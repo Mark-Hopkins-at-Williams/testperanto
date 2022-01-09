@@ -33,9 +33,9 @@ class DistributionManager:
         ground_key = expansion.substitute_in_sequence(key)
         if ground_key not in self.distributions:
             base = distributions.IdGenerator()
-            if len(key) > 1:
+            if len(ground_key) > 1:
                 try:
-                    base = self.get(key[:-1], expansion)
+                    base = self.get(ground_key[:-1], expansion)
                 except KeyError:
                     pass
             self.distributions[ground_key] = factory.instantiate_dist(base)
@@ -71,6 +71,16 @@ class UniformDistributionFactory(DistributionFactory):
         return distributions.UniformDistribution(self.domain)
 
 
+class CategoricalDistributionFactory(DistributionFactory):
+    def __init__(self, domain, weights):
+        super().__init__()
+        self.domain = domain
+        self.weights = weights
+
+    def instantiate_dist(self, base):
+        return distributions.CategoricalDistribution(self.weights, self.domain)
+
+
 class GEMDistributionFactory(DistributionFactory):
     def __init__(self, concentration):
         super().__init__()
@@ -103,3 +113,4 @@ CONSTRUCTORS['gem'] = GEMDistributionFactory
 CONSTRUCTORS['crp'] = CRPDistributionFactory
 CONSTRUCTORS['pyor'] = PitmanYorDistributionFactory
 CONSTRUCTORS['uniform'] = UniformDistributionFactory
+CONSTRUCTORS['categorical'] = CategoricalDistributionFactory

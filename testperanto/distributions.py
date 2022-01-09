@@ -51,13 +51,17 @@ class AltCategoricalDistribution(Distribution):
 
 class CategoricalDistribution(Distribution):
 
-    def __init__(self, weights):
+    def __init__(self, weights, labels=None):
         """Initialize a CategoricalDistribution from unnormalized weights."""
         normalizer = float(sum(weights))
         self.normalized_weights = list(map(lambda x: float(x)/float(normalizer), weights))
         self.weights = []
         weight_sum = 0.0
         self.most_likely_index = 0
+        if labels is None:
+            self.labels = list(range(len(weights)))
+        else:
+            self.labels = labels
         for i in range(len(self.normalized_weights)):
             self.weights.append( weight_sum + self.normalized_weights[i] )
             weight_sum += self.normalized_weights[i]
@@ -69,12 +73,12 @@ class CategoricalDistribution(Distribution):
         trial = random.random()
         for i in range(len(self.weights)): #TODO: make this a binary search?
             if trial < self.weights[i]:
-                return i
-        return len(self.weights)-1
+                return self.labels[i]
+        return self.labels[len(self.weights)-1]
 
     def get_most_likely_sample(self):
         """Return the most likely category."""
-        return self.most_likely_index
+        return self.labels[self.most_likely_index]
 
     def __str__(self):
         retval = 'categorical'
@@ -186,16 +190,16 @@ class PitmanYorProcess(Distribution):
         return obj
 
     def sample_alt(self):
-        chance_of_new_numer = self.strength_param + (self.discount_param * len(self.samples))
-        chance_of_new_denom = self.strength_param + self.num_samples_so_far
+        chance_of_new_numer = self.strength + (self.discount * len(self.samples))
+        chance_of_new_denom = self.strength + self.num_samples_so_far
         chance_of_new = chance_of_new_numer / chance_of_new_denom
         trial = random.random()
         if trial < chance_of_new:
             obj = self.base_dist.sample()
             self.samples.append(obj)
-            self.sample_multiplicity.append(1.0 - self.discount_param)
+            self.sample_multiplicity.append(1.0 - self.discount)
         else:
-            dist = AltCategoricalDistribution(self.sample_multiplicity)
+            dist = CategoricalDistribution(self.sample_multiplicity)
             sample_index = dist.sample()
             obj = self.samples[sample_index]
             self.sample_multiplicity[sample_index] += 1.0

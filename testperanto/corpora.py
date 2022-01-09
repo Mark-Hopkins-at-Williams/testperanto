@@ -23,3 +23,16 @@ def stream_ngrams(lines, ngram_order, tokenize = lambda line: line.split()):
 
 def brown_ngrams(n):
     return stream_ngrams(brown.sents(), n, lambda line: line)
+
+def stream_plaintext(filename, ngram_order):
+    with open(filename, 'r') as reader:
+        return list(stream_ngrams(reader, ngram_order))
+
+def stream_one_word_per_line(lines, index, tokenize = lambda line: line.split()):
+    for line in lines:
+        iwords = tokenize(line)
+        yield iwords[index]
+
+def stream_plaintext_target_word(filename, index):
+    with open(filename, 'r') as reader:
+        return list(stream_one_word_per_line(reader, index))

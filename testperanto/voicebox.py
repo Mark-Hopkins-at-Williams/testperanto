@@ -5,7 +5,7 @@
 # $Date: 2012-04-27 15:56:28 -0700 (Fri, 27 Apr 2012) $
 ##
 
-
+from testperanto.trees import TreeNode
 from testperanto import wordgenerators
 from abc import ABC, abstractmethod
 from testperanto.morphology import SuffixMorphologizer, EnglishVerbMorpher, EnglishNounMorpher
@@ -42,6 +42,36 @@ def read_property_tree(tree):
         preterminal, leaf = read_preterminal_tree(child)
         properties[preterminal] = leaf
     return properties
+
+
+class TreeVoicebox(Voicebox):
+    def __init__(self):
+        super().__init__()
+        self.listeners = dict()
+
+    def express(self, syntax_tree):
+        tok_str = '~'.join(syntax_tree.get_label())
+        if tok_str[0] == '@':
+            voicebox_code = tok_str[1:]
+            if voicebox_code not in self.listeners:
+                if 'default' in self.listeners:
+                    voicebox_code = 'default'
+                else:
+                    raise VoiceboxExpressionError('voicebox code not recognized: ' + str(voicebox_code))
+            rendering = self.listeners[voicebox_code].express(syntax_tree)
+            if len(rendering) == 0:
+                rendering = "NULL"
+            return TreeNode.construct_from_str(rendering)
+        else:
+            subtrees = [self.express(syntax_tree.get_child(i))
+                        for i in range(syntax_tree.get_num_children())]
+            result = TreeNode()
+            result.label = syntax_tree.get_label()
+            result.children = subtrees
+            return result
+
+    def register_listener(self, name, listener_voicebox):
+        self.listeners[name] = listener_voicebox
 
 
 class ManagingVoicebox(Voicebox):
@@ -130,7 +160,7 @@ class VoiceboxFactory(object):
         self.generator_factory = wordgenerators.WordGeneratorFactory()
     
     def create_voicebox(self, voicebox_name):
-        manager = ManagingVoicebox()
+        manager = TreeVoicebox()
         manager.register_listener('default', VerbatimVoicebox())
         if voicebox_name == 'seuss':
             manager.register_listener('vb', MorphologyVoicebox(self.generator_factory.create_generator('SeussVerbs'), [EnglishVerbMorpher()]))
