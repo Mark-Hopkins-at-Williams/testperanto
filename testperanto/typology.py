@@ -1,4 +1,5 @@
 import json
+import os
 import sys
 from tqdm import tqdm
 from testperanto.macros import TreeTransducer
@@ -97,9 +98,38 @@ def all_switching_codes(k):
         return ["0" + suffix for suffix in suffixes] + ["1" + suffix for suffix in suffixes]
 
 
+def train_valid_test_split(filename):
+    sents = []
+    with open(filename, 'r') as reader:
+        lines = [line.strip() for line in reader]
+        for line in tqdm(lines):
+            sents.append(flatten(TreeNode.construct_from_str(line.strip())))
+    directory, file = os.path.split(filename)
+    stem, ext = os.path.splitext(file)
+    for fold in range(10):
+        base_dir = os.path.join(directory, '{}.fold{}'.format(stem, fold))
+        os.mkdir(base_dir)
+        tenth = sents[int(0.1 * fold * len(sents)):int((0.1 + 0.1 * fold) * len(sents))]
+        train_file = os.path.join(base_dir, '{}.fold{}.train'.format(stem, fold))
+        valid_file = os.path.join(base_dir, '{}.fold{}.valid'.format(stem, fold))
+        test_file = os.path.join(base_dir, '{}.fold{}.test'.format(stem, fold))
+        with open(train_file, 'w') as writer:
+            for sent in tenth[:int(.8*len(tenth))]:
+                writer.write('{}\n'.format(sent))
+        with open(valid_file, 'w') as writer:
+            for sent in tenth[int(.8*len(tenth)):int(.9*len(tenth))]:
+                writer.write('{}\n'.format(sent))
+        with open(test_file, 'w') as writer:
+            for sent in tenth[int(.9*len(tenth)):]:
+                writer.write('{}\n'.format(sent))
+
+
 if __name__ == '__main__':
-    for code in tqdm(all_switching_codes(6)):
-        impose_typology(sys.argv[1], code)
+    for code in all_switching_codes(6):
+        train_valid_test_split('{}.{}.trees'.format(sys.argv[1], code))
+
+
+    #     impose_typology(sys.argv[1], code)
 
 
 
