@@ -13,9 +13,7 @@ def run_spacy(in_file, out_file, spacy_model_name):
     with open(in_file, 'r') as reader:
         for doc in tqdm(nlp.pipe(reader)):
             doc_bin.add(doc)
-    with open(out_file, 'wb') as writer:
-        bytes_data = doc_bin.to_bytes()
-        writer.write(bytes_data)
+    return doc_bin
 
 
 def process_spacy_doc(f, spacy_doc_file):
@@ -27,6 +25,41 @@ def process_spacy_doc(f, spacy_doc_file):
             f(doc)
 
 
+class TaggedWordCounter:
+
+    def __init__(self):
+        self.words = defaultdict(list)
+
+    def __call__(self, doc):
+        for token in doc:
+            self.words[token.pos_].append(token.text)
+
+    def to_json(self, json_file):
+        with open(json_file, 'w', encoding='utf-8') as writer:
+            json.dump(dict(self.words), writer, ensure_ascii=False)
+
+    @staticmethod
+    def from_json(json_file):
+        with open(json_file, 'r', encoding='utf-8') as reader:
+            words = json.load(reader)
+        result = TaggedWordCounter()
+        result.words = words
+        return result
+
+
+def tag_with_spacy(in_file, spacy_model_name):
+    nlp = spacy.load(spacy_model_name)
+    words = defaultdict(list)
+    with open(in_file, 'r') as reader:
+        for doc in tqdm(nlp.pipe(reader)):
+            for token in doc:
+                words[token.pos_].append(token.text)
+    for tag in words:
+        with open('{}.{}.txt'.format(in_file, tag), 'w') as writer:
+            for word in words[tag]:
+                writer.write("{}\n".format(word))
+
+
 def main(in_file, spacy_model_name):
     out_file = '{}.spacy'.format(in_file)
     run_spacy(in_file, out_file, spacy_model_name)
@@ -36,4 +69,4 @@ def main(in_file, spacy_model_name):
 
 
 if __name__ == '__main__':
-    main(sys.argv[1], sys.argv[2])
+    tag_with_spacy(sys.argv[1], sys.argv[2])
