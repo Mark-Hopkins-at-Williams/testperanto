@@ -13,6 +13,7 @@ import pyconll
 import sys
 from tqdm import tqdm
 from testperanto.trees import TreeNode
+from testperanto.corpora import TaggedWordCounter
 
 powers_of_2 = [2**x for x in range(7, 30)]
 multiples_of_1000 = [1000*k for k in range(1000)]
@@ -128,4 +129,6 @@ def get_dependencies(tree):
         return result + [(dependent, deprel, head) for deprel, dependent in deprels if dependent != 'NULL']
 
 if __name__ == "__main__":
-    harvest_dependencies_ptb(sys.argv[1], sys.argv[2], sys.argv[3].split(','))
+    # harvest_dependencies_ptb(sys.argv[1], sys.argv[2], sys.argv[3].split(','))
+    counter = TaggedWordCounter.from_json(sys.argv[1])
+    plot_statistic(singleton_proportion, [counter.words['NOUN'], counter.words['ADJ'], counter.words['VERB']], powers_of_2, "semilogx")
