@@ -53,11 +53,28 @@ def tag_with_spacy(in_file, spacy_model_name):
     with open(in_file, 'r') as reader:
         for doc in tqdm(nlp.pipe(reader)):
             for token in doc:
+                # print('{} {} {} {} {}'.format(token.text, token.pos_, token.dep_, token.head, token.head.pos_))
                 words[token.pos_].append(token.text)
     for tag in words:
         with open('{}.{}.txt'.format(in_file, tag), 'w') as writer:
             for word in words[tag]:
                 writer.write("{}\n".format(word))
+
+
+def spacy_dependencies(in_file, spacy_model_name):
+    nlp = spacy.load(spacy_model_name)
+    bigrams = defaultdict(list)
+    desired_deps = [("ADJ", "amod", "NOUN"), ("NOUN", "nsubj", "VERB"), ("NOUN", "dobj", "VERB")]
+    with open(in_file, 'r') as reader:
+        for doc in tqdm(nlp.pipe(reader)):
+            for token in doc:
+                # print('{} {} {} {} {}'.format(token.text, token.pos_, token.dep_, token.head, token.head.pos_))
+                if (token.pos_, token.dep_, token.head.pos_) in desired_deps:
+                    bigrams[token.dep_].append('{} {}'.format(token.text, token.head))
+    for dep in bigrams:
+        with open('{}.{}.txt'.format(in_file, dep), 'w') as writer:
+            for bigram in bigrams[dep]:
+                writer.write("{}\n".format(bigram))
 
 
 def main(in_file, spacy_model_name):
@@ -70,3 +87,4 @@ def main(in_file, spacy_model_name):
 
 if __name__ == '__main__':
     tag_with_spacy(sys.argv[1], sys.argv[2])
+    spacy_dependencies(sys.argv[1], sys.argv[2])
