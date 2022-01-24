@@ -113,7 +113,10 @@ class WordGeneratorFactory(object):
             wordlist = ['b','c','d','f','g','k','l','m','n','p','r','t','x']        
             return ListBasedWordGenerator( wordlist )
         elif generator_name == 'EnglishPrepositions':
-            wordlist = ['in','on','near','under','in front of','beside','next to','behind']
+            wordlist = ["in", "on", "to", "at", "by", "of", "off", "with", "around", "from",
+                        "into", "before", "along", "above", "across", "against", "among",
+                        "behind", "below", "beneath", "beside", "between", "near", "toward",
+                        "under", "upon", "within"]
             prefix_generator = self.create_generator('EnglishSyllables')
             suffix_generator = self.create_generator('EnglishConsonants')
             default_generator = PrefixSuffixWordGenerator( prefix_generator, suffix_generator )
@@ -121,7 +124,8 @@ class WordGeneratorFactory(object):
         elif generator_name == 'Seuss':
             atom_generator = self.create_generator('EnglishSyllables')
             # word_length_distribution = distributions.CategoricalDistribution([0,0,0.2,0.5,0.2,0.1])
-            word_length_distribution = distributions.CategoricalDistribution([0,0.3,0.2,0.1,0.1])
+            # word_length_distribution = distributions.CategoricalDistribution([0,0.3,0.2,0.1,0.1])
+            word_length_distribution = distributions.CategoricalDistribution([0,0.0,0.2,0.4,0.4])
             prefix_generator = AtomBasedWordGenerator( atom_generator, word_length_distribution )
             suffix_generator = self.create_generator('EnglishConsonants')
             return PrefixSuffixWordGenerator( prefix_generator, suffix_generator )

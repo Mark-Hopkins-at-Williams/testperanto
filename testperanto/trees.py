@@ -426,3 +426,11 @@ class LeafLabelCollector(TreeVisitor):
     def get_leaf_labels(self):
         return self.leaf_labels
 
+
+def leaf_string(tree):
+    collector = LeafLabelCollector()
+    collector.execute(tree)
+    leaves = ['~'.join(leaf) for leaf in collector.get_leaf_labels()]
+    leaves = [leaf for leaf in leaves if leaf != "NULL"]
+    output = ' '.join(leaves)
+    return output

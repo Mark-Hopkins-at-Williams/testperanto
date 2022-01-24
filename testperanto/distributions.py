@@ -143,9 +143,11 @@ class IdGenerator(object):
         self.next_id = 0
         
     def sample(self):
-        retval = self.next_id
-        self.next_id += 1
-        return retval
+        #retval = self.next_id
+        #self.next_id += 1
+        # return retval
+        return random.randint(0, 10000000000000)
+
 
 
 class GEMDistribution(object):

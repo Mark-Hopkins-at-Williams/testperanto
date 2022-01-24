@@ -83,16 +83,6 @@ def harvest_dependencies(conllu_file, out_file, desired_deprels):
                     writer.write("{} {}\n".format(dependent.lower(), head.lower()))
 
 
-def harvest_dependencies_ptb(ptb_file, out_file, desired_deprels):
-    with open(out_file, 'w') as writer:
-        with open(ptb_file, 'r') as reader:
-            for line in tqdm(list(reader)):
-                tree = TreeNode.construct_from_str(line)
-                desired = [(x,z) for (x,deprel,z) in get_dependencies(tree) if deprel in desired_deprels]
-                for (dependent, head) in desired:
-                    writer.write("{} {}\n".format(dependent.lower(), head.lower()))
-
-
 def get_head(tree):
     if tree.get_num_children() == 0:
         return ' '.join(tree.get_label())
@@ -104,6 +94,7 @@ def get_head(tree):
                 return get_head(child.get_child(0))
         raise Exception('head not found: {}'.format(tree))
 
+
 def get_child_heads(tree):
     if tree.get_num_children() == 0:
         return ' '.join(tree.get_label())
@@ -114,6 +105,7 @@ def get_child_heads(tree):
             if deprel != 'head':
                 result += [(deprel, get_head(child.get_child(0)))]
         return result
+
 
 def get_dependencies(tree):
     if tree.get_num_children() == 0:
@@ -127,8 +119,3 @@ def get_dependencies(tree):
         head = get_head(tree)
         deprels = get_child_heads(tree)
         return result + [(dependent, deprel, head) for deprel, dependent in deprels if dependent != 'NULL']
-
-if __name__ == "__main__":
-    # harvest_dependencies_ptb(sys.argv[1], sys.argv[2], sys.argv[3].split(','))
-    counter = TaggedWordCounter.from_json(sys.argv[1])
-    plot_statistic(singleton_proportion, [counter.words['NOUN'], counter.words['ADJ'], counter.words['VERB']], powers_of_2, "semilogx")

@@ -2,10 +2,9 @@ import json
 import os
 import sys
 from tqdm import tqdm
-from testperanto.macros import TreeTransducer
+from testperanto.macros import TreeTransducer, init_transducer_cascade
 from testperanto.trees import TreeNode, LeafLabelCollector
 from testperanto.voicebox import VoiceboxFactory
-from testperanto.tpo import init_transducer_cascade
 
 SWITCHED = [None,
             "($qs (S (nsubj $x1) (head $x2))) -> (S (head ($qvp $x2)) (nsubj ($qnp $x1)))",
@@ -45,6 +44,7 @@ RULES = ["($qstart $x1) -> ($qs $x1)",
 
 CONFIG = {'distributions': [], "macros": [{"rule": r} for r in RULES]}
 
+"""
 def choose_rule(code, index):
     if ((code[0] == "1" and index == 1)
         or (code[1] == "1" and index == 2)
@@ -63,7 +63,18 @@ def get_switching_transducer(code):
     rules = [choose_rule(code, index) for index in range(len(RULES))]
     config = {'distributions': [], "macros": [{"rule": r} for r in rules]}
     return TreeTransducer.from_config(config)
+"""
 
+def init_switched_grammar(config, code):
+    rules = []
+    for macro in config['macros']:
+        next_rule = {key: macro[key] for key in macro}
+        if 'alt' in macro and 'switch' in macro and code[macro['switch']] == "1":
+            next_rule['rule'] = next_rule['alt']
+        next_rule = {key: next_rule[key] for key in next_rule if key not in ['alt', 'switch']}
+        rules.append(next_rule)
+    config = {"distributions": config["distributions"], "macros": rules}
+    return TreeTransducer.from_config(config)
 
 
 def flatten(tree):
@@ -89,6 +100,7 @@ def impose_typology(tree_file, switching_code):
                     in_tree = TreeNode.construct_from_str('({} {})'.format('$qstart', out_tree))
                 output = cascade[-1].run(in_tree).get_child(0)
                 writer.write('{}\n'.format(str(output)))
+
 
 def all_switching_codes(k):
     if k == 1:

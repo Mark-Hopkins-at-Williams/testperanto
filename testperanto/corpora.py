@@ -39,6 +39,11 @@ def stream_one_word_per_line(lines, index, tokenize = lambda line: line.split())
         iwords = tokenize(line)
         yield iwords[index]
 
+def stream_lines(filename):
+    with open(filename, 'r') as reader:
+        for line in reader:
+            yield line.strip()
+
 def stream_plaintext_target_word(filename, index):
     with open(filename, 'r') as reader:
         return list(stream_one_word_per_line(reader, index))

@@ -2,3 +2,5 @@
 .eggs
 *.egg-info
 *pycache*
+data/
+work/
