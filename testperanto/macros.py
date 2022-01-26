@@ -7,6 +7,7 @@
 ##
 
 import yaml
+import json
 from abc import ABC, abstractmethod
 
 from testperanto import trees
@@ -16,6 +17,8 @@ from testperanto.substitutions import SymbolSubstitution
 from testperanto.matchers import LeafVariableMatcher
 from testperanto.matchers import RefinementVariableMatcher
 from testperanto.distributions import CategoricalDistribution
+from testperanto.voicebox import VoiceboxFactory
+from testperanto.trees import TreeNode
 
 
 def rhs_refinement_var(i):

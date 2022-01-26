@@ -434,3 +434,4 @@ def leaf_string(tree):
     leaves = [leaf for leaf in leaves if leaf != "NULL"]
     output = ' '.join(leaves)
     return output
+
