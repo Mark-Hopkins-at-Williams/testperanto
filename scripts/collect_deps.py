@@ -54,7 +54,7 @@ if __name__ == '__main__':
                         help='name of spacy model (e.g. "en_core_web_md", "el_core_news_md")')
     args = parser.parse_args()
     extract_chains(args.corpus, args.model)
-    #for thing in spacy_chains(args.corpus, args.model):
-    #    print(thing)
+    for thing in spacy_chains(args.corpus, args.model):
+        print(thing)
 
 

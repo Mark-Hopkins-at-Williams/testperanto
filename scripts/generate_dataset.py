@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 import sys
 from tqdm import tqdm
 from testperanto.macros import TreeTransducer, init_transducer_cascade
@@ -8,7 +9,7 @@ from testperanto.trees import TreeNode, LeafLabelCollector
 from testperanto.voicebox import VoiceboxFactory
 
 
-def main(config_files, switching_code, num_to_generate, only_sents):
+def generate(config_files, switching_code, num_to_generate, only_sents):
     cascade = init_transducer_cascade(config_files, switching_code)
     for _ in tqdm(range(num_to_generate)):
         output = run_transducer_cascade(cascade)
@@ -18,11 +19,28 @@ def main(config_files, switching_code, num_to_generate, only_sents):
             leaves = ['~'.join(leaf) for leaf in collector.get_leaf_labels()]
             leaves = [leaf for leaf in leaves if leaf != "NULL"]
             output = ' '.join(leaves)
-        print(output)
+        yield output
+
+
+def split_data(sents, base_dir, percentages=(.8,.1,.1)):
+    os.mkdir(base_dir)
+    train_pct, valid_pct, test_pct = percentages
+    train_file = os.path.join(base_dir, 'sents.train')
+    valid_file = os.path.join(base_dir, 'sents.valid')
+    test_file = os.path.join(base_dir, 'sents.test')
+    with open(train_file, 'w') as writer:
+        for sent_index in range(int(train_pct * len(sents))):
+            writer.write('{}\n'.format(sents[sent_index]))
+    with open(valid_file, 'w') as writer:
+        for sent_index in range(int(train_pct * len(sents)), int((train_pct+valid_pct) * len(sents))):
+            writer.write('{}\n'.format(sents[sent_index]))
+    with open(test_file, 'w') as writer:
+        for sent_index in range(int((train_pct+valid_pct) * len(sents)), int(len(sents))):
+            writer.write('{}\n'.format(sents[sent_index]))
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Generate trees using testperanto.')
+    parser = argparse.ArgumentParser(description='Generate LM training data using testperanto.')
     parser.add_argument('-c', '--configs', nargs='+', required=True,
                         help='names of the transducer config files in the cascade')
     parser.add_argument('-n', '--num', required=True, type=int,
@@ -31,6 +49,8 @@ if __name__ == '__main__':
                         help='the typological switches, as a bitstring')
     parser.add_argument('--sents', dest='sents', action='store_true', default=False,
                         help='only output sentences (rather than trees)')
+    parser.add_argument('-d', '--dir', required=True,
+                        help='output directory for the data files')
     args = parser.parse_args()
-    main(args.configs, args.switches, args.num, args.sents)
-
+    sentences = list(generate(args.configs, args.switches, args.num, args.sents))
+    split_data(sentences, args.dir)

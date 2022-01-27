@@ -119,3 +119,4 @@ def get_dependencies(tree):
         head = get_head(tree)
         deprels = get_child_heads(tree)
         return result + [(dependent, deprel, head) for deprel, dependent in deprels if dependent != 'NULL']
+

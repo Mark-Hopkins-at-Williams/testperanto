@@ -15,18 +15,6 @@ def all_switching_codes(k):
         return ["0" + suffix for suffix in suffixes] + ["1" + suffix for suffix in suffixes]
 
 
-def init_switched_grammar(config, code):
-    rules = []
-    for macro in config['macros']:
-        next_rule = {key: macro[key] for key in macro}
-        if 'alt' in macro and 'switch' in macro and code[macro['switch']] == "1":
-            next_rule['rule'] = next_rule['alt']
-        next_rule = {key: next_rule[key] for key in next_rule if key not in ['alt', 'switch']}
-        rules.append(next_rule)
-    config = {"distributions": config["distributions"], "macros": rules}
-    return TreeTransducer.from_config(config)
-
-
 def train_valid_test_split(filename):
     sents = []
     with open(filename, 'r') as reader:

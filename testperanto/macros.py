@@ -168,11 +168,12 @@ class TreeTransducer(object):
         return TreeTransducer(grammar)
 
 
-def init_transducer_cascade(config_files):
+def init_transducer_cascade(config_files, code=None):
     cascade = []
     for config_file in config_files:
         with open(config_file, 'r') as reader:
-            cascade.append(TreeTransducer.from_config(json.load(reader)))
+            config = json.load(reader)
+            cascade.append(init_switched_grammar(config, code))
     vfactory = VoiceboxFactory()
     vbox = vfactory.create_voicebox("seuss")
     cascade.append(vbox)
@@ -186,3 +187,16 @@ def run_transducer_cascade(cascade, start_state='$qstart'):
         in_tree = TreeNode.construct_from_str('({} {})'.format(start_state, out_tree))
     output = cascade[-1].run(in_tree).get_child(0)
     return output
+
+
+def init_switched_grammar(config, code):
+    rules = []
+    for macro in config['macros']:
+        next_rule = {key: macro[key] for key in macro}
+        if 'alt' in macro and 'switch' in macro and code[macro['switch']] == "1":
+            next_rule['rule'] = next_rule['alt']
+        next_rule = {key: next_rule[key] for key in next_rule if key not in ['alt', 'switch']}
+        rules.append(next_rule)
+    config = {"distributions": config["distributions"], "macros": rules}
+    return TreeTransducer.from_config(config)
+
