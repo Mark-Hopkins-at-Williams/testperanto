@@ -21,7 +21,7 @@ echo "Training."
 fairseq-train \
   $OUTPUT_DIR/fairseq \
   --task language_modeling \
-  --tensorboard-logdir $OUTPUT_DIR/tensorboard
+  --tensorboard-logdir $OUTPUT_DIR/tensorboard \
   --save-dir $OUTPUT_DIR/checkpoints \
   --arch transformer_lm \
   --share-decoder-input-output-embed \
