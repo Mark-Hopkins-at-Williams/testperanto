@@ -42,4 +42,10 @@ fairseq-train \
   --patience 50 \
   --fp16 \
   --max-update 50000
+fairseq-eval-lm \
+  $OUTPUT_DIR/fairseq/ \
+  --path $OUTPUT_DIR/checkpoints/checkpoint_best.pt \
+  --batch-size 2 \
+  --tokens-per-sample 512 \
+  --context-window 400 > $OUTPUT_DIR/eval.txt
 
