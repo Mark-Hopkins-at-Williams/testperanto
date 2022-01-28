@@ -39,6 +39,5 @@ fairseq-train \
   --max-tokens 2048 \
   --update-freq 16 \
   --fp16 \
-  --max-update 50000 \
-  --patience 10
+  --max-update 50000
 
