@@ -38,7 +38,8 @@ fairseq-train \
   --sample-break-mode none \
   --max-tokens 2048 \
   --update-freq 16 \
-  --keep-best-checkpoints 5 \
+  --no-epoch-checkpoints \
+  --patience 50 \
   --fp16 \
   --max-update 50000
 
