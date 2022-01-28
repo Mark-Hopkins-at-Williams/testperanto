@@ -1,0 +1,21 @@
+#!/bin/bash
+bash experiment.sh examples/white/white.json 000000 work/000000.1
+bash experiment.sh examples/white/white.json 000000 work/000000.2
+bash experiment.sh examples/white/white.json 000000 work/000000.3
+bash experiment.sh examples/white/white.json 000000 work/000000.4
+bash experiment.sh examples/white/white.json 000000 work/000000.5
+bash experiment.sh examples/white/white.json 000000 work/000000.6
+bash experiment.sh examples/white/white.json 000000 work/000000.7
+bash experiment.sh examples/white/white.json 000000 work/000000.8
+bash experiment.sh examples/white/white.json 000000 work/000000.9
+bash experiment.sh examples/white/white.json 000000 work/000000.10
+bash experiment.sh examples/white/white.json 011101 work/011101.1
+bash experiment.sh examples/white/white.json 011101 work/011101.2
+bash experiment.sh examples/white/white.json 011101 work/011101.3
+bash experiment.sh examples/white/white.json 011101 work/011101.4
+bash experiment.sh examples/white/white.json 011101 work/011101.5
+bash experiment.sh examples/white/white.json 011101 work/011101.6
+bash experiment.sh examples/white/white.json 011101 work/011101.7
+bash experiment.sh examples/white/white.json 011101 work/011101.8
+bash experiment.sh examples/white/white.json 011101 work/011101.9
+bash experiment.sh examples/white/white.json 011101 work/011101.10
