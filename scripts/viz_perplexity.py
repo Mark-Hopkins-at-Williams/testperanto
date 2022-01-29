@@ -20,7 +20,9 @@ def main(directory):
     results = defaultdict(list)
     for (key, filename) in eval_files:
         switches, _ = key.split(".")
-        results[switches].append(get_perplexity(filename))
+        perplexity = get_perplexity(filename)
+        if perplexity is not None:
+            results[switches].append(perplexity)
     for key in results:
         print('{}: {:.2f}, {:.2f}'.format(key, np.mean(results[key]), np.var(results[key])))
 
