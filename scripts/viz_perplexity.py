@@ -19,6 +19,8 @@ def main(directory):
                   if isfile(join(join(directory, subdir), 'eval.txt'))]
     results = defaultdict(list)
     for (key, filename) in eval_files:
+        print(key)
+        print(filename)
         switches, _ = key.split(".")
         perplexity = get_perplexity(filename)
         if perplexity is not None:
