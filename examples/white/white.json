@@ -24,8 +24,8 @@
             "zdists": ["nn~subj~$y1"]
         },
         {
-            "alt": "$qccomp~$y1~$y2 -> (S (mark (SCONJ that)) $qs~$y1~$y2)",
-            "rule": "$qccomp~$y1~$y2 ->(S $qs~$y1~$y2 (mark (SCONJ that)))",
+            "alt": "$qccomp~$y1~$y2 -> (S (mark (SCONJ that)) (head $qs~$y1~$y2))",
+            "rule": "$qccomp~$y1~$y2 ->(S (head $qs~$y1~$y2) (mark (SCONJ that)))",
             "switch": 2
         },
         {
