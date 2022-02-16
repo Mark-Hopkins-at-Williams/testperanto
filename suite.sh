@@ -1,4 +1,14 @@
 #!/bin/bash
+bash experiment.sh examples/white/white.json 100000 work/100000.1
+bash experiment.sh examples/white/white.json 100000 work/100000.2
+bash experiment.sh examples/white/white.json 100000 work/100000.3
+bash experiment.sh examples/white/white.json 100000 work/100000.4
+bash experiment.sh examples/white/white.json 100000 work/100000.5
+bash experiment.sh examples/white/white.json 100000 work/100000.6
+bash experiment.sh examples/white/white.json 100000 work/100000.7
+bash experiment.sh examples/white/white.json 100000 work/100000.8
+bash experiment.sh examples/white/white.json 100000 work/100000.9
+bash experiment.sh examples/white/white.json 100000 work/100000.10
 bash experiment.sh examples/white/white.json 100001 work/100001.1
 bash experiment.sh examples/white/white.json 100001 work/100001.2
 bash experiment.sh examples/white/white.json 100001 work/100001.3
