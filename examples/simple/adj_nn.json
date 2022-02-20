@@ -1,0 +1,20 @@
+{
+    "distributions": [
+        {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.5},
+        {"name": "adj", "type": "pyor", "strength": 100, "discount": 0.8},
+        {"name": "adj~$y1", "type": "pyor", "strength": 5, "discount": 0.5}
+    ],
+    "macros": [
+        {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
+        {
+            "rule": "$qnp~$y1 -> (NP (amod $qadj~$z1) (head $qnn~$y1))",
+            "alt": "$qnp~$y1 -> (NP (head $qnn~$y1) (amod $qadj~$z1))",
+            "switch": 0,
+            "zdists": ["adj~$y1"]
+        },
+        {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"},
+        {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT plu)))"},
+        {"rule": "$qadj~$y1 -> (ADJ (@adj (STEM adj~$y1)))"}
+    ]
+}
+

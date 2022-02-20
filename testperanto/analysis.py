@@ -14,10 +14,22 @@ import sys
 from tqdm import tqdm
 from testperanto.trees import TreeNode
 from testperanto.corpora import TaggedWordCounter
+import pandas as pd
+import seaborn as sns
 
 powers_of_2 = [2**x for x in range(7, 30)]
 multiples_of_1000 = [1000*k for k in range(1000)]
 
+def count_words(filename):
+    counts = defaultdict(int)
+    with open(filename) as reader:
+        for line in reader:
+            tokens = line.split()
+            for token in tokens:
+                counts[token] += 1
+    counts = sorted([(counts[k], k) for k in counts])
+    for (k, v) in counts:
+        print('{}: {}'.format(k, v))
 
 def type_count_over_time(token_stream, x_values):
     """ Tracks the number of types in a token stream. """
@@ -55,18 +67,22 @@ def singleton_proportion(token_stream, x_values):
             y_points.append(1.0 * len(singleton_token_set) / len(token_counts))
     return x_points, y_points
 
-
-def plot_statistic(stat_fn, token_streams, x_values, axes="semilogx"):
-    plot_args = []
-    colors = ['red', 'blue', 'green', 'yellow', 'orange', 'violet']
-    for i, token_stream in enumerate(token_streams):
-        print(colors[i])
+def plot_statistic(stat_fn, token_streams, x_values, axes="semilogx",
+                   corpus_labels=None, x_label="num tokens", y_label="y"):
+    data = []
+    if corpus_labels is None:
+        corpus_labels = ['corpus{}'.format(i) for i in range(len(token_streams))]
+    for i, token_stream in tqdm(enumerate(token_streams)):
         x_vals, y_vals = stat_fn(token_stream, x_values)
-        plot_args += [x_vals, y_vals, colors[i]]
+        data += [[corpus_labels[i], x,y] for [x,y] in zip(x_vals, y_vals)]
+    df = pd.DataFrame(data, columns=['corpus', x_label, y_label])
+    sns.set_style("darkgrid")
+    ax = sns.lineplot(data=df, x="num tokens", y=y_label, hue="corpus", style="corpus")
     if axes == "semilogx":
-        plt.semilogx(*plot_args)
+        ax.set(xscale='log')
     elif axes == "loglog":
-        plt.loglog(*plot_args)
+        ax.set(xscale='log')
+        ax.set(yscale='log')
     plt.show()
 
 

@@ -15,7 +15,6 @@ from testperanto import vocabulary
 from testperanto import macros
 from testperanto import voicebox
 
-
 def init_macro_from_yaml(macro_file, yaml_file):
     """Initializes a tree transducer macro from a YAML configuration and pickles it to the specified file."""
     yaml_handle = open(yaml_file, 'rb')

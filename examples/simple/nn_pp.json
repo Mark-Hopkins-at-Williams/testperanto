@@ -1,0 +1,18 @@
+{
+    "distributions": [
+        {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "pobj", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "pobj~$y1", "type": "pyor", "strength": 20, "discount": 0.6},
+        {"name": "prep", "type": "uniform", "domain": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]},
+        {"name": "prep~$y1", "type": "pyor", "strength": 10, "discount": 0.0}
+    ],
+    "macros": [
+        {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
+        {"rule": "$qnp~$y1 -> (NP (head $qnn~$y1) (nmod $qpp~$z1))", "zdists": ["pobj~$y1"]},
+        {"rule": "$qpp~$y1 -> (PP (case $qprep~$z1) (head $qnn~$y1))", "zdists": ["prep~$y1"]},
+        {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"},
+        {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT plu)))"},
+        {"rule": "$qprep~$y1 -> (PREP (@prep (STEM pp~$y1)))"}
+    ]
+}
+

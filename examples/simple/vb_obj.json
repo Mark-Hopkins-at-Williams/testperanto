@@ -1,0 +1,21 @@
+{
+    "distributions": [
+        {"name": "vb", "type": "pyor", "strength": 100, "discount": 0.5},
+        {"name": "nn", "type": "pyor", "strength": 100, "discount": 0.8},
+        {"name": "nn~$y1", "type": "pyor", "strength": 2, "discount": 0.8},
+        {"name": "tense", "type": "uniform", "domain": ["present", "perfect"]},
+        {"name": "count", "type": "uniform", "domain": ["sng", "plu"]},
+        {"name": "person", "type": "categorical", "domain": ["1", "3"], "weights": [0.2, 0.8]}
+    ],
+    "macros": [
+        {"rule": "$qstart -> $qs"},
+        {"rule": "$qs -> (S (head $qvp~$z1~$z2~$z3))", "zdists": ["person", "count", "vb"]},
+        {"rule": "$qvp~$y1~$y2~$y3 -> (VP (head $qvb~$y1~$y2~$y3) (obj $qnp~$y3))"},
+        {"rule": "$qvb~$y1~$y2~$y3 -> (VB (@vb (STEM vb~$y3) (PERSON $y1) (COUNT $y2) $qtense~$z1))", "zdists": ["tense"]},
+        {"rule": "$qnp~$y1 -> (NP (head $qnpb~3~$z1~$z2))", "zdists": ["count", "nn~$y1"]},
+        {"rule": "$qnpb~3~$y1~$y2 -> (NP (head $qnn~$y1~$y2))"},
+        {"rule": "$qnn~$y1~$y2 -> (NN (@nn (STEM nn~$y2) (COUNT $y1)))"},
+        {"rule": "$qtense~$y1 -> (TENSE $y1)"}
+    ]
+}
+
