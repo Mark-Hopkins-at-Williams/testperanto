@@ -19,7 +19,7 @@ from testperanto.examples import AlternatingDistributionFactory, AveragerDistrib
 class TestMacros(unittest.TestCase):
 
     def setUp(self):
-        self.manager = DistributionManager()
+        self.manager = DistributionManager(generate_consecutive_ids=True)
         self.manager.add_factory(('nn',), AlternatingDistributionFactory(self.manager))
         self.manager.add_factory(('jj',), AlternatingDistributionFactory(self.manager))
         self.manager.add_factory(('nn', 'rule1',), AveragerDistributionFactory(self.manager, ('nn',)))
@@ -133,7 +133,6 @@ class TestMacros(unittest.TestCase):
                                      '(TOP (N n~2 (NPROP def plu)))',
                                      '(TOP (N n~3 (NPROP def sng)))',
                                      '(TOP (N n~3 (NPROP def plu)))'})
-
 
 if __name__ == "__main__":
     unittest.main()   

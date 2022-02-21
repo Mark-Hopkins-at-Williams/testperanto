@@ -14,13 +14,13 @@ from testperanto.config import CONSTRUCTORS
 
 class DistributionManager:
     
-    def __init__(self, factories=None):
-        super().__init__()
+    def __init__(self, factories=None, generate_consecutive_ids=False):
         if factories is None:
             self.factories = dict()
         else:
             self.factories = factories
         self.distributions = dict()
+        self.generate_consecutive_ids = generate_consecutive_ids
 
     def add_factory(self, key, factory):
         self.factories[key] = factory
@@ -30,15 +30,15 @@ class DistributionManager:
             factory = self.factories[key]
         except KeyError:
             raise KeyError('no matches for distribution: {}'.format(key))
+        # print('expansion: {}'.format(expansion))
         ground_key = expansion.substitute_in_sequence(key)
         if ground_key not in self.distributions:
-            base = distributions.IdGenerator()
-            if len(ground_key) > 1:
-                try:
-                    base = self.get(ground_key[:-1], expansion)
-                except KeyError:
-                    pass
+            if len(key) > 1:
+                base = self.get(key[:-1], expansion)
+            else:
+                base = distributions.IdGenerator(self.generate_consecutive_ids)
             self.distributions[ground_key] = factory.instantiate_dist(base)
+        # print('{}: {}'.format(key, ground_key))
         return self.distributions[ground_key]
 
     @staticmethod

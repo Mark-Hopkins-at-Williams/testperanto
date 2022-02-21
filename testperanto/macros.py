@@ -6,7 +6,6 @@
 # $Date: 2012-05-23 18:26:36 -0700 (Wed, 23 May 2012) $
 ##
 
-import yaml
 import json
 from abc import ABC, abstractmethod
 

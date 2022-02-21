@@ -139,14 +139,20 @@ class CRPDistribution(Distribution):
 
 
 class IdGenerator(object):
-    def __init__(self):
+    def __init__(self, consecutive_ids):
         self.next_id = 0
+        self.max_id = 2**32-1
+        self.used_ids = set()
+        self.consecutive_ids = consecutive_ids
         
     def sample(self):
-        #retval = self.next_id
-        #self.next_id += 1
-        # return retval
-        return random.randint(0, 10000000000000)
+        if self.consecutive_ids:
+            retval = self.next_id
+            self.next_id += 1
+        else:
+            retval = random.randint(0, self.max_id)
+            self.used_ids.add(retval)
+        return retval
 
 
 

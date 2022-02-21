@@ -7,7 +7,8 @@
 
 import unittest
 import sys
-from testperanto.typology import all_switching_codes, init_switched_grammar
+from testperanto.typology import all_switching_codes
+from testperanto.macros import init_switched_grammar
 from testperanto.trees import TreeNode, leaf_string
 
 
