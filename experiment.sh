@@ -1,6 +1,6 @@
 #!/bin/bash
 CONFIG_FILE=$1
-NUM_SENTS=1000
+NUM_SENTS=1000000
 SWITCHES=$2
 OUTPUT_DIR=$3
 echo "Generating data."
