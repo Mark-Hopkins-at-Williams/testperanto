@@ -7,7 +7,7 @@
 
 import unittest
 import sys
-from testperanto.morphology import SuffixMorphologizer
+from testperanto.morphology import SuffixMorpher
 from testperanto.trees import TreeNode
 from testperanto.voicebox import VoiceboxFactory
 from testperanto.voicebox import WordGeneratorVoicebox, EnglishDeterminerVoicebox
@@ -15,7 +15,6 @@ from testperanto.voicebox import MorphologyVoicebox
 from testperanto.voicebox import read_preterminal_tree, read_property_tree
 from testperanto.wordgenerators import WordGeneratorFactory
 from testperanto.wordgenerators import IteratingWordGenerator, PrefixSuffixWordGenerator
-
 
 
 def english_noun_generator():
@@ -47,16 +46,16 @@ class TestVoicebox(unittest.TestCase):
         self.assertEqual(read_property_tree(in_tree), {'DEF': 'indef', 'COUNT': 'sng'})
 
     def test_morphology_vbox(self):
-        morph1 = SuffixMorphologizer(properties=('COUNT',),
+        morph1 = SuffixMorpher(properties=('COUNT',),
                                      suffix_map={('sng',): '', ('plu',): 's'})
         in_tree = TreeNode.construct_from_str('(@nn (STEM n~0) (DEF indef) (COUNT plu))')
         vbox = MorphologyVoicebox(english_noun_generator(), [morph1])
         self.assertEqual(vbox.express(in_tree), "cats")
 
     def test_morphology_vbox_cascade(self):
-        morph1 = SuffixMorphologizer(properties=('GENDER',),
+        morph1 = SuffixMorpher(properties=('GENDER',),
                                      suffix_map={('m',): 'eau', ('f',): 'ette'})
-        morph2 = SuffixMorphologizer(properties=('COUNT',),
+        morph2 = SuffixMorpher(properties=('COUNT',),
                                      suffix_map={('sng',): '', ('plu',): 's'})
         vbox = MorphologyVoicebox(french_noun_generator(), [morph1, morph2])
         in_tree = TreeNode.construct_from_str('(@nn (STEM n~10) (GENDER f) (COUNT plu))')

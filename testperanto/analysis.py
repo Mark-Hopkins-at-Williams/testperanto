@@ -13,23 +13,12 @@ import pyconll
 import sys
 from tqdm import tqdm
 from testperanto.trees import TreeNode
-from testperanto.corpora import TaggedWordCounter
 import pandas as pd
 import seaborn as sns
 
 powers_of_2 = [2**x for x in range(7, 30)]
 multiples_of_1000 = [1000*k for k in range(1000)]
 
-def count_words(filename):
-    counts = defaultdict(int)
-    with open(filename) as reader:
-        for line in reader:
-            tokens = line.split()
-            for token in tokens:
-                counts[token] += 1
-    counts = sorted([(counts[k], k) for k in counts])
-    for (k, v) in counts:
-        print('{}: {}'.format(k, v))
 
 def type_count_over_time(token_stream, x_values):
     """ Tracks the number of types in a token stream. """
@@ -67,6 +56,7 @@ def singleton_proportion(token_stream, x_values):
             y_points.append(1.0 * len(singleton_token_set) / len(token_counts))
     return x_points, y_points
 
+
 def plot_statistic(stat_fn, token_streams, x_values, axes="semilogx",
                    corpus_labels=None, x_label="num tokens", y_label="y"):
     data = []
@@ -84,55 +74,3 @@ def plot_statistic(stat_fn, token_streams, x_values, axes="semilogx",
         ax.set(xscale='log')
         ax.set(yscale='log')
     plt.show()
-
-
-def harvest_dependencies(conllu_file, out_file, desired_deprels):
-    reader = pyconll.load_from_file(conllu_file)
-    with open(out_file, 'w') as writer:
-        for sentence in tqdm(reader):
-            heads = [tok.head for tok in sentence]
-            deprels = [tok.deprel for tok in sentence]
-            words = ['-ROOT-'] + [tok.form for tok in sentence]
-            for i in range(len(deprels)):
-                if deprels[i] in desired_deprels:
-                    dependent, head = words[i+1], words[int(heads[i])]
-                    writer.write("{} {}\n".format(dependent.lower(), head.lower()))
-
-
-def get_head(tree):
-    if tree.get_num_children() == 0:
-        return ' '.join(tree.get_label())
-    elif tree.get_num_children() == 1 and tree.get_child(0).get_num_children() == 0:
-        return get_head(tree.get_child(0))
-    else:
-        for child in tree.get_children():
-            if child.get_label()[0] == 'head':
-                return get_head(child.get_child(0))
-        raise Exception('head not found: {}'.format(tree))
-
-
-def get_child_heads(tree):
-    if tree.get_num_children() == 0:
-        return ' '.join(tree.get_label())
-    else:
-        result = []
-        for child in tree.get_children():
-            deprel = child.get_label()[0]
-            if deprel != 'head':
-                result += [(deprel, get_head(child.get_child(0)))]
-        return result
-
-
-def get_dependencies(tree):
-    if tree.get_num_children() == 0:
-        return []
-    elif tree.get_num_children() == 1 and tree.get_child(0).get_num_children() == 0:
-        return []
-    else:
-        result = []
-        for child in tree.get_children():
-            result += get_dependencies(child.get_child(0))
-        head = get_head(tree)
-        deprels = get_child_heads(tree)
-        return result + [(dependent, deprel, head) for deprel, dependent in deprels if dependent != 'NULL']
-

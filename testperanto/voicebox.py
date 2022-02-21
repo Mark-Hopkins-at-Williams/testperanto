@@ -8,7 +8,7 @@
 from testperanto.trees import TreeNode
 from testperanto import wordgenerators
 from abc import ABC, abstractmethod
-from testperanto.morphology import SuffixMorphologizer, EnglishVerbMorpher, EnglishNounMorpher
+from testperanto.morphology import SuffixMorpher, EnglishVerbMorpher, EnglishNounMorpher
 
 class Voicebox(ABC):
     """A Voicebox flattens a syntax tree into a string representation (sentence)."""
@@ -101,8 +101,8 @@ class ManagingVoicebox(Voicebox):
 
 class MorphologyVoicebox(Voicebox):
 
-    def __init__(self, stem_generator, morphologizers=[]):
-        self.morphologizers = morphologizers
+    def __init__(self, stem_generator, morphers=[]):
+        self.morphers = morphers
         self.stem_generator = stem_generator
         self.lexicon = dict()
 
@@ -114,14 +114,14 @@ class MorphologyVoicebox(Voicebox):
             if properties['STEM'] not in self.lexicon:
                 self.lexicon[properties['STEM']] = self.stem_generator.generate()
             word = self.lexicon[properties['STEM']]
-        for morphologizer in self.morphologizers:
-            word = morphologizer.mutate(word, properties)
+        for morpher in self.morphers:
+            word = morpher.morph(word, properties)
         return word
 
 
 class EnglishDeterminerVoicebox(Voicebox):
     def __init__(self):
-        morph = SuffixMorphologizer(properties=('COUNT', 'DEF'),
+        morph = SuffixMorpher(properties=('COUNT', 'DEF'),
                                     suffix_map={('sng', 'def'): 'the',
                                                 ('plu', 'def'): 'these',
                                                 ('sng', 'indef'): 'a',

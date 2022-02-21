@@ -7,27 +7,27 @@
 
 import unittest
 import sys
-from testperanto.morphology import SuffixMorphologizer
+from testperanto.morphology import SuffixMorpher
 
 class TestMorphology(unittest.TestCase):
 
-    def test_suffix_morphologizer(self):
-        morphologizer = SuffixMorphologizer(properties=('COUNT',),
+    def test_suffix_morpher(self):
+        morpher = SuffixMorpher(properties=('COUNT',),
                                             suffix_map={('sng',): '', ('plu',): 's'})
-        result = morphologizer.mutate('apple', {'COUNT': 'plu', 'DEF': 'def'})
+        result = morpher.morph('apple', {'COUNT': 'plu', 'DEF': 'def'})
         self.assertEqual(result, 'apples')
 
-    def test_suffix_morphologizer2(self):
-        morphologizer = SuffixMorphologizer(properties=('GENDER', 'CASE'),
+    def test_suffix_morpher2(self):
+        morpher = SuffixMorpher(properties=('GENDER', 'CASE'),
                                             suffix_map={('m', 'acc'): 'en',
                                                         ('f', 'acc'): 'e',
                                                         ('n', 'acc'): 'es',
                                                         ('m', 'dat'): 'em',
                                                         ('f', 'dat'): 'er',
                                                         ('n', 'dat'): 'em'})
-        result = morphologizer.mutate('rot', {'GENDER': 'n', 'CASE': 'acc'})
+        result = morpher.morph('rot', {'GENDER': 'n', 'CASE': 'acc'})
         self.assertEqual(result, 'rotes')
-        result = morphologizer.mutate('rot', {'GENDER': 'm', 'CASE': 'dat'})
+        result = morpher.morph('rot', {'GENDER': 'm', 'CASE': 'dat'})
         self.assertEqual(result, 'rotem')
 
 

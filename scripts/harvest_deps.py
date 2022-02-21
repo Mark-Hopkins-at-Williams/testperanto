@@ -1,6 +1,6 @@
 import argparse
 from tqdm import tqdm
-from testperanto.analysis import get_dependencies
+from testperanto.parses import get_dependencies
 from testperanto.trees import TreeNode
 
 

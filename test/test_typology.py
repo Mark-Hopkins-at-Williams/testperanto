@@ -7,7 +7,6 @@
 
 import unittest
 import sys
-from testperanto.typology import all_switching_codes
 from testperanto.macros import init_switched_grammar
 from testperanto.trees import TreeNode, leaf_string
 
@@ -54,11 +53,6 @@ GRAMMAR2 = {
 
 
 class TestSubstitution(unittest.TestCase):
-
-    def test_all_switching_codes(self):
-        expected = ['0000', '0001', '0010', '0011', '0100', '0101', '0110', '0111',
-                    '1000', '1001', '1010', '1011', '1100', '1101', '1110', '1111']
-        self.assertEqual(all_switching_codes(4), expected)
 
     def test_switched_grammar1a(self):
         grammar = init_switched_grammar(GRAMMAR1, "1")

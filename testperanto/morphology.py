@@ -1,24 +1,24 @@
 from abc import ABC, abstractmethod
 
-class Morphologizer(ABC):
-    def mutate(self, word, properties):
+class Morpher(ABC):
+    def morph(self, word, properties):
         ...
 
 
-class SuffixMorphologizer(Morphologizer):
+class SuffixMorpher(Morpher):
     def __init__(self, properties, suffix_map):
         self.properties = properties
         self.suffix_map = suffix_map
 
-    def mutate(self, word, property_values):
+    def morph(self, word, property_values):
         value = tuple([property_values[p] for p in self.properties])
         suffix = self.suffix_map[value]
         return word + suffix
 
 
-class EnglishVerbMorpher(Morphologizer):
+class EnglishVerbMorpher(Morpher):
     def __init__(self):
-        self.base_morpher = SuffixMorphologizer(properties=('PERSON', 'COUNT', 'TENSE'),
+        self.base_morpher = SuffixMorpher(properties=('PERSON', 'COUNT', 'TENSE'),
                                                 suffix_map={('1', 'sng', 'present'): '',
                                                             ('1', 'plu', 'present'): '',
                                                             ('1', 'sng', 'perfect'): 'd',
@@ -28,14 +28,14 @@ class EnglishVerbMorpher(Morphologizer):
                                                             ('3', 'sng', 'perfect'): 'd',
                                                             ('3', 'plu', 'perfect'): 'd'})
 
-    def mutate(self, word, property_values):
-        return self.base_morpher.mutate(word, property_values)
+    def morph(self, word, property_values):
+        return self.base_morpher.morph(word, property_values)
 
 
-class EnglishNounMorpher(Morphologizer):
+class EnglishNounMorpher(Morpher):
     def __init__(self):
-        self.base_morpher = SuffixMorphologizer(properties=('COUNT',),
+        self.base_morpher = SuffixMorpher(properties=('COUNT',),
                                                 suffix_map={('sng',): '', ('plu',): 's'})
 
-    def mutate(self, word, property_values):
-        return self.base_morpher.mutate(word, property_values)
+    def morph(self, word, property_values):
+        return self.base_morpher.morph(word, property_values)

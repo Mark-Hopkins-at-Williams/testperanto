@@ -8,7 +8,6 @@ class TestAnalysis(unittest.TestCase):
         sents = ['the dog barked',
                  'i said hello to the dog',
                  'the cat and the dog said hello']
-
         one_grams = stream_ngrams(sents, 1)
         x_vals, y_vals = type_count_over_time(one_grams, range(1, 100))
         assert x_vals == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -18,7 +17,6 @@ class TestAnalysis(unittest.TestCase):
         sents = ['the dog barked',
                  'i said hello to the dog',
                  'the cat and the dog said hello']
-
         two_grams = stream_ngrams(sents, 2)
         x_vals, y_vals = type_count_over_time(two_grams, range(1, 100))
         assert x_vals == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
@@ -28,7 +26,6 @@ class TestAnalysis(unittest.TestCase):
         sents = ['the dog barked',
                  'i said hello to the dog',
                  'the cat and the dog said hello']
-
         one_grams = stream_ngrams(sents, 1)
         x_vals, y_vals = singleton_proportion(one_grams, range(1, 100))
         assert x_vals == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
