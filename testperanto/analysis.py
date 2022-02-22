@@ -74,3 +74,13 @@ def plot_statistic(stat_fn, token_streams, x_values, axes="semilogx",
         ax.set(xscale='log')
         ax.set(yscale='log')
     plt.show()
+
+
+def plot_singleton_proportion(corpora, corpus_labels=None):
+    if corpus_labels is None:
+        corpus_labels = ['corpus{}'.format(i) for i in range(1, len(corpora) + 1)]
+    metric = singleton_proportion
+    axes = "semilogx"
+    y_label = "singleton proportion"
+    plot_statistic(metric, corpora, powers_of_2, axes,
+                   corpus_labels=corpus_labels, y_label=y_label)

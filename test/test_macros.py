@@ -10,7 +10,7 @@
 import unittest
 import sys
 
-from testperanto.distfactories import DistributionManager, UniformDistributionFactory
+from testperanto.distmanager import DistributionManager, UniformDistributionFactory
 from testperanto.macros import TreeTransducerRule, TreeTransducerRuleMacro
 from testperanto.macros import MacroGrammar, TreeTransducer
 from testperanto.trees import construct_node_based_tree_from_string, TreeNode

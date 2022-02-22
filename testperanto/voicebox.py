@@ -162,7 +162,7 @@ class VoiceboxFactory(object):
     def create_voicebox(self, voicebox_name):
         manager = TreeVoicebox()
         manager.register_listener('default', VerbatimVoicebox())
-        if voicebox_name == 'seuss':
+        if voicebox_name == 'english':
             manager.register_listener('vb', MorphologyVoicebox(self.generator_factory.create_generator('SeussVerbs'), [EnglishVerbMorpher()]))
             manager.register_listener('nn', MorphologyVoicebox(self.generator_factory.create_generator('Seuss'), [EnglishNounMorpher()]))
             manager.register_listener('adj', MorphologyVoicebox(self.generator_factory.create_generator('SeussAdjectives')))

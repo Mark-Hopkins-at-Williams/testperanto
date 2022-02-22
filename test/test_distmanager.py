@@ -1,6 +1,6 @@
 ##
-# testdistfactories.py
-# Unit tests for distfactories.py.
+# testdistmanager.py
+# Unit tests for distmanager.py.
 # $Author: mhopkins $
 # $Revision: 32586 $
 # $Date: 2012-04-17 14:26:33 -0700 (Tue, 17 Apr 2012) $
@@ -9,8 +9,8 @@
 
 import unittest
 import sys
-from testperanto.distfactories import DistributionManager
-from testperanto.distfactories import DistributionFactory
+from testperanto.distmanager import DistributionManager
+from testperanto.distmanager import DistributionFactory
 from testperanto.distributions import PitmanYorProcess
 from testperanto.substitutions import SymbolSubstitution
 from testperanto.examples import AlternatingDistributionFactory, AveragerDistributionFactory

@@ -1,6 +1,6 @@
 ##
-# distfactories.py
-# Representations and algorithms for distribution factories.
+# distmanager.py
+# A structure that manages the distributions of a weighted grammar macro.
 # $Author: mhopkins $
 # $Revision: 34246 $
 # $Date: 2012-05-23 18:26:36 -0700 (Wed, 23 May 2012) $
@@ -30,7 +30,6 @@ class DistributionManager:
             factory = self.factories[key]
         except KeyError:
             raise KeyError('no matches for distribution: {}'.format(key))
-        # print('expansion: {}'.format(expansion))
         ground_key = expansion.substitute_in_sequence(key)
         if ground_key not in self.distributions:
             if len(key) > 1:
@@ -38,7 +37,6 @@ class DistributionManager:
             else:
                 base = distributions.IdGenerator(self.generate_consecutive_ids)
             self.distributions[ground_key] = factory.instantiate_dist(base)
-        # print('{}: {}'.format(key, ground_key))
         return self.distributions[ground_key]
 
     @staticmethod
@@ -81,24 +79,6 @@ class CategoricalDistributionFactory(DistributionFactory):
         return distributions.CategoricalDistribution(self.weights, self.domain)
 
 
-class GEMDistributionFactory(DistributionFactory):
-    def __init__(self, concentration):
-        super().__init__()
-        self.concentration = concentration
-    
-    def instantiate_dist(self, base):
-        return distributions.GEMDistribution(self.concentration)
-
-
-class CRPDistributionFactory(DistributionFactory):
-    def __init__(self, concentration):
-        super().__init__()
-        self.concentration = concentration
-    
-    def instantiate_dist(self, base):
-        return distributions.CRPDistribution(base, self.concentration)
-
-
 class PitmanYorDistributionFactory(DistributionFactory):
     def __init__(self, discount, strength):
         super().__init__()
@@ -109,8 +89,6 @@ class PitmanYorDistributionFactory(DistributionFactory):
         return distributions.PitmanYorProcess(base, self.discount, self.strength)
 
 
-CONSTRUCTORS['gem'] = GEMDistributionFactory
-CONSTRUCTORS['crp'] = CRPDistributionFactory
 CONSTRUCTORS['pyor'] = PitmanYorDistributionFactory
 CONSTRUCTORS['uniform'] = UniformDistributionFactory
 CONSTRUCTORS['categorical'] = CategoricalDistributionFactory

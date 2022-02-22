@@ -8,16 +8,16 @@
 
 import json
 from abc import ABC, abstractmethod
+from copy import deepcopy
 
 from testperanto import trees
-from testperanto import distfactories
-from testperanto.distfactories import DistributionManager
+from testperanto.distmanager import DistributionManager
 from testperanto.substitutions import SymbolSubstitution
 from testperanto.matchers import LeafVariableMatcher
 from testperanto.matchers import RefinementVariableMatcher
 from testperanto.distributions import CategoricalDistribution
 from testperanto.voicebox import VoiceboxFactory
-from testperanto.trees import TreeNode
+from testperanto.trees import TreeNode, LeafLabelCollector
 
 
 def rhs_refinement_var(i):
@@ -162,9 +162,13 @@ class TreeTransducer(object):
 
     @staticmethod
     def from_config(config):
+        config = deepcopy(config)
         manager = DistributionManager.from_config(config)
         grammar = MacroGrammar.from_config(config, manager)
         return TreeTransducer(grammar)
+
+    def __str__(self):
+        return str(self.grammar)
 
 
 def init_transducer_cascade(config_files, code=None):
@@ -174,7 +178,7 @@ def init_transducer_cascade(config_files, code=None):
             config = json.load(reader)
             cascade.append(init_switched_grammar(config, code))
     vfactory = VoiceboxFactory()
-    vbox = vfactory.create_voicebox("seuss")
+    vbox = vfactory.create_voicebox("english")
     cascade.append(vbox)
     return cascade
 
@@ -188,6 +192,22 @@ def run_transducer_cascade(cascade, start_state='$qstart'):
     return output
 
 
+def generate_sentence(cascade, start_state):
+    output = run_transducer_cascade(cascade, start_state)
+    collector = LeafLabelCollector()
+    collector.execute(output)
+    leaves = ['~'.join(leaf) for leaf in collector.get_leaf_labels()]
+    leaves = [leaf for leaf in leaves if leaf != "NULL"]
+    return ' '.join(leaves)
+
+
+def generate_sentences(transducer, start_state, num_to_generate, voicebox="english"):
+    vfactory = VoiceboxFactory()
+    vbox = vfactory.create_voicebox(voicebox)
+    cascade = [transducer, vbox]
+    return [generate_sentence(cascade, start_state) for _ in range(num_to_generate)]
+
+
 def init_switched_grammar(config, code):
     rules = []
     for macro in config['macros']:
@@ -197,5 +217,11 @@ def init_switched_grammar(config, code):
         next_rule = {key: next_rule[key] for key in next_rule if key not in ['alt', 'switch']}
         rules.append(next_rule)
     config = {"distributions": config["distributions"], "macros": rules}
+    return TreeTransducer.from_config(config)
+
+
+def init_simple_grammar(config):
+    if "distributions" not in config:
+        config["distributions"] = []
     return TreeTransducer.from_config(config)
 

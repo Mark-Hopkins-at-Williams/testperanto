@@ -1,4 +1,4 @@
-from testperanto.distfactories import DistributionFactory
+from testperanto.distmanager import DistributionFactory
 
 class AlternatingDistribution(object):
     """A test distribution that deterministically alternates between sampling 0 and 100."""

@@ -80,7 +80,7 @@ class TestVoicebox(unittest.TestCase):
 
     def test_tree_voicebox(self):
         vfactory = VoiceboxFactory()
-        vbox = vfactory.create_voicebox("seuss")
+        vbox = vfactory.create_voicebox("english")
         in_tree_str = "(S (NP (JJ (@adj (STEM adj~0) (DEF indef) (COUNT sng))) (NN (@nn (STEM nn~0) (COUNT sng)))))"
         in_tree = TreeNode.construct_from_str(in_tree_str)
         print(vbox.express(in_tree))

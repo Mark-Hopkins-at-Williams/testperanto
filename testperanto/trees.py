@@ -76,10 +76,20 @@ class PositionBasedTree(object):
             A list of the child positions of pos (or an empty list if pos is not in the tree).
 
         """
-        def is_child(x):
-            return len(x) > 0 and x[:-1] == pos
-        retval = filter( is_child, self.positions )
-        return sorted(retval)
+        children = []
+        counter = 1
+        next_child = tuple(list(pos) + [counter])
+        while next_child in self.positions:
+            children.append(next_child)
+            counter += 1
+            next_child = tuple(list(pos) + [counter])
+        return children
+        #def is_child(x):
+        #    return len(x) > 0 and x[:-1] == pos
+        #retval = filter( is_child, self.positions )
+        #retval = sorted(retval)
+        #print(retval)
+        #return retval
 
     def is_leaf(self, pos):
         """Return True iff the argument position is a leaf, i.e. a tree position that has no child positions.

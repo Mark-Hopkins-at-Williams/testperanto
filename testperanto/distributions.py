@@ -6,47 +6,43 @@
 # $Date: 2012-05-23 18:26:36 -0700 (Wed, 23 May 2012) $
 ##
 
-
+from abc import ABC, abstractmethod
 import random
-    
-class DistributionInitError(Exception): pass                
-
-class Distribution(object):
-
-    def sample(self):    
-        """Generate a sample from the distribution.""" 
-        raise NotImplementedError("Implement me.")
 
 
-class CrossDistribution(Distribution):
-
-    def __init__(self, dist_list):
-        self.dist_list = dist_list
+class IdGenerator:
+    def __init__(self, consecutive_ids):
+        self.next_id = 0
+        self.max_id = 2 ** 32 - 1
+        self.used_ids = set()
+        self.consecutive_ids = consecutive_ids
 
     def sample(self):
-        return tuple([dist.sample() for dist in self.dist_list])
-
-
-class AltCategoricalDistribution(Distribution):
-
-    def __init__(self, weights):
-        """Initialize a CategoricalDistribution from unnormalized weights."""
-        normalizer = float(sum(weights))
-        self.normalized_weights = map(lambda x: float(x)/float(normalizer), weights)
-      
-    def sample(self):
-        """Generate a sample from the distribution."""
-        trial = random.random()
-        for i in range(len(self.weights)): #TODO: make this a binary search?
-            if trial < self.weights[i]:
-                return i
-        return len(self.weights) - 1
-
-    def __str__(self):
-        retval = 'categorical'
-        for wt in self.normalized_weights:
-            retval += ':' + str(wt)
+        if self.consecutive_ids:
+            retval = self.next_id
+            self.next_id += 1
+        else:
+            retval = random.randint(0, self.max_id)
+            self.used_ids.add(retval)
         return retval
+
+
+class Distribution(ABC):
+
+    @abstractmethod
+    def sample(self):    
+        """Generates a sample from the distribution."""
+
+
+def binary_search(target, ls):
+    if len(ls) == 1:
+        return ls[0][0] + int(ls[0][1] < target)
+    else:
+        midpoint = len(ls) // 2
+        if target <= ls[midpoint][1]:
+            return binary_search(target, ls[:midpoint])
+        else:
+            return binary_search(target, ls[midpoint:])
 
 
 class CategoricalDistribution(Distribution):
@@ -67,14 +63,12 @@ class CategoricalDistribution(Distribution):
             weight_sum += self.normalized_weights[i]
             if self.normalized_weights[i] > self.normalized_weights[self.most_likely_index]:
                 self.most_likely_index = i
+        self.enumerated = list(enumerate(self.weights))
        
     def sample(self):
         """Generate a sample from the distribution."""
         trial = random.random()
-        for i in range(len(self.weights)): #TODO: make this a binary search?
-            if trial < self.weights[i]:
-                return self.labels[i]
-        return self.labels[len(self.weights)-1]
+        return self.labels[binary_search(trial, self.enumerated)]
 
     def get_most_likely_sample(self):
         """Return the most likely category."""
@@ -87,17 +81,6 @@ class CategoricalDistribution(Distribution):
         return retval
 
 
-class DirichletDistribution(Distribution):
-
-    def __init__(self, concentration_params):
-        self.concentration_params = concentration_params
-
-    def sample(self):
-        sample = [random.gammavariate(a, 1) for a in self.concentration_params]
-        sample = [v / sum(sample) for v in sample]
-        return CategoricalDistribution(sample)
-
-
 class UniformDistribution(Distribution):
 
     def __init__(self, domain):
@@ -106,65 +89,6 @@ class UniformDistribution(Distribution):
     def sample(self):
         domain_index = random.randint(0, len(self.domain) - 1)
         return self.domain[domain_index]
-
-
-class CRPDistribution(Distribution):
-
-    def __init__(self, base_dist, alpha=10.0):
-        """Constructor"""
-        self.base_dist = base_dist
-        self.alpha = float(alpha)
-        self.num_samples_taken_so_far = 0
-        self.obj_multiplicity = {}
-        
-    def sample(self):
-        chance_of_new = self.alpha / (self.alpha + self.num_samples_taken_so_far)
-        trial = random.random()
-        if trial < chance_of_new:
-            obj = self.base_dist.sample()
-        else:
-            lottery_number = random.randint(1,self.num_samples_taken_so_far)
-            ticket_number = 0
-            for cand_obj in self.obj_multiplicity:
-                ticket_number += self.obj_multiplicity[cand_obj]
-                if ticket_number >= lottery_number:
-                    obj = cand_obj
-                    break
-        self.num_samples_taken_so_far += 1
-        if obj not in self.obj_multiplicity:
-            self.obj_multiplicity[obj] = 1
-        else:
-            self.obj_multiplicity[obj] += 1
-        return obj
-
-
-class IdGenerator(object):
-    def __init__(self, consecutive_ids):
-        self.next_id = 0
-        self.max_id = 2**32-1
-        self.used_ids = set()
-        self.consecutive_ids = consecutive_ids
-        
-    def sample(self):
-        if self.consecutive_ids:
-            retval = self.next_id
-            self.next_id += 1
-        else:
-            retval = random.randint(0, self.max_id)
-            self.used_ids.add(retval)
-        return retval
-
-
-
-class GEMDistribution(object):
-
-    def __init__(self, alpha=10.0):
-        """Constructor"""
-        self.crp_dist = CRPDistribution(IdGenerator(), alpha)
-       
-    def sample(self):
-        # TODO: reimplement as an actual stick-breaking dist.
-        return self.crp_dist.sample()
 
 
 class PitmanYorProcess(Distribution):
@@ -178,7 +102,6 @@ class PitmanYorProcess(Distribution):
         self.sample_multiplicity = []
 
     def sample(self):
-        # Seems right but the graphs are more erratic than the other implementation, for some reason.
         trial = (self.strength + self.num_samples_so_far) * random.random()
         next_bound = self.strength + (self.discount * len(self.samples))
         if trial <= next_bound:
@@ -189,28 +112,8 @@ class PitmanYorProcess(Distribution):
             sample_index = -1
             while trial > next_bound:
                 sample_index += 1
-                # print str(self.strength_param+self.num_samples_so_far) + ":" + str(trial) + ":" + str(next_bound) + ":" + str(sample_index)
-                # print self.sample_multiplicity
                 next_bound += self.sample_multiplicity[sample_index]
             obj = self.samples[sample_index]
             self.sample_multiplicity[sample_index] += 1.0
         self.num_samples_so_far += 1
         return obj
-
-    def sample_alt(self):
-        chance_of_new_numer = self.strength + (self.discount * len(self.samples))
-        chance_of_new_denom = self.strength + self.num_samples_so_far
-        chance_of_new = chance_of_new_numer / chance_of_new_denom
-        trial = random.random()
-        if trial < chance_of_new:
-            obj = self.base_dist.sample()
-            self.samples.append(obj)
-            self.sample_multiplicity.append(1.0 - self.discount)
-        else:
-            dist = CategoricalDistribution(self.sample_multiplicity)
-            sample_index = dist.sample()
-            obj = self.samples[sample_index]
-            self.sample_multiplicity[sample_index] += 1.0
-        self.num_samples_so_far += 1
-        return obj
-
