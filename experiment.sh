@@ -39,7 +39,7 @@ fairseq-train \
   --max-tokens 2048 \
   --update-freq 16 \
   --no-epoch-checkpoints \
-  --patience 50 \
+  --patience 15 \
   --fp16 \
   --max-update 50000
 fairseq-eval-lm \
