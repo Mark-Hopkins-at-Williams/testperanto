@@ -3,7 +3,7 @@ import json
 import sys
 from tqdm import tqdm
 from testperanto.config import init_transducer_cascade
-from testperanto.globals import EMPTY_STR
+from testperanto.globals import EMPTY_STR, DOT
 from testperanto.transducer import TreeTransducer, run_transducer_cascade
 from testperanto.trees import TreeNode
 from testperanto.voicebox import lookup_voicebox_theme
@@ -14,7 +14,7 @@ def main(config_files, switching_code, num_to_generate, only_sents):
     for _ in tqdm(range(num_to_generate)):
         output = run_transducer_cascade(cascade)
         if only_sents:
-            leaves = ['~'.join(leaf.get_label()) for leaf in output.get_leaves()]
+            leaves = [DOT.join(leaf.get_label()) for leaf in output.get_leaves()]
             leaves = [leaf for leaf in leaves if leaf != EMPTY_STR]
             output = ' '.join(leaves)
         print(output)

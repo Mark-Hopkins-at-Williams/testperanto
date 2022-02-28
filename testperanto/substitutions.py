@@ -105,10 +105,10 @@ class SymbolSubstitution(Substitution):
 
     Then to apply the substitutions to a tree, we use the .substitute method.
     For instance:
-        sub.substitute(TreeNode.from_str('(S~$y1 (N~$y2 the dog) barked)'))
+        sub.substitute(TreeNode.from_str('(S.$y1 (N.$y2 the dog) barked)'))
 
     This returns the following tree:
-        (S~342 (N~23 the dog) barked)
+        (S.342 (N.23 the dog) barked)
 
     Methods
     -------

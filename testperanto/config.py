@@ -60,7 +60,6 @@ def generate_sentences(transducer, num_to_generate, start_state, vbox_theme="eng
 
 
 def rewrite_gmacro_symbol(symbol):
-    symbol = symbol.replace('.', '~')
     if symbol[0].isupper():
         symbol = '$q{}'.format(symbol.lower())
     return symbol
@@ -89,8 +88,6 @@ def rewrite_gmacro_config(config):
             rhs = [rewrite_gmacro_symbol(symbol) for symbol in split_gmacro_rule_rhs(rhs)]
             result = {key: rule_config[key] for key in rule_config if key != "rule"}
             result['rule'] = '{} -> (X {})'.format(lhs, ' '.join(rhs))
-            if 'zdists' in result:
-                result['zdists'] = [zdist.replace('.', '~') for zdist in result['zdists']]
         except Exception:
             raise Exception("Badly formed rule config: {}".format(rule_config))
         return result
@@ -99,9 +96,6 @@ def rewrite_gmacro_config(config):
     if "grammar" in config:
         rules = [rewrite_gmacro_rule_config(rule) for rule in config["grammar"]]
         result["macros"] = rules
-        if 'distributions' in config:
-            for dist in result['distributions']:
-                dist['name'] = dist['name'].replace('.', '~')
     return result
 
 

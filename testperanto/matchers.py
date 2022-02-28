@@ -181,9 +181,9 @@ class SymbolMatcher(Matcher):
 
     The SymbolMatcher focuses exclusively on y-variables in compound symbol labels
     For instance, if the pattern tree is
-        (S~$y1 (N~$y2 the dog) barked)
+        (S.$y1 (N.$y2 the dog) barked)
     then calling the .match method on target tree
-        (S~52 (N~34 the dog) barked)
+        (S.52 (N.34 the dog) barked)
     should return the following substitution:
         {'$y1': "52", '$y2': "34"}
 

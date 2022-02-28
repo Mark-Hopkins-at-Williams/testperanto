@@ -505,8 +505,8 @@ class TreeNode(object):
         testperanto.globals.COMPOUND_SEP. This function will use the separator to
         split each label string into a tuple.
 
-        An example would be: 'S~13~$y1', for which the root
-        label (assuming COMPOUND_SEP=="~") would be the tuple ("S", "13", "$y1").
+        An example would be: 'S.13.$y1', for which the root
+        label (assuming COMPOUND_SEP==".") would be the tuple ("S", "13", "$y1").
 
         Parameters
         ----------
@@ -533,8 +533,8 @@ class TreeNode(object):
         testperanto.globals.COMPOUND_SEP. This function will use the separator to
         split each label string into a tuple.
 
-        An example would be: '(S~13 (NP they) (VP~12 ate))', for which the root
-        label (assuming COMPOUND_SEP=="~") would be the tuple ("S", "13").
+        An example would be: '(S.13 (NP they) (VP.12 ate))', for which the root
+        label (assuming COMPOUND_SEP==".") would be the tuple ("S", "13").
 
         Parameters
         ----------

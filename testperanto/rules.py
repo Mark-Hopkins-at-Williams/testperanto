@@ -9,6 +9,7 @@ from copy import deepcopy
 from tqdm import tqdm
 from testperanto.distributions import CategoricalDistribution
 from testperanto.distmanager import DistributionManager
+from testperanto.globals import DOT
 from testperanto.substitutions import SymbolSubstitution
 from testperanto.matchers import LeafMatcher, SymbolMatcher
 from testperanto.trees import TreeNode
@@ -26,11 +27,11 @@ class TreeTransducerRule:
     which can only be used to label the leaves of the trees. The x-variables
     are used to substitute matched subtrees, as in the following example.
     Suppose we have the tree transducer rule:
-        (S (N~23 $x1 $x2) $x3) -> (S (NP~23 $x2 $x3 $x1) $x1)
+        (S (N.23 $x1 $x2) $x3) -> (S (NP.23 $x2 $x3 $x1) $x1)
     If we apply the rule to the input tree:
-        (S (N~23 (DT the) (NN dog)) (VBD jumped))
+        (S (N.23 (DT the) (NN dog)) (VBD jumped))
     Then our output tree is:
-        (S (NP~23 (NN dog) (VBD jumped) (DT the)) (DT the))
+        (S (NP.23 (NN dog) (VBD jumped) (DT the)) (DT the))
 
     Methods
     -------
@@ -97,11 +98,11 @@ class TreeTransducerRule:
         """Applies the rule to an input tree if it matches the rule's lhs.
 
         Suppose we have the tree transducer rule:
-            (S (N~23 $x1 $x2) $x3) -> (S (NP~23 $x2 $x3 $x1) $x1)
+            (S (N.23 $x1 $x2) $x3) -> (S (NP.23 $x2 $x3 $x1) $x1)
         If we apply the rule to the input tree:
-            (S (N~23 (DT the) (NN dog)) (VBD jumped))
+            (S (N.23 (DT the) (NN dog)) (VBD jumped))
         Then our output tree is:
-            (S (NP~23 (NN dog) (VBD jumped) (DT the)) (DT the))
+            (S (NP.23 (NN dog) (VBD jumped) (DT the)) (DT the))
 
         If the rule's lhs does not match the input tree (i.e. we cannot make
         substitutions for the x-variables to produce the input tree), then
@@ -132,7 +133,7 @@ class TreeTransducerRule:
         are tree representations that can be parsed by testperanto.trees.TreeNode.from_str.
 
         For instance, the following is a valid string representation:
-           "(S (N~23 $x1 $x2) $x3) -> (S (NP~23 $x2 $x3 $x1) $x1)"
+           "(S (N.23 $x1 $x2) $x3) -> (S (NP.23 $x2 $x3 $x1) $x1)"
 
         Parameters
         ----------
@@ -169,19 +170,19 @@ class TreeTransducerRuleMacro:
     upon request.
 
     For instance, suppose we initialize the following rule macro:
-        macro = TreeTransducerRuleMacro(rule='N~$y1 -> (NP nn~$z1 jj~$y1)',
+        macro = TreeTransducerRuleMacro(rule='N.$y1 -> (NP nn.$z1 jj.$y1)',
                                         zdists=[('nn',)],
                                         dist_manager=example_distribution_manager())
     where the example distribution manager associates 'nn' with a distribution
     that alternatively samples the numbers 0 and 100. Then, we can instantiate
-    a rule from the rule macro that matches input tree N~12 as follows:
-        macro.choose_rule(TreeNode.from_str('N~12'))
+    a rule from the rule macro that matches input tree N.12 as follows:
+        macro.choose_rule(TreeNode.from_str('N.12'))
     which returns the rule:
-        N~12 -> (NP nn~0 jj~12)
+        N.12 -> (NP nn.0 jj.12)
     If we call the method again:
-        macro.choose_rule(TreeNode.from_str('N~12'))
+        macro.choose_rule(TreeNode.from_str('N.12'))
     It returns the rule:
-        N~12 -> (NP nn~100 jj~12)
+        N.12 -> (NP nn.100 jj.12)
     (because the value sampled from distribution 'nn' this time was 100).
 
     Important:
@@ -247,19 +248,19 @@ class TreeTransducerRuleMacro:
         are sampled from the provided z-distributions.
 
         For instance, suppose we initialize the following rule macro:
-            macro = TreeTransducerRuleMacro(rule='N~$y1 -> (NP nn~$z1 jj~$y1)',
+            macro = TreeTransducerRuleMacro(rule='N.$y1 -> (NP nn.$z1 jj.$y1)',
                                             zdists=[('nn',)],
                                             dist_manager=example_distribution_manager())
         where the example distribution manager associates 'nn' with a distribution
         that alternatively samples the numbers 0 and 100. Then, we can instantiate
-        a rule from the rule macro that matches input tree N~12 as follows:
-            macro.choose_rule(TreeNode.from_str('N~12'))
+        a rule from the rule macro that matches input tree N.12 as follows:
+            macro.choose_rule(TreeNode.from_str('N.12'))
         which returns the rule:
-            N~12 -> (NP nn~0 jj~12)
+            N.12 -> (NP nn.0 jj.12)
         If we call the method again:
-            macro.choose_rule(TreeNode.from_str('N~12'))
+            macro.choose_rule(TreeNode.from_str('N.12'))
         It returns the rule:
-            N~12 -> (NP nn~100 jj~12)
+            N.12 -> (NP nn.100 jj.12)
         (because the value sampled from distribution 'nn' this time was 100).
 
         Parameters
@@ -379,7 +380,7 @@ class RuleMacroSet:
         for mconfig in macro_configs:
             mconfig['dist_manager'] = manager
             if 'zdists' in mconfig:
-                mconfig['zdists'] = [tuple(zdist.split('~')) for zdist in mconfig['zdists']]
+                mconfig['zdists'] = [tuple(zdist.split('.')) for zdist in mconfig['zdists']]
             macros.append(TreeTransducerRuleMacro(**mconfig))
         return RuleMacroSet(macros)
 

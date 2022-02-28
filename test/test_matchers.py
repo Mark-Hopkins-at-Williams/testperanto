@@ -7,6 +7,7 @@
 
 import unittest
 import sys
+from testperanto.globals import DOT
 from testperanto.matchers import LeafMatcher, SymbolMatcher
 from testperanto.trees import TreeNode
 
@@ -28,18 +29,18 @@ class TestMatching(unittest.TestCase):
         self.assertEqual(sub, None)
 
     def test_refinement_matcher(self):
-        pattern_tree_str = '(S~$y1 (N~$y2 $x1 $x2) $x3)'
+        pattern_tree_str = f'(S{DOT}$y1 (N{DOT}$y2 $x1 $x2) $x3)'
         pattern_tree = TreeNode.from_str(pattern_tree_str)
-        in_tree_str = '(S~32 (N~123 (NP the dog) (VB wags)) (JJ quickly))'
+        in_tree_str = f'(S{DOT}32 (N{DOT}123 (NP the dog) (VB wags)) (JJ quickly))'
         in_tree = TreeNode.from_str(in_tree_str)
         matcher = SymbolMatcher(pattern_tree)
         sub = matcher.match(in_tree)
-        self.assertEqual(str(sub.substitute(pattern_tree)), "(S~32 (N~123 $x1 $x2) $x3)")
-        in_tree_str = '(S~23 (N~231 (NP the dog) (VB wags)) (JJ quickly) (JJS again))'
+        self.assertEqual(str(sub.substitute(pattern_tree)), f"(S{DOT}32 (N{DOT}123 $x1 $x2) $x3)")
+        in_tree_str = f'(S{DOT}23 (N{DOT}231 (NP the dog) (VB wags)) (JJ quickly) (JJS again))'
         in_tree = TreeNode.from_str(in_tree_str)
         sub = matcher.match(in_tree)
         self.assertEqual(sub, None)
-        in_tree_str = '(S~32 (N~123~5 (NP the dog) (VB wags)) (JJ quickly))'
+        in_tree_str = f'(S{DOT}32 (N{DOT}123{DOT}5 (NP the dog) (VB wags)) (JJ quickly))'
         in_tree = TreeNode.from_str(in_tree_str)
         sub = matcher.match(in_tree)
         self.assertEqual(sub, None)

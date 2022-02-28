@@ -1,86 +1,86 @@
 {
     "distributions": [
         {"name": "vb", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "vb~$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
+        {"name": "vb.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
         {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn~subj", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn~obj", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn~pobj", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn~subj~$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
-        {"name": "nn~obj~$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
-        {"name": "nn~pobj~$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
+        {"name": "nn.subj", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn.obj", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn.pobj", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn.subj.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
+        {"name": "nn.obj.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
+        {"name": "nn.pobj.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
         {"name": "adj", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "adj~$y1", "type": "pyor", "strength": 2.0, "discount": 0.6},
+        {"name": "adj.$y1", "type": "pyor", "strength": 2.0, "discount": 0.6},
         {"name": "prep", "type": "uniform", "domain": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]},
-        {"name": "prep~$y1", "type": "pyor", "strength": 10, "discount": 0.0},
+        {"name": "prep.$y1", "type": "pyor", "strength": 10, "discount": 0.0},
         {"name": "count", "type": "uniform", "domain": ["sng", "plu"]}
     ],
     "macros": [
-        {"rule": "$qstart -> $qs~$z1~$z2", "zdists": ["vb", "count"]},
+        {"rule": "$qstart -> $qs.$z1.$z2", "zdists": ["vb", "count"]},
         {
-            "rule": "$qs~$y1~$y2 -> (S (nsubj $qnp~$z1~$y2) (head $qvp~$y1~$y2))",
-            "alt": "$qs~$y1~$y2 -> (S (head $qvp~$y1~$y2) (nsubj $qnp~$z1~$y2))",
+            "rule": "$qs.$y1.$y2 -> (S (nsubj $qnp.$z1.$y2) (head $qvp.$y1.$y2))",
+            "alt": "$qs.$y1.$y2 -> (S (head $qvp.$y1.$y2) (nsubj $qnp.$z1.$y2))",
             "switch": 0,
-            "zdists": ["nn~subj~$y1"]
+            "zdists": ["nn.subj.$y1"]
         },
-        {"rule": "$qnp~$y1~$y2 -> (NP (head $qnpb~$y1~$y2))"},
+        {"rule": "$qnp.$y1.$y2 -> (NP (head $qnpb.$y1.$y2))"},
         {
-            "alt": "$qnp~$y1~$y2 -> (NP (head $qnpb~$y1~$y2) (nmod $qpp~$z1))",
-            "rule": "$qnp~$y1~$y2 -> (NP (nmod $qpp~$z1) (head $qnpb~$y1~$y2))",
+            "alt": "$qnp.$y1.$y2 -> (NP (head $qnpb.$y1.$y2) (nmod $qpp.$z1))",
+            "rule": "$qnp.$y1.$y2 -> (NP (nmod $qpp.$z1) (head $qnpb.$y1.$y2))",
             "switch": 3,
-            "zdists": ["nn~pobj~$y1"]
+            "zdists": ["nn.pobj.$y1"]
         },
         {
-            "alt": "$qnp~$y1~$y2 -> (NP (head $qnpb~$y1~$y2) (relc $qrelc~$z1~$y2))",
-            "rule": "$qnp~$y1~$y2 -> (NP (relc $qrelc~$z1~$y2) (head $qnpb~$y1~$y2))",
+            "alt": "$qnp.$y1.$y2 -> (NP (head $qnpb.$y1.$y2) (relc $qrelc.$z1.$y2))",
+            "rule": "$qnp.$y1.$y2 -> (NP (relc $qrelc.$z1.$y2) (head $qnpb.$y1.$y2))",
             "switch": 5,
-            "zdists": ["vb~$y1"],
+            "zdists": ["vb.$y1"],
             "discount_factor": 0.5
         },
-        {"rule": "$qnpb~$y1~$y2 -> (NP (dt $qdt~$y2) (head $qnn~$y1~$y2))"},
+        {"rule": "$qnpb.$y1.$y2 -> (NP (dt $qdt.$y2) (head $qnn.$y1.$y2))"},
         {
-            "rule": "$qnpb~$y1~$y2 -> (NP (dt $qdt~$y2) (amod $qadj~$z1) (head $qnn~$y1~$y2))",
-            "alt": "$qnpb~$y1~$y2 -> (NP (dt $qdt~$y2) (head $qnn~$y1~$y2) (amod $qadj~$z1))",
+            "rule": "$qnpb.$y1.$y2 -> (NP (dt $qdt.$y2) (amod $qadj.$z1) (head $qnn.$y1.$y2))",
+            "alt": "$qnpb.$y1.$y2 -> (NP (dt $qdt.$y2) (head $qnn.$y1.$y2) (amod $qadj.$z1))",
             "switch": 4,
-            "zdists": ["adj~$y1"]
+            "zdists": ["adj.$y1"]
         },
         {
-            "alt": "$qvp~$y1~$y2 -> (VP (head $qvb~$y1~$y2) (dobj $qnp~$z1~$z2))",
-            "rule": "$qvp~$y1~$y2 -> (VP (dobj $qnp~$z1~$z2) (head $qvb~$y1~$y2))",
+            "alt": "$qvp.$y1.$y2 -> (VP (head $qvb.$y1.$y2) (dobj $qnp.$z1.$z2))",
+            "rule": "$qvp.$y1.$y2 -> (VP (dobj $qnp.$z1.$z2) (head $qvb.$y1.$y2))",
             "switch": 1,
-            "zdists": ["nn~obj~$y1", "count"]
+            "zdists": ["nn.obj.$y1", "count"]
         },
         {
-            "alt": "$qvp~$y1~$y2 -> (VP (head $qvb~$y1~$y2) (ccomp $qccomp~$z1~$z2))",
-            "rule": "$qvp~$y1~$y2 -> (VP (ccomp $qccomp~$z1~$z2) (head $qvb~$y1~$y2))",
+            "alt": "$qvp.$y1.$y2 -> (VP (head $qvb.$y1.$y2) (ccomp $qccomp.$z1.$z2))",
+            "rule": "$qvp.$y1.$y2 -> (VP (ccomp $qccomp.$z1.$z2) (head $qvb.$y1.$y2))",
             "switch": 1,
             "zdists": ["vb", "count"],
             "discount_factor": 0.5
         },
         {
-            "alt": "$qccomp~$y1~$y2 -> (S (mark (SCONJ that)) (head $qs~$y1~$y2))",
-            "rule": "$qccomp~$y1~$y2 ->(S (head $qs~$y1~$y2) (mark (SCONJ that)))",
+            "alt": "$qccomp.$y1.$y2 -> (S (mark (SCONJ that)) (head $qs.$y1.$y2))",
+            "rule": "$qccomp.$y1.$y2 ->(S (head $qs.$y1.$y2) (mark (SCONJ that)))",
             "switch": 2
         },
         {
-            "alt": "$qrelc~$y1~$y2 -> (S (nsubj (PRON who)) (head $qvp~$y1~$y2))",
-            "rule": "$qrelc~$y1~$y2 -> (S (head $qvp~$y1~$y2) (nsubj (PRON who)))",
+            "alt": "$qrelc.$y1.$y2 -> (S (nsubj (PRON who)) (head $qvp.$y1.$y2))",
+            "rule": "$qrelc.$y1.$y2 -> (S (head $qvp.$y1.$y2) (nsubj (PRON who)))",
             "switch": 5
         },
         {
-            "alt": "$qpp~$y1 -> (PP (case $qprep~$z1) (head $qnpb~$y1~$z2))",
-            "rule": "$qpp~$y1 -> (PP (head $qnpb~$y1~$z2) (case $qprep~$z1))",
+            "alt": "$qpp.$y1 -> (PP (case $qprep.$z1) (head $qnpb.$y1.$z2))",
+            "rule": "$qpp.$y1 -> (PP (head $qnpb.$y1.$z2) (case $qprep.$z1))",
             "switch": 3,
-            "zdists": ["prep~$y1", "count"]
+            "zdists": ["prep.$y1", "count"]
         },
-        {"rule": "$qvb~$y1~$y2 -> (VB (@vb (STEM vb~$y1) (PERSON 3) $qcount~$y2 (TENSE present)))"},
-        {"rule": "$qnn~$y1~$y2 -> (NN (@nn (STEM nn~$y1) $qcount~$y2))"},
-        {"rule": "$qadj~$y1 -> (ADJ (@adj (STEM adj~$y1)))"},
-        {"rule": "$qdt~$y1 -> (DT (@dt (DEF def) (COUNT $y1)))"},
-        {"rule": "$qdt~$y1 -> (DT (@dt (DEF indef) (COUNT $y1)))"},
-        {"rule": "$qprep~$y1 -> (PREP (@prep (STEM pp~$y1)))"},
-        {"rule": "$qcount~sng -> (COUNT sng)"},
-        {"rule": "$qcount~plu -> (COUNT plu)"}
+        {"rule": "$qvb.$y1.$y2 -> (VB (@vb (STEM vb.$y1) (PERSON 3) $qcount.$y2 (TENSE present)))"},
+        {"rule": "$qnn.$y1.$y2 -> (NN (@nn (STEM nn.$y1) $qcount.$y2))"},
+        {"rule": "$qadj.$y1 -> (ADJ (@adj (STEM adj.$y1)))"},
+        {"rule": "$qdt.$y1 -> (DT (@dt (DEF def) (COUNT $y1)))"},
+        {"rule": "$qdt.$y1 -> (DT (@dt (DEF indef) (COUNT $y1)))"},
+        {"rule": "$qprep.$y1 -> (PREP (@prep (STEM pp.$y1)))"},
+        {"rule": "$qcount.sng -> (COUNT sng)"},
+        {"rule": "$qcount.plu -> (COUNT plu)"}
     ]
 }
 

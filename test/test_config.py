@@ -9,7 +9,7 @@ import testperanto.examples
 from testperanto.config import rewrite_gmacro_config
 from testperanto.config import generate_sentences, init_grammar_macro
 from testperanto.distmanager import DistributionManager
-from testperanto.globals import EMPTY_STR
+from testperanto.globals import DOT, EMPTY_STR
 from testperanto.rules import TreeTransducerRule, TreeTransducerRuleMacro
 from testperanto.rules import RuleMacroSet
 from testperanto.transducer import TreeTransducer
@@ -21,16 +21,16 @@ GRAMMAR1 = {
     "distributions": [
         {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.5},
         {"name": "adj", "type": "pyor", "strength": 100, "discount": 0.8},
-        {"name": "adj~$y1", "type": "pyor", "strength": 5, "discount": 0.5}
+        {"name": f"adj{DOT}$y1", "type": "pyor", "strength": 5, "discount": 0.5}
     ],
     "macros": [
-        {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
+        {"rule": f"$qstart -> $qnp{DOT}$z1", "zdists": ["nn"]},
         {
-            "rule": "$qnp~$y1 -> (NP (amod $qadj) (head $qnn~$y1))",
-            "alt": "$qnp~$y1 -> (NP (head $qnn~$y1) (amod $qadj))",
+            "rule": f"$qnp{DOT}$y1 -> (NP (amod $qadj) (head $qnn{DOT}$y1))",
+            "alt": f"$qnp{DOT}$y1 -> (NP (head $qnn{DOT}$y1) (amod $qadj))",
             "switch": 0
         },
-        {"rule": "$qnn~$y1 -> (NN bottle)"},
+        {"rule": f"$qnn{DOT}$y1 -> (NN bottle)"},
         {"rule": "$qadj -> (ADJ blue)"}
     ]
 }
@@ -68,21 +68,21 @@ def leaf_string(node):
 class TestConfig(unittest.TestCase):
 
     def test_config(self):
-        rule1 = {'rule': '$qtop~$y1 -> (TOP $qn~$z1)', 'zdists': ['a']}
-        rule2 = {'rule': '$qn~$y1 -> (N n~$y1 $qnprop~$z1)', 'zdists': ['a']}
-        rule3 = {'rule': '$qnprop~$y1 -> (NPROP def plu)'}
-        rule4 = {'rule': '$qnprop~$y1 -> (NPROP def sng)'}
+        rule1 = {'rule': f'$qtop{DOT}$y1 -> (TOP $qn{DOT}$z1)', 'zdists': ['a']}
+        rule2 = {'rule': f'$qn{DOT}$y1 -> (N n{DOT}$y1 $qnprop{DOT}$z1)', 'zdists': ['a']}
+        rule3 = {'rule': f'$qnprop{DOT}$y1 -> (NPROP def plu)'}
+        rule4 = {'rule': f'$qnprop{DOT}$y1 -> (NPROP def sng)'}
         config = {"distributions": [{"name": "a", "type": 'uniform', "domain": [1, 2, 3]}],
                   "macros": [rule1, rule2, rule3, rule4]}
         transducer = TreeTransducer.from_config(config)
-        in_tree = TreeNode.from_str('$qtop~0')
+        in_tree = TreeNode.from_str(f'$qtop{DOT}0')
         out_trees = set([str(transducer.run(in_tree)) for _ in range(500)])
-        self.assertEqual(out_trees, {'(TOP (N n~1 (NPROP def sng)))',
-                                     '(TOP (N n~1 (NPROP def plu)))',
-                                     '(TOP (N n~2 (NPROP def sng)))',
-                                     '(TOP (N n~2 (NPROP def plu)))',
-                                     '(TOP (N n~3 (NPROP def sng)))',
-                                     '(TOP (N n~3 (NPROP def plu)))'})
+        self.assertEqual(out_trees, {f'(TOP (N n{DOT}1 (NPROP def sng)))',
+                                     f'(TOP (N n{DOT}1 (NPROP def plu)))',
+                                     f'(TOP (N n{DOT}2 (NPROP def sng)))',
+                                     f'(TOP (N n{DOT}2 (NPROP def plu)))',
+                                     f'(TOP (N n{DOT}3 (NPROP def sng)))',
+                                     f'(TOP (N n{DOT}3 (NPROP def plu)))'})
 
 
     def test_grammar_config(self):
@@ -92,15 +92,15 @@ class TestConfig(unittest.TestCase):
         rule4 = {'rule': 'VB.$y1 -> (@vb (STEM verb.$y1) (COUNT sng) (PERSON 3) (TENSE perfect))'}
         config = {"distributions": [{"name": "vb", "type": 'alternating'},
                                     {'name': 'nn', 'type': 'alternating'},
-                                    {"name": "nn.$y1", "type": 'averager'}],
+                                    {"name": f"nn{DOT}$y1", "type": 'averager'}],
                   "grammar": [rule1, rule2, rule3, rule4]}
         expected = {'distributions': [{'name': 'vb', 'type': 'alternating'},
                                       {'name': 'nn', 'type': 'alternating'},
-                                      {'name': 'nn~$y1', 'type': 'averager'}],
-                    'macros': [{'rule': '$qtop -> (X $qs~$z1)', 'zdists': ['vb']},
-                               {'rule': '$qs~$y1 -> (X $qnn~$z1 $qvb~$y1)', 'zdists': ['nn~$y1']},
-                               {'rule': '$qnn~$y1 -> (X (@verbatim noun~$y1))'},
-                               {'rule': '$qvb~$y1 -> (X (@vb (STEM verb~$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
+                                      {'name': f'nn{DOT}$y1', 'type': 'averager'}],
+                    'macros': [{'rule': f'$qtop -> (X $qs{DOT}$z1)', 'zdists': ['vb']},
+                               {'rule': f'$qs{DOT}$y1 -> (X $qnn{DOT}$z1 $qvb{DOT}$y1)', 'zdists': [f'nn{DOT}$y1']},
+                               {'rule': f'$qnn{DOT}$y1 -> (X (@verbatim noun{DOT}$y1))'},
+                               {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
         rewritten = rewrite_gmacro_config(config)
         self.assertEqual(expected, rewrite_gmacro_config(rewritten))
         transducer = TreeTransducer.from_config(rewritten)

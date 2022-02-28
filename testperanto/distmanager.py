@@ -7,6 +7,7 @@ from abc import ABC, abstractmethod
 from testperanto import distributions
 from testperanto.distributions import PitmanYorProcess, lookup_distribution
 from testperanto.distributions import UniformDistribution, CategoricalDistribution
+from testperanto.globals import DOT
 from testperanto.substitutions import SymbolSubstitution
 
 
@@ -137,7 +138,7 @@ class DistributionManager:
             factory_configs = config['distributions']
         factories = dict()
         for fconfig in factory_configs:
-            name = tuple(fconfig['name'].split('~'))
+            name = tuple(fconfig['name'].split(DOT))
             args = {key: fconfig[key] for key in fconfig if key not in ['name']}
             factories[name] = args
         return DistributionManager(factories)

@@ -5,7 +5,7 @@
 
 import unittest
 import sys
-from testperanto.globals import EMPTY_STR
+from testperanto.globals import DOT, EMPTY_STR
 from testperanto.morphology import SuffixMorpher
 from testperanto.trees import TreeNode
 from testperanto.util import compound
@@ -57,7 +57,7 @@ class TestVoicebox(unittest.TestCase):
         morph1 = SuffixMorpher(property_names=('COUNT',),
                                suffix_map={('sng',): '', ('plu',): 's'})
         vbox = MorphologyVoicebox(word_generator, [morph1])
-        in_tree = make_tree('(@nn (STEM n~0) (DEF indef) (COUNT plu))')
+        in_tree = make_tree(f'(@nn (STEM n{DOT}0) (DEF indef) (COUNT plu))')
         self.assertEqual(vbox.run(in_tree), make_tree("cats"))
 
     def test_morphology_vbox_cascade(self):

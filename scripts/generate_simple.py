@@ -3,7 +3,7 @@ from os.path import join
 import spacy
 from spacy.tokens import DocBin
 import sys
-from testperanto.globals import EMPTY_STR
+from testperanto.globals import DOT, EMPTY_STR
 from testperanto.analysis import plot_statistic, singleton_proportion, type_count_over_time
 from testperanto.analysis import powers_of_2, multiples_of_1000
 from testperanto.transducer import TreeTransducer, run_transducer_cascade
@@ -18,8 +18,8 @@ def pyor_config(strength, discount):
                 {"name": "nn", "type": "pyor", "strength": strength, "discount": discount}
               ],
               "macros": [
-                {"rule": "$qstart -> $qnn~$z1", "zdists": ["nn"]},
-                {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"}
+                {"rule": f"$qstart -> $qnn{DOT}$z1", "zdists": ["nn"]},
+                {"rule": f"$qnn{DOT}$y1 -> (NN (@nn (STEM nn{DOT}$y1) (COUNT sng)))"}
               ]}
     return result
 
@@ -27,12 +27,12 @@ def pyor_config(strength, discount):
 def hpyor_config(base_strength, base_discount, strength, discount):
     result = {"distributions": [
                 {"name": "nn", "type": "pyor", "strength": base_strength, "discount": base_discount},
-                {"name": "nn~$y1", "type": "pyor", "strength": strength, "discount": discount}
+                {"name": f"nn{DOT}$y1", "type": "pyor", "strength": strength, "discount": discount}
               ],
               "macros": [
-                {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
-                {"rule": "$qnp~$y1 -> $qnn~$z1", "zdists": ["nn~$y1"]},
-                {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"}
+                {"rule": f"$qstart -> $qnp{DOT}$z1", "zdists": ["nn"]},
+                {"rule": f"$qnp{DOT}$y1 -> $qnn{DOT}$z1", "zdists": [f"nn{DOT}$y1"]},
+                {"rule": f"$qnn{DOT}$y1 -> (NN (@nn (STEM nn{DOT}$y1) (COUNT sng)))"}
               ]}
     return result
 
@@ -42,13 +42,13 @@ def dual_config(head_strength, head_discount, base_strength, base_discount, stre
         "distributions": [
             {"name": "nn", "type": "pyor", "strength": head_strength, "discount": head_discount},
             {"name": "adj", "type": "pyor", "strength": base_strength, "discount": base_discount},
-            {"name": "adj~$y1", "type": "pyor", "strength": strength, "discount": discount}
+            {"name": f"adj{DOT}$y1", "type": "pyor", "strength": strength, "discount": discount}
         ],
         "macros": [
-            {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
-            {"rule": "$qnp~$y1 -> (NP (amod $qadj~$z1) (head $qnn~$y1))", "zdists": ["adj~$y1"]},
-            {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"},
-            {"rule": "$qadj~$y1 -> (ADJ (@adj (STEM adj~$y1)))"}
+            {"rule": f"$qstart -> $qnp{DOT}$z1", "zdists": ["nn"]},
+            {"rule": f"$qnp{DOT}$y1 -> (NP (amod $qadj{DOT}$z1) (head $qnn{DOT}$y1))", "zdists": [f"adj{DOT}$y1"]},
+            {"rule": f"$qnn{DOT}$y1 -> (NN (@nn (STEM nn{DOT}$y1) (COUNT sng)))"},
+            {"rule": f"$qadj{DOT}$y1 -> (ADJ (@adj (STEM adj{DOT}$y1)))"}
         ]
     }
     return result
@@ -59,14 +59,14 @@ def dual_config_alt(head_strength, head_discount, s1, d1, s2, d2, s3, d3):
         "distributions": [
             {"name": "vb", "type": "pyor", "strength": head_strength, "discount": head_discount},
             {"name": "nn", "type": "pyor", "strength": s1, "discount": d1},
-            {"name": "nn~subj", "type": "pyor", "strength": s2, "discount": d2},
-            {"name": "nn~subj~$y1", "type": "pyor", "strength": s3, "discount": d3}
+            {"name": f"nn{DOT}subj", "type": "pyor", "strength": s2, "discount": d2},
+            {"name": f"nn{DOT}subj{DOT}$y1", "type": "pyor", "strength": s3, "discount": d3}
         ],
         "macros": [
-            {"rule": "$qstart -> $qs~$z1", "zdists": ["vb"]},
-            {"rule": "$qs~$y1 -> (NP (nsubj $qnn~subj~$z1) (head $qvb~$y1))", "zdists": ["nn~subj~$y1"]},
-            {"rule": "$qvb~$y1 -> (VB (@vb (STEM vb~$y1) (PERSON 3) (COUNT sng) (TENSE present)))"},
-            {"rule": "$qnn~subj~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"},
+            {"rule": f"$qstart -> $qs{DOT}$z1", "zdists": ["vb"]},
+            {"rule": f"$qs{DOT}$y1 -> (NP (nsubj $qnn{DOT}subj{DOT}$z1) (head $qvb{DOT}$y1))", "zdists": [f"nn{DOT}subj{DOT}$y1"]},
+            {"rule": f"$qvb{DOT}$y1 -> (VB (@vb (STEM vb{DOT}$y1) (PERSON 3) (COUNT sng) (TENSE present)))"},
+            {"rule": f"$qnn{DOT}subj{DOT}$y1 -> (NN (@nn (STEM nn{DOT}$y1) (COUNT sng)))"},
         ]
     }
     return result
@@ -80,9 +80,9 @@ def indep_config(head_strength, head_discount, base_strength, base_discount):
         ],
         "macros": [
             {"rule": "$qstart -> $qnp", "zdists": []},
-            {"rule": "$qnp -> (NP (amod $qadj~$z1) (head $qnn~$z2))", "zdists": ["adj", "nn"]},
-            {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"},
-            {"rule": "$qadj~$y1 -> (ADJ (@adj (STEM adj~$y1)))"}
+            {"rule": f"$qnp -> (NP (amod $qadj{DOT}$z1) (head $qnn{DOT}$z2))", "zdists": ["adj", "nn"]},
+            {"rule": f"$qnn{DOT}$y1 -> (NN (@nn (STEM nn{DOT}$y1) (COUNT sng)))"},
+            {"rule": f"$qadj{DOT}$y1 -> (ADJ (@adj (STEM adj{DOT}$y1)))"}
         ]
     }
     return result
@@ -97,7 +97,7 @@ def init_cascade(config_constructor, args):
 def token_stream(cascade, num_to_generate=500000):
     for _ in tqdm(range(num_to_generate)):
         output = run_transducer_cascade(cascade)
-        leaves = ['~'.join(leaf) for leaf in output.get_leaves()]
+        leaves = [DOT.join(leaf) for leaf in output.get_leaves()]
         leaves = [leaf for leaf in leaves if leaf != EMPTY_STR]
         segment = ' '.join(leaves)
         yield segment
