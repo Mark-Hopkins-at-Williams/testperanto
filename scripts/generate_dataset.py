@@ -3,10 +3,11 @@ import json
 import os
 import sys
 from tqdm import tqdm
-from testperanto.macros import TreeTransducer, init_transducer_cascade
-from testperanto.macros import run_transducer_cascade
-from testperanto.trees import TreeNode, LeafLabelCollector
-from testperanto.voicebox import VoiceboxFactory
+from testperanto.globals import EMPTY_STR
+from testperanto.config import init_transducer_cascade
+from testperanto.transducer import TreeTransducer, run_transducer_cascade
+from testperanto.trees import TreeNode
+from testperanto.voicebox import lookup_voicebox_theme
 
 
 def generate(config_files, switching_code, num_to_generate, only_sents):
@@ -14,10 +15,8 @@ def generate(config_files, switching_code, num_to_generate, only_sents):
     for _ in tqdm(range(num_to_generate)):
         output = run_transducer_cascade(cascade)
         if only_sents:
-            collector = LeafLabelCollector()
-            collector.execute(output)
-            leaves = ['~'.join(leaf) for leaf in collector.get_leaf_labels()]
-            leaves = [leaf for leaf in leaves if leaf != "NULL"]
+            leaves = ['~'.join(leaf.get_label()) for leaf in output.get_leaves()]
+            leaves = [leaf for leaf in leaves if leaf != EMPTY_STR]
             output = ' '.join(leaves)
         yield output
 

@@ -1,3 +1,9 @@
+##
+# util.py
+# Miscellaneous utility functions.
+##
+
+
 from collections import defaultdict
 import json
 from nltk.corpus import brown
@@ -5,6 +11,22 @@ from nltk import pos_tag, word_tokenize
 import spacy
 from spacy.tokens import DocBin
 from tqdm import tqdm
+from testperanto.globals import COMPOUND_SEP
+
+
+def compound(symbols):
+    return COMPOUND_SEP.join([str(s) for s in symbols])
+
+
+def rhs_refinement_var(i):
+    return '$z{}'.format(i)
+
+
+def is_state(label):
+    try:
+        return label[0][:2] == '$q'
+    except Exception:
+        return False
 
 
 def stream_ngrams(lines, ngram_order, tokenize = lambda line: line.split()):

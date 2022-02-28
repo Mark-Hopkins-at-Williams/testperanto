@@ -7,36 +7,40 @@
 
 import unittest
 import sys
-from testperanto.matchers import LeafVariableMatcher, RefinementVariableMatcher
-from testperanto import trees
+from testperanto.matchers import LeafMatcher, SymbolMatcher
+from testperanto.trees import TreeNode
 
 
 class TestMatching(unittest.TestCase):
 
     def test_leaf_matcher(self):
         pattern_tree_str = '(S (N $x1 $x2) $x3)'
-        pattern_tree = trees.construct_node_based_tree_from_string(pattern_tree_str)
+        pattern_tree = TreeNode.from_str(pattern_tree_str)
         in_tree_str = '(S (N (NP the dog) (VB wags)) (JJ quickly))'
-        in_tree = trees.construct_node_based_tree_from_string(in_tree_str)
-        matcher = LeafVariableMatcher(pattern_tree)
+        in_tree = TreeNode.from_str(in_tree_str)
+        matcher = LeafMatcher(pattern_tree)
         sub = matcher.match(in_tree)
         self.assertEqual(str(sub.substitute(pattern_tree)),
                          "(S (N (NP the dog) (VB wags)) (JJ quickly))")
-        in_tree_str = '(S (N (NP the dog) (VB wags)) (JJ quickly) (JJS right))'
-        in_tree = trees.construct_node_based_tree_from_string(in_tree_str)
+        in_tree_str = '(S (N (NP the dog) (VB wags)) (JJ quickly) (JJS again))'
+        in_tree = TreeNode.from_str(in_tree_str)
         sub = matcher.match(in_tree)
         self.assertEqual(sub, None)
 
     def test_refinement_matcher(self):
         pattern_tree_str = '(S~$y1 (N~$y2 $x1 $x2) $x3)'
-        pattern_tree = trees.construct_node_based_tree_from_string(pattern_tree_str)
+        pattern_tree = TreeNode.from_str(pattern_tree_str)
         in_tree_str = '(S~32 (N~123 (NP the dog) (VB wags)) (JJ quickly))'
-        in_tree = trees.construct_node_based_tree_from_string(in_tree_str)
-        matcher = RefinementVariableMatcher(pattern_tree)
+        in_tree = TreeNode.from_str(in_tree_str)
+        matcher = SymbolMatcher(pattern_tree)
         sub = matcher.match(in_tree)
         self.assertEqual(str(sub.substitute(pattern_tree)), "(S~32 (N~123 $x1 $x2) $x3)")
-        in_tree_str = '(S~23 (N~231 (NP the dog) (VB wags)) (JJ quickly) (JJS right))'
-        in_tree = trees.construct_node_based_tree_from_string(in_tree_str)
+        in_tree_str = '(S~23 (N~231 (NP the dog) (VB wags)) (JJ quickly) (JJS again))'
+        in_tree = TreeNode.from_str(in_tree_str)
+        sub = matcher.match(in_tree)
+        self.assertEqual(sub, None)
+        in_tree_str = '(S~32 (N~123~5 (NP the dog) (VB wags)) (JJ quickly))'
+        in_tree = TreeNode.from_str(in_tree_str)
         sub = matcher.match(in_tree)
         self.assertEqual(sub, None)
 

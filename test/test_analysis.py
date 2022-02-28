@@ -1,6 +1,6 @@
 import unittest
 from testperanto.analysis import type_count_over_time, singleton_proportion
-from testperanto.corpora import stream_ngrams
+from testperanto.util import stream_ngrams
 
 class TestAnalysis(unittest.TestCase):
 
@@ -31,6 +31,7 @@ class TestAnalysis(unittest.TestCase):
         assert x_vals == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
         assert y_vals == [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 6/7, 5/7,
                           5/7, 6/8, 7/9, 7/9, 7/9, 6/9, 5/9]
+
 
 if __name__ == "__main__":
     unittest.main()

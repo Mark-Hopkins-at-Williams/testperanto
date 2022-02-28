@@ -1,7 +1,7 @@
 import argparse
 from testperanto.analysis import plot_statistic, singleton_proportion, type_count_over_time
 from testperanto.analysis import powers_of_2, multiples_of_1000
-from testperanto.corpora import stream_lines
+from testperanto.util import stream_lines
 
 
 def main(corpora, metric_name):

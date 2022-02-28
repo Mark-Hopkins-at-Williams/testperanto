@@ -12,19 +12,19 @@ from testperanto.morphology import SuffixMorpher
 class TestMorphology(unittest.TestCase):
 
     def test_suffix_morpher(self):
-        morpher = SuffixMorpher(properties=('COUNT',),
-                                            suffix_map={('sng',): '', ('plu',): 's'})
+        morpher = SuffixMorpher(property_names=('COUNT',),
+                                suffix_map={('sng',): '', ('plu',): 's'})
         result = morpher.morph('apple', {'COUNT': 'plu', 'DEF': 'def'})
         self.assertEqual(result, 'apples')
 
     def test_suffix_morpher2(self):
-        morpher = SuffixMorpher(properties=('GENDER', 'CASE'),
-                                            suffix_map={('m', 'acc'): 'en',
-                                                        ('f', 'acc'): 'e',
-                                                        ('n', 'acc'): 'es',
-                                                        ('m', 'dat'): 'em',
-                                                        ('f', 'dat'): 'er',
-                                                        ('n', 'dat'): 'em'})
+        morpher = SuffixMorpher(property_names=('GENDER', 'CASE'),
+                                suffix_map={('m', 'acc'): 'en',
+                                            ('f', 'acc'): 'e',
+                                            ('n', 'acc'): 'es',
+                                            ('m', 'dat'): 'em',
+                                            ('f', 'dat'): 'er',
+                                            ('n', 'dat'): 'em'})
         result = morpher.morph('rot', {'GENDER': 'n', 'CASE': 'acc'})
         self.assertEqual(result, 'rotes')
         result = morpher.morph('rot', {'GENDER': 'm', 'CASE': 'dat'})

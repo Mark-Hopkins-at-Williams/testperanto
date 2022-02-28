@@ -1,32 +1,31 @@
 ##
 # testdistmanager.py
 # Unit tests for distmanager.py.
-# $Author: mhopkins $
-# $Revision: 32586 $
-# $Date: 2012-04-17 14:26:33 -0700 (Tue, 17 Apr 2012) $
 ##
 
 
 import unittest
 import sys
 from testperanto.distmanager import DistributionManager
-from testperanto.distmanager import DistributionFactory
 from testperanto.distributions import PitmanYorProcess
+from testperanto.util import compound
 from testperanto.substitutions import SymbolSubstitution
-from testperanto.examples import AlternatingDistributionFactory, AveragerDistributionFactory
+import testperanto.examples
 
 class TestDistributionFactory(unittest.TestCase):
 
     def setUp(self):
         self.manager = DistributionManager()
-        self.manager.add_factory(('a',), AlternatingDistributionFactory(self.manager) )
-        self.manager.add_factory(('b',), AlternatingDistributionFactory(self.manager) )
-        self.manager.add_factory(('c',), AlternatingDistributionFactory(self.manager) )
-        self.manager.add_factory(('a', '1'), AveragerDistributionFactory(self.manager, ('a',)) )
-        self.manager.add_factory(('a', '2'), AveragerDistributionFactory(self.manager, ('a',)) )
-        self.manager.add_factory(('b', '1'), AveragerDistributionFactory(self.manager, ('b',)) )
-        self.manager.add_factory(('a', '$y1'), AveragerDistributionFactory(self.manager, ('a',)) )
-        self.manager.add_factory(('a', '$y1', '$y2'), AveragerDistributionFactory(self.manager, ('a', '$y1')) )
+        self.manager.add_config(('a',), {'type': 'alternating'})
+        self.manager.add_config(('b',), {'type': 'alternating'})
+        self.manager.add_config(('c',), {'type': 'alternating'})
+        self.manager.add_config(('a', '1'), {'type': 'averager'})
+        self.manager.add_config(('a', '2'), {'type': 'averager'})
+        self.manager.add_config(('b', '1'), {'type': 'averager'})
+        self.manager.add_config(('a', '$y1'), {'type': 'averager'})
+        self.manager.add_config(('a', '$y1', '$y2'), {'type': 'averager'})
+        self.manager.add_config(('c', '1'), {'type': 'averager', 'base': ('a',)})
+        self.manager.add_config(('c', '2'), {'type': 'averager'})
 
     def test_simple_factory(self):
         """Tests that a simple factory manager maintains state across calls to sample."""
@@ -50,9 +49,23 @@ class TestDistributionFactory(unittest.TestCase):
         sample = self.manager.get(('a', '1'), sub).sample()
         self.assertEqual(sample, 0)
         sample = self.manager.get(('a', '1'), sub).sample()
-        self.assertEqual(sample, 60)                
+        self.assertEqual(sample, 60)
         sample = self.manager.get(('a', '1'), sub).sample()
-        self.assertEqual(sample, 0)                
+        self.assertEqual(sample, 0)
+
+    def test_specified_base1(self):
+        sub = SymbolSubstitution()
+        sample = self.manager.get(('a', '1'), sub).sample()
+        self.assertEqual(sample, 0)
+        sample = self.manager.get(('c', '1'), sub).sample()
+        self.assertEqual(sample, 100)
+
+    def test_specified_base2(self):
+        sub = SymbolSubstitution()
+        sample = self.manager.get(('a', '1'), sub).sample()
+        self.assertEqual(sample, 0)
+        sample = self.manager.get(('c', '2'), sub).sample()
+        self.assertEqual(sample, 0)
 
     def test_multiple_factories_with_base(self):
         """

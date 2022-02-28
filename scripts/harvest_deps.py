@@ -7,7 +7,7 @@ from testperanto.trees import TreeNode
 def main(ptb_file, desired_deprels):
     with open(ptb_file, 'r') as reader:
         for line in tqdm(list(reader)):
-            tree = TreeNode.construct_from_str(line)
+            tree = TreeNode.from_str(line)
             desired = [(x,z) for (x,deprel,z) in get_dependencies(tree) if deprel in desired_deprels]
             for (dependent, head) in desired:
                 print("{} {}".format(dependent.lower(), head.lower()))
