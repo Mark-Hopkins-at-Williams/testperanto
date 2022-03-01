@@ -1,0 +1,14 @@
+{
+    "distributions": [
+        {"name": "nn", "type": "pyor", "strength": 1, "discount": 0.4},
+        {"name": "count", "type": "uniform", "domain": ["sng", "plu"]}
+    ],
+    "grammar": [
+        {"rule": "START -> NP.$z1.nom.$z2", "zdists": ["nn", "count"]},
+        {"rule": "NP.$y1.$y2.$y3 -> DT.$y2.$y3 NN.$y1.$y2.$y3"},
+        {"rule": "DT.$y1.$y2 -> (@dt (DEF def) (CASE $y1) (COUNT $y2))"},
+        {"rule": "DT.$y1.$y2 -> (@dt (DEF indef) (CASE $y1) (COUNT $y2))"},
+        {"rule": "NN.$y1.$y2.$y3 -> (@nn (STEM noun.$y1) (CASE $y2) (COUNT $y3))"}
+    ]
+}
+
