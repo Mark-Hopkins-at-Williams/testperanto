@@ -9,13 +9,13 @@ artificial languages. Among its intended uses:
 
 ### getting started
 
-#### quickstart (with anaconda)
+#### quickstart (with anaconda, from testperanto root directory)
 
     conda create -n tpo python=3.8
     conda activate tpo
     pip install -e .
 
-#### quickstart (with python 3 virtual environments)
+#### quickstart (with venv, from testperanto root directory)
 
     python3 -m venv tpo
     source tpo/bin/activate
