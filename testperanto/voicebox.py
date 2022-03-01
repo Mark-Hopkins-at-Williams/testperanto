@@ -340,16 +340,20 @@ class JapaneseTheme(VoiceboxTheme):
         vbox = ManagingVoicebox()
         glookup = lookup_word_generator
         vbox.delegate('verbatim', VerbatimVoicebox())
-        vbox.delegate('vb', MorphologyVoicebox(glookup('JapaneseStems'), [EnglishVerbMorpher()]))
-        vbox.delegate('nn', MorphologyVoicebox(glookup('JapaneseStems'), [EnglishNounMorpher()]))
+        vbox.delegate('vb', MorphologyVoicebox(glookup('JapaneseStems'), [JapaneseVerbMorpher()]))
+        vbox.delegate('nn', MorphologyVoicebox(glookup('JapaneseStems')))
         vbox.delegate('adj', MorphologyVoicebox(glookup('JapaneseStems')))
         vbox.delegate('adv', MorphologyVoicebox(glookup('JapaneseStems')))
         vbox.delegate('prep', MorphologyVoicebox(glookup('JapanesePrepositions')))
-        vbox.delegate('dt', EnglishDeterminerVoicebox())
+        dt_morph = SuffixMorpher(property_names=('COUNT', 'DEF'),
+                                 suffix_map={('sng', 'def'): EMPTY_STR,
+                                             ('plu', 'def'): EMPTY_STR,
+                                             ('sng', 'indef'): EMPTY_STR,
+                                             ('plu', 'indef'): EMPTY_STR})
+        vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
         return vbox
 
 
 register_voicebox_theme("goose", MotherGooseTheme)
 register_voicebox_theme("english", MotherGooseTheme)
 register_voicebox_theme("japanese", JapaneseTheme)
-

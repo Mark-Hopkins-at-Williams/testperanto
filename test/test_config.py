@@ -6,7 +6,7 @@
 
 import unittest
 import testperanto.examples
-from testperanto.config import rewrite_gmacro_config
+from testperanto.config import rewrite_gmacro_config, configure_transducer
 from testperanto.config import generate_sentences, init_grammar_macro
 from testperanto.distmanager import DistributionManager
 from testperanto.globals import DOT, EMPTY_STR
@@ -74,7 +74,7 @@ class TestConfig(unittest.TestCase):
         rule4 = {'rule': f'$qnprop{DOT}$y1 -> (NPROP def sng)'}
         config = {"distributions": [{"name": "a", "type": 'uniform', "domain": [1, 2, 3]}],
                   "macros": [rule1, rule2, rule3, rule4]}
-        transducer = TreeTransducer.from_config(config)
+        transducer = configure_transducer(config)
         in_tree = TreeNode.from_str(f'$qtop{DOT}0')
         out_trees = set([str(transducer.run(in_tree)) for _ in range(500)])
         self.assertEqual(out_trees, {f'(TOP (N n{DOT}1 (NPROP def sng)))',
@@ -103,7 +103,7 @@ class TestConfig(unittest.TestCase):
                                {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
         rewritten = rewrite_gmacro_config(config)
         self.assertEqual(expected, rewrite_gmacro_config(rewritten))
-        transducer = TreeTransducer.from_config(rewritten)
+        transducer = configure_transducer(rewritten)
         sents = generate_sentences(transducer, start_state='TOP', num_to_generate=5)
         self.assertEqual(sents[0].split()[0], 'noun.0')
         self.assertEqual(sents[1].split()[0], 'noun.100')
@@ -132,40 +132,40 @@ class TestConfig(unittest.TestCase):
         self.assertEqual(sents[4], "noun.0 verb.0")
 
     def test_switched_grammar1a(self):
-        grammar = TreeTransducer.from_config(GRAMMAR1, "1")
+        grammar = configure_transducer(GRAMMAR1, "1")
         output = grammar.run(TreeNode.from_str("$qstart"))
         expected = "(NP (head (NN bottle)) (amod (ADJ blue)))"
         self.assertEqual(str(output), expected)
 
     def test_switched_grammar1b(self):
-        grammar = TreeTransducer.from_config(GRAMMAR1, "0")
+        grammar = configure_transducer(GRAMMAR1, "0")
         output = grammar.run(TreeNode.from_str("$qstart"))
         expected = "(NP (amod (ADJ blue)) (head (NN bottle)))"
         self.assertEqual(str(output), expected)
 
     def test_switched_grammar2a(self):
-        grammar = TreeTransducer.from_config(GRAMMAR2, "00")
+        grammar = configure_transducer(GRAMMAR2, "00")
         output = grammar.run(TreeNode.from_str("$qstart"))
         expected = "(S (nsubj (NN dogs)) (head (VP (head (VB chased)) (dobj (NP (amod (ADJ concerned)) (head (NN cats)))))))"
         self.assertEqual(str(output), expected)
         self.assertEqual(leaf_string(output), "dogs chased concerned cats")
 
     def test_switched_grammar2b(self):
-        grammar = TreeTransducer.from_config(GRAMMAR2, "10")
+        grammar = configure_transducer(GRAMMAR2, "10")
         output = grammar.run(TreeNode.from_str("$qstart"))
         expected = "(S (nsubj (NN dogs)) (head (VP (dobj (NP (amod (ADJ concerned)) (head (NN cats)))) (head (VB chased)))))"
         self.assertEqual(str(output), expected)
         self.assertEqual(leaf_string(output), "dogs concerned cats chased")
 
     def test_switched_grammar2c(self):
-        grammar = TreeTransducer.from_config(GRAMMAR2, "01")
+        grammar = configure_transducer(GRAMMAR2, "01")
         output = grammar.run(TreeNode.from_str("$qstart"))
         expected = "(S (nsubj (NN dogs)) (head (VP (head (VB chased)) (dobj (NP (head (NN cats)) (amod (ADJ concerned)))))))"
         self.assertEqual(str(output), expected)
         self.assertEqual(leaf_string(output), "dogs chased cats concerned")
 
     def test_switched_grammar2d(self):
-        grammar = TreeTransducer.from_config(GRAMMAR2, "11")
+        grammar = configure_transducer(GRAMMAR2, "11")
         output = grammar.run(TreeNode.from_str("$qstart"))
         expected = "(S (nsubj (NN dogs)) (head (VP (dobj (NP (head (NN cats)) (amod (ADJ concerned)))) (head (VB chased)))))"
         self.assertEqual(str(output), expected)

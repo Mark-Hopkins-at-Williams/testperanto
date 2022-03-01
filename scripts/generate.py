@@ -9,8 +9,8 @@ from testperanto.trees import TreeNode
 from testperanto.voicebox import lookup_voicebox_theme
 
 
-def main(config_files, switching_code, num_to_generate, only_sents):
-    cascade = init_transducer_cascade(config_files, switching_code)
+def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="goose"):
+    cascade = init_transducer_cascade(config_files, switching_code, vbox_theme=vbox_theme)
     for _ in tqdm(range(num_to_generate)):
         output = run_transducer_cascade(cascade)
         if only_sents:
@@ -28,8 +28,10 @@ if __name__ == '__main__':
                         help='number of trees to generate')
     parser.add_argument('-s', '--switches', required=False, default=None,
                         help='the typological switches, as a bitstring')
+    parser.add_argument('-v', '--vbox_theme', required=False, default="goose",
+                        help='the voicebox theme')
     parser.add_argument('--sents', dest='sents', action='store_true', default=False,
                         help='only output sentences (rather than trees)')
     args = parser.parse_args()
-    main(args.configs, args.switches, args.num, args.sents)
+    main(args.configs, args.switches, args.num, args.sents, args.vbox_theme)
 

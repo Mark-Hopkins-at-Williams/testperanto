@@ -86,12 +86,13 @@ class DistributionManager:
             try:
                 return self.dist_configs[k]
             except KeyError:
-                raise KeyError('no matches for distribution: {}'.format(key))
+                return None
+                # raise KeyError('no matches for distribution: {}'.format(key))
 
         def get_base(argz, k, sub):
             if "base" in argz:
                 return self.get(argz["base"], sub)
-            elif len(k) > 1:
+            elif len(k) > 1 and k[:-1] in self.dist_configs:
                 return self.get(k[:-1], sub)
             else:
                 return distributions.IdGenerator(self.generate_consecutive_ids)

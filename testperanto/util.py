@@ -8,6 +8,7 @@ from collections import defaultdict
 import json
 from nltk.corpus import brown
 from nltk import pos_tag, word_tokenize
+from nltk.tokenize import SyllableTokenizer
 import spacy
 from spacy.tokens import DocBin
 from tqdm import tqdm
@@ -27,6 +28,23 @@ def is_state(label):
         return label[0][:2] == '$q'
     except Exception:
         return False
+
+
+def is_ascii(s):
+    try:
+        s.encode('ascii')
+        return True
+    except Exception:
+        return False
+
+
+def stream_syllables(lines):
+    tokenizer = SyllableTokenizer()
+    for line in lines:
+        for token in word_tokenize(line):
+            if is_ascii(token) and token.isalpha():
+                for syllable in tokenizer.tokenize(token):
+                    yield syllable.lower()
 
 
 def stream_ngrams(lines, ngram_order, tokenize = lambda line: line.split()):

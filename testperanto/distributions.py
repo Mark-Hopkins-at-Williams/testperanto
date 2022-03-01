@@ -167,6 +167,17 @@ class CategoricalDistribution(Distribution):
         return retval
 
 
+class StickyCategorical(Distribution):
+    def __init__(self, weights, domain=None, random_gen=random.random):
+        self.categorical = CategoricalDistribution(weights, domain, random_gen)
+        self.first_sample = None
+
+    def sample(self):
+        if self.first_sample is None:
+            self.first_sample = self.categorical.sample()
+        return self.first_sample
+
+
 class UniformDistribution(Distribution):
     """A uniform distribution over a finite domain.
 
@@ -254,6 +265,7 @@ class PitmanYorProcess(Distribution):
 
 
 register_distribution('categorical', CategoricalDistribution)
+register_distribution('sticky', StickyCategorical)
 register_distribution('uniform', UniformDistribution)
 register_distribution('pyor', PitmanYorProcess)
 

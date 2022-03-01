@@ -82,32 +82,6 @@ class TreeTransducer:
                 retval.children.append(self.run(in_tree.get_child(i), recursion_depth))
         return retval
 
-    @staticmethod
-    def from_config(config, switching_code=None):
-        """Constructs a tree transducer from a configuration dictionary.
-
-        Parameters
-        ----------
-        config : dict
-            The configuration dictionary
-        switching_code : str
-            Binary switch string to configure alternative versions of rule macros.
-        """
-        config = deepcopy(config)
-        code = switching_code
-        if code is not None:
-            rules = []
-            for macro in config['macros']:
-                next_rule = {key: macro[key] for key in macro}
-                if 'alt' in macro and 'switch' in macro and code[macro['switch']] == "1":
-                    next_rule['rule'] = next_rule['alt']
-                next_rule = {key: next_rule[key] for key in next_rule if key not in ['alt', 'switch']}
-                rules.append(next_rule)
-            config = {"distributions": config["distributions"], "macros": rules}
-        manager = DistributionManager.from_config(config)
-        grammar = RuleMacroSet.from_config(config, manager)
-        return TreeTransducer(grammar)
-
     def __str__(self):
         """Overrides the default string representation to enumerate the grammar rules."""
         return str(self.grammar)

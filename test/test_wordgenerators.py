@@ -5,7 +5,6 @@
 
 import unittest
 from testperanto.distributions import Distribution
-from testperanto.wordgenerators import WordGeneratorFactory
 from testperanto.wordgenerators import IteratingWordGenerator, PrefixSuffixWordGenerator
 from testperanto.wordgenerators import ListBasedWordGenerator, AtomBasedWordGenerator
 

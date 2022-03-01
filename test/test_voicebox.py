@@ -12,7 +12,6 @@ from testperanto.util import compound
 from testperanto.voicebox import lookup_voicebox_theme
 from testperanto.voicebox import VerbatimVoicebox, ManagingVoicebox, MorphologyVoicebox
 from testperanto.voicebox import read_preterminal_tree, read_terminal_structure
-from testperanto.wordgenerators import WordGeneratorFactory
 from testperanto.wordgenerators import IteratingWordGenerator, PrefixSuffixWordGenerator
 
 

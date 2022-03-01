@@ -6,6 +6,7 @@ import sys
 from testperanto.globals import DOT, EMPTY_STR
 from testperanto.analysis import plot_statistic, singleton_proportion, type_count_over_time
 from testperanto.analysis import powers_of_2, multiples_of_1000
+from testperanto.config import configure_transducer
 from testperanto.transducer import TreeTransducer, run_transducer_cascade
 from testperanto.trees import TreeNode
 from testperanto.voicebox import lookup_voicebox_theme
@@ -90,7 +91,7 @@ def indep_config(head_strength, head_discount, base_strength, base_discount):
 
 def init_cascade(config_constructor, args):
     vbox = lookup_voicebox_theme("english")
-    cascade = [TreeTransducer.from_config(config_constructor(*args)), vbox]
+    cascade = [configure_transducer(config_constructor(*args)), vbox]
     return cascade
 
 

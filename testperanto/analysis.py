@@ -108,7 +108,7 @@ def plot_statistic(stat_fn, corpora, x_values, axes="semilogx",
     if corpus_labels is None:
         corpus_labels = ['corpus{}'.format(i) for i in range(len(corpora))]
     for i, token_stream in tqdm(enumerate(corpora)):
-        x_vals, y_vals = stat_fn(corpora, x_values)
+        x_vals, y_vals = stat_fn(token_stream, x_values)
         data += [[corpus_labels[i], x,y] for [x,y] in zip(x_vals, y_vals)]
     df = pd.DataFrame(data, columns=['corpus', x_label, y_label])
     sns.set_style("darkgrid")
