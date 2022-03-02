@@ -16,7 +16,7 @@ from testperanto.distributions import CategoricalDistribution
 from testperanto.rules import TreeTransducerRule, TreeTransducerRuleMacro
 from testperanto.voicebox import lookup_voicebox_theme
 from testperanto.trees import TreeNode
-from testperanto.util import rhs_refinement_var, is_state
+from testperanto.util import is_state
 from testperanto.rules import RuleMacroSet
 
 

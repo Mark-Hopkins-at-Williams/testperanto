@@ -168,11 +168,32 @@ class CategoricalDistribution(Distribution):
 
 
 class StickyCategorical(Distribution):
+    """A categorical distribution that keeps repeating its first sample.
+
+    Methods
+    -------
+    sample()
+        Always returns the same value -- the sample drawn on the first call
+    """
+
     def __init__(self, weights, domain=None, random_gen=random.random):
+        """
+        Parameters
+        ----------
+        weights : list[float]
+            Unnormalized non-negative weights to associate with each category
+        labels : list[str]
+            A string label to associate with each category (should have same length as
+            weights)
+        random_gen : function
+            A random generator that generates floats between 0.0 and 1.0
+        """
+
         self.categorical = CategoricalDistribution(weights, domain, random_gen)
         self.first_sample = None
 
     def sample(self):
+        """Always returns the same value -- the sample drawn on the first call."""
         if self.first_sample is None:
             self.first_sample = self.categorical.sample()
         return self.first_sample
@@ -186,6 +207,7 @@ class UniformDistribution(Distribution):
     sample()
         Returns an element from the domain, sampled uniformly at random.
     """
+
     def __init__(self, domain):
         """
         Parameters
@@ -204,6 +226,7 @@ class UniformDistribution(Distribution):
         object
             An element from the domain, sampled uniformly at random
         """
+
         domain_index = random.randint(0, len(self.domain) - 1)
         return self.domain[domain_index]
 
@@ -216,6 +239,7 @@ class PitmanYorProcess(Distribution):
     sample()
         Returns a non-negative integer sampled from the PY process.
     """
+
     def __init__(self, base, discount, strength, random_gen=random.random):
         """
         Pqrameters

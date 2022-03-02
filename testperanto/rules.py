@@ -13,7 +13,7 @@ from testperanto.globals import DOT
 from testperanto.substitutions import SymbolSubstitution
 from testperanto.matchers import LeafMatcher, SymbolMatcher
 from testperanto.trees import TreeNode
-from testperanto.util import rhs_refinement_var, is_state
+from testperanto.util import zvar, is_state
 
 
 class TreeTransducerRule:
@@ -286,8 +286,8 @@ class TreeTransducerRuleMacro:
                 dist_key = self.zdist_keys[i]
                 zdist = self.dist_manager.get(dist_key, lhs_sub)
                 rhs_expansion = zdist.sample()
-                lhs_sub.add_substitution(rhs_refinement_var(i + 1), rhs_expansion)  # note: start counting vars at 1
-                rhs_sub.add_substitution(rhs_refinement_var(i + 1), rhs_expansion)  # note: start counting vars at 1
+                lhs_sub.add_substitution(zvar(i + 1), rhs_expansion)  # note: start counting vars at 1
+                rhs_sub.add_substitution(zvar(i + 1), rhs_expansion)  # note: start counting vars at 1
             rule_lhs = lhs_sub.substitute(self.rule.lhs)
             rule_rhs = rhs_sub.substitute(lhs_sub.substitute(self.rule.rhs))
             return TreeTransducerRule(rule_lhs, rule_rhs, rule_weight)

@@ -6,7 +6,7 @@
 
 import unittest
 from testperanto.distributions import IdGenerator, PitmanYorProcess
-from testperanto.distributions import CategoricalDistribution
+from testperanto.distributions import CategoricalDistribution, StickyCategorical
 
 
 class PredictableRandomGen:
@@ -56,6 +56,15 @@ class TestDistributions(unittest.TestCase):
         self.assertEqual(dist.sample(), 'b')
         self.assertEqual(dist.sample(), 'c')
         self.assertEqual(dist.sample(), 'a')
+        self.assertEqual(dist.sample(), 'b')
+
+    def test_sticky_categorical(self):
+        random_gen = PredictableRandomGen([0.4, 0.8, 0.1])
+        dist = StickyCategorical([20, 30, 50], domain=['a', 'b', 'c'],
+                                  random_gen=random_gen)
+        self.assertEqual(dist.sample(), 'b')
+        self.assertEqual(dist.sample(), 'b')
+        self.assertEqual(dist.sample(), 'b')
         self.assertEqual(dist.sample(), 'b')
 
     def test_pitman_yor1(self):
