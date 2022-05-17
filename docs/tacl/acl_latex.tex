@@ -1,0 +1,442 @@
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage[review]{acl}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{bbm}
+
+
+% This is not strictly necessary, and may be commented out,
+% but it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
+
+\title{A Re-examination of Neural Selective Prediction for Natural Language Processing}
+
+% Author information can be set in various styles:
+% For several authors from the same institution:
+% \author{Author 1 \and ... \and Author n \\
+%         Address line \\ ... \\ Address line}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a seperate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
+\author{Zhengyao Gu \\
+  Reed College \\
+  \texttt{guzh@reed.edu} \\\And
+  Mark Hopkins \\
+  Reed College \\
+  \texttt{hopkinsm@reed.edu} \\}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+We provide a survey and careful empirical comparison of the state-of-the-art in neural selective classification for NLP tasks. Across multiple trials on multiple datasets, only one of the surveyed techniques -- Monte Carlo Dropout -- significantly outperforms the simple baseline of using the maximum softmax probability as an indicator of prediction confidence. Our results provide a counterpoint to recent claims made on the basis of single-trial experiments on a small number of datasets. We also provide a blueprint and open-source code to support the future evaluation of selective prediction techniques. 
+\end{abstract}
+
+\section{Introduction}
+
+Despite the massive improvements that deep learning has brought to natural language processing over the past decade, neural networks still do make mistakes. There has thus been a growing interest in confidence estimation techniques that perform well on deep neural networks. 
+
+A prominent subarea of confidence estimation is \emph{selective prediction} \cite{el2010foundations,geifman2017selective}. Selective prediction focuses on developing classifiers that choose to abstain when sufficiently uncertain. There is less focus on absolute measures of confidence, and more on a classifier's ability to successful rank its predictions, enabling techniques that maximize prediction quality given a desired yield \cite{geifman2019selectivenet} or that maximize yield given a desired quality \cite{geifman2017selective}.  
+
+
+This paper provides a survey and rigorous empirical comparison of the state-of-the-art in \emph{neural selective classification} (i.e. selective prediction where the underlying classifier is a neural network) specifically as it pertains to natural language processing. Our main contributions are the following:
+
+\begin{itemize}
+	\item We survey a broad variety of recent techniques proposed in the ML and NLP literature.
+	\item We compare them across \textbf{six} classification tasks from the \textsc{GLUE} benchmark \cite{wang-etal-2018-glue}, we do careful hyperparameter tuning for all surveyed techniques, and we perform multiple trials of each technique to get an adequate sense of median and variance.
+	\item We discover and remedy a flaw in an evaluation metric proposed by \cite{xin-etal-2021-art}, resulting in a simple metric called \emph{worst-case normalized Kendall-Tau distance} that allows apples-to-apples comparison of selective classifiers across tasks.
+	\item We determine that, despite various recent claims to have identified techniques that outperform the simple baseline \cite{HendrycksG17} of using maximum softmax response as confidence, the only technique that demonstrates significant improvement across multiple tasks and trials is Monte Carlo Dropout \cite{gal2016dropout}.
+	\item We release a documented and unit-tested Python package called \textsf{spred} (\textbf{s}elective \textbf{pred}iction) to make our experiments transparent and reproducible. To facilitate evaluation of future techniques, the package provides tutorials about how to add and evaluate novel selective prediction methods.
+\end{itemize}
+
+\section{Selective Prediction}
+
+\subsection{Preliminaries}
+
+A \emph{prediction function} is a function $f: \mathcal{X} \rightarrow \mathcal{Y}$ that maps an instance space $\mathcal{X}$ to a label space $\mathcal{Y}$. We refer to the output $f(x)$ of the prediction function as its \emph{prediction} for instance $x \in \mathcal{X}$. We use the notation $\overline{f}(x)$ to refer to the gold prediction for a particular instance. The following denotes the correctly and incorrectly predicted instances of prediction function $f$ on set $\mathbf{x} \subseteq \mathcal{X}$:
+\begin{eqnarray*}
+\mathcal{C}(f,\mathbf{x})
+&= \{ x_i \in \mathbf{x} \mid f(x_i) = \overline{f}(x_i) \} \\
+\overline{\mathcal{C}}(f,\mathbf{x})
+&= \{ x_i \in \mathbf{x} \mid f(x_i) \neq \overline{f}(x_i) \}
+\end{eqnarray*}
+
+
+If we pair a prediction function with a \emph{selection function} $g: \mathcal{X} \rightarrow \{0,1\}$, we obtain a \emph{selective model} $(f,g)$. For input $x \in \mathcal{X}$, a selective model $h = (f,g)$ \emph{publishes} its prediction $f(x)$ if $g(x)=1$, and \emph{abstains} if $g(x)=0$. In short:
+\begin{gather*}
+h(x) = \begin{cases}
+               f(x) &\mbox{ if } g(x)=1\\
+               \bot &\mbox{ if } g(x)=0
+       \end{cases}
+\end{gather*}
+
+\noindent where $\bot$ is a symbol representing abstention.
+
+A convenient way to implement a selection function is to use a \emph{confidence function} $\tilde{g}: \mathcal{X} \rightarrow \mathbf{R}$ that assigns a real-valued confidence to any input $x \in \mathcal{X}$. We can derive a selection function $g_\theta$ from confidence function $\tilde{g}$ by specifying a minimum confidence threshold $\theta$ for publishing predictions:
+
+\begin{equation}
+g_\theta(x) = \mathbbm{1}[\tilde{g}(x) > \theta]
+\end{equation}
+
+\subsection{Examples}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{example1.png}
+\caption{Three confidence functions for an example prediction function that has an overall accuracy of 6/10 on the evaluation set.}
+\label{fig:example1}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{example2.png}
+\caption{Three confidence functions for a stronger prediction function that has an overall accuracy of 9/10 on the evaluation set.}
+\label{fig:example2}
+\end{figure}
+
+
+In Figure~\ref{fig:example1}, we show three confidence functions $\tilde{g}_1^{(A)}$, $\tilde{g}_2^{(A)}$, $\tilde{g}_3^{(A)}$ for an example prediction function $f^{(A)}$. The first confidence function $\tilde{g}_1^{(A)}$ is pretty good; it assigns its highest confidences to four out of the six correct predictions, though unfortunately it also gives its lowest confidence to the correct prediction $f^{(A)}(x_1)$. By contrast, $\tilde{g}_2^{(A)}$ is a best-case confidence function (assigning its highest confidences to the six correct predictions) and $\tilde{g}_3^{(A)}$ is a worst-case confidence function (assigning its lowest confidences to the six correct predictions).
+
+Figure~\ref{fig:example2} shows three more confidence functions $\tilde{g}_1^{(B)}$, $\tilde{g}_2^{(B)}$, $\tilde{g}_3^{(B)}$ for a stronger prediction function $f^{(B)}$. This time, the first confidence function $\tilde{g}_1^{(B)}$ is not particularly good; it assigns its third-highest confidence to the only incorrect prediction. Again, $\tilde{g}_2^{(B)}$ is a best-case confidence function (assigning its highest confidences to the nine correct predictions) and $\tilde{g}_3^{(B)}$ is a worst-case confidence function (assigning its lowest confidences to the nine correct predictions). 
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.88\textwidth]{pr_curves.png}
+\caption{Precision-recall curves for confidence functions $\tilde{g}_1^{(A)}$, $\tilde{g}_2^{(A)}$, $\tilde{g}_3^{(A)}$ (top, blue) and confidence functions $\tilde{g}_1^{(B)}$, $\tilde{g}_2^{(B)}$, $\tilde{g}_3^{(B)}$ (bottom, green).}
+\label{fig:pr_curves}
+\end{figure*}
+
+
+\subsection{Evaluation with AUC Metrics}
+
+Typically, one evaluates the goodness of a confidence function by quantifying the trade-off between the quality and quantity of its published predictions. The prominent approaches -- risk/coverage curves \cite{el2010foundations}, receiver-operator (ROC) curves \cite{Davis06}, and precision-recall curves \cite{HendrycksG17} -- share many of the same benefits and drawbacks. In this paper, we will use precision-recall curves, mainly due to the NLP community's increased familiarity with them.
+
+In Figure~\ref{fig:pr_curves}, we show the precision-recall curves for the six confidence functions from the previous subsection. The aspiration of any confidence function is to achieve an \textbf{A}rea \textbf{U}nder the \textbf{P}recision-\textbf{R}ecall curve (AUPR) of 1, which means that it has perfectly separated the correct and incorrect predictions of the prediction function. Among the examples, this has been achieved by confidence functions $\tilde{g}_2^{(A)}$ and $\tilde{g}_2^{(B)}$.
+
+A drawback with AUPR (and its analogs) is that its value is not interpretable without knowledge of the goodness of the prediction function. Consider the two confidence functions $\tilde{g}_1^{(A)}$ and $\tilde{g}_1^{(B)}$. Whereas $\tilde{g}_1^{(B)}$ is worse than choosing a random confidence function, $\tilde{g}_1^{(A)}$ is considerably better. However, the AUPR of the former exceeds that of the latter. This is because AUPR conflates the goodness of the confidence function and the goodness of the prediction function.
+
+One could imagine calibrating AUPR by taking into account the worst-case AUPR (i.e. the AUPRs for worst-case confidence functions $\tilde{g}_3^{(A)}$ and $\tilde{g}_3^{(B)}$) but we will adopt an even simpler approach by amending a recent proposal by \cite{xin-etal-2021-art}.
+
+\subsection{Evaluation with Kendall-Tau Distance}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{ranked.png}
+\caption{The predictions of Figure~\ref{fig:example1}, sorted by increasing confidence.}
+\label{fig:ranked}
+\end{figure}
+
+
+If we sort predictions by increasing confidence (as in Figure~\ref{fig:ranked}), a best-case confidence function (e.g. $\tilde{g}_2^{(A)}$) ranks all incorrect predictions below all correct predictions, while a worst-case confidence function (e.g. $\tilde{g}_3^{(A)}$) ranks all \emph{correct} predictions below all \emph{incorrect} predictions. Observing this, \cite{xin-etal-2021-art} proposes a rank-based evaluation metric for selective prediction called \textbf{R}eversed \textbf{P}air \textbf{P}roportion (RPP), which is a normalized count of pairwise ranking errors. Although they do not make this connection in their paper, RPP is a normalized version of Kendall-Tau distance: 
+\begin{gather*}
+\tau_{dist}(\tilde{g} ; f, \mathbf{x}) = \sum_{\substack{
+x_i \in \mathcal{C}(f, \mathbf{x})\\
+x_j \in \overline{\mathcal{C}}(f, \mathbf{x})}} \mathbbm{1}[\tilde{g}(x_i) < \tilde{g}(x_j)] \\
+RPP = \frac{\tau_{dist}(\tilde{g} ; f, \mathbf{x})}{n^2}
+\end{gather*}
+
+For instance, confidence function $\tilde{g}_1^{(A)}$ has a $\tau_{dist}$ of 7 (it ranks correct instance $x_1$ below 4 incorrect predictions, and instance $x_3$ below 3 incorrect predictions) and an RPP of $\frac{7}{100}$. For the best-case confidence function $\tilde{g}_2^{(A)}$, $\tau_{dist} = RPP = 0$. 
+
+Unfortunately, choosing $n^2$ as their denominator means that RPP suffers the same problem as AUPR: its value cannot be interpreted\footnote{\cite{xin-etal-2021-art} seem unaware of this issue, directly comparing the RPP of confidence functions for different prediction functions, leading to some unjustified conclusions.} independently of the goodness of the prediction function. Consider the RPP for our ``worse-than-random" confidence function $\tilde{g}_1^{(B)}$. Like $\tilde{g}_1^{(A)}$, it has a $\tau_{dist}$ of 7 (it ranks incorrect instance $x_8$ above 7 correct predictions) and thus an RPP of $\frac{7}{100}$. Even though $\tilde{g}_1^{(A)}$ is better than random and $\tilde{g}_1^{(B)}$ is worse than random, they end up with the same RPP. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{ranked2.png}
+\caption{The predictions of $\tilde{g}_1^{(B)}$, sorted by increasing confidence. Both $\tau_{dist}$ and RPP for $\tilde{g}_1^{(A)}$ and $\tilde{g}_1^{(B)}$ are equivalent.}
+\label{fig:ranked2}
+\end{figure}
+
+Fortunately, there is a simple remedy. One possibility is to use alternative ranking statistics that account for ties in the two lists\footnote{In our case, the two lists are the list of confidences and the 0-1 list of prediction correctness. The second of these, having only zeroes and ones, has lots of ties.} we are comparing. Examples of these alternative statistics include Kendall-Tau-b and Kendall-Tau-c. However, these are a bit heavyweight for our purposes here. All we really need to do is normalize by the worst-case Kendall-Tau distance, which is not $n^2$, but rather $c(n-c)$, where $c$ is the number of correct predictions made by the prediction function. This gives us a measurement we will refer to as \emph{worst-case normalized Kendall-Tau distance}:
+
+\begin{equation}
+\tau_{wcn}(\tilde{g} ; f, \mathbf{x}) = \frac{\tau_{dist}(\tilde{g} ; f, \mathbf{x})}{c(|\mathbf{x}|-c)}
+\end{equation}
+
+\noindent where $c = |\mathcal{C}(f, \mathbf{x})|$. Worst-case normalized Kendall-Tau distance has the following attractive properties:
+
+\begin{itemize}
+	\item For a perfect confidence function $\tilde{g}$, $\tau_{wcn}(\tilde{g} ; f, \mathbf{x}) = 0$.
+	\item For a worst-case confidence function $\tilde{g}$, $\tau_{wcn}(\tilde{g} ; f, \mathbf{x}) = 1$.
+	\item For a random confidence function $\tilde{g}$, the expected value of $\tau_{wcn}(\tilde{g} ; f, \mathbf{x})$ is 0.5.
+\end{itemize}
+
+
+\section{Surveyed Techniques}
+
+Our main goal in this paper is a reproducible and rigorous comparison of a broad range of selective prediction techniques on NLP tasks. In this section, we describe the techniques we compare. 
+
+\subsection{Post-hoc Techniques}
+
+Several selective prediction techniques operate on an already trained neural prediction function.
+
+\subsubsection*{Softmax Response}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{softmax.png}
+\caption{\textsc{SoftmaxResponse} (SR), sometimes known as \textsc{MaxProb}, is the simplest confidence function. After applying softmax to the neural network output, it uses the maximum probability of the resulting distribution as its measure of confidence.}
+\label{fig:softmax}
+\end{figure}
+
+For neural prediction functions, the simplest-to-implement confidence function is probably \textsc{SoftmaxResponse}, pictured in Figure~\ref{fig:softmax} for a three-way sentiment analysis task. After applying softmax to the neural network output, \textsc{SoftmaxResponse} uses the maximum probability of the resulting distribution as its measure of confidence. The surprising effectiveness of such a simple approach was observed by \cite{HendrycksG17}, among others, although more recent papers have claimed to have made significant improvements over \textsc{SoftmaxResponse} with more involved techniques.
+
+\subsubsection*{Monte Carlo Dropout}
+
+\cite{gal2016dropout} propose leveraging dropout \cite{srivastava2014} to assess the uncertainty of a neural network on a particular instance. As usual, we turn off dropout at test time to make our prediction. But then we re-decode the input instance $k$ times with dropout enabled. This gives us $k$ estimates for the softmax probability of the prediction. There are two common methods \cite{kamath-etal-2020-selective} for synthesizing these $k$ estimates into a confidence measure: either we take the mean \cite{lakshminarayanan2017simple} of the estimates (a strategy we refer to as \textsc{McdM}), or the negative\footnote{We use the \emph{negative} variance  so that a greater value indicates a greater confidence.} variance \cite{feinman2017detecting,SmithG18} of the estimates (a strategy we refer to as \textsc{McdV}).
+
+
+\subsubsection*{Trustscore}
+
+\cite{jiang2018trust} advocate a nearest-neighbor-based confidence function. First, the training instances are converted\footnote{They are agnostic about how best to do so. We will return to this issue.} into vector encodings, and grouped according to their gold labels. Outliers are then filtered from each labeled group. Specifically, they sort the vectors (i.e. points in $R^d$ space) by the radius of the minimal ball centered at that vector that contains $k$ points from their labeled group. The percentage $\alpha \in [0, 1]$ of points with the largest such radii (i.e. the outliers) are removed. This filtered set\footnote{They fix $k=10$, but treat $\alpha$ as a tunable hyperparameter.} is called an $\alpha$-\emph{high density set}.
+
+The confidence assigned to an instance prediction, called \textsc{TrustScore}, is the ratio of the following two quantities:
+\begin{itemize}
+	\item the distance between the instance's vector encoding and the closest $\alpha$-high density set of a \emph{non-predicted} label
+	\item the distance between the instance's vector encoding and the $\alpha$-high density set of the \emph{predicted} label
+\end{itemize}
+
+%\subsubsection*{Posttraining}
+
+%A fourth option is to directly train an auxiliary classifier to distinguish instances that are correctly and incorrectly classified by the prediction function. A simple approach is to replace the output head of the prediction function's neural network with a binary output, and to train using the trained prediction function's predictions on a second training set. We use \textsc{GlueTrain-B} for this purpose, and use \textsc{GlueTrain-A} for early stopping. Since the positive (correct predictions) and negative (incorrect predictions) labels are unbalanced for any decent prediction function, we balance the training data by resampling the negative instances with replacement.
+
+\subsection{Specialized Loss Functions}
+
+We also survey techniques that simultaneously train a prediction function and an associated confidence function. 
+
+\subsubsection*{Error Regularization}
+
+\cite{xin-etal-2021-art} suggests adding an ``error regularization" term to the task's loss function $\mathcal{L}$ that directly penalizes ranking errors made by the confidence function $\tilde{g}$:
+\begin{gather*}
+\epsilon(f, \mathbf{x}) = \sum_{(x_i, x_j) \in \mathcal{C}(f, \mathbf{x}) \times \overline{\mathcal{C}}(f, \mathbf{x})}\mathsf{relu}(\tilde{g}(x_i)-\tilde{g}(x_j))^2 \\
+\mathcal{L}_{ereg}(f, \mathbf{x}) = \mathcal{L}(f, \mathbf{x}) + \lambda \cdot \sum_{\mathbf{b} \in \mathsf{batches}(\mathbf{x})} \epsilon(f, \mathbf{b})
+\end{gather*}
+
+\noindent where $\lambda \in \mathbb{R}^+$ is a tunable hyperparameter and $\mathsf{batches}(\mathbf{x})$ is the set of minibatches of training set $\mathbf{x}$.
+
+At training time, \cite{xin-etal-2021-art} uses \textsc{SoftmaxResponse} for the confidence function $\tilde{g}$, though at test time, they additionally experiment with \textsc{McdM} and \textsc{McdV}.
+
+
+\subsubsection*{Deep Abstaining Classifiers}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{dac.png}
+\caption{The Deep Abstaining Classifier (DAC) trains with a loss function that allows the prediction function to gain benefit from abstaining on difficult instances. After applying softmax to the neural network output, there are two ways to extract confidence: (1) SR (excluding the abstention label), (2) IA (one minus the abstention probability).}
+\label{fig:dac}
+\end{figure}
+
+
+A Deep Abstaining Classifier \cite{thulasidasan2019combating}, abbreviated DAC, explicitly introduces an extra abstention output $\bot$ to the neural network (see Figure~\ref{fig:dac}), and trains with a loss function that allows the prediction function to gain benefit from abstaining on difficult instances:
+\begin{equation}
+	(1-p_\bot) \mathcal{L}(f, \mathbf{x}) + \alpha \log \frac{1}{1-p_\bot}
+\end{equation}
+
+\noindent where $p_\bot$ is the probability according to abstention output $\bot$ after applying softmax, $\mathcal{L}(f, \mathbf{x})$ is standard cross-entropy loss over the non-abstention outputs, and $\alpha$ is a real-valued weight that is zero for the first $k$ (warmup) epochs of training, and is linearly scaled from $\alpha_{min}$ to $\alpha_{max}$ during the remaining epochs. The initial value $\alpha_{min}$ is set to be a fixed fraction\footnote{According to the paper, this fraction is $\frac{1}{64}$.} of a moving average of the loss during the warmup epochs. While the paper does not mention how $\alpha_{max}$ is determined, the authors provide code that we use in our experiments.
+
+At test time, there are two ways to extract a confidence: (1) SR: use the softmax response (excluding the abstention label), (2) IA: use the inverse of the probability mass accorded to abstention, i.e. $(1-p_\bot)$. This is equivalent to the sum of the probabilities of the non-abstention labels.
+
+\section{Experiment Design}
+\label{sec:expdesign}
+
+To draw reliable conclusions on a sufficiently varied set of NLP tasks, we have chosen to evaluate the techniques on all ten classification\footnote{We exclude only STS-B, a regression task.} tasks of the \textsc{GLUE} benchmark \cite{wang-etal-2018-glue}.
+
+
+Bearing in mind that our goal is to compare selective classification techniques, not to produce state-of-the-art prediction functions, we randomly partition each training set into two halves, using \textsc{GlueTrain-A} for training and \textsc{GlueTrain-B} for early stopping, hyperparameter tuning, and training\footnote{For this training, we use \textsc{GlueTrain-A} for early stopping.} the PT confidence function. Since the gold labels for GLUE test sets are not all publicly available, we reserve the development set (\textsc{GlueDev}) of each task for final evaluation. 
+
+For the post-hoc techniques, we train the prediction function by fine-tuning \textsc{bert-base-cased} using the transformers package \cite{wolf-etal-2020-transformers}, mostly using the training parameters recommended by its run\_glue.py script (the sole deviation is that we run each training for 6 epochs, rather than 3). For the techniques that require specialized loss functions, again we fine-tune \textsc{bert-base-cased} using the transformers package \cite{wolf-etal-2020-transformers}, but we substitute the loss function with the alternative specified by the selective prediction technique. 
+
+\subsection{Hyperparameter Tuning}
+
+In an effort to fairly evaluate each technique, we began with smaller-scale experiments to determine an appropriate setting of a technique's hyperparameters for the \textsc{GLUE} tasks. For these experiments, we used \textsc{GlueTrain-A} for training and \textsc{GlueTrain-B} for validation. We selected three \textsc{GLUE} tasks of various sizes and genres (one single-sentence task, one similarity-and-paraphrase task, and one inference task) as proxies: \textsc{sst-2}, \textsc{mrpc}, and \textsc{rte}. We ran 5 trials for each hyperparameter setting.
+
+\subsubsection*{Monte Carlo Dropout}
+
+Monte Carlo Dropout has a single hyperparameter $k$: the number of decodings of the training instance with dropout enabled. We experimented with $k \in \{10, 30, 50\}$. We found little discernible difference (see Figure~\ref{fig:mcd_hparams}) between the three settings, though slightly better results with $k=30$ versus $k=10$ convinced us to use $k=30$ for further experiments.
+
+
+\subsubsection*{TrustScore}
+
+To use \textsc{TrustScore}, we need to encode each instance as a vector. We chose to use BERT's final layer encoding (after finetuning) of the \textsc{[cls]} token.
+
+To select the hyperparameter settings for \textsc{TrustScore}, we followed \cite{jiang2018trust} and experimented with several powers of two for hyperparameter $\alpha$, specifically $\alpha \in \{0.5, 0.25, 0.125\}$. Also, since \textsc{TrustScore} is too slow in practice to run on large training sets, we sample $N$ training instances (without replacement) prior to running the TrustScore algorithm. In our tuning experiments, we tried the values $N \in \{800, 1600\}$. 
+
+We found little difference between the six hyperparameter settings (see Figure~\ref{fig:ts_hparams}) and set $N=800$ and $\alpha=0.25$ for further experiments.
+
+\subsubsection*{Error Regularization}
+
+At first glance, Error Regularization has only a single hyperparameter $\lambda$ (the multiplier for the regularization term). Following the appendix of \cite{xin-etal-2021-art}, we experimented with $\lambda \in \{0.01, 0.05, 0.1, 0.5\}$. Because Error Regularization uses an alternative loss function that can potentially affect the overall quality of the prediction function, we used AUPR (which blends the quality of the prediction function with the quality of the selection function) as our main evaluation metric. We found high variance between trials (see Figure~\ref{fig:ereg_hparams}), and selected $\lambda = 0.05$ (with the most consistently high performance) for further experiments.
+
+However, Error Regularization is also affected by the training batch size. If the batch size is 1, then the loss function reduces to the base loss function for the task. Larger batches increase the number of pairwise comparisons incorporated into the regularization term. Unfortunately, many GPU machines do not have sufficient memory to finetune PTLMs with large batch sizes, so we experimented to see the impact of batch size on the performance of Error Regularization.
+
+\subsubsection*{Deep Abstaining Classifier}
+
+One of the virtues of the Deep Abstaining Classifier is that it automatically adjusts its weights according to the cross-entropy loss observed during the warmup epochs, but it still has hyperparameters $\rho$ and $\alpha_{final}$ to determine precisely how this is done. In the code accompanying \cite{thulasidasan2019combating}, the default settings are $\rho=64$ and $\alpha_{final}=1.0$. Given these defaults, we experimented with $\rho \in \{32,64,128\}$ and $\alpha_{final}\in \{0.5, 1.0, 2.0\}$. The technique did not appear to be particularly sensitive to the choice of hyperparameters (see Figure~\ref{fig:dac_hparams}) and so we kept the default settings for further experiments. We used two warmup epochs (sufficient to get decent baseline accuracy for all GLUE tasks), and accordingly increased the total number of training epochs from 6 to 8.
+
+
+\section{Results}
+
+\subsection{Post-hoc Techniques}
+
+To evaluate the post-hoc techniques, we ran ten experiment trials on six\footnote{We did not include \textsc{wnli} because the training set was too small to train a prediction function that does better than random guessing. We did not include \textsc{qqp} because we had training difficulties that we could not resolve before the submission deadline. \textsc{sts-b} is a regression task, not a classification task. For evaluating \textsc{mnli}, we used matched accuracy, since the focus of this paper is not on domain shift.} GLUE tasks (\textsc{cola}, \textsc{mnli}, \textsc{mrpc}, \textsc{qnli}, \textsc{rte}, \textsc{sst-2}). Specifically, we trained ten prediction functions with different random seeds, and for each prediction function, we ran and evaluated the post-hoc selective prediction methods, using the hyperparameter settings established in Section~\ref{sec:expdesign}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{posthoc1.png}
+\caption{Vioplot.}
+\label{fig:posthocviolin}
+\end{figure}
+
+
+Figure~\ref{fig:posthocviolin} uses a violin plot\footnote{We used the \texttt{seaborn} package to create the plots: \url{https://seaborn.pydata.org/generated/seaborn.violinplot.html}.} to visualize the results on two GLUE datasets (\textsc{mrpc} and \textsc{sst-2}). Each "string" of the violin corresponds to the $\tau_{wcn}$ of a single trial on \textsc{GlueDev}, while the "body" of the violin is a kernel density estimation of the result distribution. We include a random baseline, which assigns a random confidence to each prediction. This provides empirical validation that the expected value of $\tau_{wcn}$ for a random confidence function is 0.5, and also gives a sense of the experimental variance for a particular dataset.
+
+Figure~\ref{fig:posthocviolin} seems to suggest that \textsc{TrustScore} has a considerably higher variance than the other techniques, and perhaps that \textsc{McdM} and \textsc{McdV} are slightly more effective than the simpler \textsc{MaxProb} approach.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{posthoc2.png}
+\caption{Pointplot.}
+\label{fig:posthocpointplot}
+\end{figure}
+
+
+However, the MC Dropout techniques are considerably more expensive to run (since they require multiple independent decodings). Are \textsc{McdM} and \textsc{McdV} meaningfully better than \textsc{MaxProb}? To answer this question, we estimate the expected $\tau_{wcn}$ difference between each technique and the \textsc{MaxProb} baseline. This can be achieved by averaging samples obtained through the following procedure:
+\begin{itemize}
+\item Choose a random task from a probability distribution over tasks.
+\item Train the prediction function for the task.	
+\item Run the candidate selective prediction technique and the baseline technique (i.e. \textsc{MaxProb}) and evaluate each using $\tau_{wcn}$.
+\item Return the difference between the obtained $\tau_{wcn}$ values.
+\end{itemize}
+
+\noindent Since we performed 10 trials for each of 6 GLUE tasks, we therefore have 60 samples\footnote{In this case, the ``probability distribution" over tasks is a uniform distribution over 6 GLUE tasks. Whether this is an effective proxy for NLP tasks in general is a legitimate question, but the NLP community does seem to have adopted GLUE as an important benchmark.} for the above estimate. Figure~\ref{fig:posthocpointplot} shows the estimate of the $\tau_{wcn}$ difference for each of our post-hoc techniques, along with a 95\% confidence interval. It suggests that with 95\% confidence, both \textsc{McdM} and \textsc{McdV} yield a significant $\tau_{wcn}$ improvement of at least 0.02 over the \textsc{MaxProb} baseline. 
+
+\subsection{Specialized Loss Functions}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{specialized1.png}
+\caption{Vioplot.}
+\label{fig:specializedviolin}
+\end{figure}
+
+To evaluate the specialized loss functions, we performed the same experiment: ten trials for each of the six GLUE tasks. Figure~\ref{fig:specializedviolin} shows a violin plot visualizing the trial results for the same two GLUE tasks as Figure~\ref{fig:posthocviolin}. As a point of comparison, we include the \textsc{MaxProb} result for the basic loss function (i.e. the result from Figure~\ref{fig:posthocviolin}). 
+
+At first glance, the error regularization approach appears to have some advantage over the basic \textsc{MaxProb} baseline for the \textsc{mrpc} task. To judge whether this is a consistent trend, we again estimate the expected $\tau_{wcn}$ difference between each technique and the basic \textsc{MaxProb} baseline. Figure~\ref{fig:specializedpointplot1} shows the estimate of the $\tau_{wcn}$ difference, along with a 95\% confidence interval, indicating that DAC provides no advantage, while the slight advantage provided by error regularization is not significant. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{specialized2.png}
+\caption{Vioplot.}
+\label{fig:specializedpointplot1}
+\end{figure}
+
+Moreover, there is a further complication. Worst-case normalized Kendall-tau distance specifically focuses on the quality of the confidence function, given a fixed prediction function. However, even if the specialized loss functions improve the efficiency of the confidence function, they might reduce the quality of the prediction function. Thus, we need to also evaluate the performance of these techniques using AUPR. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{specialized3.png}
+\caption{Vioplot.}
+\label{fig:specializedpointplot1}
+\end{figure}
+
+Figure~\ref{fig:specializedpointplot1} shows the estimate of the AUPR difference, along with a 95\% confidence interval, suggesting that any improvement in confidence ranking provided by error regularization is offset by a reduction in the quality of the prediction function that it trains.
+
+
+\section{Related Work}
+
+Selective prediction has a long tradition in machine learning, dating back to the  1950s \cite{chow1957optimum}. There is an extensive literature \cite{hellman1970nearest,fumera2002support,cortes2016learning} on training classifiers with the ability to abstain (also known as the "reject option"), usually specific to alternative classifiers like support vector machines.
+
+There is also a significant literature \cite{platt1999probabilistic,guo2017calibration,kumar2018trainable,wang-etal-2020-inference,desai-durrett-2020-calibration} on the topic of \emph{calibration}, i.e. the development of probabilistically interpretable confidence measures. In this paper, we restrict our focus to the relative rankings of selective predictors, and not the confidence values themselves. 
+
+
+While our survey focuses on techniques designed to identify ambiguous instances in the evaluation set (and, in the case of some of the alternative loss functions, to also ignore label noise in the training set), there is also interest in selective prediction techniques that operate successfully under domain shift \cite{kamath-etal-2020-selective}, i.e. when the distribution of evaluation instances differs from the training instances. Evaluation of such techniques is beyond the scope of the work described here, but we have plans to expand the \textsf{spred} package to evaluate selective prediction under domain shift.
+
+
+\section{Conclusion}
+
+With this effort, we have tried to write a paper that we would like to see more of in the NLP literature: a careful survey and empirical comparison of a diverse selection of recent techniques on a broad set of tasks. We have purposefully avoiding introducing new techniques to avoid ``having a horse in the race," instead focusing on doing our best to optimize each evaluated technique and provide a fair comparison. As a companion to the paper, the documented and unit-tested Python package \textsf{spred} affords the following benefits:
+\begin{enumerate}
+	\item \textbf{reproducibility: } JSON configurations for each experiment performed are provided with the library, as well as instructions for replicating them.
+	\item \textbf{transparency: } The documented code and unit tests can be easily inspected to independently confirm the accuracy of our implementations.
+	\item \textbf{extensibility: } We designed the code to make it simple to add new techniques and tasks. We provide tutorials demonstrating how to do so. These are intended both for selective prediction techniques that we have invariably overlooked in our survey, as well as novel contributions to the literature. 
+	\end{enumerate}
+
+\noindent Ever since \cite{HendrycksG17} identified \textsc{MaxProb} as a strong baseline for selective prediction, many papers have proposed techniques that reportedly improve upon it. By and large, these papers reported improvements based on single-trial experiments on a small selection of datasets. In our more comprehensive study, the only technique that demonstrated significant improvement over \textsc{MaxProb} was Monte Carlo Dropout \cite{gal2016dropout}. Our results should make it clear that, at least in the realm of selective prediction, there is significant variance between tasks, and between trials of the same experiment. Thus, this paper suggests caution in drawing conclusions from single-trial experiments, especially when one may be subconsciously invested in a particular technique. 
+
+\bibliography{anthology,custom}
+\bibliographystyle{acl_natbib}
+
+\appendix
+
+\section{Hyperparameter Tuning Details}
+\label{sec:tuningappendix}
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{mcd_hparams.png}
+\caption{Results of the hyperparameter tuning experiments for Monte Carlo Dropout.}
+\label{fig:mcd_hparams}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{ts_hparams.png}
+\caption{Results of the hyperparameter tuning experiments for TrustScore.}
+\label{fig:ts_hparams}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{ereg_hparams.png}
+\caption{Results of the hyperparameter tuning experiments for Error Regularization.}
+\label{fig:ereg_hparams}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.48\textwidth]{dac_hparams.png}
+\caption{Results of the hyperparameter tuning experiments for the Deep Abstaining Classifier.}
+\label{fig:dac_hparams}
+\end{figure}
+
+
+\end{document}
