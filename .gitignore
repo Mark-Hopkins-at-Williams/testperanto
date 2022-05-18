@@ -6,3 +6,7 @@ data/
 work/
 tutorials/.ipynb_checkpoint*
 results/
+docs/*/*.bbl
+docs/*/*.idx
+docs/*/*.ind
+docs/*/*.pdf
