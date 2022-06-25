@@ -121,6 +121,21 @@ def plot_statistic(stat_fn, corpora, x_values, axes="semilogx",
     plt.show()
 
 
+def average_absolute_difference(stat_fn, baseline, corpora, x_values):
+    baseline_x_vals, baseline_y_vals = stat_fn(baseline, x_values)
+    baseline_vals = dict(zip(baseline_x_vals, baseline_y_vals))
+    avg_abs_diffs = []
+    for corpus in corpora:
+        x_vals, y_vals = stat_fn(corpus, x_values)
+        candidate_vals = dict(zip(x_vals, y_vals))
+        abs_diffs = []
+        for x in baseline_vals:
+            if x in candidate_vals:
+                abs_diffs.append(abs(baseline_vals[x] - candidate_vals[x]))
+        avg_abs_diffs.append(sum(abs_diffs) / len(abs_diffs))
+    return avg_abs_diffs
+
+
 def plot_singleton_proportion(corpora, corpus_labels=None):
     """Plots singleton proportion versus overall token count.
 

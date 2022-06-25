@@ -259,3 +259,16 @@ register_word_generator("JapaneseStems",
 register_word_generator("JapanesePrepositions",
                         ListBasedWordGenerator(['naka','ue','chikako','shita','mae','yoko','tonari','ushiro']))
 
+
+
+german_syllables = ['flach', 'stau', 'bei', 'der', 'dich', 'dung', 'mein',
+                    'fin', 'frisch', 'frau', 'geh', 'glied', 'gun', 'gnug' 'haf', 'han', 'heim'
+                    'her', 'herr', 'hub', 'lag', 'hung', 'jahr', 'keit', 'kol', 'kom', 'kenn',
+                    'kon', 'lang', 'lich', 'ler', 'lung', 'man', 'mensch', 'milch', 'mon', 'nach',
+                    'nied', 'par', 'rech', 'rich', 'run', 'rung', 'schlag', 'sam',
+                    'schmid', 'sich', 'ster', 'sung', 'tag', 'tel', 'ter', 'tik', 'trum', 'tun',
+                    'tung', 'run', 'ver', 'vor', 'wir', 'wohn', 'zer', 'ziem', 'zum']
+syllable_generator = ListBasedWordGenerator(german_syllables)
+stem_generator = AtomBasedWordGenerator(syllable_generator,
+                                        CategoricalDistribution([0, 0, 0.4, 0.4, 0.1]))
+register_word_generator("german-stems", stem_generator)

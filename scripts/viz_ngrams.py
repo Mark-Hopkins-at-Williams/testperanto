@@ -1,6 +1,6 @@
 import argparse
 from testperanto.analysis import plot_statistic, singleton_proportion, type_count_over_time
-from testperanto.analysis import powers_of_2, multiples_of_1000
+from testperanto.analysis import powers_of_2, multiples_of_1000, average_absolute_difference
 from testperanto.util import stream_lines
 
 
@@ -22,6 +22,10 @@ def main(corpora, metric_name):
             label, filename = 'corpus{}'.format(i), corpus
         filenames.append(filename)
         corpus_labels.append(label)
+    streams = [stream_lines(filename) for filename in filenames]
+    diffs = average_absolute_difference(metric, streams[0], streams[1:], powers_of_2)
+    for corpus_label, avg_abs_diff in zip(corpus_labels[1:], diffs):
+        print(f"{corpus_label}: {avg_abs_diff}")
     streams = [stream_lines(filename) for filename in filenames]
     plot_statistic(metric, streams, powers_of_2, axes,
                    corpus_labels=corpus_labels, y_label=y_label)

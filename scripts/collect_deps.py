@@ -53,8 +53,9 @@ if __name__ == '__main__':
     parser.add_argument('-m', '--model', type=str,
                         help='name of spacy model (e.g. "en_core_web_md", "el_core_news_md")')
     args = parser.parse_args()
-    extract_chains(args.corpus, args.model)
-    for thing in spacy_chains(args.corpus, args.model):
-        print(thing)
+    spacy_dependencies(args.corpus, args.model)
+    #extract_chains(args.corpus, args.model)
+    #for thing in spacy_chains(args.corpus, args.model):
+    #    print(thing)
 
 

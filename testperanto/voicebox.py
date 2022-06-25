@@ -353,6 +353,34 @@ class JapaneseTheme(VoiceboxTheme):
         vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
         return vbox
 
+class GermanTheme(VoiceboxTheme):
+
+    def init_vbox(self):
+        vbox = ManagingVoicebox()
+        verb_morpher = SuffixMorpher(property_names=('COUNT',),
+                                     suffix_map={('sng',): 'e', ('plu',): 'en'})
+        noun_morpher = SuffixMorpher(property_names=('COUNT',),
+                                     suffix_map={('sng',): '', ('plu',): 'en'})
+        vbox.delegate('vb', MorphologyVoicebox(lookup_word_generator('german-stems'), [verb_morpher]))
+        vbox.delegate('nn', MorphologyVoicebox(lookup_word_generator('german-stems'), [noun_morpher]))
+        dt_morph = SuffixMorpher(property_names=('COUNT', 'CASE', 'GENDER'),
+                                 suffix_map={('sng', 'nom', 'm'): 'der',
+                                             ('plu', 'nom', 'm'): 'die',
+                                             ('sng', 'acc', 'm'): 'den',
+                                             ('plu', 'acc', 'm'): 'die',
+                                             ('sng', 'nom', 'f'): 'die',
+                                             ('plu', 'nom', 'f'): 'die',
+                                             ('sng', 'acc', 'f'): 'die',
+                                             ('plu', 'acc', 'f'): 'die',
+                                             ('sng', 'nom', 'n'): 'das',
+                                             ('plu', 'nom', 'n'): 'die',
+                                             ('sng', 'acc', 'n'): 'das',
+                                             ('plu', 'acc', 'n'): 'die'
+                                             })
+        vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
+        return vbox
+
+register_voicebox_theme("deutsch", GermanTheme)
 
 register_voicebox_theme("goose", MotherGooseTheme)
 register_voicebox_theme("english", MotherGooseTheme)
