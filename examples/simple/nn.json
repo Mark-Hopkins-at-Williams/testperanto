@@ -2,7 +2,7 @@
     "distributions": [
         {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.9}
     ],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qnn~$z1", "zdists": ["nn"]},
         {"rule": "$qnn~$y1 -> (NN (@nn (STEM nn~$y1) (COUNT sng)))"}
     ]

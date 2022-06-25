@@ -9,7 +9,7 @@
         {"name": "adj", "type": "pyor", "strength": 500, "discount": 0.4},
         {"name": "adj~$y1", "type": "pyor", "strength": 2.0, "discount": 0.6}
     ],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qs~$z1", "zdists": ["vb"]},
         {"rule": "$qs~$y1 -> (S (nsubj $qnp~$z1) (head $qvp~$y1))", "zdists": ["nn~subj~$y1"]},
         {"rule": "$qvp~$y1 -> (VP (head $qvb~$y1) (dobj $qnp~$z1))", "zdists": ["nn~obj~$y1"]},

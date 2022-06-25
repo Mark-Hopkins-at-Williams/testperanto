@@ -4,7 +4,7 @@
         {"name": "nn", "type": "pyor", "strength": 4500, "discount": 0.8},
         {"name": "adj", "type": "pyor", "strength": 150, "discount": 0.9}
     ],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qnp"},
         {"rule": "$qnp -> (NP (amod $qadj) (head $qnn))"},
         {"rule": "$qnn -> (NN (@nn (STEM nn~$z1) (COUNT sng)))", "zdists": ["nn"]},

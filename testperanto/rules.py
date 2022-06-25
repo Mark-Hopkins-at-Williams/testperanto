@@ -374,8 +374,8 @@ class IndexedRuleSet:
         """
 
         irule_configs = []
-        if 'macros' in config:
-            irule_configs = config['macros']
+        if 'rules' in config:
+            irule_configs = config['rules']
         irules = []
         for iconfig in irule_configs:
             iconfig['dist_manager'] = manager

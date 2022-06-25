@@ -31,13 +31,13 @@ def configure_transducer(config, switching_code=None):
     code = switching_code
     if code is not None:
         rules = []
-        for indexed_rule in config['macros']:
+        for indexed_rule in config['rules']:
             next_rule = {key: indexed_rule[key] for key in indexed_rule}
             if 'alt' in indexed_rule and 'switch' in indexed_rule and code[indexed_rule['switch']] == "1":
                 next_rule['rule'] = next_rule['alt']
             next_rule = {key: next_rule[key] for key in next_rule if key not in ['alt', 'switch']}
             rules.append(next_rule)
-        config = {"distributions": config["distributions"], "macros": rules}
+        config = {"distributions": config["distributions"], "rules": rules}
     manager = DistributionManager.from_config(config)
     grammar = IndexedRuleSet.from_config(config, manager)
     return TreeTransducer(grammar)
@@ -126,7 +126,7 @@ def rewrite_wrig_config(config):
     result = {key: config[key] for key in config if key != "grammar"}
     if "grammar" in config:
         rules = [rewrite_wrig_rule_config(rule) for rule in config["grammar"]]
-        result["macros"] = rules
+        result["rules"] = rules
     return result
 
 

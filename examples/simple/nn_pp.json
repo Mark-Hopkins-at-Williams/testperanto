@@ -6,7 +6,7 @@
         {"name": "prep", "type": "uniform", "domain": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]},
         {"name": "prep~$y1", "type": "pyor", "strength": 10, "discount": 0.0}
     ],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
         {"rule": "$qnp~$y1 -> (NP (head $qnn~$y1) (nmod $qpp~$z1))", "zdists": ["pobj~$y1"]},
         {"rule": "$qpp~$y1 -> (PP (case $qprep~$z1) (head $qnn~$y1))", "zdists": ["prep~$y1"]},

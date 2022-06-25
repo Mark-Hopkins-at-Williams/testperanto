@@ -15,7 +15,7 @@
         {"name": "prep.$y1", "type": "pyor", "strength": 10, "discount": 0.0},
         {"name": "count", "type": "uniform", "domain": ["sng", "plu"]}
     ],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qs.$z1.$z2", "zdists": ["vb", "count"]},
         {
             "rule": "$qs.$y1.$y2 -> (S (nsubj $qnp.$z1.$y2) (head $qvp.$y1.$y2))",

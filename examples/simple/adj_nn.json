@@ -4,7 +4,7 @@
         {"name": "adj", "type": "pyor", "strength": 500, "discount": 0.4},
         {"name": "adj~$y1", "type": "pyor", "strength": 20, "discount": 0.6}
     ],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qnp~$z1", "zdists": ["nn"]},
         {
             "rule": "$qnp~$y1 -> (NP (amod $qadj~$z1) (head $qnn~$y1))",

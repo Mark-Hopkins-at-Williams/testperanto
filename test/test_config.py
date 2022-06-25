@@ -23,7 +23,7 @@ GRAMMAR1 = {
         {"name": "adj", "type": "pyor", "strength": 100, "discount": 0.8},
         {"name": f"adj{DOT}$y1", "type": "pyor", "strength": 5, "discount": 0.5}
     ],
-    "macros": [
+    "rules": [
         {"rule": f"$qstart -> $qnp{DOT}$z1", "zdists": ["nn"]},
         {
             "rule": f"$qnp{DOT}$y1 -> (NP (amod $qadj) (head $qnn{DOT}$y1))",
@@ -37,7 +37,7 @@ GRAMMAR1 = {
 
 GRAMMAR2 = {
     "distributions": [],
-    "macros": [
+    "rules": [
         {"rule": "$qstart -> $qs"},
         {"rule": "$qs -> (S (nsubj $qsubj) (head $qvp))"},
         {
@@ -73,7 +73,7 @@ class TestConfig(unittest.TestCase):
         rule3 = {'rule': f'$qnprop{DOT}$y1 -> (NPROP def plu)'}
         rule4 = {'rule': f'$qnprop{DOT}$y1 -> (NPROP def sng)'}
         config = {"distributions": [{"name": "a", "type": 'uniform', "domain": [1, 2, 3]}],
-                  "macros": [rule1, rule2, rule3, rule4]}
+                  "rules": [rule1, rule2, rule3, rule4]}
         transducer = configure_transducer(config)
         in_tree = TreeNode.from_str(f'$qtop{DOT}0')
         out_trees = set([str(transducer.run(in_tree)) for _ in range(500)])
@@ -97,10 +97,10 @@ class TestConfig(unittest.TestCase):
         expected = {'distributions': [{'name': 'vb', 'type': 'alternating'},
                                       {'name': 'nn', 'type': 'alternating'},
                                       {'name': f'nn{DOT}$y1', 'type': 'averager'}],
-                    'macros': [{'rule': f'$qtop -> (X $qs{DOT}$z1)', 'zdists': ['vb']},
-                               {'rule': f'$qs{DOT}$y1 -> (X $qnn{DOT}$z1 $qvb{DOT}$y1)', 'zdists': [f'nn{DOT}$y1']},
-                               {'rule': f'$qnn{DOT}$y1 -> (X (@verbatim noun{DOT}$y1))'},
-                               {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
+                    'rules': [{'rule': f'$qtop -> (X $qs{DOT}$z1)', 'zdists': ['vb']},
+                              {'rule': f'$qs{DOT}$y1 -> (X $qnn{DOT}$z1 $qvb{DOT}$y1)', 'zdists': [f'nn{DOT}$y1']},
+                              {'rule': f'$qnn{DOT}$y1 -> (X (@verbatim noun{DOT}$y1))'},
+                              {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
         rewritten = rewrite_wrig_config(config)
         self.assertEqual(expected, rewrite_wrig_config(rewritten))
         transducer = configure_transducer(rewritten)
