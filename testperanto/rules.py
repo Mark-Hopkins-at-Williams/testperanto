@@ -1,6 +1,6 @@
 ##
 # rules.py
-# Representations and algorithms for tree transducer rules and rule macros.
+# Representations and algorithms for tree transducer rules.
 ##
 
 import json
@@ -155,32 +155,32 @@ class TreeTransducerRule:
         return str(self.lhs) + ' -> ' + str(self.rhs)
 
 
-class TreeTransducerRuleMacro:
-    """Implementation of a tree transducer rule macro
+class IndexedTreeTransducerRule:
+    """Implementation of an indexed tree transducer rule.
 
-    Tree transducer rule macros have the form
+    Indexed tree transducer rules have the form
         t1 -> t2
     where t1 and t2 are both testperanto.trees.TreeNode objects.
 
-    A tree transducer rule macro is compact way of expressing a family of tree
+    An indexed tree transducer rule is a compact way of expressing a family of tree
     transducer rules, using y- and z-variables. Y-variables appear in the
     compound symbols of the rule lhs, and are used for matching input tree symbols
     and generating rules on the fly. Z-variables appear in the compound symbols of the
     rule rhs, and each is associated with a distribution that generates its value
     upon request.
 
-    For instance, suppose we initialize the following rule macro:
-        macro = TreeTransducerRuleMacro(rule='N.$y1 -> (NP nn.$z1 jj.$y1)',
-                                        zdists=[('nn',)],
-                                        dist_manager=example_distribution_manager())
+    For instance, suppose we initialize the following indexed rule:
+        irule = IndexedTreeTransducerRule(rule='N.$y1 -> (NP nn.$z1 jj.$y1)',
+                                          zdists=[('nn',)],
+                                          dist_manager=example_distribution_manager())
     where the example distribution manager associates 'nn' with a distribution
     that alternatively samples the numbers 0 and 100. Then, we can instantiate
-    a rule from the rule macro that matches input tree N.12 as follows:
-        macro.choose_rule(TreeNode.from_str('N.12'))
+    a rule from the indexed rule that matches input tree N.12 as follows:
+        irule.choose_rule(TreeNode.from_str('N.12'))
     which returns the rule:
         N.12 -> (NP nn.0 jj.12)
     If we call the method again:
-        macro.choose_rule(TreeNode.from_str('N.12'))
+        irule.choose_rule(TreeNode.from_str('N.12'))
     It returns the rule:
         N.12 -> (NP nn.100 jj.12)
     (because the value sampled from distribution 'nn' this time was 100).
@@ -192,9 +192,9 @@ class TreeTransducerRuleMacro:
     Methods
     -------
     choose_rule(in_tree, recursion_depth=0):
-        Expands the rule macro into a rule by replacing the y- and z- variables.
+        Expands the indexed rule into a CFG rule by replacing the y- and z- variables.
     get_rule_weight(recursion_depth)
-        Returns the rule macro weight when applied at a particular recursion depth.
+        Returns the indexed rule weight when applied at a particular recursion depth.
     """
 
     def __init__(self, rule, base_weight=1.0,
@@ -204,10 +204,10 @@ class TreeTransducerRuleMacro:
         Parameters
         ----------
         rule : str
-            String representation of the rule macro (use the format specified by
+            String representation of the indexed rule (use the format specified by
             TreeTransducerRule.from_str)
         base_weight : float
-            Base weight associated with any rule expanded from the rule macro
+            Base weight associated with any rule expanded from the indexed rule
         discount_factor : float
             Multiplicative penalty when the rule is applied at deeper recursion depths
         zdists : list[str]
@@ -225,40 +225,40 @@ class TreeTransducerRuleMacro:
         self.dist_manager = dist_manager
 
     def get_rule_weight(self, recursion_depth):
-        """Returns the weight to associate with rules expanded from this macro.
+        """Returns the weight to associate with rules expanded from this indexed rule.
 
         Parameters
         ----------
         recursion_depth : int
-            Indicates the depth of the derivation tree when this macro is applied
+            Indicates the depth of the derivation tree when this indexed rule is applied
 
         Returns
         -------
         float
-            Base weight of the rule macro, multiplied by the discount factor raised
+            Base weight of the indexed rule, multiplied by the discount factor raised
             to the power of the recursion depth.
         """
 
         return (self.discount_factor ** recursion_depth) * self.base_weight
 
     def choose_rule(self, in_tree, recursion_depth=0):
-        """Expands the rule macro into a rule by replacing the y- and z- variables.
+        """Expands the indexed rule into a transducer rule by replacing the y- and z- variables.
 
         The y-variables are set by matching the input tree, whereas the z-variables
         are sampled from the provided z-distributions.
 
-        For instance, suppose we initialize the following rule macro:
-            macro = TreeTransducerRuleMacro(rule='N.$y1 -> (NP nn.$z1 jj.$y1)',
-                                            zdists=[('nn',)],
-                                            dist_manager=example_distribution_manager())
+        For instance, suppose we initialize the following indexed rule:
+            irule = IndexedTreeTransducerRule(rule='N.$y1 -> (NP nn.$z1 jj.$y1)',
+                                              zdists=[('nn',)],
+                                              dist_manager=example_distribution_manager())
         where the example distribution manager associates 'nn' with a distribution
         that alternatively samples the numbers 0 and 100. Then, we can instantiate
-        a rule from the rule macro that matches input tree N.12 as follows:
-            macro.choose_rule(TreeNode.from_str('N.12'))
+        a rule from the indexed rule that matches input tree N.12 as follows:
+            irule.choose_rule(TreeNode.from_str('N.12'))
         which returns the rule:
             N.12 -> (NP nn.0 jj.12)
         If we call the method again:
-            macro.choose_rule(TreeNode.from_str('N.12'))
+            irule.choose_rule(TreeNode.from_str('N.12'))
         It returns the rule:
             N.12 -> (NP nn.100 jj.12)
         (because the value sampled from distribution 'nn' this time was 100).
@@ -296,8 +296,8 @@ class TreeTransducerRuleMacro:
         return str(self.rule.lhs) + ' -> ' + str(self.rule.rhs)
 
 
-class RuleMacroSet:
-    """A collection of TransducerRuleMacros.
+class IndexedRuleSet:
+    """A collection of IndexedTransducerRules.
 
     Methods
     -------
@@ -311,24 +311,24 @@ class RuleMacroSet:
         Applies the rule to an input tree if it matches the rule's lhs.
     """
 
-    def __init__(self, macros):
+    def __init__(self, irules):
         """
         Parameters
         ----------
-        macros : list[testperanto.rules.TreeTransducerRuleMacro]
-            The transducer rule macros to include in the grammar
+        irules : list[testperanto.rules.IndexedTreeTransducerRule]
+            The indexed rules to include in the grammar
         """
 
-        self.macros = macros
+        self.irules = irules
 
     def choose_rule(self, in_tree, recursion_depth=0):
         """Samples an applicable rule from the grammar.
 
-        First, the grammar finds all rule macros that can be applied to the input
-        tree, i.e. any macro that returns a non-None value for the call
-        macro.choose_rule(in_tree).
+        First, the grammar finds all indexed rules that can be applied to the input
+        tree, i.e. any indexed rule that returns a non-None value for the call
+        irule.choose_rule(in_tree).
 
-        Then, rules are chosen from each applicable rule macros.
+        Then, rules are chosen from each applicable indexed rules.
 
         Finally, one of these rules is chosen in proportion to their associated weights.
 
@@ -347,12 +347,12 @@ class RuleMacroSet:
         Raises
         ------
         IndexError
-            If no rule macro in the grammar can be applied to the input tree
+            If no indexed rule in the grammar can be applied to the input tree
         """
 
         successful_matches = []
-        for macro in self.macros:
-            rule = macro.choose_rule(in_tree, recursion_depth)
+        for irule in self.irules:
+            rule = irule.choose_rule(in_tree, recursion_depth)
             if rule is not None:
                 successful_matches.append(rule)
         if len(successful_matches) == 0:
@@ -363,27 +363,27 @@ class RuleMacroSet:
 
     @staticmethod
     def from_config(config, manager):
-        """Constructs a grammar macro from a configuration dictionary.
+        """Constructs a IndexedRuleSet from a configuration dictionary.
 
         Parameters
         ----------
         config : dict
             The configuration dictionary
         manager : testperanto.distmanager.DistributionManager
-            The distribution manager to associate with the rule macros.
+            The distribution manager to associate with the indexed rules.
         """
 
-        macro_configs = []
+        irule_configs = []
         if 'macros' in config:
-            macro_configs = config['macros']
-        macros = []
-        for mconfig in macro_configs:
-            mconfig['dist_manager'] = manager
-            if 'zdists' in mconfig:
-                mconfig['zdists'] = [tuple(zdist.split('.')) for zdist in mconfig['zdists']]
-            macros.append(TreeTransducerRuleMacro(**mconfig))
-        return RuleMacroSet(macros)
+            irule_configs = config['macros']
+        irules = []
+        for iconfig in irule_configs:
+            iconfig['dist_manager'] = manager
+            if 'zdists' in iconfig:
+                iconfig['zdists'] = [tuple(zdist.split('.')) for zdist in iconfig['zdists']]
+            irules.append(IndexedTreeTransducerRule(**iconfig))
+        return IndexedRuleSet(irules)
 
     def __str__(self):
         """Overrides the string method."""
-        return '\n'.join([str(m) for m in self.macros])
+        return '\n'.join([str(m) for m in self.irules])

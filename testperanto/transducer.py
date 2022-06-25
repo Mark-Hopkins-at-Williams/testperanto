@@ -13,11 +13,11 @@ from testperanto.globals import EMPTY_STR
 from testperanto.substitutions import SymbolSubstitution
 from testperanto.matchers import LeafMatcher, SymbolMatcher
 from testperanto.distributions import CategoricalDistribution
-from testperanto.rules import TreeTransducerRule, TreeTransducerRuleMacro
+from testperanto.rules import TreeTransducerRule, IndexedTreeTransducerRule
 from testperanto.voicebox import lookup_voicebox_theme
 from testperanto.trees import TreeNode
 from testperanto.util import is_state
-from testperanto.rules import RuleMacroSet
+from testperanto.rules import IndexedRuleSet
 
 
 class TreeTransducer:
@@ -42,7 +42,7 @@ class TreeTransducer:
         ==rule 3 ==>  (S (NP (NN watashi) wa) (NN mark) (VB desu))
 
     Applicable rules are chosen in proportion to their weights, as determined by
-    testperanto.rules.RuleMacroSet.choose_rule().
+    testperanto.rules.IndexedRuleSet.choose_rule().
 
     """
 
@@ -67,7 +67,7 @@ class TreeTransducer:
         Raises
         ------
         IndexError
-            If there is a point when no rule macro in the grammar can be applied to
+            If there is a point when no indexed rule in the grammar can be applied to
             the input tree
         """
 

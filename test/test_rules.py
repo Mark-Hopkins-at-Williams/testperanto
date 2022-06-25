@@ -7,8 +7,8 @@ import unittest
 import testperanto.examples
 from testperanto.distmanager import DistributionManager
 from testperanto.globals import DOT
-from testperanto.rules import TreeTransducerRule, TreeTransducerRuleMacro
-from testperanto.rules import RuleMacroSet
+from testperanto.rules import TreeTransducerRule, IndexedTreeTransducerRule
+from testperanto.rules import IndexedRuleSet
 from testperanto.trees import TreeNode
 
 
@@ -51,56 +51,56 @@ class TestRules(unittest.TestCase):
         in_tree = TreeNode.from_str(f'(S (N{DOT}23 (DT the) (NN dog)) (VBD jumped))')
         self.assertEqual(rule.apply(in_tree), None)
 
-    def test_example_macro1(self):
-        macro = TreeTransducerRuleMacro(rule=f'N{DOT}$y1 -> (NP nn{DOT}$z1 jj{DOT}$y1)',
-                                        zdists=[('nn',)],
-                                        dist_manager=example_distribution_manager())
+    def test_example_indexed_rule1(self):
+        irule = IndexedTreeTransducerRule(rule=f'N{DOT}$y1 -> (NP nn{DOT}$z1 jj{DOT}$y1)',
+                                          zdists=[('nn',)],
+                                          dist_manager=example_distribution_manager())
         state1 = TreeNode.from_str(f'N{DOT}12')
         state2 = TreeNode.from_str(f'N{DOT}27')
-        self.assertEqual(str(macro.choose_rule(state1)), f'N{DOT}12 -> (NP nn{DOT}0 jj{DOT}12)')
-        self.assertEqual(str(macro.choose_rule(state2)), f'N{DOT}27 -> (NP nn{DOT}100 jj{DOT}27)')
-        self.assertEqual(str(macro.choose_rule(state2)), f'N{DOT}27 -> (NP nn{DOT}0 jj{DOT}27)')
-        self.assertEqual(str(macro.choose_rule(state1)), f'N{DOT}12 -> (NP nn{DOT}100 jj{DOT}12)')
+        self.assertEqual(str(irule.choose_rule(state1)), f'N{DOT}12 -> (NP nn{DOT}0 jj{DOT}12)')
+        self.assertEqual(str(irule.choose_rule(state2)), f'N{DOT}27 -> (NP nn{DOT}100 jj{DOT}27)')
+        self.assertEqual(str(irule.choose_rule(state2)), f'N{DOT}27 -> (NP nn{DOT}0 jj{DOT}27)')
+        self.assertEqual(str(irule.choose_rule(state1)), f'N{DOT}12 -> (NP nn{DOT}100 jj{DOT}12)')
 
-    def test_example_macro2(self):
-        macro = TreeTransducerRuleMacro(rule=f'$qnp{DOT}$y1 -> (NP nn{DOT}$z1 jj{DOT}$z2)',
-                                        base_weight=0.5,
-                                        discount_factor=1.0,
-                                        zdists=[('nn', 'rule1', '$y1'), ('jj','$z1', '$y1')],
-                                        dist_manager=example_distribution_manager())
+    def test_example_indexed_rule2(self):
+        irule = IndexedTreeTransducerRule(rule=f'$qnp{DOT}$y1 -> (NP nn{DOT}$z1 jj{DOT}$z2)',
+                                          base_weight=0.5,
+                                          discount_factor=1.0,
+                                          zdists=[('nn', 'rule1', '$y1'), ('jj','$z1', '$y1')],
+                                          dist_manager=example_distribution_manager())
         state1 = TreeNode.from_str(f'$qnp{DOT}1')
         state2 = TreeNode.from_str(f'$qnp{DOT}2')
         state3 = TreeNode.from_str(f'$qnp{DOT}3')
-        rule = macro.choose_rule(state1)
+        rule = irule.choose_rule(state1)
         self.assertEqual(str(rule), f'$qnp{DOT}1 -> (NP nn{DOT}0 jj{DOT}0)')
-        rule = macro.choose_rule(state1)
+        rule = irule.choose_rule(state1)
         self.assertEqual(str(rule), f'$qnp{DOT}1 -> (NP nn{DOT}36 jj{DOT}100)')
-        rule = macro.choose_rule(state1)
+        rule = irule.choose_rule(state1)
         self.assertEqual(str(rule), f'$qnp{DOT}1 -> (NP nn{DOT}0 jj{DOT}64)')
-        rule = macro.choose_rule(state2)
+        rule = irule.choose_rule(state2)
         self.assertEqual(str(rule), f'$qnp{DOT}2 -> (NP nn{DOT}60 jj{DOT}100)')
-        rule = macro.choose_rule(state3)
+        rule = irule.choose_rule(state3)
         self.assertEqual(str(rule), f'$qnp{DOT}3 -> (NP nn{DOT}0 jj{DOT}0)')
-        rule = macro.choose_rule(state1)
+        rule = irule.choose_rule(state1)
         self.assertEqual(str(rule), f'$qnp{DOT}1 -> (NP nn{DOT}36 jj{DOT}36)')
-        rule = macro.choose_rule(state1)
+        rule = irule.choose_rule(state1)
         self.assertEqual(str(rule), f'$qnp{DOT}1 -> (NP nn{DOT}0 jj{DOT}40)')
 
-    def test_grammar_macro(self):
+    def test_wrig(self):
         manager = DistributionManager()
         manager.add_config(('a',), {'type': 'uniform', 'domain': [1,2]})
-        macros = list()
-        macros.append(TreeTransducerRuleMacro(f'$qtop{DOT}$y1 -> (TOP $qn{DOT}$z1)', 1.0, 1.0, [('a',)], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qn{DOT}$y1 -> (N n{DOT}$y1 $qnprop{DOT}$z1 $qadjunct{DOT}$z2)', 1.0, 1.0, [('a',), ('a',)], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qnprop{DOT}$y1 -> (NPROP def plu)', 0.25, 1.0, [], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qnprop{DOT}$y1 -> (NPROP def sng)', 0.25, 1.0, [], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qnprop{DOT}$y1 -> (NPROP indef plu)', 0.25, 1.0, [], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qnprop{DOT}$y1 -> (NPROP indef sng)', 0.25, 1.0, [], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qadjunct{DOT}$y1 -> (ADJUNCT $qa{DOT}$z1)', 0.2, 1.0, [('a',)], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qadjunct{DOT}$y1 -> (ADJUNCT $qa{DOT}$z1 $qadjunct{DOT}$y1)', 0.8, 0.0, [('a',)], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qa{DOT}$y1 -> (A a{DOT}$z1)', 0.5, 1.0, [('a',)], manager))
-        macros.append(TreeTransducerRuleMacro(f'$qa{DOT}$y1 -> (A a{DOT}$z1 $qn{DOT}$z2)', 0.5, 0.5, [('a',), ('a',)], manager))
-        grammar = RuleMacroSet(macros)
+        irules = list()
+        irules.append(IndexedTreeTransducerRule(f'$qtop{DOT}$y1 -> (TOP $qn{DOT}$z1)', 1.0, 1.0, [('a',)], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qn{DOT}$y1 -> (N n{DOT}$y1 $qnprop{DOT}$z1 $qadjunct{DOT}$z2)', 1.0, 1.0, [('a',), ('a',)], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qnprop{DOT}$y1 -> (NPROP def plu)', 0.25, 1.0, [], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qnprop{DOT}$y1 -> (NPROP def sng)', 0.25, 1.0, [], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qnprop{DOT}$y1 -> (NPROP indef plu)', 0.25, 1.0, [], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qnprop{DOT}$y1 -> (NPROP indef sng)', 0.25, 1.0, [], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qadjunct{DOT}$y1 -> (ADJUNCT $qa{DOT}$z1)', 0.2, 1.0, [('a',)], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qadjunct{DOT}$y1 -> (ADJUNCT $qa{DOT}$z1 $qadjunct{DOT}$y1)', 0.8, 0.0, [('a',)], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qa{DOT}$y1 -> (A a{DOT}$z1)', 0.5, 1.0, [('a',)], manager))
+        irules.append(IndexedTreeTransducerRule(f'$qa{DOT}$y1 -> (A a{DOT}$z1 $qn{DOT}$z2)', 0.5, 0.5, [('a',), ('a',)], manager))
+        grammar = IndexedRuleSet(irules)
         in_tree = TreeNode.from_str(f'$qnprop{DOT}1')
         nprop_rules = set([str(grammar.choose_rule(in_tree)) for _ in range(100)])
         self.assertEqual(nprop_rules, {f'$qnprop{DOT}1 -> (NPROP def plu)',

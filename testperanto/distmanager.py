@@ -1,6 +1,6 @@
 ##
 # distmanager.py
-# A structure that manages the distributions (weightings) of a weighted grammar macro.
+# A structure that manages the distributions (weightings) of a WRIG.
 ##
 
 from abc import ABC, abstractmethod
@@ -13,7 +13,7 @@ from testperanto.substitutions import SymbolSubstitution
 
 
 class DistributionManager:
-    """Manages the weightings (usually distributions) of a weighted transducer macro.
+    """Manages the weightings (usually distributions) of a WRIG.
 
     Methods
     -------

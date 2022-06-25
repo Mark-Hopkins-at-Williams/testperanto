@@ -1,17 +1,17 @@
 ##
 # test_config.py
-# Unit tests for configuring tree transducer and grammar macros.
+# Unit tests for configuring indexed grammars and transducers.
 ##
 
 
 import unittest
 import testperanto.examples
-from testperanto.config import rewrite_gmacro_config, configure_transducer
-from testperanto.config import generate_sentences, init_grammar_macro
+from testperanto.config import rewrite_wrig_config, configure_transducer
+from testperanto.config import generate_sentences, init_wrig
 from testperanto.distmanager import DistributionManager
 from testperanto.globals import DOT, EMPTY_STR
-from testperanto.rules import TreeTransducerRule, TreeTransducerRuleMacro
-from testperanto.rules import RuleMacroSet
+from testperanto.rules import TreeTransducerRule, IndexedTreeTransducerRule
+from testperanto.rules import IndexedRuleSet
 from testperanto.transducer import TreeTransducer
 from testperanto.trees import TreeNode
 from testperanto.util import compound
@@ -101,8 +101,8 @@ class TestConfig(unittest.TestCase):
                                {'rule': f'$qs{DOT}$y1 -> (X $qnn{DOT}$z1 $qvb{DOT}$y1)', 'zdists': [f'nn{DOT}$y1']},
                                {'rule': f'$qnn{DOT}$y1 -> (X (@verbatim noun{DOT}$y1))'},
                                {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
-        rewritten = rewrite_gmacro_config(config)
-        self.assertEqual(expected, rewrite_gmacro_config(rewritten))
+        rewritten = rewrite_wrig_config(config)
+        self.assertEqual(expected, rewrite_wrig_config(rewritten))
         transducer = configure_transducer(rewritten)
         sents = generate_sentences(transducer, start_state='TOP', num_to_generate=5)
         self.assertEqual(sents[0].split()[0], 'noun.0')
@@ -123,7 +123,7 @@ class TestConfig(unittest.TestCase):
                                     {'name': 'nn', 'type': 'alternating'},
                                     {"name": "nn.$y1", "type": 'averager'}],
                   "grammar": [rule1, rule2, rule3, rule4]}
-        transducer = init_grammar_macro(config)
+        transducer = init_wrig(config)
         sents = generate_sentences(transducer, start_state='TOP', num_to_generate=5)
         self.assertEqual(sents[0], "noun.0 verb.0")
         self.assertEqual(sents[1], "noun.100 verb.100")
