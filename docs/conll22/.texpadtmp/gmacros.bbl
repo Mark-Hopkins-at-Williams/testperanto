@@ -1,0 +1,31 @@
+\begin{thebibliography}{4}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Kotz et~al.(2004)Kotz, Balakrishnan, and
+  Johnson}]{kotz2004continuous}
+Samuel Kotz, Narayanaswamy Balakrishnan, and Norman~L Johnson. 2004.
+\newblock \emph{Continuous multivariate distributions, Volume 1: Models and
+  applications}, volume~1.
+\newblock John Wiley \& Sons.
+
+\bibitem[{Newman(2005)}]{newman2005power}
+Mark~EJ Newman. 2005.
+\newblock Power laws, pareto distributions and zipf's law.
+\newblock \emph{Contemporary physics}, 46(5):323--351.
+
+\bibitem[{Pitman and Yor(1997)}]{pitman1997two}
+Jim Pitman and Marc Yor. 1997.
+\newblock The two-parameter poisson-dirichlet distribution derived from a
+  stable subordinator.
+\newblock \emph{The Annals of Probability}, pages 855--900.
+
+\bibitem[{Teh(2006)}]{teh-2006-hierarchical}
+Yee~Whye Teh. 2006.
+\newblock \href {https://doi.org/10.3115/1220175.1220299} {A hierarchical
+  {B}ayesian language model based on {P}itman-{Y}or processes}.
+\newblock In \emph{Proceedings of the 21st International Conference on
+  Computational Linguistics and 44th Annual Meeting of the Association for
+  Computational Linguistics}, pages 985--992, Sydney, Australia. Association
+  for Computational Linguistics.
+
+\end{thebibliography}

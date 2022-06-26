@@ -1,0 +1,52 @@
+This is BibTeX, Version 0.99d (TeX Live 2021)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: /Users/markhopkins/Documents/projects/testperanto/docs/conll22/.texpadtmp/emnlp2022.aux
+The style file: ../acl_natbib.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: ../anthology.bib
+Database file #2: ../custom.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+You've used 26 entries,
+            3571 wiz_defined-function locations,
+            881 strings with 12076 characters,
+and the built_in function-call counts, 19272 in all, are:
+= -- 1754
+> -- 755
+< -- 30
++ -- 250
+- -- 212
+* -- 1165
+:= -- 2823
+add.period$ -- 114
+call.type$ -- 26
+change.case$ -- 225
+chr.to.int$ -- 26
+cite$ -- 26
+duplicate$ -- 1307
+empty$ -- 1507
+format.name$ -- 281
+if$ -- 4356
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 250
+newline$ -- 134
+num.names$ -- 106
+pop$ -- 543
+preamble$ -- 1
+purify$ -- 174
+quote$ -- 0
+skip$ -- 1022
+stack$ -- 0
+substring$ -- 797
+swap$ -- 669
+text.length$ -- 13
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 225
+warning$ -- 0
+while$ -- 126
+width$ -- 0
+write$ -- 353
