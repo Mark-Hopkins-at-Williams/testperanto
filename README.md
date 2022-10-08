@@ -1,6 +1,18 @@
-![screenshot](images/screenshot.jpeg)
-# testperanto
-### a python package for generating artificial language
+<div align="center">
+    <br>
+    <h1>testperanto</h1>
+    <p>
+    an apache 2.0 python package for artificial language generation
+    </p>
+    <img alt="screenshot" src="images/screenshot.jpeg">
+    <hr/>
+</div>
+<p align="center">
+    <a href="https://github.com/Mark-Hopkins-at-Williams/testperanto/blob/main/LICENSE.md">
+        <img alt="License" src="https://img.shields.io/badge/license-apache2.0-blue">
+    </a>
+    <br/>
+</p>
 
 `testperanto` is designed to facilitate the generation of "linguistically realistic"
 artificial languages. Among its intended uses:
