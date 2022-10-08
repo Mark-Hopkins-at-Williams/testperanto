@@ -1,10 +1,10 @@
 <div align="center">
     <br>
     <h1>testperanto</h1>
+    <img alt="screenshot" src="images/screenshot.jpeg">
     <p>
     an apache 2.0 python package for artificial language generation
-    </p>
-    <img alt="screenshot" src="images/screenshot.jpeg">
+    </p> 
     <hr/>
 </div>
 <p align="center">
