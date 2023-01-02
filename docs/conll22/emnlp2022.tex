@@ -5,7 +5,7 @@
 \documentclass[11pt]{article}
 
 % Remove the "review" option to generate the final version.
-\usepackage[review]{EMNLP2022}
+\usepackage[]{EMNLP2022}
 
 % Standard package includes
 \usepackage{times}
@@ -70,7 +70,7 @@
 \author{Mark Hopkins \\
   Department of Computer Science \\
   Williams College \\
-\\}
+  \texttt{mh24@williams.edu} \\}
 
 \begin{document}
 \maketitle
@@ -84,7 +84,8 @@ In the World Atlas of Linguistic Structures, \citet{wals81} reports that the plu
 
 An obvious objection presents itself: what if the models aren't realistic enough? If not, then conclusions drawn from artificial languages may not transfer to natural languages. One response to this objection would be to abandon the entire enterprise, and with it the potential advantages of simulated data. An alternative is to follow the tradition of other disciplines who model natural systems (e.g. physics, geology, meteorology) and iterate on these models until they are sufficiently good predictors of observed phenomena.
 
-In this spirit, this paper builds upon the framework of \citet{white-cotterell-2021-examining}, who used weighted context-free grammars to construct artificial languages for studying the inductive biases of neural language models towards particular word orders. Observing that their framework did not account for selectional preference (the linguistic  phenomenon that head words and their syntactic dependents are not probabilistically independent), we generalize weighted context-free grammars by introducing the \emph{weighted random-access indexed grammar}, which facilitates the development of artificial languages that manifest selectional preference.
+In this spirit, this paper builds upon the framework of \citet{white-cotterell-2021-examining}, who used weighted context-free grammars to construct artificial languages for studying the inductive biases of neural language models towards particular word orders. Observing that their framework did not account for selectional preference (the linguistic  phenomenon that head words and their syntactic dependents are not probabilistically independent), we generalize weighted context-free grammars by introducing the \emph{weighted random-access indexed grammar}, which facilitates the development of artificial languages that manifest selectional preference. We also present a methodology for building grammars that emulate statistical relationships observed in natural language corpora. Inspired by \citet{teh-2006-hierarchical}, we use hierarchical Pitman-Yor processes \cite{pitman1997two} as the token-generating distributions for open-class categories (like noun, verb, and adjective). We set the hyperparameters by matching the statistics of the produced artificial languages with natural language corpora. As a pilot experiment for our framework, we partially replicate an experiment performed by \citet{white-cotterell-2021-examining} that studied the inductive bias of transformer and LSTM-based language models towards languages featuring various syntactic parameter configurations \cite{chomsky1981principles,baker2008atoms}.
+
 
 
 \begin{figure*}[tb]
@@ -95,22 +96,8 @@ In this spirit, this paper builds upon the framework of \citet{white-cotterell-2
 \end{figure*}
 
 
-%\begin{figure}[tb]
-%\begin{bnf*}
-%\bnfprod{S} {\bnfpn{NN} \bnfsp \bnfpn{VP}} \\
-%\bnfprod{VP} {\bnfpn{VB} \bnfsp \bnfpn{NN}}\\
-%\bnfprod{VB} {\bnfts{drank} \bnfor \bnfts{ate}} \\
-%\bnfprod{NN} {\bnfts{you} \bnfor \bnfts{it} \bnfor \bnfts{water} \bnfor \bnfts{food}}
-%\end{bnf*}
-%\caption{A CFG describing a small subset of English.\label{fig:pcfg1}}
-%\end{figure}
 
-
-We also present a methodology for building grammars that emulate statistical relationships observed in natural language corpora. Inspired by \citet{teh-2006-hierarchical}, we use hierarchical Pitman-Yor processes \cite{pitman1997two} as the token-generating distributions for open-class categories (like noun, verb, and adjective). We set the hyperparameters by matching the statistics of the produced artificial languages with natural language corpora.
-
-As a pilot experiment for our framework, we replicate an experiment performed by \citet{white-cotterell-2021-examining} that studied the inductive bias of transformer and LSTM-based language models towards languages featuring various syntactic parameter configurations \cite{chomsky1981principles,baker2008atoms}.
-
-Finally, we accompany this paper with an open-source Python package called \texttt{testperanto}, to allow researchers to use and refine our framework for further linguistic studies.
+Finally, we accompany this paper with a Python package called \texttt{testperanto}\footnote{\url{https://github.com/Mark-Hopkins-at-Williams/testperanto} (Apache 2.0 license)}, to allow researchers to use and refine our framework for further linguistic studies.
 
 \section{Related Work}
 
@@ -209,16 +196,19 @@ The main challenge: how do we construct a WCFG that derives its weights from the
 \label{fig:derivation}
 \end{figure}
 
-\begin{figure}[t]
-\begin{bnf*}
-\bnfprod{S[]} {\bnfpn{S[z_1]}} \\
-\bnfprod{S[y_1]} {\bnfpn{NN[z_1]} \bnfsp \bnfpn{VP[y_1]}} \\
-\bnfprod{VP[y_1]} {\bnfpn{VB[y_1]} \bnfsp \bnfpn{NN[z_1]}}\\
-\bnfprod{NN[y_1]} {\bnfts{noun.y_1}}\\
-\bnfprod{VB[y_1]} {\bnfts{verb.y_1}}
-\end{bnf*}
-\caption{An example indexed grammar.\label{fig:indexed_grammar}}
-\end{figure}
+%\begin{figure}[t]
+%\begin{bnf*}
+%\bnfprod{S[]} {\bnfpn{S[z_1]}} \\
+%\bnfprod{S[y_1]} {\bnfpn{NN[z_1]} \bnfsp \bnfpn{VP[y_1]}} \\
+%\bnfprod{VP[y_1]} {\bnfpn{VB[y_1]} \bnfsp \bnfpn{NN[z_1]}}\\
+%\bnfprod{VB[27]} {\bnfts{ate}} \\
+%\bnfprod{VB[28]} {\bnfts{drank}} \\
+%\bnfprod{NN[9]} {\bnfts{it}}\\
+%\bnfprod{NN[56]} {\bnfts{food}}\\
+%\bnfprod{NN[57]} {\bnfts{water}}
+%\end{bnf*}
+%\caption{An example indexed grammar.\label{fig:indexed_grammar}}
+%\end{figure}
 
 \begin{figure}
 \begin{tabular}{rcl|l} 

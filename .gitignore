@@ -10,3 +10,4 @@ docs/*/*.bbl
 docs/*/*.idx
 docs/*/*.ind
 docs/*/*.pdf
+docs/*/.texpadtmp
