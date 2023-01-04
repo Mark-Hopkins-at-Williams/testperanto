@@ -1,12 +1,8 @@
 import argparse
-import json
-import sys
 from tqdm import tqdm
 from testperanto.config import init_transducer_cascade
 from testperanto.globals import EMPTY_STR, DOT
-from testperanto.transducer import TreeTransducer, run_transducer_cascade
-from testperanto.trees import TreeNode
-from testperanto.voicebox import lookup_voicebox_theme
+from testperanto.transducer import run_transducer_cascade
 
 
 def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="goose"):
