@@ -1,0 +1,17 @@
+{
+    "distributions": [
+        {"name": "vb", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn.arg0", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn.arg1", "type": "pyor", "strength": 500, "discount": 0.4},
+        {"name": "nn.arg0.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
+        {"name": "nn.arg1.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6}
+    ],
+    "rules": [
+        {"rule": "$qstart -> $qs.$z1", "zdists": ["vb"]},
+        {"rule": "$qs.$y1 -> (X $qinst.$y1 $qarg0.$z1 $qarg1.$z2)", "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
+        {"rule": "$qinst.$y1 -> (INST (@vb (STEM vb.$y1)))"},
+        {"rule": "$qarg0.$y1 -> (ARG0 (@nn (STEM nn.$y1)))"},
+        {"rule": "$qarg1.$y1 -> (ARG1 (@nn (STEM nn.$y1)))"}
+    ]
+}

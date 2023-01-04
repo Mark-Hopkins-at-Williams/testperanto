@@ -292,6 +292,13 @@ class VerbatimVoicebox(Voicebox):
         return TreeNode.from_str(leaf_label)
 
 
+class InactiveVoicebox(Voicebox):
+
+    def run(self, syntax_tree):
+        return syntax_tree
+
+
+
 class VoiceboxTheme(ABC):
     """Constructs preconfigured voiceboxes.
 
@@ -310,6 +317,21 @@ class VoiceboxTheme(ABC):
         testperanto.voicebox.Voicebox
             The preconfigured voicebox
         """
+
+
+class InactiveTheme(VoiceboxTheme):
+    """A voicebox theme that does nothing to the output tree."""
+
+    def init_vbox(self):
+        vbox = ManagingVoicebox()
+        vbox.delegate('verbatim', InactiveVoicebox())
+        vbox.delegate('vb', InactiveVoicebox())
+        vbox.delegate('nn', InactiveVoicebox())
+        vbox.delegate('adj', InactiveVoicebox())
+        vbox.delegate('adv', InactiveVoicebox())
+        vbox.delegate('prep', InactiveVoicebox())
+        vbox.delegate('dt', InactiveVoicebox())
+        return vbox
 
 
 class MotherGooseTheme(VoiceboxTheme):
@@ -381,7 +403,7 @@ class GermanTheme(VoiceboxTheme):
         return vbox
 
 register_voicebox_theme("deutsch", GermanTheme)
-
+register_voicebox_theme("inactive", InactiveTheme)
 register_voicebox_theme("goose", MotherGooseTheme)
 register_voicebox_theme("english", MotherGooseTheme)
 register_voicebox_theme("japanese", JapaneseTheme)
