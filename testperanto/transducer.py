@@ -3,21 +3,9 @@
 # Implementation of tree transduction.
 ##
 
-import json
-from abc import ABC, abstractmethod
-from copy import deepcopy
-from tqdm import tqdm
 
-from testperanto.distmanager import DistributionManager
-from testperanto.globals import EMPTY_STR
-from testperanto.substitutions import SymbolSubstitution
-from testperanto.matchers import LeafMatcher, SymbolMatcher
-from testperanto.distributions import CategoricalDistribution
-from testperanto.rules import TreeTransducerRule, IndexedTreeTransducerRule
-from testperanto.voicebox import lookup_voicebox_theme
 from testperanto.trees import TreeNode
 from testperanto.util import is_state
-from testperanto.rules import IndexedRuleSet
 
 
 class TreeTransducer:
