@@ -1,0 +1,7 @@
+{
+    "distributions": [
+    ],
+    "rules": [
+        {"rule": "($qstart (X $x1 $x2 $x3)) -> (Y $x2 $x1 $x3)"}
+    ]
+}
