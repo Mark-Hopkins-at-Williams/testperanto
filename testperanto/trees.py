@@ -401,6 +401,16 @@ class TreeNode(object):
         """
         return self.label
 
+    def get_simple_label(self):
+        """Assumes that a label is a singleton tuple, and returns the first element.
+
+        Returns
+        -------
+        str:
+            The first element of the label of this node
+        """
+        return self.label[0]
+
     def get_children(self):
         """Returns a list of the children of the node.
 
