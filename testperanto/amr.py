@@ -2,38 +2,25 @@ from testperanto.trees import PositionBasedTree, str_to_position_tree, dfs_sort,
 from testperanto.util import compound
 import sys
 
-def amr_str(tree):
+def amr_str(tree, indent=""):
     """This function takes the root node of a tree and prints it out in amr format"""
 
-    def dfs(tree, postorder, count):
-        if tree.children:
-            for child in tree.children[::-1]:
-                if child.get_label()[0] == "VB":
-                    postorder.append("(s / " + str(child.children[0]))
-                elif child.get_label()[0] == "NN":
-                    postorder.append(":arg{} ".format(count) + '(' + str(child.children[0]) + ')')
-                    count += 1
-                elif child.is_leaf():
-                    postorder.append(":placeholder " + '(' + str(child.children[0]) + ')')
-                else:
-                    dfs(child, postorder, count)
-
-    postorder = []
-    dfs(tree, postorder, 0)
-    res = ""
-    tab = "   "
-    tabs = 0
-    for item in postorder:
-        res += "\n" + tab * tabs + item
-        if item[1] == 's':
-            tabs += 1
-        if item == postorder[-1]:
-            res += ')'
+    if len(tree.get_children()) == 0:
+        return indent + tree.get_label()
     
-    return res
+    child0 = tree.get_child(0)
+    assert child0.get_simple_label() == "instance"
+    instance0 = child0.get_child(0).get_simple_label()
+    res = f"({instance0}"
+    for child in tree.get_children()[1:]:
+        res += amr_str(child, indent + " " * 3)
+    res += ")"
+
+    prefix = f"\n{indent}:{tree.get_simple_label()} " if tree.get_simple_label() != "ROOT" else ""  
+    return prefix + res
 
 def main():
-    tree_str = "(S (NN man) (NN dog) (VB bark))"
+    tree_str = "(ROOT (instance want-01) (arg0 (instance boy)) (arg1 (instance go-01)))"
     tree = TreeNode.from_str(tree_str)
     print(amr_str(tree))
     #print(tree.children)
