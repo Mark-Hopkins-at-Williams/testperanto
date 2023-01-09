@@ -9,9 +9,11 @@
     ],
     "rules": [
         {"rule": "$qstart -> $qs.$z1", "zdists": ["vb"]},
-        {"rule": "$qs.$y1 -> (X $qinst.$y1 $qarg0.$z1 $qarg1.$z2)", "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
-        {"rule": "$qinst.$y1 -> (INST (@vb (STEM vb.$y1)))"},
-        {"rule": "$qarg0.$y1 -> (ARG0 (@nn (STEM nn.$y1)))"},
-        {"rule": "$qarg1.$y1 -> (ARG1 (@nn (STEM nn.$y1)))"}
+        {"rule": "$qs.$y1 -> (ROOT $qinst.$y1 $qarg0.$z1 $qarg1.$z2)", "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
+        {"rule": "$qinst.$y1 -> (inst vb.$y1)"},
+        {"rule": "$qarg0.$y1 -> (arg0 (inst nn.$y1))", "base_weight" : 0.8},
+        {"rule": "$qarg0.$y1 -> (arg0 (inst vb.$y1) $qarg0.$z1 $qarg1.$z2)", "base_weight": 0.2, "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
+        {"rule": "$qarg1.$y1 -> (arg1 (inst vb.$y1) $qarg0.$z1 $qarg1.$z2)", "base_weight": 0.3, "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
+        {"rule": "$qarg1.$y1 -> (arg1 (inst nn.$y1))", "base_weight": 0.7}
     ]
 }

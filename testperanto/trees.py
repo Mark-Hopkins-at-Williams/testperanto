@@ -409,7 +409,9 @@ class TreeNode(object):
         str:
             The first element of the label of this node
         """
-        return self.label[0]
+
+
+        return self.label[0] + ('' if len(self.label) == 1 else ('.' + self.label[1]))
 
     def get_children(self):
         """Returns a list of the children of the node.
