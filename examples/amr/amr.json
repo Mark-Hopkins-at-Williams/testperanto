@@ -1,19 +1,20 @@
 {
     "distributions": [
-        {"name": "vb", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn.arg0", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn.arg1", "type": "pyor", "strength": 500, "discount": 0.4},
-        {"name": "nn.arg0.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6},
-        {"name": "nn.arg1.$y1", "type": "pyor", "strength": 20.0, "discount": 0.6}
+        {"name": "vb", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "qvp.1", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "qvp.2", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "qvp.3", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "nn.$y1", "type": "pyor", "strength": 2, "discount": 0}
+
     ],
     "rules": [
         {"rule": "$qstart -> $qs.$z1", "zdists": ["vb"]},
-        {"rule": "$qs.$y1 -> (ROOT $qinst.$y1 $qarg0.$z1 $qarg1.$z2)", "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
+        {"rule": "$qs.$y1 -> (ROOT $qinst.$z1 $qarg0.$z1)", "base_weight": 0.2, "zdists": ["qvp.1"]},
+        {"rule": "$qs.$y1 -> (ROOT $qinst.$z1 $qarg0.$z1 $qarg1.$z1)",  "base_weight": 0.6, "zdists": ["qvp.2"]},
+        {"rule": "$qs.$y1 -> (ROOT $qinst.$z1 $qarg0.$z1 $qarg1.$z1 $qarg2.$z1)",  "base_weight": 0.2, "zdists": ["qvp.3"]},
         {"rule": "$qinst.$y1 -> (inst vb.$y1)"},
-        {"rule": "$qarg0.$y1 -> (arg0 (inst nn.$y1))", "base_weight" : 0.8},
-        {"rule": "$qarg0.$y1 -> (arg0 (inst vb.$y1) $qarg0.$z1 $qarg1.$z2)", "base_weight": 0.2, "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
-        {"rule": "$qarg1.$y1 -> (arg1 (inst vb.$y1) $qarg0.$z1 $qarg1.$z2)", "base_weight": 0.3, "zdists": ["nn.arg0.$y1", "nn.arg1.$y1"]},
-        {"rule": "$qarg1.$y1 -> (arg1 (inst nn.$y1))", "base_weight": 0.7}
+        {"rule": "$qarg0.$y1 -> (arg0 (inst nn.$z1))", "zdists": ["nn.$y1"]},
+        {"rule": "$qarg1.$y1 -> (arg1 (inst nn.$z1))","zdists": ["nn.$y1"]},
+        {"rule": "$qarg2.$y1 -> (arg2 (inst nn.$z1))","zdists": ["nn.$y1"]}
     ]
 }
