@@ -1,20 +1,29 @@
 {
     "distributions": [
         {"name": "vb", "type": "pyor", "strength": 5, "discount": 0},
-        {"name": "qvp.1", "type": "pyor", "strength": 5, "discount": 0},
-        {"name": "qvp.2", "type": "pyor", "strength": 5, "discount": 0},
-        {"name": "qvp.3", "type": "pyor", "strength": 5, "discount": 0},
-        {"name": "nn.$y1", "type": "pyor", "strength": 2, "discount": 0}
-
+        {"name": "vb.$y1", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "vb.$y1.1", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "vb.$y1.2", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "vb.$y1.3", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "vb.time", "type": "pyor", "strength": 5, "discount": 0},
+        {"name": "nn.arg0.$y1", "type": "pyor", "strength": 2, "discount": 0},
+        {"name": "nn.arg1.$y1", "type": "pyor", "strength": 2, "discount": 0},
+        {"name": "nn.arg2.$y1", "type": "pyor", "strength": 2, "discount": 0}
     ],
     "rules": [
-        {"rule": "$qstart -> $qs.$z1", "zdists": ["vb"]},
-        {"rule": "$qs.$y1 -> (ROOT $qinst.$z1 $qarg0.$z1)", "base_weight": 0.2, "zdists": ["qvp.1"]},
-        {"rule": "$qs.$y1 -> (ROOT $qinst.$z1 $qarg0.$z1 $qarg1.$z1)",  "base_weight": 0.6, "zdists": ["qvp.2"]},
-        {"rule": "$qs.$y1 -> (ROOT $qinst.$z1 $qarg0.$z1 $qarg1.$z1 $qarg2.$z1)",  "base_weight": 0.2, "zdists": ["qvp.3"]},
+        {"rule": "$qstart -> $qentity.0"},
+        {"rule": "$qentity.$y1 -> (X $qinst.$z1 $qarg0.$z1 $qmods)", "base_weight": 0.2, "zdists": ["vb.$y1.1"]},
+        {"rule": "$qentity.$y1 -> (X $qinst.$z1 $qarg0.$z1 $qarg1.$z1 $qmods)",  "base_weight": 0.6, "zdists": ["vb.$y1.2"]},
+        {"rule": "$qentity.$y1 -> (X $qinst.$z1 $qarg0.$z1 $qarg1.$z1 $qarg2.$z1 $qmods)",  "base_weight": 0.2, "zdists": ["vb.$y1.3"]},
         {"rule": "$qinst.$y1 -> (inst vb.$y1)"},
-        {"rule": "$qarg0.$y1 -> (arg0 (inst nn.$z1))", "zdists": ["nn.$y1"]},
-        {"rule": "$qarg1.$y1 -> (arg1 (inst nn.$z1))","zdists": ["nn.$y1"]},
-        {"rule": "$qarg2.$y1 -> (arg2 (inst nn.$z1))","zdists": ["nn.$y1"]}
+        {"rule": "$qarg0.$y1 -> (arg0 (X (inst nn.$z1)))", "zdists": ["nn.arg0.$y1"]},
+        {"rule": "$qarg1.$y1 -> (arg1 (X (inst nn.$z1)))", "zdists": ["nn.arg1.$y1"]},
+        {"rule": "$qarg2.$y1 -> (arg2 (X (inst nn.$z1)))", "zdists": ["nn.arg2.$y1"]},
+        {"rule": "$qmods -> (mods $qmod)"},
+        {"rule": "$qmods -> (mods -null-)"},
+        {"rule": "$qmod -> $qpolarity"},
+        {"rule": "$qmod -> $qtime"},
+        {"rule": "$qpolarity -> (polarity -)"},
+        {"rule": "$qtime -> (time $qentity.1)"}        
     ]
 }
