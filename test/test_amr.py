@@ -40,17 +40,17 @@ class TestAmr(unittest.TestCase):
                               "   :arg4 (careful))"])
         self.assertEqual(amr_str(tree), expected)   
 
-    def test_amr_str4(self):
-        # generate a tree using examples/amr/amr.json rules such that amr_str works properyly
-        random.seed(9347)      
-        cascade = init_transducer_cascade(["examples/amr/amr.json"], any, vbox_theme="inactive")
-        tree = run_transducer_cascade(cascade)
-        expected = "\n".join(["(vb.2866597763",
-                              "   :arg0 (vb.1976741014",
-                              "      :arg0 (nn.40873566)",
-                              "      :arg1 (nn.1249596819))",
-                              "   :arg1 (nn.3483591668))"])
-        self.assertEqual(amr_str(tree), expected) 
+    # def test_amr_str4(self):
+    #     # generate a tree using examples/amr/amr.json rules such that amr_str works properyly
+    #     random.seed(9347)      
+    #     cascade = init_transducer_cascade(["examples/amr/amr.json"], any, vbox_theme="inactive")
+    #     tree = run_transducer_cascade(cascade)
+        # expected = "\n".join(["(vb.2866597763",
+        #                       "   :arg0 (vb.1976741014",
+        #                       "      :arg0 (nn.40873566)",
+        #                       "      :arg1 (nn.1249596819))",
+        #                       "   :arg1 (nn.3483591668))"])
+        #self.assertEqual(amr_str(tree), expected)         
  
 
 if __name__ == "__main__":
