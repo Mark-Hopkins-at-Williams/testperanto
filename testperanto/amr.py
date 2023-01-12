@@ -33,3 +33,21 @@ def amr_str(tree, indent=""):
             res += f"\n{my_indent}:{child.get_simple_label()} {recursive}"
     res += ")"
     return res
+
+def amr_parse(filepath):
+    file = open(filepath, mode='r')
+    lines = file.readlines()
+    file.close()
+    amrs = []
+    curr = ""
+    for line in lines:
+        if line[0] == '#':
+            if curr != "":
+                amrs.append(curr)
+            curr = ""
+        else:
+            line = line.replace(":", " ").strip()
+            curr += " " + line
+    return amrs[1:]
+
+
