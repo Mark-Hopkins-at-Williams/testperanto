@@ -3,7 +3,7 @@ from tqdm import tqdm
 from testperanto.config import init_transducer_cascade
 from testperanto.globals import EMPTY_STR, DOT
 from testperanto.transducer import run_transducer_cascade
-
+from testperanto.amr import amr_str
 
 def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="goose"):
     cascade = init_transducer_cascade(config_files, switching_code, vbox_theme=vbox_theme)
@@ -14,7 +14,7 @@ def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="
             leaves = [leaf for leaf in leaves if leaf != EMPTY_STR]
             output = ' '.join(leaves)
         print(output)
-
+        print(amr_str(output))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate trees using testperanto.')
