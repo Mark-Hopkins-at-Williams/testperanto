@@ -1,10 +1,5 @@
-##
-# test_trees.py
-# Unit tests for trees.py.
-##
-
 import unittest
-from testperanto.amr import amr_str
+from testperanto.amr import amr_str, amr_parse
 from testperanto.config import init_transducer_cascade, run_transducer_cascade
 from testperanto.trees import TreeNode
 import random
@@ -39,6 +34,24 @@ class TestAmr(unittest.TestCase):
                               "      :arg3 (all))",
                               "   :arg4 (careful))"])
         self.assertEqual(amr_str(tree), expected)   
+
+
+    def test_amr_parse(self):
+        tree_str = '\n'.join([  '# ::id lpp_1943.295 ::date 2012-11-18T16:56:51 ::annotator ISI-AMR-05 ::preferred',
+                                '# ::snt " Yes , even flowers that have thorns . ',
+                                '# ::zh “有刺的也吃！”',
+                                '# ::save-date Tue Apr 23, 2013 ::file lpp_1943_295.txt',
+                                '(f / flower',
+                                '      :mod (e / even)',
+                                '      :ARG0-of (h / have-03',
+                                '            :ARG1 (t / thorn)))"'])
+        tree = amr_parse(tree_str)
+        expected = "\n".join(["(f/flower",
+                              "   :mod (e/even)",
+                              "   :ARG0-of (h/have-03",
+                              "      :ARG1 (t/thorn)))"])
+        self.assertEqual(amr_str(tree), expected)
+
 
     # def test_amr_str4(self):
     #     # generate a tree using examples/amr/amr.json rules such that amr_str works properyly

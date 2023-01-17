@@ -15,10 +15,9 @@ def amr_str(tree, indent=""):
     str
         a Penman-style formatting of the tree    
     """
-
     if len(tree.get_children()) == 0:
         return indent + tree.get_simple_label()
-    child0 = tree.get_child(0)    
+    child0 = tree.get_child(0)
     assert child0.get_simple_label() == "inst", f"tree: {tree}"
     inst0 = child0.get_child(0).get_simple_label()
     res = f"({inst0}"
@@ -30,7 +29,7 @@ def amr_str(tree, indent=""):
                     my_indent = indent + " " * 3
                     res += f"\n{my_indent}:{grandchild.get_simple_label()} {recursive}"
         else:
-            recursive = amr_str(child.get_child(0), indent + " " * 3)
+            recursive = amr_str(child, indent + " " * 3)
             my_indent = indent + " " * 3
             res += f"\n{my_indent}:{child.get_simple_label()} {recursive}"
     res += ")"
@@ -53,18 +52,43 @@ def amr_parse1(filepath):
     return amrs[1:]
 
 def amr_parse(s):
-    def construct_from_str_rec(postree, pos):
-        retval = TreeNode()
-        retval.label = postree.get_label(pos)
-        retval.children = []
-        for childpos in postree.get_children(pos):
-            retval.children.append(construct_from_str_rec(postree, childpos))
-        return retval
-    ptree = str_to_position_tree(s, TreeNode.string_to_label)
-    return construct_from_str_rec(ptree, ptree.get_root())
+    """ not done """
+    tokens = cool_split(s)
+    stack = [tok for tok in tokens][::-1]
+    root = TreeNode()
+    root.label = tuple(["ROOT"])
+    node_stack = [root]
+    while len(stack) > 0:
+        next_tok = stack.pop()
+        if next_tok == "(":
+            inst_node = TreeNode()
+            inst_node.label = tuple(['inst'])
+            node_stack[-1].children.append(inst_node)
+            node_stack.append(inst_node)
+            node = TreeNode()
+            label = stack.pop()
+            if stack[-1] == "/":
+                label = label + stack.pop() + stack.pop()
+            node.label = tuple([label])
+            node_stack[-1].children.append(node)
+
+        elif next_tok == ")":
+            node_stack.pop()
+
+        elif next_tok[0] == ":":
+            node_stack.pop()
+            node = TreeNode()
+            node.label = tuple([next_tok[1:]])
+            node_stack[-1].children.append(node)
+            node_stack.append(node)
+
+    return root
+
 
 def cool_split(s):
-    chunks = s.split()
+    lines = s.split('\n')
+    uncommented_lines = '\n'.join([line for line in lines if line[0] != '#'])
+    chunks = uncommented_lines.split()
     for chunk in chunks:
         next_token = ""
         for char in chunk:
