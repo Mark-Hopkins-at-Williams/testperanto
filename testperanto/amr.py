@@ -53,15 +53,21 @@ def amr_parse1(filepath):
     return amrs[1:]
 
 def amr_parse(s):
-    def construct_from_str_rec(postree, pos):
-        retval = TreeNode()
-        retval.label = postree.get_label(pos)
-        retval.children = []
-        for childpos in postree.get_children(pos):
-            retval.children.append(construct_from_str_rec(postree, childpos))
-        return retval
-    ptree = str_to_position_tree(s, TreeNode.string_to_label)
-    return construct_from_str_rec(ptree, ptree.get_root())
+    """ not done """
+    tokens = cool_split(s)
+    stack = [tok for tok in tokens]    
+    root = TreeNode()
+    root.label = "ROOT"
+    node_stack = [root]
+    while len(stack) > 0:
+        next_tok = stack.pop()
+        if next_tok == "(":
+            node = TreeNode()
+            label = stack.pop()
+            if stack[-1] == "/":
+                label = label + stack.pop() + stack.pop()
+            node.label = label
+
 
 def cool_split(s):
     chunks = s.split()
