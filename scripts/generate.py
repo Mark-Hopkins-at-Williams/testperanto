@@ -14,7 +14,7 @@ def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="
             leaves = [leaf for leaf in leaves if leaf != EMPTY_STR]
             output = ' '.join(leaves)
         print(output)
-        print(amr_str(output))
+        #print(amr_str(output))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate trees using testperanto.')

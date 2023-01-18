@@ -1,3 +1,6 @@
+from testperanto.trees import TreeNode
+
+
 def amr_str(tree, indent=""):
     """Takes the root node of a tree and prints it out in amr format.
     
@@ -13,10 +16,9 @@ def amr_str(tree, indent=""):
     str
         a Penman-style formatting of the tree    
     """
-
     if len(tree.get_children()) == 0:
         return indent + tree.get_simple_label()
-    child0 = tree.get_child(0)    
+    child0 = tree.get_child(0)
     assert child0.get_simple_label() == "inst", f"tree: {tree}"
     inst0 = child0.get_child(0).get_simple_label()
     res = f"({inst0}"
@@ -33,3 +35,57 @@ def amr_str(tree, indent=""):
             res += f"\n{my_indent}:{child.get_simple_label()} {recursive}"
     res += ")"
     return res
+
+def amr_parse(s):
+    """Creates a TreeNode for an AMR expressed in the Penman style."""
+    tokens = cool_split(s)
+    stack = [tok for tok in tokens][::-1]
+    root = TreeNode()
+    root.label = tuple(["ROOT"])
+    node_stack = [root]
+    while len(stack) > 0:
+        next_tok = stack.pop()
+        if next_tok == "(":
+            for label in ['X', 'inst']:
+                inst_node = TreeNode()
+                inst_node.label = tuple([label])
+                node_stack[-1].children.append(inst_node)
+                node_stack.append(inst_node)
+            node = TreeNode()
+            label = stack.pop()
+            if stack[-1] == "/":
+                label = label + stack.pop() + stack.pop()
+            node.label = tuple([label])
+            node_stack[-1].children.append(node)
+
+        elif next_tok == ")":
+            node_stack.pop()
+            node_stack.pop()
+
+        elif next_tok[0] == ":":
+            node_stack.pop()
+            node = TreeNode()
+            node.label = tuple([next_tok[1:]])
+            node_stack[-1].children.append(node)
+            node_stack.append(node)
+
+    return root.get_child(0)
+
+
+def cool_split(s):
+    """Tokenizes the Penman style AMR format."""
+    lines = s.split('\n')
+    uncommented_lines = '\n'.join([line for line in lines if line[0] != '#'])
+    chunks = uncommented_lines.split()
+    for chunk in chunks:
+        next_token = ""
+        for char in chunk:
+            if char == "(" or char == ")":
+                if len(next_token) > 0:
+                    yield next_token 
+                    next_token = ""
+                yield char
+            else:
+                next_token += char
+        if len(next_token) > 0:
+            yield next_token
