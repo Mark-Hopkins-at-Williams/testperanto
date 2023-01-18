@@ -1,4 +1,5 @@
-from testperanto.trees import TreeNode, str_to_position_tree
+from testperanto.trees import TreeNode
+
 
 def amr_str(tree, indent=""):
     """Takes the root node of a tree and prints it out in amr format.
@@ -15,10 +16,9 @@ def amr_str(tree, indent=""):
     str
         a Penman-style formatting of the tree    
     """
-
     if len(tree.get_children()) == 0:
         return indent + tree.get_simple_label()
-    child0 = tree.get_child(0)    
+    child0 = tree.get_child(0)
     assert child0.get_simple_label() == "inst", f"tree: {tree}"
     inst0 = child0.get_child(0).get_simple_label()
     res = f"({inst0}"
@@ -36,41 +36,47 @@ def amr_str(tree, indent=""):
     res += ")"
     return res
 
-def amr_parse1(filepath):
-    file = open(filepath, mode='r')
-    lines = file.readlines()
-    file.close()
-    amrs = []
-    curr = ""
-    for line in lines:
-        if line[0] == '#':
-            if curr != "":
-                amrs.append(curr)
-            curr = ""
-        else:
-            line = line.replace(":", " ").strip()
-            curr += " " + line
-    return amrs[1:]
-
 def amr_parse(s):
-    """ not done """
+    """Creates a TreeNode for an AMR expressed in the Penman style."""
     tokens = cool_split(s)
-    stack = [tok for tok in tokens]    
+    stack = [tok for tok in tokens][::-1]
     root = TreeNode()
-    root.label = "ROOT"
+    root.label = tuple(["ROOT"])
     node_stack = [root]
     while len(stack) > 0:
         next_tok = stack.pop()
         if next_tok == "(":
+            for label in ['X', 'inst']:
+                inst_node = TreeNode()
+                inst_node.label = tuple([label])
+                node_stack[-1].children.append(inst_node)
+                node_stack.append(inst_node)
             node = TreeNode()
             label = stack.pop()
             if stack[-1] == "/":
                 label = label + stack.pop() + stack.pop()
-            node.label = label
+            node.label = tuple([label])
+            node_stack[-1].children.append(node)
+
+        elif next_tok == ")":
+            node_stack.pop()
+            node_stack.pop()
+
+        elif next_tok[0] == ":":
+            node_stack.pop()
+            node = TreeNode()
+            node.label = tuple([next_tok[1:]])
+            node_stack[-1].children.append(node)
+            node_stack.append(node)
+
+    return root.get_child(0)
 
 
 def cool_split(s):
-    chunks = s.split()
+    """Tokenizes the Penman style AMR format."""
+    lines = s.split('\n')
+    uncommented_lines = '\n'.join([line for line in lines if line[0] != '#'])
+    chunks = uncommented_lines.split()
     for chunk in chunks:
         next_token = ""
         for char in chunk:

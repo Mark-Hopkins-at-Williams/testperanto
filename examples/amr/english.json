@@ -2,21 +2,19 @@
     "distributions": [
     ],
     "rules": [
-        {"rule": "($qstart (X $x1 $x2 $x3 $x4 $x5)) -> (Y ($qarg0 $x2) ($qmods $x5) ($qinst $x1) ($qarg1 $x3) ($qarg2 $x4))"},
-        {"rule": "($qstart (X $x1 $x2 $x3 $x4)) -> (Y ($qarg0 $x2) ($qmods $x4) ($qinst $x1) ($qarg1 $x3))"},
-        {"rule": "($qstart (X $x1 $x2 $x3)) -> (Y ($qarg0 $x2) ($qmods $x3) ($qinst $x1))"},
-        {"rule": "($qstart (X $x1)) -> ($qinst $x1)"},
+        {"rule": "($qstart $x1) -> ($qx $x1)"},
+        {"rule": "($qx (X $x1 $x2 $x3 $x4 $x5)) -> (Y ($qarg0 $x2) ($qmods $x5) ($qinst $x1) ($qarg1 $x3) ($qarg2 $x4))"},
+        {"rule": "($qx (X $x1 $x2 $x3 $x4)) -> (Y ($qarg0 $x2) ($qmods $x4) ($qinst $x1) ($qarg1 $x3))"},
+        {"rule": "($qx (X $x1 $x2 $x3)) -> (Y ($qarg0 $x2) ($qmods $x3) ($qinst $x1))"},
+        {"rule": "($qx (X $x1)) -> ($qinst $x1)"},
         {"rule": "($qinst (inst $x2)) -> (INST ($qvn $x2))"},
         {"rule": "($qvn vb.$y1) -> (VB (@vb (STEM vb.$y1)))"},
         {"rule": "($qvn nn.$y1) -> (NN (@nn (STEM nn.$y1)))"},
-        {"rule": "($qarg0 (arg0 (X $x2))) -> (ARG0 ($qinst $x2))"},
-        {"rule": "($qarg1 (arg1 (X $x3))) -> (ARG1 ($qinst $x3))"},
-        {"rule": "($qarg2 (arg2 (X $x4))) -> (ARG2 ($qinst $x4))"},
-        {"rule": "($qarg0 (arg0 $x1)) -> (ARG0 ($qstart $x1))"},
-        {"rule": "($qarg1 (arg1 $x1)) -> (ARG1 ($qstart $x1))"},
-        {"rule": "($qarg2 (arg2 $x1)) -> (ARG2 ($qstart $x1))"},
-        {"rule": "($qmods (mods $x5)) -> (MODS ($qmods2 $x5))"},
-        {"rule": "($qmods2 (time $x5)) -> (TIME ($qstart $x5))"},
-        {"rule": "($qmods2 $x5) -> (OTHER $x5)"}
+        {"rule": "($qarg0 (arg0 $x1)) -> (ARG0 ($qx $x1))"},
+        {"rule": "($qarg1 (arg1 $x1)) -> (ARG1 ($qx $x1))"},
+        {"rule": "($qarg2 (arg2 $x1)) -> (ARG2 ($qx $x1))"},
+        {"rule": "($qmods (mods (time $x5))) -> (MODS (TIME ($qx $x5)))"},
+        {"rule": "($qmods (mods (polarity -))) -> (MODS (POLARITY -))"},
+        {"rule": "($qmods (mods -null-)) -> (MODS -NULL-)"}
     ]
 }
