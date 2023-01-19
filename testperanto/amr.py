@@ -1,5 +1,5 @@
 from testperanto.trees import TreeNode
-
+from collections import defaultdict
 
 def amr_str(tree, indent=""):
     """Takes the root node of a tree and prints it out in amr format.
@@ -89,3 +89,38 @@ def cool_split(s):
                 next_token += char
         if len(next_token) > 0:
             yield next_token
+
+def get_statistics(tree, statistics):
+    """A helper method to extract statistics from a treeNode object"""
+    for child in tree.get_children():
+        if child.get_simple_label() == 'X' and child.get_num_children() > 0:
+            grandchildren = [g.get_simple_label() for g in child.get_children()]
+            statistics[tuple(grandchildren)] += 1
+        elif child.get_num_children() > 0:
+            get_statistics(child, statistics)
+    return statistics
+
+
+def text_stats(path):
+    """Takes an input text file path and returns a list of treeNodeAMRS"""
+    text_file = open(path, "r")
+    data = text_file.read()
+    text_file.close()
+    strings = data.split("\n\n")
+
+    treeNodes = []
+    for s in strings:
+        treeNodes.append(amr_parse(s))
+
+    statistics = defaultdict()
+    #print(treeNodes)
+    for tree in treeNodes:
+        # print(tree)
+        get_statistics(tree, statistics)
+    return statistics
+
+            
+
+    
+
+

@@ -8,12 +8,12 @@
         {"rule": "($qx (X $x1 $x2 $x3)) -> (Y ($qarg0 $x2) ($qmods $x3) ($qinst $x1))"},
         {"rule": "($qx (X $x1)) -> ($qinst $x1)"},
         {"rule": "($qinst (inst $x2)) -> (INST ($qvn $x2))"},
-        {"rule": "($qvn vb.$y1) -> (VB (@vb (STEM vb.$y1)))"},
-        {"rule": "($qvn nn.$y1) -> (NN (@nn (STEM nn.$y1)))"},
+        {"rule": "($qvn vb.$y1) -> (VB (@vb (STEM vb.$y1) (PERSON 3) (COUNT sng) (DEF def) (TENSE present)))"},
+        {"rule": "($qvn nn.$y1) -> (NN (@nn (STEM nn.$y1) (PERSON 3) (COUNT sng) (DEF def) (TENSE present)))"},
         {"rule": "($qarg0 (arg0 $x1)) -> (ARG0 ($qx $x1))"},
         {"rule": "($qarg1 (arg1 $x1)) -> (ARG1 ($qx $x1))"},
         {"rule": "($qarg2 (arg2 $x1)) -> (ARG2 ($qx $x1))"},
-        {"rule": "($qmods (mods (time $x5))) -> (MODS (TIME ($qx $x5)))"},
+        {"rule": "($qmods (mods (location $x5))) -> (MODS (LOCATION ($qinst $x5)))"},
         {"rule": "($qmods (mods (polarity -))) -> (MODS (POLARITY -))"},
         {"rule": "($qmods (mods -null-)) -> (MODS -NULL-)"}
     ]

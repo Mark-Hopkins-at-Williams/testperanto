@@ -1,8 +1,7 @@
 import unittest
-from testperanto.amr import amr_str, amr_parse
+from testperanto.amr import amr_str, amr_parse, text_stats
 from testperanto.config import init_transducer_cascade, run_transducer_cascade
 from testperanto.trees import TreeNode
-import random
 
 class TestAmr(unittest.TestCase):
 
@@ -51,6 +50,10 @@ class TestAmr(unittest.TestCase):
                               "   :ARG0-of (h/have-03",
                               "      :ARG1 (t/thorn)))"])
         self.assertEqual(amr_str(tree), expected)
+    
+    def test_text_stats(self):
+        amrs = text_stats("text.txt")
+        print(amrs)
         
  
 
