@@ -52,7 +52,7 @@ class TestAmr(unittest.TestCase):
         self.assertEqual(amr_str(tree), expected)
     
     def test_text_stats(self):
-        amrs = text_stats("text.txt")
+        amrs = text_stats("examples/amr/text.txt")
         print(amrs)
         
  

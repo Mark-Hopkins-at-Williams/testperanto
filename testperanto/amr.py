@@ -110,13 +110,19 @@ def text_stats(path):
 
     treeNodes = []
     for s in strings:
-        treeNodes.append(amr_parse(s))
+        parse = amr_parse(s)
+        if parse is not None:
+            treeNodes.append(parse)
+    
+    #for tree in treeNodes[:5]:
+    #    print(tree)
 
-    statistics = defaultdict()
+    statistics = defaultdict(int)
     #print(treeNodes)
     for tree in treeNodes:
         # print(tree)
         get_statistics(tree, statistics)
+    # return treeNodes
     return statistics
 
             
