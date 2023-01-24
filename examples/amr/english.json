@@ -3,7 +3,7 @@
     ],
     "rules": [
         {"rule": "($qstart $x1) -> ($qx $x1)"},
-        {"rule": "($qx (X $x1 $x2 $x3 $x4 $x5)) -> (Y ($qarg0 $x2) ($qmods $x5) ($qinst $x1) ($qarg1 $x3) ($qarg2 $x4))"},
+        {"rule": "($qx (X $x1 $x2 $x3 $x4 (mods (location $x5)))) -> (Y ($qmods (mods (location $x5))) , ($qarg0 $x2) ($qinst $x1) ($qarg1 $x3) ($qarg2 $x4))"},
         {"rule": "($qx (X $x1 $x2 $x3 $x4)) -> (Y ($qarg0 $x2) ($qmods $x4) ($qinst $x1) ($qarg1 $x3))"},
         {"rule": "($qx (X $x1 $x2 $x3)) -> (Y ($qarg0 $x2) ($qmods $x3) ($qinst $x1))"},
         {"rule": "($qx (X $x1)) -> ($qinst $x1)"},
@@ -14,7 +14,7 @@
         {"rule": "($qarg0 (arg0 $x1)) -> (ARG0 ($qx $x1))"},
         {"rule": "($qarg1 (arg1 $x1)) -> (ARG1 ($qx $x1))"},
         {"rule": "($qarg2 (arg2 $x1)) -> (ARG2 ($qx $x1))"},
-        {"rule": "($qmods (mods (location $x5))) -> (MODS (LOCATION ($qinst $x5)))"},
+        {"rule": "($qmods (mods (location $x5))) -> (PP in the ($qinst $x5))"},
         {"rule": "($qmods (mods (poss $x5))) -> (MODS (POSS ($qinst $x5)))"},
         {"rule": "($qmods (mods (direction $x5))) -> (MODS (DIRECTION ($qinst $x5)))"},
         {"rule": "($qmods (mods (beneficiary $x5))) -> (MODS (BENEFICIARY ($qinst $x5)))"},
