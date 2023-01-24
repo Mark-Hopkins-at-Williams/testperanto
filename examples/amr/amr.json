@@ -17,17 +17,43 @@
         {"rule": "$qentity.$y1 -> (X $qinst.$z1 $qarg0.$z1 $qarg1.$z1 $qarg2.$z1 $qmods)",  "base_weight": 0.2, "zdists": ["vb.$y1.3"]},
         {"rule": "$qinst.$y1 -> (inst vb.$y1)"},
         {"rule": "$qnn.$y1 -> (inst nn.$y1)"},
-        {"rule": "$qarg0.$y1 -> (arg0 (X (inst nn.$z1)))", "base_weight": 0.9, "zdists": ["nn.arg0.$y1"]},
+        {"rule": "$qadj.$y1 -> (inst adj.$y1)"},
+        {"rule": "$qarg0.$y1 -> (arg0 (X $qnn.$z1))", "base_weight": 0.9, "zdists": ["nn.arg0.$y1"]},
         {"rule": "$qarg0.$y1 -> (arg0 $qentity.$y1)", "base_weight": 0.1, "zdists": ["nn.arg0.$y1"]},
-        {"rule": "$qarg1.$y1 -> (arg1 (X (inst nn.$z1)))", "base_weight": 0.9, "zdists": ["nn.arg1.$y1"]},
+        {"rule": "$qarg1.$y1 -> (arg1 (X $qnn.$z1))", "base_weight": 0.9, "zdists": ["nn.arg1.$y1"]},
         {"rule": "$qarg1.$y1 -> (arg1 $qentity.$y1)", "base_weight": 0.1, "zdists": ["nn.arg1.$y1"]},
-        {"rule": "$qarg2.$y1 -> (arg2 (X (inst nn.$z1)))", "base_weight": 0.9, "zdists": ["nn.arg2.$y1"]},
+        {"rule": "$qarg2.$y1 -> (arg2 (X $qnn.$z1))", "base_weight": 0.9, "zdists": ["nn.arg2.$y1"]},
         {"rule": "$qarg2.$y1 -> (arg2 $qentity.$y1)", "base_weight":0.1, "zdists": ["nn.arg2.$y1"]},
         {"rule": "$qmods -> (mods $qmod)"},
         {"rule": "$qmods -> (mods -null-)"},
         {"rule": "$qmod -> $qpolarity"},
         {"rule": "$qmod -> $qlocation"},
+        {"rule": "$qmod -> $qposs"},
+        {"rule": "$qmod -> $qdirection"},
+        {"rule": "$qmod -> $qbeneficiary"},
+        {"rule": "$qmod -> $qdayperiod"},
+        {"rule": "$qmod -> $qdomain"},
+        {"rule": "$qmod -> $qmode"},
+        {"rule": "$qmod -> $qcondition"},
+        {"rule": "$qmod -> $qpurpose"},
+        {"rule": "$qmod -> $compared-to"},
         {"rule": "$qpolarity -> (polarity -)"},
-        {"rule": "$qlocation -> (location $qnn.$y1)"}        
+        {"rule": "$qlocation -> (location $qnn.$y1)"},
+        {"rule": "$qposs -> (poss $qnn.$y1)"},
+        {"rule": "$qdirection -> (direction $qnn.$y1)"},
+        {"rule": "$qbeneficiary -> (beneficiary $qnn.$y1)"},
+        {"rule": "$qdayperiod -> (dayperiod $qnn.$y1)"},
+        {"rule": "$qdomain -> (domain $qnn.$y1)"},
+        {"rule": "$qmode -> (mode $qadj.$y1)"},
+        {"rule": "$qcondition -> (condtion $qvb.$y1)"},
+        {"rule": "$qpurpose -> (purpose $qvb.$y1)"},
+        {"rule": "$qcompared-to -> (compared-to $qvb.$y1)"},
+        {"rule": "$qcompared-to -> (compared-to $qnn.$y1)"}
+
+
+        
+
+
+
     ]
 }
