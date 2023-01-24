@@ -103,16 +103,8 @@ def get_statistics(tree, statistics):
 
 def text_stats(path):
     """Takes an input text file path and returns a list of treeNodeAMRS"""
-    text_file = open(path, "r")
-    data = text_file.read()
-    text_file.close()
-    strings = data.split("\n\n")
-
-    treeNodes = []
-    for s in strings:
-        parse = amr_parse(s)
-        if parse is not None:
-            treeNodes.append(parse)
+    with open(path, "r", errors = "ignore") as text_file: 
+        treeNodes = file_parse(text_file.read())
     
     #for tree in treeNodes[:5]:
     #    print(tree)
@@ -124,6 +116,18 @@ def text_stats(path):
         get_statistics(tree, statistics)
     # return treeNodes
     return statistics
+
+def file_parse(data):
+    """ Takes in data as a string and parses it into trees based on amr convention """
+    strings = data.split("\n\n")
+
+    treeNodes = []
+    for s in strings:
+        parse = amr_parse(s)
+        if parse is not None:
+            treeNodes.append(parse)
+
+    return treeNodes
 
             
 
