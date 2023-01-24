@@ -34,11 +34,28 @@ def amr_str(tree, indent=""):
             my_indent = indent + " " * 3
             res += f"\n{my_indent}:{child.get_simple_label()} {recursive}"
     res += ")"
-    print(res)
     return res
 
 def amr_parse(s):
-    """Creates a TreeNode for an AMR expressed in the Penman style."""
+    """
+    Creates a TreeNode for an AMR expressed in the Penman style.
+
+    Parameters:
+    -----------
+    s: a string representation of the tree in AMR style
+
+    Returns:
+    root: the root node of a tree that contains the entered amr sentence information stored in a tree
+    
+    """
+
+    """ Helper method that goes through the process of creating an adding a node to the stack """
+    def create_node(label):
+        node = TreeNode()
+        node.label = tuple([label])
+        node_stack[-1].children.append(node)
+        node_stack.append(node)
+
     tokens = cool_split(s)
     stack = [tok for tok in tokens][::-1]
     root = TreeNode()
@@ -48,16 +65,14 @@ def amr_parse(s):
         next_tok = stack.pop()
         if next_tok == "(":
             for label in ['X', 'inst']:
-                inst_node = TreeNode()
-                inst_node.label = tuple([label])
-                node_stack[-1].children.append(inst_node)
-                node_stack.append(inst_node)
-            node = TreeNode()
+                create_node(label)
+
             label = stack.pop()
             if stack[-1] == "/":
                 label = label + stack.pop() + stack.pop()
-            node.label = tuple([label])
-            node_stack[-1].children.append(node)
+            create_node(label)
+            # We don't want to add this node to the stack, so we just pop it before continuing
+            node_stack.pop()
 
         elif next_tok == ")":
             node_stack.pop()
@@ -65,16 +80,10 @@ def amr_parse(s):
 
         elif next_tok[0] == ":":
             node_stack.pop()
-            node = TreeNode()
-            node.label = tuple([next_tok[1:]])
-            node_stack[-1].children.append(node)
-            node_stack.append(node)
+            create_node(next_tok[1:])
 
         else:
-            node = TreeNode()
-            node.label = tuple([next_tok])
-            node_stack[-1].children.append(node)
-            node_stack.append(node)
+            create_node(next_tok)
 
     return root.get_child(0)
 
