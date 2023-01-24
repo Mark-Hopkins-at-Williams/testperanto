@@ -17,7 +17,7 @@ def amr_str(tree, indent=""):
         a Penman-style formatting of the tree    
     """
     if len(tree.get_children()) == 0:
-        return indent + tree.get_simple_label()
+        return tree.get_simple_label()
     child0 = tree.get_child(0)
     assert child0.get_simple_label() == "inst", f"tree: {tree}"
     inst0 = child0.get_child(0).get_simple_label()
@@ -34,6 +34,7 @@ def amr_str(tree, indent=""):
             my_indent = indent + " " * 3
             res += f"\n{my_indent}:{child.get_simple_label()} {recursive}"
     res += ")"
+    print(res)
     return res
 
 def amr_parse(s):
@@ -66,6 +67,12 @@ def amr_parse(s):
             node_stack.pop()
             node = TreeNode()
             node.label = tuple([next_tok[1:]])
+            node_stack[-1].children.append(node)
+            node_stack.append(node)
+
+        else:
+            node = TreeNode()
+            node.label = tuple([next_tok])
             node_stack[-1].children.append(node)
             node_stack.append(node)
 

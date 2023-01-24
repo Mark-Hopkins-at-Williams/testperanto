@@ -81,19 +81,17 @@ class TestAmr(unittest.TestCase):
             '(a/answer-01',
             '   :ARG0 (i/i)',
             '   :ARG1 (e/eat-01',
-            '       :ARG1 (a2/anything',
-            '           :ARG1-of (f/find-01',
-            '               :ARG0 (i2/it)',
-            '               :location (r/reach-03',
-            '                   :ARG0 i2)))))'
+            '      :ARG1 (a2/anything',
+            '         :ARG1-of (f/find-01',
+            '            :ARG0 (i2/it)',
+            '            :location (r/reach-03',
+            '               :ARG0 i2)))))'
         ])
-        breakpoint()
         self.assertEqual(amr_str(treeNodes[1]), expected_two)
 
     def test_text_stats(self):
         amrs = text_stats("examples/amr/text.txt")
         print(amrs)
-        breakpoint()
         
  
 
