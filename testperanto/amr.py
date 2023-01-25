@@ -59,7 +59,7 @@ def amr_str(tree, indent=""):
         a Penman-style formatting of the tree    
     """
     if len(tree.get_children()) == 0:
-        return indent + tree.get_simple_label()
+        return tree.get_simple_label()
     child0 = tree.get_child(0)
     assert child0.get_simple_label() == "inst", f"tree: {tree}"
     inst0 = child0.get_child(0).get_simple_label()
@@ -79,7 +79,25 @@ def amr_str(tree, indent=""):
     return res
 
 def amr_parse(s):
-    """Creates a TreeNode for an AMR expressed in the Penman style."""
+    """
+    Creates a TreeNode for an AMR expressed in the Penman style.
+
+    Parameters:
+    -----------
+    s: a string representation of the tree in AMR style
+
+    Returns:
+    root: the root node of a tree that contains the entered amr sentence information stored in a tree
+    
+    """
+
+    """ Helper method that goes through the process of creating an adding a node to the stack """
+    def create_node(label):
+        node = TreeNode()
+        node.label = tuple([label])
+        node_stack[-1].children.append(node)
+        node_stack.append(node)
+
     tokens = cool_split(s)
     stack = [tok for tok in tokens][::-1]
     root = TreeNode()
@@ -89,16 +107,14 @@ def amr_parse(s):
         next_tok = stack.pop()
         if next_tok == "(":
             for label in ['X', 'inst']:
-                inst_node = TreeNode()
-                inst_node.label = tuple([label])
-                node_stack[-1].children.append(inst_node)
-                node_stack.append(inst_node)
-            node = TreeNode()
+                create_node(label)
+
             label = stack.pop()
             if stack[-1] == "/":
                 label = label + stack.pop() + stack.pop()
-            node.label = tuple([label])
-            node_stack[-1].children.append(node)
+            create_node(label)
+            # We don't want to add this node to the stack, so we just pop it before continuing
+            node_stack.pop()
 
         elif next_tok == ")":
             node_stack.pop()
@@ -106,10 +122,10 @@ def amr_parse(s):
 
         elif next_tok[0] == ":":
             node_stack.pop()
-            node = TreeNode()
-            node.label = tuple([next_tok[1:]])
-            node_stack[-1].children.append(node)
-            node_stack.append(node)
+            create_node(next_tok[1:])
+
+        else:
+            create_node(next_tok)
 
     return root.get_child(0)
 
@@ -145,17 +161,9 @@ def get_statistics(tree, statistics):
 
 
 def text_stats(path):
-    """Takes an input text file path and plots some statistics from the text's AMRS"""
-    text_file = open(path, "r")
-    data = text_file.read()
-    text_file.close()
-    strings = data.split("\n\n")
-
-    treeNodes = []
-    for s in strings:
-        parse = amr_parse(s)
-        if parse is not None:
-            treeNodes.append(parse)
+    """Takes an input text file path and returns a list of treeNodeAMRS"""
+    with open(path, "r", errors = "ignore") as text_file: 
+        treeNodes = file_parse(text_file.read())
     
     statistics = defaultdict(int)
     for tree in treeNodes:
@@ -185,6 +193,18 @@ def text_stats(path):
 
     plt.show()
 
+
+def file_parse(data):
+    """ Takes in data as a string and parses it into trees based on amr convention """
+    strings = data.split("\n\n")
+
+    treeNodes = []
+    for s in strings:
+        parse = amr_parse(s)
+        if parse is not None:
+            treeNodes.append(parse)
+
+    return treeNodes
 
             
 
