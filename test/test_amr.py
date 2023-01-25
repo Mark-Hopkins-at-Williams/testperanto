@@ -1,5 +1,5 @@
 import unittest
-from testperanto.amr import amr_str, amr_parse, text_stats
+from testperanto.amr import amr_str, amr_parse, text_stats, english_amr_str
 from testperanto.config import init_transducer_cascade, run_transducer_cascade
 from testperanto.trees import TreeNode
 
@@ -32,7 +32,56 @@ class TestAmr(unittest.TestCase):
                               "      :arg0 (i)",
                               "      :arg3 (all))",
                               "   :arg4 (careful))"])
-        self.assertEqual(amr_str(tree), expected)   
+        self.assertEqual(amr_str(tree), expected)  
+
+    def test_amr_english_str1(self):
+        tree_str = "(Y (PP in the (INST (NN (@nn (STEM nn.$y1) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))) , (ARG0 (INST (NN (@nn (STEM nn.1019611202) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))) (INST (VB (@vb (STEM vb.2121862795) (PERSON 3) (COUNT sng) (DEF def) (TENSE present)))) (ARG1 (INST (NN (@nn (STEM nn.3589675348) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))) (ARG2 (INST (NN (@nn (STEM nn.3122889036) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))))" 
+        tree = TreeNode.from_str(tree_str)
+        expected = "\n".join([
+            "(",
+            "   :PP (in the",
+            "      :INST (",
+            "         :NN (@nn (",
+            "            :STEM nn.$y1",
+            "            :PERSON 3",
+            "            :COUNT sng",
+            "            :DEF def",
+            "            :TENSE present))))",
+            "   :ARG0 (",
+            "      :INST (",
+            "         :NN (@nn (",
+            "            :STEM nn.1019611202",
+            "            :PERSON 3",
+            "            :COUNT sng",
+            "            :DEF def",
+            "            :TENSE present))))",
+            "   :INST (",
+            "      :VB (@vb (",
+            "         :STEM vb.2121862795",
+            "         :PERSON 3",
+            "         :COUNT sng",
+            "         :DEF def",
+            "         :TENSE present)))",
+            "   :ARG1 (",
+            "      :INST (",
+            "         :NN (@nn (",
+            "            :STEM nn.3589675348",
+            "            :PERSON 3",
+            "            :COUNT sng",
+            "            :DEF def",
+            "            :TENSE present))))",
+            "   :ARG2 (",
+            "      :INST (",
+            "         :NN (@nn (",
+            "            :STEM nn.3122889036",
+            "            :PERSON 3",
+            "            :COUNT sng",
+            "            :DEF def",
+            "            :TENSE present)))))"
+        ])
+        # print(english_amr_str(tree))
+        self.maxDiff = None
+        self.assertEqual(english_amr_str(tree), expected)
 
 
     def test_amr_parse(self):

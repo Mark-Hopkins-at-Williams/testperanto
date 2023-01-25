@@ -5,9 +5,6 @@ from testperanto.globals import EMPTY_STR, DOT
 from testperanto.transducer import run_transducer_cascade
 from testperanto.amr import amr_str
 
-import random
-random.seed(18)
-
 def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="goose"):
     cascade = init_transducer_cascade(config_files, switching_code, vbox_theme=vbox_theme)
     for _ in tqdm(range(num_to_generate)):
@@ -17,7 +14,8 @@ def main(config_files, switching_code, num_to_generate, only_sents, vbox_theme="
             leaves = [leaf for leaf in leaves if leaf != EMPTY_STR]
             output = ' '.join(leaves)
         print(output)
-        #print(amr_str(output))
+        # Commenting out because it doesn't work is passed through english
+        # print(amr_str(output))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Generate trees using testperanto.')
