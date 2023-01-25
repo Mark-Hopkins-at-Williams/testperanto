@@ -1,6 +1,7 @@
 import unittest
-from testperanto.amr import amr_str, amr_parse, text_stats, file_parse
+from testperanto.amr import amr_str, amr_parse, text_stats, file_parse, english_amr_str
 from testperanto.trees import TreeNode
+from testperanto.config import init_transducer_cascade, run_transducer_cascade
 
 class TestAmr(unittest.TestCase):
 
@@ -13,7 +14,7 @@ class TestAmr(unittest.TestCase):
         self.assertEqual(amr_str(tree), expected)
 
     def test_amr_str2(self):
-        tree_str = "(ROOT (inst obligate-01) (arg1 (X (inst i))) (arg2 (X (inst grow-02) (arg1 (X (inst i))) (arg2 (X (inst old))))))"
+        tree_str = "(X (inst obligate-01) (arg1 (X (inst i))) (arg2 (X (inst grow-02) (arg1 (X (inst i))) (arg2 (X (inst old))))))"
         tree = TreeNode.from_str(tree_str)
         expected = "\n".join(["(obligate-01",
                               "   :arg1 (i)",
@@ -21,6 +22,7 @@ class TestAmr(unittest.TestCase):
                               "      :arg1 (i)",
                               "      :arg2 (old)))"])
         self.assertEqual(amr_str(tree), expected)        
+
     
     def test_amr_str3(self):
         tree_str = "(ROOT (inst look-01) (arg0 (X (inst i))) (arg2 (X (inst around) (arg0 (X (inst i))) (arg3 (X (inst all))))) (arg4 (X (inst careful))))"
@@ -99,6 +101,18 @@ class TestAmr(unittest.TestCase):
                               "      :ARG1 (t/thorn)))"])
         self.assertEqual(amr_str(tree), expected)
     
+    def test_clausal_complement(self):
+        tree_str = "(X (inst vb.1) (arg0 (X (inst nn.2))) (arg1 (X (inst vb.5) (arg0 (X (inst nn.2))) (arg1 (X (inst nn.5))) (mods -null-))) (mods -null-))"
+        tree = TreeNode.from_str(tree_str) 
+        cascade = init_transducer_cascade(["examples/amr/english.json"], None, vbox_theme="goose")
+        #output = run_transducer_cascade(cascade, start_state=f'{tree_str}')
+        in_tree = TreeNode.from_str(f'($qstart {tree_str})')
+        transducer = cascade[0]
+        output = transducer.run(in_tree)
+        print(in_tree)
+        print(english_amr_str(output))
+        
+
     def test_file_parse(self):
         str_to_test = "\n".join([
             '# ::id lpp_1943.292 ::date 2012-11-18T16:49:43 ::annotator ISI-AMR-05 ::preferred',
