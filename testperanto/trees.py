@@ -477,6 +477,19 @@ class TreeNode(object):
                 result += self.get_child(i).get_leaves()
             return result
 
+    def pretty_print(self, indent=""):
+        if self.is_leaf():
+            retval = indent + TreeNode.label_to_string(self.label)
+        else:
+            retval = indent + '(' + TreeNode.label_to_string(self.label)
+            if len(self.children) == 1 and self.get_child(0).is_leaf():
+                retval += " " + self.get_child(0).pretty_print()
+            else:
+                for child in self.children:
+                    retval += '\n' + child.pretty_print(indent + " " * 4)
+            retval += ')'
+        return retval
+
     def __str__(self):
         if self.is_leaf():
             retval = TreeNode.label_to_string(self.label)
