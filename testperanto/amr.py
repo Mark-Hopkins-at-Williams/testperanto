@@ -2,47 +2,6 @@ from testperanto.trees import TreeNode
 from collections import defaultdict
 import matplotlib.pyplot as plt
 
-def english_amr_str(tree, indent=""):
-    """Takes the root node of a tree and prints it out in amr format. This particular method works for the further processed version from the english.json
-    
-    Parameters
-    ----------
-    tree : testperanto.trees.TreeNode
-        the input tree
-    indent : str
-        the base number of spaces to indent each line
-
-    Returns
-    -------
-    str
-        a Penman-style formatting of the tree    
-    """
-    res = ""
-    same_line = True
-    for child in tree.get_children():
-        has_at = '@' in child.get_simple_label()
-        if child.get_simple_label() == ',':
-            continue
-        
-        if child.get_simple_label().isupper() or has_at:
-            same_line = False 
-        
-        if same_line:
-            res += (" " if res else "") + child.get_simple_label()
-                
-        else:
-            recursive = english_amr_str(child, indent + " " * 3 if not has_at else indent)
-            my_indent = indent + " " * 3
-            precursor = f"{child.get_simple_label()}"
-            if not has_at:
-                precursor = f"\n{my_indent}:" + precursor
-                
-            res += f"{precursor} {recursive}"
-
-    if not same_line:
-        res = "(" + res + ")"
-    return res
-
 def amr_str(tree, indent=""):
     """Takes the root node of a tree and prints it out in amr format.
     
@@ -147,6 +106,7 @@ def cool_split(s):
                 next_token += char
         if len(next_token) > 0:
             yield next_token
+
 
 def get_statistics(tree, statistics):
     """A helper method to extract statistics from a treeNode object"""

@@ -1,7 +1,7 @@
 import unittest
-from testperanto.amr import amr_str, amr_parse, text_stats, file_parse, english_amr_str
+from testperanto.amr import amr_str, amr_parse, text_stats, file_parse
 from testperanto.trees import TreeNode
-from testperanto.config import init_transducer_cascade, run_transducer_cascade
+from testperanto.config import init_transducer_cascade
 
 class TestAmr(unittest.TestCase):
 
@@ -23,7 +23,6 @@ class TestAmr(unittest.TestCase):
                               "      :arg2 (old)))"])
         self.assertEqual(amr_str(tree), expected)        
 
-    
     def test_amr_str3(self):
         tree_str = "(ROOT (inst look-01) (arg0 (X (inst i))) (arg2 (X (inst around) (arg0 (X (inst i))) (arg3 (X (inst all))))) (arg4 (X (inst careful))))"
         tree = TreeNode.from_str(tree_str)
@@ -34,56 +33,6 @@ class TestAmr(unittest.TestCase):
                               "      :arg3 (all))",
                               "   :arg4 (careful))"])
         self.assertEqual(amr_str(tree), expected)  
-
-    def test_amr_english_str1(self):
-        tree_str = "(Y (PP in the (INST (NN (@nn (STEM nn.$y1) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))) , (ARG0 (INST (NN (@nn (STEM nn.1019611202) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))) (INST (VB (@vb (STEM vb.2121862795) (PERSON 3) (COUNT sng) (DEF def) (TENSE present)))) (ARG1 (INST (NN (@nn (STEM nn.3589675348) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))) (ARG2 (INST (NN (@nn (STEM nn.3122889036) (PERSON 3) (COUNT sng) (DEF def) (TENSE present))))))" 
-        tree = TreeNode.from_str(tree_str)
-        expected = "\n".join([
-            "(",
-            "   :PP (in the",
-            "      :INST (",
-            "         :NN (@nn (",
-            "            :STEM nn.$y1",
-            "            :PERSON 3",
-            "            :COUNT sng",
-            "            :DEF def",
-            "            :TENSE present))))",
-            "   :ARG0 (",
-            "      :INST (",
-            "         :NN (@nn (",
-            "            :STEM nn.1019611202",
-            "            :PERSON 3",
-            "            :COUNT sng",
-            "            :DEF def",
-            "            :TENSE present))))",
-            "   :INST (",
-            "      :VB (@vb (",
-            "         :STEM vb.2121862795",
-            "         :PERSON 3",
-            "         :COUNT sng",
-            "         :DEF def",
-            "         :TENSE present)))",
-            "   :ARG1 (",
-            "      :INST (",
-            "         :NN (@nn (",
-            "            :STEM nn.3589675348",
-            "            :PERSON 3",
-            "            :COUNT sng",
-            "            :DEF def",
-            "            :TENSE present))))",
-            "   :ARG2 (",
-            "      :INST (",
-            "         :NN (@nn (",
-            "            :STEM nn.3122889036",
-            "            :PERSON 3",
-            "            :COUNT sng",
-            "            :DEF def",
-            "            :TENSE present)))))"
-        ])
-        # print(english_amr_str(tree))
-        self.maxDiff = None
-        self.assertEqual(english_amr_str(tree), expected)
-
 
     def test_amr_parse(self):
         tree_str = '\n'.join([  '# ::id lpp_1943.295 ::date 2012-11-18T16:56:51 ::annotator ISI-AMR-05 ::preferred',
@@ -100,19 +49,7 @@ class TestAmr(unittest.TestCase):
                               "   :ARG0-of (h/have-03",
                               "      :ARG1 (t/thorn)))"])
         self.assertEqual(amr_str(tree), expected)
-    
-    def test_clausal_complement(self):
-        tree_str = "(X (inst vb.1) (arg0 (X (inst nn.2))) (arg1 (X (inst vb.5) (arg0 (X (inst nn.2))) (arg1 (X (inst nn.5))) (mods -null-))) (mods -null-))"
-        tree = TreeNode.from_str(tree_str) 
-        cascade = init_transducer_cascade(["examples/amr/english.json"], None, vbox_theme="goose")
-        #output = run_transducer_cascade(cascade, start_state=f'{tree_str}')
-        in_tree = TreeNode.from_str(f'($qstart {tree_str})')
-        transducer = cascade[0]
-        output = transducer.run(in_tree)
-        print(in_tree)
-        print(english_amr_str(output))
         
-
     def test_file_parse(self):
         str_to_test = "\n".join([
             '# ::id lpp_1943.292 ::date 2012-11-18T16:49:43 ::annotator ISI-AMR-05 ::preferred',
@@ -150,10 +87,7 @@ class TestAmr(unittest.TestCase):
             '               :ARG0 i2)))))'
         ])
         self.assertEqual(amr_str(treeNodes[1]), expected_two)
-
-    def test_text_stats(self):
-        amrs = text_stats("examples/amr/text.txt")
-        
+       
  
 
 if __name__ == "__main__":
