@@ -165,9 +165,3 @@ def file_parse(data):
             treeNodes.append(parse)
 
     return treeNodes
-
-            
-
-    
-
-
