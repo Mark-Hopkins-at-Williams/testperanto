@@ -356,7 +356,7 @@ class IndexedRuleSet:
             if rule is not None:
                 successful_matches.append(rule)
         if len(successful_matches) == 0:
-            raise IndexError('no matches for input tree: ' + str(in_tree))
+            raise IndexError('no matches for input tree:\n' + in_tree.pretty_print())
         weights = [rule.get_weight() for rule in successful_matches]
         weights_index = CategoricalDistribution(weights).sample()
         return successful_matches[weights_index]

@@ -217,7 +217,7 @@ register_word_generator("EnglishPrepositions",
 
 def goose_generator():
     atom_generator = lookup_word_generator('EnglishSyllables')
-    word_length_distribution = CategoricalDistribution([0, 0.0, 0.2, 0.4, 0.4])
+    word_length_distribution = CategoricalDistribution([0, 0.2, 0.6, 0.2, 0.0])
     prefix_generator = AtomBasedWordGenerator(atom_generator, word_length_distribution)
     suffix_generator = lookup_word_generator('EnglishConsonants')
     return PrefixSuffixWordGenerator(prefix_generator, suffix_generator)

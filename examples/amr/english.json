@@ -1,20 +1,22 @@
 {
     "distributions": [
+        {"name": "count", "type": "uniform", "domain": ["sng", "plu"]}
     ],
     "rules": [
-        {"rule": "($qstart $x1) -> ($qx $x1)"},
-        {"rule": "($qx (X $x1 $x2 $x3 $x4 $x5)) -> (Y ($qarg0 $x2) ($qmods $x5) ($qinst $x1) ($qarg1 $x3) ($qarg2 $x4))"},
-        {"rule": "($qx (X $x1 $x2 $x3 $x4)) -> (Y ($qarg0 $x2) ($qmods $x4) ($qinst $x1) ($qarg1 $x3))"},
-        {"rule": "($qx (X $x1 $x2 $x3)) -> (Y ($qarg0 $x2) ($qmods $x3) ($qinst $x1))"},
-        {"rule": "($qx (X $x1)) -> ($qinst $x1)"},
-        {"rule": "($qinst (inst $x2)) -> (INST ($qvn $x2))"},
-        {"rule": "($qvn vb.$y1) -> (VB (@vb (STEM vb.$y1)))"},
-        {"rule": "($qvn nn.$y1) -> (NN (@nn (STEM nn.$y1)))"},
-        {"rule": "($qarg0 (arg0 $x1)) -> (ARG0 ($qx $x1))"},
-        {"rule": "($qarg1 (arg1 $x1)) -> (ARG1 ($qx $x1))"},
-        {"rule": "($qarg2 (arg2 $x1)) -> (ARG2 ($qx $x1))"},
-        {"rule": "($qmods (mods (time $x5))) -> (MODS (TIME ($qx $x5)))"},
-        {"rule": "($qmods (mods (polarity -))) -> (MODS (POLARITY -))"},
-        {"rule": "($qmods (mods -null-)) -> (MODS -NULL-)"}
+        {"rule": "($qstart $x1) -> ($qevent $x1)"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) $x3) $x4)) -> (S ($qarg0.$z1 (arg0 $x2)) ($qvb.$z1 $x1) ($qarg1 $x3))", "zdists": ["count"]},
+        {"rule": "($qccomp (EVENT (inst $x1) (args (arg1 $x2)) (mods $x3))) -> (S ($qvbinf $x1) ($qarg1 (arg1 $x2)))"},
+        {"rule": "($qentity.$y1 (ENTITY (inst $x1) $x2)) -> ($qnn.$y1 $x1)"},
+        {"rule": "($qarg0.$y1 (arg0 $x1)) -> ($qentity.$y1 $x1)"},
+        {"rule": "($qarg1 (arg1 (ENTITY $x1 $x2))) -> ($qentity.$z1 (ENTITY $x1 $x2))", "zdists": ["count"]},
+        {"rule": "($qarg1 (arg1 (EVENT $x1 $x2 $x3))) -> ($qccomp (EVENT $x1 $x2 $x3))"},
+        {"rule": "($qvbinf vb.$y1) -> (VP (TO to) (VB (@vb (STEM vb.$y1) (PERSON 1) (COUNT sng) (DEF def) (TENSE present))))"},
+        {"rule": "($qvb.$y1 vb.$y2) -> (VB (@vb (STEM vb.$y2) (PERSON 3) (COUNT $y1) (DEF def) $qtense))"},
+        {"rule": "($qnn.$y1 nn.$y2) -> (NP $qdt.$z1 (NN (@nn (STEM nn.$y2) (PERSON 3) (COUNT $y1) (DEF def))))"},
+        {"rule": "$qdt.$y1 -> (DT the)"},
+        {"rule": "$qdt.sng -> (DT a)"},
+        {"rule": "$qdt.plu -> (DT -null-)"},
+        {"rule": "$qtense -> (TENSE perfect)"},
+        {"rule": "$qtense -> (TENSE present)"}
     ]
 }

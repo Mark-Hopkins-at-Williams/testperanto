@@ -1,0 +1,30 @@
+Currently:
+Dog barks.
+Dog eats food.
+Dog gives me food.
+Dog barks in shed.
+In shed dog barks.
+
+Add articles (the, a):
+- A dog eats the food.
+
+Prepositional phrases (for location and time):
+- A dog eats in the house.
+
+Clausal complements (i.e. when arg1 is a "verb")
+- A dog wants to leave the house.
+
+Relative clauses:
+- I fed the dog that wanted food.
+
+Coordinating conjunctions:
+- I fed the dog and the cat.
+- I fed the dog and gave him water.
+- I will feed the dog or take the dog outside.
+
+Proper nouns:
+- Chicago is a city in Illinois.
+
+
+
+*** what is up with -91 frames?
