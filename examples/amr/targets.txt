@@ -4,18 +4,20 @@ Dog eats food.
 Dog gives me food.
 Dog barks in shed.
 In shed dog barks.
-
-Add articles (the, a):
+Clausal complements (i.e. when arg1 is a "verb")
+- A dog wants to leave the house.
+Articles (the, a):
 - A dog eats the food.
+Relative clauses:
+- I fed the dog that wanted food.
+
+TODO:
+
 
 Prepositional phrases (for location and time):
 - A dog eats in the house.
 
-Clausal complements (i.e. when arg1 is a "verb")
-- A dog wants to leave the house.
 
-Relative clauses:
-- I fed the dog that wanted food.
 
 Coordinating conjunctions:
 - I fed the dog and the cat.
@@ -25,6 +27,8 @@ Coordinating conjunctions:
 Proper nouns:
 - Chicago is a city in Illinois.
 
+Passive voice
 
 
 *** what is up with -91 frames?
+referencing a subject that isn't explicitly mentioned in the text, i.e. My friend ("the person who is my friend")
