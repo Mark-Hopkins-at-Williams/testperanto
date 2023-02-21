@@ -18,7 +18,7 @@
         {"rule": "($qnp.$y1 nn.$y2) -> (NP $qdt.$y1.$z1 $qnn.$y1.$y2)", "zdists": ["def"] },
         {"rule": "$qnn.$y1.$y2 -> (NN (@nn (STEM nn.$y2) (PERSON 3) (COUNT $y1)))"},
         {"rule": "($qvmods (mods -null-)) -> (MOD *eps*)"},
-        {"rule": "($qvmods (mods (location $x1))) -> (PP in $x1)"},
+        {"rule": "($qvmods (mods (location $x1))) -> (PP in ($qentity.$z1 $x1))", "zdists": ["count"]},
         {"rule": "($qnmods.$y1 (mods -null-)) -> (MOD *eps*)"},
         {"rule": "($qnmods.$y1 (mods (arg0-of $x1))) -> (RC that ($qrcevent.$y1 $x1))"},
         {"rule": "$qdt.$y1.def -> (DT the)"},

@@ -10,14 +10,34 @@ Articles (the, a):
 - A dog eats the food.
 Relative clauses:
 - I fed the dog that wanted food.
-
-TODO:
-
-
-Prepositional phrases (for location and time):
+Prepositional phrases (for location):
 - A dog eats in the house.
 
 
+TODO:
+
+Prepositional phrases (for time):
+- A dog eats in an hour.
+
+Negation:
+- I did not eat dinner.
+
+Tenses:
+- past
+- future
+- conditional
+- progressive
+
+Subordinate clauses:
+- A dog ate because it was hungry.
+- If a tree falls, does it make a sound?
+- He made dinner so that I wouldn't have to.
+
+Questions:
+- Does it make a sound?
+
+Imperative:
+- Make a sound!
 
 Coordinating conjunctions:
 - I fed the dog and the cat.
