@@ -40,8 +40,11 @@
         {"rule": "$qentitymods -> (mods $qentitymod)", "discount_factor": 0.5},
         {"rule": "$qentitymod -> (arg0-of $qrcevent)"},
         {"rule": "$qmods -> (mods $qlocation)"},
+        {"rule": "$qmods -> (mods $qsubclause)", "discount_factor": 0.4},
         {"rule": "$qmod -> $qpolarity"},
         {"rule": "$qmod -> $qlocation"},
+        {"rule": "$qsubclause -> (arg1-of $qcause)"},
+        {"rule": "$qcause -> (EVENT (inst cause.0) (args (arg0 $qevent.0)) (mods -null-))"},
         {"rule": "$qpolarity -> (polarity -)"},
         {"rule": "$qlocation -> (location $qentity.loc)"}
     ]
