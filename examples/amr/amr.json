@@ -35,7 +35,7 @@
         {"rule": "$qentitymods -> (mods -null-)"},
         {"rule": "$qentitymods -> (mods $qentitymod)", "discount_factor": 0.5},
         {"rule": "$qentitymod -> (arg0-of $qrcevent)"},
-        {"rule": "$qmods -> (mods -null-)"},
+        {"rule": "$qmods -> (mods $qlocation)"},
         {"rule": "$qmod -> $qpolarity"},
         {"rule": "$qmod -> $qlocation"},
         {"rule": "$qpolarity -> (polarity -)"},
