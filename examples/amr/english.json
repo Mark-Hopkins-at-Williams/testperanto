@@ -5,7 +5,7 @@
     ],
     "rules": [
         {"rule": "($qstart $x1) -> ($qevent $x1)"},
-        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) $x3) $x4)) -> (S ($qarg0.$z1 (arg0 $x2)) ($qvb.$z1 $x1) ($qarg1 $x3) ($qvmods $x4))", "zdists": ["count"]},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) $x3) $x4)) -> (S ($qarg0.$z1 (arg0 $x2)) ($qvmods $x4) ($qvb.$z1 $x1) ($qarg1 $x3))", "zdists": ["count"]},
         {"rule": "($qccomp (EVENT (inst $x1) (args (arg1 $x2)) (mods $x3))) -> (S ($qvbinf $x1) ($qarg1 (arg1 $x2)))"},
         {"rule": "($qrcevent.$y1 (EVENT (inst $x1) (args (arg1 $x2)) (mods $x3))) -> (S ($qvb.$y1 $x1) ($qarg1 (arg1 $x2)))"},
         {"rule": "($qentity.$y1 (ENTITY (inst $x1) $x2)) -> ($qnp.$y1 $x1 $x2)"},
@@ -18,7 +18,9 @@
         {"rule": "($qnp.$y1 nn.$y2) -> (NP $qdt.$y1.$z1 $qnn.$y1.$y2)", "zdists": ["def"] },
         {"rule": "$qnn.$y1.$y2 -> (NN (@nn (STEM nn.$y2) (PERSON 3) (COUNT $y1)))"},
         {"rule": "($qvmods (mods -null-)) -> (MOD *eps*)"},
+        {"rule": "($qvmods (mods (polarity -))) -> (MOD did not)"},
         {"rule": "($qvmods (mods (location $x1))) -> (PP in ($qentity.$z1 $x1))", "zdists": ["count"]},
+        {"rule": "($qvmods (mods (time $x1))) -> (PP in ($qentity.$z1 $x1))", "zdists": ["count"]},
         {"rule": "($qnmods.$y1 (mods -null-)) -> (MOD *eps*)"},
         {"rule": "($qnmods.$y1 (mods (arg0-of $x1))) -> (RC that ($qrcevent.$y1 $x1))"},
         {"rule": "$qdt.$y1.def -> (DT the)"},
