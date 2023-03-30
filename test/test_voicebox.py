@@ -38,7 +38,7 @@ class TestVoicebox(unittest.TestCase):
                                              ('plu', 'indef'): EMPTY_STR})
         vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
         ptree = make_tree('(@dt (DEF def) (COUNT sng))')
-        self.assertEqual(vbox.run(ptree), make_tree("the"))
+        self.assertEqual(vbox.run(ptree), make_tree("(X the)"))
 
     def test_managing_vbox2(self):
         vbox = ManagingVoicebox()
@@ -49,7 +49,7 @@ class TestVoicebox(unittest.TestCase):
                                              ('plu', 'indef'): EMPTY_STR})
         vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
         ptree = make_tree('(TOP (@dt (DEF def) (COUNT sng)) (@dt (DEF indef) (COUNT sng)))')
-        self.assertEqual(vbox.run(ptree), make_tree("(TOP the a)"))
+        self.assertEqual(vbox.run(ptree), make_tree("(TOP (X the) (X a))"))
 
     def test_morphology_vbox(self):
         word_generator = IteratingWordGenerator(['cat', 'dog', 'cookie'], None)
@@ -57,7 +57,7 @@ class TestVoicebox(unittest.TestCase):
                                suffix_map={('sng',): '', ('plu',): 's'})
         vbox = MorphologyVoicebox(word_generator, [morph1])
         in_tree = make_tree(f'(@nn (STEM n{DOT}0) (DEF indef) (COUNT plu))')
-        self.assertEqual(vbox.run(in_tree), make_tree("cats"))
+        self.assertEqual(vbox.run(in_tree), make_tree("(X cats)"))
 
     def test_morphology_vbox_cascade(self):
         morph1 = SuffixMorpher(property_names=('GENDER',),
@@ -68,16 +68,16 @@ class TestVoicebox(unittest.TestCase):
         vbox = MorphologyVoicebox(word_generator, [morph1, morph2])
         in_tree = make_tree('(@nn (STEM {}) (GENDER f) (COUNT plu))'
                                               .format(compound(["n", "10"])))
-        self.assertEqual(vbox.run(in_tree), make_tree("tablettes"))
+        self.assertEqual(vbox.run(in_tree), make_tree("(X tablettes)"))
         in_tree = make_tree('(@nn (STEM {}) (GENDER m) (COUNT plu))'
                                               .format(compound(["n", "10"])))
-        self.assertEqual(vbox.run(in_tree), make_tree("tableaus"))
+        self.assertEqual(vbox.run(in_tree), make_tree("(X tableaus)"))
         in_tree = make_tree('(@nn (STEM {}) (GENDER f) (COUNT sng))'
                                               .format(compound(["n", "212"])))
-        self.assertEqual(vbox.run(in_tree), make_tree("lunette"))
+        self.assertEqual(vbox.run(in_tree), make_tree("(X lunette)"))
         in_tree = make_tree('(@nn (STEM {}) (GENDER m) (COUNT sng))'
                                               .format(compound(["n", "10"])))
-        self.assertEqual(vbox.run(in_tree), make_tree("tableau"))
+        self.assertEqual(vbox.run(in_tree), make_tree("(X tableau)"))
 
 
     def test_verbatim_vbox(self):
@@ -89,13 +89,13 @@ class TestVoicebox(unittest.TestCase):
     def test_english_det_vbox(self):
         vbox = lookup_voicebox_theme("english").init_vbox()
         in_tree_str = make_tree('(@dt (DEF indef) (COUNT sng))')
-        self.assertEqual(vbox.run(in_tree_str), make_tree('a'))
+        self.assertEqual(vbox.run(in_tree_str), make_tree('(X a)'))
         in_tree_str = make_tree('(@dt (DEF def) (COUNT sng))')
-        self.assertEqual(vbox.run(in_tree_str), make_tree('the'))
+        self.assertEqual(vbox.run(in_tree_str), make_tree('(X the)'))
         in_tree_str = make_tree('(@dt (DEF indef) (COUNT plu))')
-        self.assertEqual(vbox.run(in_tree_str), make_tree(EMPTY_STR))
+        self.assertEqual(vbox.run(in_tree_str), make_tree(f'(X {EMPTY_STR})'))
         in_tree_str = make_tree('(@dt (DEF def) (COUNT plu))')
-        self.assertEqual(vbox.run(in_tree_str), make_tree('these'))
+        self.assertEqual(vbox.run(in_tree_str), make_tree('(X these)'))
 
     def test_tree_voicebox(self):
         vbox = lookup_voicebox_theme("english").init_vbox()
