@@ -89,7 +89,7 @@ class TestConfig(unittest.TestCase):
         rule1 = {'rule': 'TOP -> S.$z1', 'zdists': ['vb']}
         rule2 = {'rule': 'S.$y1 -> NN.$z1 VB.$y1', 'zdists': ['nn.$y1']}
         rule3 = {'rule': 'NN.$y1 -> (@verbatim noun.$y1)'}
-        rule4 = {'rule': 'VB.$y1 -> (@vb (STEM verb.$y1) (COUNT sng) (PERSON 3) (TENSE perfect))'}
+        rule4 = {'rule': 'VB.$y1 -> (@vb (STEM verb.$y1) (POLARITY pos) (COUNT sng) (PERSON 3) (TENSE perfect))'}
         config = {"distributions": [{"name": "vb", "type": 'alternating'},
                                     {'name': 'nn', 'type': 'alternating'},
                                     {"name": f"nn{DOT}$y1", "type": 'averager'}],
@@ -100,7 +100,7 @@ class TestConfig(unittest.TestCase):
                     'rules': [{'rule': f'$qtop -> (X $qs{DOT}$z1)', 'zdists': ['vb']},
                               {'rule': f'$qs{DOT}$y1 -> (X $qnn{DOT}$z1 $qvb{DOT}$y1)', 'zdists': [f'nn{DOT}$y1']},
                               {'rule': f'$qnn{DOT}$y1 -> (X (@verbatim noun{DOT}$y1))'},
-                              {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
+                              {'rule': f'$qvb{DOT}$y1 -> (X (@vb (STEM verb{DOT}$y1) (POLARITY pos) (COUNT sng) (PERSON 3) (TENSE perfect)))'}]}
         rewritten = rewrite_wrig_config(config)
         self.assertEqual(expected, rewrite_wrig_config(rewritten))
         transducer = configure_transducer(rewritten)
