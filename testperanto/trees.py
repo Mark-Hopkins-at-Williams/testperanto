@@ -294,29 +294,32 @@ def str_to_position_tree(s, token_parser=lambda x: x, cls=PositionBasedTree):
         raise PositionTreeReadError('Tree string contains too few tokens: ' + s )
     labels = {}
     num_children = []
-    while len(tokens) > 0:
-        next_token = tokens[0]
-        tokens = tokens[1:]
-        start_paren = False
-        end_paren_count = 0
-        if next_token.startswith('('):
-            next_label = next_token[1:].strip()
-            start_paren = True
-        elif next_token.endswith(')'):
-            while next_token.endswith(')'):
-                next_token = next_token[:-1]
-                end_paren_count += 1
-            next_label = next_token
-        else:
-            next_label = next_token.strip()
-        if len(num_children) > 0:
-            num_children[-1] += 1
-        if next_label != '':
-            labels[ tuple(num_children) ] = token_parser(next_label)
-        if start_paren:
-            num_children.append(0)
-        for _ in range(end_paren_count):
-            num_children.pop()
+    try:
+        while len(tokens) > 0:
+            next_token = tokens[0]
+            tokens = tokens[1:]
+            start_paren = False
+            end_paren_count = 0
+            if next_token.startswith('('):
+                next_label = next_token[1:].strip()
+                start_paren = True
+            elif next_token.endswith(')'):
+                while next_token.endswith(')'):
+                    next_token = next_token[:-1]
+                    end_paren_count += 1
+                next_label = next_token
+            else:
+                next_label = next_token.strip()
+            if len(num_children) > 0:
+                num_children[-1] += 1
+            if next_label != '':
+                labels[ tuple(num_children) ] = token_parser(next_label)
+            if start_paren:
+                num_children.append(0)
+            for _ in range(end_paren_count):
+                num_children.pop()
+    except IndexError:
+        raise PositionTreeReadError(f'Badly formatted: {s}')
     if len(num_children) > 0:
         raise PositionTreeReadError('Reached end of tree string without balanced parens: ' + s )
     t = cls()

@@ -260,7 +260,7 @@ class MorphologyVoicebox(Voicebox):
             word = self.lexicon[properties[self.stem_key]]
         for morpher in self.morphers:
             word = morpher.morph(word, properties)
-        return TreeNode.from_str(word)
+        return TreeNode.from_str(f"(X {word})")
 
 
 class VerbatimVoicebox(Voicebox):
