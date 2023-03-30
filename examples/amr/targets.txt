@@ -12,15 +12,18 @@ Relative clauses:
 - I fed the dog that wanted food.
 Prepositional phrases (for location):
 - A dog eats in the house.
-
+Negation:
+- I did not eat dinner.
+Subordinate clauses:
+- A dog ate because it was hungry.
 
 TODO:
 
+Pronouns
+
 Prepositional phrases (for time):
 - A dog eats in an hour.
-
-Negation:
-- I did not eat dinner.
+- A dog eats in a few hours.
 
 Tenses:
 - past
@@ -29,7 +32,6 @@ Tenses:
 - progressive
 
 Subordinate clauses:
-- A dog ate because it was hungry.
 - If a tree falls, does it make a sound?
 - He made dinner so that I wouldn't have to.
 
