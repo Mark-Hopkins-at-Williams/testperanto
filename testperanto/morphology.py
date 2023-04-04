@@ -170,11 +170,31 @@ class EnglishVerbMorpher(Morpher):
                                                             ('3', 'plu', 'present', 'neg'): 'do not ',
                                                             ('3', 'sng', 'perfect', 'neg'): 'did not ',
                                                             ('3', 'plu', 'perfect', 'neg'): 'did not '})
+        self.conditional_morpher = PrefixMorpher(property_names=('PERSON', 'COUNT', 'TENSE', 'POLARITY'),
+                                                 prefix_map={   ('1', 'sng', 'present', 'pos'): 'would ',
+                                                                ('1', 'plu', 'present', 'pos'): 'would ',
+                                                                ('1', 'sng', 'perfect', 'pos'): 'would have ',
+                                                                ('1', 'plu', 'perfect', 'pos'): 'would have ',
+                                                                ('3', 'sng', 'present', 'pos'): 'would ',
+                                                                ('3', 'plu', 'present', 'pos'): 'would ',
+                                                                ('3', 'sng', 'perfect', 'pos'): 'would have ',
+                                                                ('3', 'plu', 'perfect', 'pos'): 'would have ',
+                                                                ('1', 'sng', 'present', 'neg'): 'would not',
+                                                                ('1', 'plu', 'present', 'neg'): 'would not ',
+                                                                ('1', 'sng', 'perfect', 'neg'): 'would not have ',
+                                                                ('1', 'plu', 'perfect', 'neg'): 'would not have ',
+                                                                ('3', 'sng', 'present', 'neg'): 'would not ',
+                                                                ('3', 'plu', 'present', 'neg'): 'would not ',
+                                                                ('3', 'sng', 'perfect', 'neg'): 'would not have ',
+                                                                ('3', 'plu', 'perfect', 'neg'): 'would not have '})
 
     def morph(self, word, properties):
-        suffixed = self.base_morpher.morph(word, properties)
-        negated = self.negation_morpher.morph(suffixed, properties)
-        return negated
+        result = self.base_morpher.morph(word, properties)
+        result = self.negation_morpher.morph(result, properties)
+        if properties.get("CONDITIONAL", "no") == "yes":
+            revised_properties = {k: properties[k] for k in properties if k != "CONDITIONAL"}
+            result = self.conditional_morpher.morph(result, revised_properties)
+        return result
 
 
 class EnglishNounMorpher(Morpher):
