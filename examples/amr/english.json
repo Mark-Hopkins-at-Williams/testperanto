@@ -38,6 +38,8 @@
         {"rule": "$qdt.sng.indef -> (DT a)"},
         {"rule": "$qdt.plu.indef -> (DT *eps*)"},
         {"rule": "$qtense -> (TENSE perfect)"},
-        {"rule": "$qtense -> (TENSE present)"}
+        {"rule": "$qtense -> (TENSE present)"},
+        {"rule": "$qtense -> (TENSE future)"}
+
     ]
 }
