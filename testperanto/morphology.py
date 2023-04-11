@@ -161,7 +161,16 @@ class EnglishVerbMorpher(Morpher):
                                                       ('1', 'plu', 'future', 'neg'): '',
                                                       ('1', 'sng', 'future', 'neg'): '',
                                                       ('3', 'sng', 'future', 'neg'): '',
-                                                      ('3', 'plu', 'future', 'neg'): ''})
+                                                      ('3', 'plu', 'future', 'neg'): '',
+                                                      ('1', 'sng', 'past', 'pos'): '',
+                                                      ('1', 'plu', 'past', 'pos'): '',
+                                                      ('3', 'sng', 'past', 'pos'): '',
+                                                      ('3', 'plu', 'past', 'pos'): '',
+                                                      ('1', 'sng', 'past', 'neg'): '',
+                                                      ('1', 'plu', 'past', 'neg'): '',
+                                                      ('1', 'sng', 'past', 'neg'): '',
+                                                      ('3', 'sng', 'past', 'neg'): '',
+                                                      ('3', 'plu', 'past', 'neg'): ''})
         self.negation_morpher = PrefixMorpher(property_names=('PERSON', 'COUNT', 'TENSE', 'POLARITY'),
                                               prefix_map={  ('1', 'sng', 'present', 'pos'): '',
                                                             ('1', 'plu', 'present', 'pos'): '',
@@ -186,7 +195,15 @@ class EnglishVerbMorpher(Morpher):
                                                             ('1', 'sng', 'future', 'neg'): 'will not ',
                                                             ('1', 'plu', 'future', 'neg'): 'will not ',
                                                             ('3', 'sng', 'future', 'neg'): 'will not ',
-                                                            ('3', 'plu', 'future', 'neg'): 'will not '})
+                                                            ('3', 'plu', 'future', 'neg'): 'will not ',
+                                                            ('1', 'sng', 'past', 'pos'): 'used to ',
+                                                            ('1', 'plu', 'past', 'pos'): 'used to ',
+                                                            ('3', 'sng', 'past', 'pos'): 'used to ',
+                                                            ('3', 'plu', 'past', 'pos'): 'used to ',
+                                                            ('1', 'sng', 'past', 'neg'): 'did not used to ',
+                                                            ('1', 'plu', 'past', 'neg'): 'did not used to ',
+                                                            ('3', 'sng', 'past', 'neg'): 'did not used to ',
+                                                            ('3', 'plu', 'past', 'neg'): 'did not used to '})
         self.conditional_morpher = PrefixMorpher(property_names=('PERSON', 'COUNT', 'TENSE', 'POLARITY'),
                                                  prefix_map={   ('1', 'sng', 'present', 'pos'): 'would ',
                                                                 ('1', 'plu', 'present', 'pos'): 'would ',
@@ -211,7 +228,15 @@ class EnglishVerbMorpher(Morpher):
                                                                 ('1', 'sng', 'future', 'neg'): 'will not ',
                                                                 ('1', 'plu', 'future', 'neg'): 'will not ',
                                                                 ('3', 'sng', 'future', 'neg'): 'will not ',
-                                                                ('3', 'plu', 'future', 'neg'): 'will not '})
+                                                                ('3', 'plu', 'future', 'neg'): 'will not ',
+                                                                ('1', 'sng', 'past', 'pos'): 'had ',
+                                                                ('1', 'plu', 'past', 'pos'): 'had ',
+                                                                ('3', 'sng', 'past', 'pos'): 'had ',
+                                                                ('3', 'plu', 'past', 'pos'): 'had ',
+                                                                ('1', 'sng', 'past', 'neg'): 'had not ',
+                                                                ('1', 'plu', 'past', 'neg'): 'had not ',
+                                                                ('3', 'sng', 'past', 'neg'): 'had not ',
+                                                                ('3', 'plu', 'past', 'neg'): 'had not '})
 
     def morph(self, word, properties):
         result = self.base_morpher.morph(word, properties)

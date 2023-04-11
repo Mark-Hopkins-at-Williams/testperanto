@@ -39,7 +39,8 @@
         {"rule": "$qdt.plu.indef -> (DT *eps*)"},
         {"rule": "$qtense -> (TENSE perfect)"},
         {"rule": "$qtense -> (TENSE present)"},
-        {"rule": "$qtense -> (TENSE future)"}
+        {"rule": "$qtense -> (TENSE future)"},
+        {"rule": "$qtense -> (TENSE past)"}
 
     ]
 }
