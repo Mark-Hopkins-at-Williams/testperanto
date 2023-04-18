@@ -16,8 +16,17 @@ Negation:
 - I did not eat dinner.
 Subordinate clauses:
 - A dog ate because it was hungry.
+- If you fed me, I would eat.
+
+Tenses:
+- present
+- perfect
+- conditional
+- future
 
 TODO:
+
+Make an intermediate transducer that "marks up" AMR with tense/voice/other stuff
 
 Pronouns
 
@@ -26,13 +35,9 @@ Prepositional phrases (for time):
 - A dog eats in a few hours.
 
 Tenses:
-- past
-- future
-- conditional
 - progressive
 
 Subordinate clauses:
-- If a tree falls, does it make a sound?
 - He made dinner so that I wouldn't have to.
 
 Questions:
