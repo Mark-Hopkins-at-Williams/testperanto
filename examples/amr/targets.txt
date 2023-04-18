@@ -22,8 +22,11 @@ Tenses:
 - present
 - perfect
 - conditional
+- future
 
 TODO:
+
+Make an intermediate transducer that "marks up" AMR with tense/voice/other stuff
 
 Pronouns
 
@@ -32,7 +35,6 @@ Prepositional phrases (for time):
 - A dog eats in a few hours.
 
 Tenses:
-- future
 - progressive
 
 Subordinate clauses:
