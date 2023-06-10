@@ -1,15 +1,30 @@
 {
     "distributions": [
-        {"name": "vb", "type": "pyor", "strength": 5, "discount": 0}
+        {"name": "count", "type": "uniform", "domain": ["sng", "plu"]}
     ],
     "rules": [
-        {"rule": "($qstart $x1) -> ($qevent $x1)"},
-        {"rule": "($qevent (EVENT $x1 $x2 $x3)) -> (EVENT $x1 $x2 ($qeventmods $x3))"},
-        {"rule": "($qevent (EVENT-PASSIVE $x1 $x2 $x3)) -> (EVENT-PASSIVE $x1 $x2 ($qeventmods $x3))"},
-        {"rule": "($qeventmods (mods $x1 $x2)) -> (mods $x1 ($qeventmods $x2))"},
-        {"rule": "($qeventmods -null-) -> $qtensemod"},
-        {"rule": "$qtensemod -> (mods (tense $qtense) -null-)"},
-        {"rule": "$qtense -> present"},
-        {"rule": "$qtense -> perfect"}
+        {"rule": "($qstart $x1) -> ($qx $x1)"},
+        {"rule": "($qx (EVENT $x1 (args (arg0 $x2) (arg1 $x3)) $x4)) -> (EVENT $x1 (args (arg0 ($qentity.$z1 $x2)) (arg1 ($qarg $x3))) ($qmods $x4) (props $qtense (voice active) (count $z1)))", "zdists": ["count"]},
+        {"rule": "($qx (EVENT $x1 (args (arg1 (EVENT $x4 $x5 $x6))) $x3)) -> (EVENT $x1 (args (arg1 ($qarg (EVENT $x4 $x5 $x6)))) ($qmods $x3) (props $qtense (voice passive) (count sng)))"},
+        {"rule": "($qx (EVENT $x1 (args (arg1 (ENTITY $x4 $x5))) $x3)) -> (EVENT $x1 (args (arg1 ($qentity.$z1 (ENTITY $x4 $x5)))) ($qmods $x3) (props $qtense (voice passive) (count $z1)))", "zdists": ["count"]},
+        {"rule": "($qx (EVENT $x1 (args (arg0 (EVENT $x4 $x5 $x6))) $x3)) -> (EVENT $x1 (args (arg0 ($qx (EVENT $x4 $x5 $x6)))) ($qmods $x3) (props $qtense (voice active) (count $z1)))", "zdists": ["count"]},
+        {"rule": "($qarg (EVENT $x1 (args (arg0 $x2) (arg1 $x3)) $x4)) -> (EVENT $x1 (args (arg0 ($qentity.$z1 $x2)) (arg1 ($qx $x3))) ($qmods $x4) (props $qtense (voice active) (count inf)))", "zdists": ["count"]},
+        {"rule": "($qarg (EVENT $x1 (args (arg1 (EVENT $x4 $x5 $x6))) $x3)) -> (EVENT $x1 (args (arg1 ($qarg (EVENT $x4 $x5 $x6)))) ($qmods $x3) (props $qtense (voice active) (count inf)))"},
+        {"rule": "($qarg (EVENT $x1 (args (arg1 (ENTITY $x4 $x5))) $x3)) -> (EVENT $x1 (args (arg1 ($qentity.$z1 (ENTITY $x4 $x5)))) ($qmods $x3) (props $qtense (voice active) (count inf)))", "zdists": ["count"]},
+        {"rule": "($qrc.$y1 (EVENT $x1 (args (arg1 $x2)) $x3)) -> (EVENT $x1 (args (arg1 ($qarg $x2))) ($qmods $x3) (props $qtense (voice active) (count $y1)))"},
+        {"rule": "($qx (ENTITY $x1 $x2)) -> ($qentity.$z1 (ENTITY $x1 $x2))", "zdists": ["count"]},
+        {"rule": "($qarg (ENTITY $x1 $x2)) -> ($qentity.$z1 (ENTITY $x1 $x2))", "zdists": ["count"]},
+        {"rule": "($qentity.$y1 (ENTITY $x1 $x2)) -> (ENTITY $x1 ($qmods.$y1 $x2) (props (count $y1) $qdef))"},
+        {"rule": "($qmods -null-) -> -null-"},       
+        {"rule": "($qmods (mods ($y1 $x1))) -> (mods ($y1 ($qx $x1)))"},       
+        {"rule": "($qmods.$y1 -null-) -> -null-"},       
+        {"rule": "($qmods.$y1 (mods (arg0-of $x1))) -> (mods (arg0-of ($qrc.$y1 $x1)))"},       
+        {"rule": "$qtense -> (tense present)"},
+        {"rule": "$qtense -> (tense perfect)"},
+        {"rule": "$qvoice -> (voice active)"},
+        {"rule": "$qcount -> (count sng)"},
+        {"rule": "$qcount -> (count plu)"},
+        {"rule": "$qdef -> (def def)"},
+        {"rule": "$qdef -> (def indef)"}
     ]
 }
