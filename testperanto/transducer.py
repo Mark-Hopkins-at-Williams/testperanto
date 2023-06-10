@@ -97,6 +97,7 @@ def run_transducer_cascade(cascade, start_state='$qstart'):
     in_tree = TreeNode.from_str(start_state)
     for transducer in cascade[:-1]:
         out_tree = transducer.run(in_tree)
+        print(out_tree.pretty_print())
         in_tree = TreeNode.from_str(f'({start_state} {out_tree})')
     output = cascade[-1].run(in_tree)
     if is_state(output.get_label()):

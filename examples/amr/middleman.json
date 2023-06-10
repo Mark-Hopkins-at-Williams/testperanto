@@ -1,0 +1,15 @@
+{
+    "distributions": [
+        {"name": "vb", "type": "pyor", "strength": 5, "discount": 0}
+    ],
+    "rules": [
+        {"rule": "($qstart $x1) -> ($qevent $x1)"},
+        {"rule": "($qevent (EVENT $x1 $x2 $x3)) -> (EVENT $x1 $x2 ($qeventmods $x3))"},
+        {"rule": "($qevent (EVENT-PASSIVE $x1 $x2 $x3)) -> (EVENT-PASSIVE $x1 $x2 ($qeventmods $x3))"},
+        {"rule": "($qeventmods (mods $x1 $x2)) -> (mods $x1 ($qeventmods $x2))"},
+        {"rule": "($qeventmods -null-) -> $qtensemod"},
+        {"rule": "$qtensemod -> (mods (tense $qtense) -null-)"},
+        {"rule": "$qtense -> present"},
+        {"rule": "$qtense -> perfect"}
+    ]
+}
