@@ -215,6 +215,33 @@ register_word_generator("EnglishPrepositions",
                                                 "beside", "between", "near", "toward",
                                                 "under", "upon", "within"]))
 
+##
+# simple French word generators
+##
+
+register_word_generator("FrenchSyllables",
+                        ListBasedWordGenerator(['tre','foi','quan','te','dai','pa','pre',
+                                                'mie','ce','mon','ser', 'rait','me',
+                                                'mo','du','fa','fi','fo','fu','fla',
+                                                'fli','flo', 'flu','fra','trou','fro',
+                                                'frais','seul','go','gu','gla','glo',
+                                                'glu','ha','he','hi','ho','hu','ja',
+                                                'ji','jo','ju','ka','leur','ki','ko',
+                                                'ku','la','veau','li','lo','lu','ma','mee',
+                                                'mi','beau','meau']))
+
+register_word_generator("FrenchStems",
+                        AtomBasedWordGenerator(lookup_word_generator('FrenchSyllables'),
+                                               CategoricalDistribution([0, 0, 0.2, 0.5, 0.2, 0.1])))
+
+
+register_word_generator("FrenchPrepositions",
+                        ListBasedWordGenerator(["en", "sur", "a", "pres", "de",
+                                                "avec", "a cote de", "par", "dans", "avant",
+                                                "en haut de", "a l'autre cote de",
+                                                "parmi", "derriere", "sous",
+                                                "entre"]))
+
 def goose_generator():
     atom_generator = lookup_word_generator('EnglishSyllables')
     word_length_distribution = CategoricalDistribution([0, 0.2, 0.6, 0.2, 0.0])

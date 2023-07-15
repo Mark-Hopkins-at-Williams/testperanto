@@ -24,7 +24,7 @@ if __name__ == '__main__':
                         help='number of trees to generate')
     parser.add_argument('-s', '--switches', required=False, default=None,
                         help='the typological switches, as a bitstring')
-    parser.add_argument('-v', '--vbox_theme', required=False, default="goose",
+    parser.add_argument('-v', '--vbox_theme', required=False, default="universal",
                         help='the voicebox theme')
     parser.add_argument('--sents', dest='sents', action='store_true', default=False,
                         help='only output sentences (rather than trees)')

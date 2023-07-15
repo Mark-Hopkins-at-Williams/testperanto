@@ -402,8 +402,39 @@ class GermanTheme(VoiceboxTheme):
         vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
         return vbox
 
+class UniversalTheme(VoiceboxTheme):
+
+    def init_vbox(self):
+        vbox = ManagingVoicebox()
+        glookup = lookup_word_generator
+        vbox.delegate('verbatim', VerbatimVoicebox())
+        vbox.delegate('vb.en', MorphologyVoicebox(glookup('GooseVerbs'), [EnglishVerbMorpher()]))
+        vbox.delegate('nn.en', MorphologyVoicebox(glookup('Goose'), [EnglishNounMorpher()]))
+        vbox.delegate('adj.en', MorphologyVoicebox(glookup('GooseAdjectives')))
+        vbox.delegate('adv.en', MorphologyVoicebox(glookup('GooseAdverbs')))
+        vbox.delegate('prep.en', MorphologyVoicebox(glookup('EnglishPrepositions')))
+        dt_morph = SuffixMorpher(property_names=('COUNT', 'DEF'),
+                                 suffix_map={('sng', 'def'): 'the',
+                                             ('plu', 'def'): 'these',
+                                             ('sng', 'indef'): 'a',
+                                             ('plu', 'indef'): EMPTY_STR})
+        vbox.delegate('dt.en', MorphologyVoicebox(None, [dt_morph]))
+        vbox.delegate('prep.fr', MorphologyVoicebox(glookup('FrenchPrepositions')))
+        fr_dt_morph = SuffixMorpher(property_names=('COUNT', 'DEF'),
+                                    suffix_map={('sng', 'def'): 'le',
+                                                ('plu', 'def'): 'les',
+                                                ('sng', 'indef'): 'un',
+                                                ('plu', 'indef'): 'des'})
+        vbox.delegate('dt.fr', MorphologyVoicebox(None, [fr_dt_morph]))
+
+        vbox.delegate('vb.fr', MorphologyVoicebox(lookup_word_generator('FrenchStems'), [EnglishVerbMorpher()]))
+        vbox.delegate('nn.fr', MorphologyVoicebox(lookup_word_generator('FrenchStems'), [EnglishNounMorpher()]))
+
+        return vbox
+
 register_voicebox_theme("deutsch", GermanTheme)
 register_voicebox_theme("inactive", InactiveTheme)
 register_voicebox_theme("goose", MotherGooseTheme)
 register_voicebox_theme("english", MotherGooseTheme)
 register_voicebox_theme("japanese", JapaneseTheme)
+register_voicebox_theme("universal", UniversalTheme)
