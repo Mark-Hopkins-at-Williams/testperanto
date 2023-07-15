@@ -83,11 +83,14 @@ class DistributionManager:
         """
 
         def lookup_dist_config(k):
+            backed_off_key = list(k)
+            back_off_index = len(k) - 1
+            while tuple(backed_off_key) not in self.dist_configs:
+                backed_off_key[back_off_index] = "$y0"
             try:
-                return self.dist_configs[k]
+                return self.dist_configs[tuple(backed_off_key)]
             except KeyError:
-                return None
-                # raise KeyError('no matches for distribution: {}'.format(key))
+                raise KeyError('no matches for distribution: {}'.format(k))
 
         def get_base(argz, k, sub):
             if "base" in argz:
@@ -96,9 +99,9 @@ class DistributionManager:
                 return self.get(k[:-1], sub)
             else:
                 return distributions.IdGenerator(self.generate_consecutive_ids)
-
-        dist_config = lookup_dist_config(key)
+        
         ground_key = substitution.substitute_into_compound_symbol(key)
+        dist_config = lookup_dist_config(ground_key)
         if ground_key not in self.distributions:
             type = dist_config['type']
             args = {key: dist_config[key] for key in dist_config if key not in ['type']}

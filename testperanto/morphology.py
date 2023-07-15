@@ -31,6 +31,8 @@ class Morpher(ABC):
         """
 
 
+
+
 class SuffixMorpher(Morpher):
     """Adds a suffix to a word stem to express syntactic properties.
 
@@ -135,6 +137,68 @@ class PrefixMorpher(Morpher):
 ##
 
 class EnglishVerbMorpher(Morpher):
+    def morph(self, word, properties):
+        if properties['TENSE'] == 'present' and properties['POLARITY'] == 'pos':
+            return self.present_tense(word, properties)
+        elif properties['TENSE'] == 'perfect' and properties['POLARITY'] == 'pos':
+            return self.perfect_tense(word, properties)
+        elif properties['TENSE'] == 'present' and properties['POLARITY'] == 'neg':
+            return self.negative_present_tense(word, properties)
+        elif properties['TENSE'] == 'perfect' and properties['POLARITY'] == 'neg':
+            return self.negative_perfect_tense(word, properties)
+        else:
+            raise Exception(f"Tense not recognized: {properties['tense']}")
+
+    def get_auxiliary(self, tense, person, count):        
+        if tense == "present":
+            return "is" if person == "3" and count == "sng" else "are"
+        elif tense == "perfect":
+            return "was" if person == "3" and count == "sng" else "were"
+        else:
+            raise Exception(f"Auxiliary not found: {tense}, {person}, {count}")
+
+
+    def present_tense(self, word, properties):
+        person = properties['PERSON']
+        count = properties['COUNT']
+        voice = properties['VOICE']
+        if voice == "active":
+            if person == '3' and count == 'sng':
+                return word + "s"
+            elif count == 'inf':
+                return "to " + word
+            else:
+                return word
+        elif voice == "passive":
+            aux = self.get_auxiliary("present", person, count)
+            return aux + " " + word + "d"
+        else:
+            raise Exception(f"Voice not recognized: {voice}")
+        
+    def perfect_tense(self, word, properties):
+        person = properties['PERSON']
+        count = properties['COUNT']
+        voice = properties['VOICE']
+        if count == 'inf':
+            return 'to have ' + word + 'd'
+        elif voice == "passive":
+            aux = self.get_auxiliary("perfect", person, count)
+            return aux + " " + word + "d"
+        else:
+            return word + "d"
+    
+    def negative_present_tense(self, word, properties):
+        person = properties['PERSON']
+        count = properties['COUNT']
+        if person == '3' and count == 'sng':
+            return 'does not ' + word
+        else:
+            return 'do not ' + word
+
+    def negative_perfect_tense(self, word, _):
+        return 'did not ' + word
+
+class MapBasedEnglishVerbMorpher(Morpher):
     def __init__(self):
         self.base_morpher = SuffixMorpher(property_names=('PERSON', 'COUNT', 'TENSE', 'POLARITY'),
                                           suffix_map={('1', 'sng', 'present', 'pos'): '',
