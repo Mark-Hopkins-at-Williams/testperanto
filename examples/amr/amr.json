@@ -15,7 +15,8 @@
         {"name": "nn.arg2", "type": "pyor", "strength": 100, "discount": 0.5},
         {"name": "nn.arg0.$y0", "type": "pyor", "strength": 100, "discount": 0.5},
         {"name": "nn.arg1.$y0", "type": "pyor", "strength": 100, "discount": 0.5},
-        {"name": "nn.arg2.$y0", "type": "pyor", "strength": 100, "discount": 0.5}
+        {"name": "nn.arg2.$y0", "type": "pyor", "strength": 100, "discount": 0.5},
+        {"name": "pron", "type": "uniform", "domain": ["1", "2", "3"]}
     ],
     "rules": [
         {"rule": "$qstart -> $qevent.0"},
@@ -27,6 +28,7 @@
         {"rule": "$qentity.$y1.$y2 -> (ENTITY $qnn.$z1 $qentitymods)", "base_weight": 0.2, "zdists": ["nn.$y1.$y2"]},
         {"rule": "$qvb.$y1 -> (inst vb.$y1)"},
         {"rule": "$qnn.$y1 -> (inst nn.$y1)"},
+        {"rule": "$qnn.$y1 -> (inst pron.$z1)", "zdists": ["pron"]},
         {"rule": "$qargs.$y1 -> (args $qarg0.$y1 $qarg1.$y1)", "base_weight": 0.8},
         {"rule": "$qargs.$y1 -> (args $qarg1.$y1)", "base_weight": 0.2},
         {"rule": "$qargsccomp.$y1 -> (args $qarg1ccomp.$y1)"},

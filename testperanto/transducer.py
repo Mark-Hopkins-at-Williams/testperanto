@@ -97,9 +97,34 @@ def run_transducer_cascade(cascade, start_state='$qstart'):
     in_tree = TreeNode.from_str(start_state)
     for transducer in cascade[:-1]:
         out_tree = transducer.run(in_tree)
-        #print(out_tree.pretty_print())
+        print(out_tree.pretty_print())
         in_tree = TreeNode.from_str(f'({start_state} {out_tree})')
     output = cascade[-1].run(in_tree)
     if is_state(output.get_label()):
         output = output.get_child(0)
     return output
+
+
+class TransducerTree:
+    def __init__(self, transducer):
+        self.transducer = transducer
+        self.children = []
+    
+    def add_child(self, tree):
+        self.children.append(tree)
+
+    def run(self, in_tree=TreeNode.from_str('$qstart')):
+        out_tree = self.transducer.run(in_tree)
+        if len(self.children) > 0:
+            results = []
+            in_tree = TreeNode.from_str(f'($qstart {out_tree})')
+            for child in self.children:
+                try:
+                    results.extend(child.run(in_tree))
+                except TypeError:
+                    results.extend([child.run(in_tree)])
+            return results
+        else:
+            if is_state(out_tree.get_label()):
+                out_tree = out_tree.get_child(0)
+            return [out_tree]

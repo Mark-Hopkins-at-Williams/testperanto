@@ -5,8 +5,13 @@
 
 from abc import ABC, abstractmethod
 from testperanto.globals import COMPOUND_SEP, EMPTY_STR, VOICEBOX_THEMES
-from testperanto.morphology import SuffixMorpher, EnglishVerbMorpher, EnglishNounMorpher
+from testperanto.morphology import SuffixMorpher
+from testperanto.english import EnglishVerbMorpher, EnglishNounMorpher, EnglishPronounMorpher
 from testperanto.morphology import JapaneseVerbMorpher
+from testperanto.french import FrenchVerbMorpher, FrenchNounMorpher, FrenchPronounMorpher
+from testperanto.german import GermanVerbMorpher, GermanNounMorpher, GermanPronounMorpher
+from testperanto.nahuatl import NahuatlVerbMorpher, NahuatlNounMorpher, NahuatlPronounMorpher
+from testperanto.japanese import JapanesePronounMorpher
 from testperanto.trees import TreeNode
 from testperanto.wordgenerators import lookup_word_generator
 
@@ -402,6 +407,7 @@ class GermanTheme(VoiceboxTheme):
         vbox.delegate('dt', MorphologyVoicebox(None, [dt_morph]))
         return vbox
 
+
 class UniversalTheme(VoiceboxTheme):
 
     def init_vbox(self):
@@ -410,6 +416,7 @@ class UniversalTheme(VoiceboxTheme):
         vbox.delegate('verbatim', VerbatimVoicebox())
         vbox.delegate('vb.en', MorphologyVoicebox(glookup('GooseVerbs'), [EnglishVerbMorpher()]))
         vbox.delegate('nn.en', MorphologyVoicebox(glookup('Goose'), [EnglishNounMorpher()]))
+        vbox.delegate('pron.en', MorphologyVoicebox(glookup('Goose'), [EnglishPronounMorpher()]))
         vbox.delegate('adj.en', MorphologyVoicebox(glookup('GooseAdjectives')))
         vbox.delegate('adv.en', MorphologyVoicebox(glookup('GooseAdverbs')))
         vbox.delegate('prep.en', MorphologyVoicebox(glookup('EnglishPrepositions')))
@@ -426,10 +433,45 @@ class UniversalTheme(VoiceboxTheme):
                                                 ('sng', 'indef'): 'un',
                                                 ('plu', 'indef'): 'des'})
         vbox.delegate('dt.fr', MorphologyVoicebox(None, [fr_dt_morph]))
+        verb_morpher = SuffixMorpher(property_names=('COUNT',),
+                                     suffix_map={('sng',): 'e', ('plu',): 'ent', ('inf',): 'er'})
+        vbox.delegate('vb.fr', MorphologyVoicebox(lookup_word_generator('FrenchVerbs'), [FrenchVerbMorpher()]))
+        vbox.delegate('nn.fr', MorphologyVoicebox(lookup_word_generator('FrenchStems'), [FrenchNounMorpher()]))
+        vbox.delegate('pron.fr', MorphologyVoicebox(glookup('Goose'), [FrenchPronounMorpher()]))
+        vbox.delegate('vb.de', MorphologyVoicebox(lookup_word_generator('GermanVerbs'), [GermanVerbMorpher()]))
+        vbox.delegate('nn.de', MorphologyVoicebox(lookup_word_generator('german-stems'), [GermanNounMorpher()]))
+        vbox.delegate('pron.de', MorphologyVoicebox(glookup('Goose'), [GermanPronounMorpher()]))
+        de_dt_morph = SuffixMorpher(property_names=('COUNT', 'DEF', 'CASE'),
+                                    suffix_map={('sng', 'def', 'nom'): 'der',
+                                                ('plu', 'def', 'nom'): 'die',
+                                                ('sng', 'indef', 'nom'): 'ein',
+                                                ('plu', 'indef', 'nom'): EMPTY_STR,
+                                                ('sng', 'def', 'acc'): 'den',
+                                                ('plu', 'def', 'acc'): 'die',
+                                                ('sng', 'indef', 'acc'): 'einen',
+                                                ('plu', 'indef', 'acc'): EMPTY_STR,
+                                                ('sng', 'def', 'dat'): 'dem',
+                                                ('plu', 'def', 'dat'): 'den',
+                                                ('sng', 'indef', 'dat'): 'einem',
+                                                ('plu', 'indef', 'dat'): EMPTY_STR})
 
-        vbox.delegate('vb.fr', MorphologyVoicebox(lookup_word_generator('FrenchStems'), [EnglishVerbMorpher()]))
-        vbox.delegate('nn.fr', MorphologyVoicebox(lookup_word_generator('FrenchStems'), [EnglishNounMorpher()]))
-
+        vbox.delegate('dt.de', MorphologyVoicebox(None, [de_dt_morph]))
+        vbox.delegate('prep.de', MorphologyVoicebox(glookup('GermanPrepositions')))
+        vbox.delegate('vb.na', MorphologyVoicebox(lookup_word_generator('NahuatlVerbs'), [NahuatlVerbMorpher()]))
+        vbox.delegate('nn.na', MorphologyVoicebox(lookup_word_generator('NahuatlStems'), [NahuatlNounMorpher()]))
+        vbox.delegate('pron.na', MorphologyVoicebox(glookup('Goose'), [NahuatlPronounMorpher()]))       
+        vbox.delegate('vb.jp', MorphologyVoicebox(glookup('JapaneseStems'), [JapaneseVerbMorpher()]))
+        vbox.delegate('nn.jp', MorphologyVoicebox(glookup('JapaneseStems')))
+        vbox.delegate('pron.jp', MorphologyVoicebox(glookup('Goose'), [JapanesePronounMorpher()]))
+        vbox.delegate('adj.jp', MorphologyVoicebox(glookup('JapaneseStems')))
+        vbox.delegate('adv.jp', MorphologyVoicebox(glookup('JapaneseStems')))
+        vbox.delegate('prep.jp', MorphologyVoicebox(glookup('JapanesePrepositions')))
+        dt_morph = SuffixMorpher(property_names=('COUNT', 'DEF'),
+                                 suffix_map={('sng', 'def'): EMPTY_STR,
+                                             ('plu', 'def'): EMPTY_STR,
+                                             ('sng', 'indef'): EMPTY_STR,
+                                             ('plu', 'indef'): EMPTY_STR})
+        vbox.delegate('dt.jp', MorphologyVoicebox(None, [dt_morph]))
         return vbox
 
 register_voicebox_theme("deutsch", GermanTheme)
