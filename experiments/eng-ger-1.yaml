@@ -1,0 +1,7 @@
+- examples/svo/amr.json
+- examples/svo/middleman.json
+- branch: 
+    1: 
+      - examples/svo/english.json
+    2: 
+      - examples/svo/german.json

@@ -215,6 +215,57 @@ register_word_generator("EnglishPrepositions",
                                                 "beside", "between", "near", "toward",
                                                 "under", "upon", "within"]))
 
+##
+# simple French word generators
+##
+
+register_word_generator("FrenchSyllables",
+                        ListBasedWordGenerator(['tre','foi','qua','te','dai','pa','preu',
+                                                'mi','ce','mo','se', 'rai','me',
+                                                'mo','du','fai','fi','fo','fu',
+                                                'tie','flo', 'flu','fra','trou','fro',
+                                                'frai','seu','bo','gu','glou','glo',
+                                                'bleu',
+                                                'ji','voi','ju','la','leu','roi','pe',
+                                                'ku','la','veau','li','lo','lu','ma','quoi',
+                                                'mi','beau','meau']))
+
+register_word_generator("FrenchConsonants",
+                        ListBasedWordGenerator(['ch','nd','bb','ll','rr','r','v',
+                                                'l','c','n','t', 'rt','nt',
+                                                'mo','du','fair','fi','fo','fu',
+                                                'tier','flo', 'flu','fra','trou','fro',
+                                                'frai','seul','bon','gu','glou','glo',
+                                                'bleu',
+                                                'ji','voil','ju','la','leur','roi','pelle',
+                                                'ku','la','veau','li','lo','lu','mal','quoi',
+                                                'min','beau','meau']))
+
+
+register_word_generator("FrenchStems",
+                        AtomBasedWordGenerator(lookup_word_generator('FrenchSyllables'),
+                                               CategoricalDistribution([0, 0.2, 0.5, 0.1, 0.05])))
+
+
+register_word_generator("FrenchPrepositions",
+                        ListBasedWordGenerator(["en", "sur", "à", "près", "de",
+                                                "avec", "à côté de", "par", "dans", "avant",
+                                                "en haut de", "à l'autre côté de",
+                                                "parmi", "derrière", "sous",
+                                                "entre"]))
+
+def french_verb_generator():
+    atom_generator = lookup_word_generator('FrenchSyllables')
+    word_length_distribution = CategoricalDistribution([0, 0.2, 0.6, 0.2, 0.0])
+    prefix1_generator = AtomBasedWordGenerator(atom_generator, word_length_distribution)    
+    prefix2_generator = lookup_word_generator('FrenchConsonants')     
+    prefix_generator = PrefixSuffixWordGenerator(prefix1_generator, prefix2_generator)
+    suffix_generator = ListBasedWordGenerator(['er'])
+    return PrefixSuffixWordGenerator(prefix_generator, suffix_generator)
+
+
+register_word_generator("FrenchVerbs", french_verb_generator())
+
 def goose_generator():
     atom_generator = lookup_word_generator('EnglishSyllables')
     word_length_distribution = CategoricalDistribution([0, 0.2, 0.6, 0.2, 0.0])
@@ -233,7 +284,7 @@ register_word_generator("GooseAdjectives",
                                                   ListBasedWordGenerator(['ish'])))
 register_word_generator("GooseVerbs",
                         PrefixSuffixWordGenerator(goose_generator(),
-                                                  ListBasedWordGenerator(['ize'])))
+                                                  ListBasedWordGenerator(['ize', 'ate'])))
 register_word_generator("GooseAdverbs",
                         PrefixSuffixWordGenerator(goose_generator(),
                                                   ListBasedWordGenerator(['ly'])))
@@ -263,7 +314,7 @@ register_word_generator("JapanesePrepositions",
 
 german_syllables = ['flach', 'stau', 'bei', 'der', 'dich', 'dung', 'mein',
                     'fin', 'frisch', 'frau', 'geh', 'glied', 'gun', 'gnug' 'haf', 'han', 'heim'
-                    'her', 'herr', 'hub', 'lag', 'hung', 'jahr', 'keit', 'kol', 'kom', 'kenn',
+                    'her', 'herr', 'hub', 'lag', 'hung', 'jahr', 'keil', 'kol', 'kom', 'kenn',
                     'kon', 'lang', 'lich', 'ler', 'lung', 'man', 'mensch', 'milch', 'mon', 'nach',
                     'nied', 'par', 'rech', 'rich', 'run', 'rung', 'schlag', 'sam',
                     'schmid', 'sich', 'ster', 'sung', 'tag', 'tel', 'ter', 'tik', 'trum', 'tun',
@@ -272,3 +323,23 @@ syllable_generator = ListBasedWordGenerator(german_syllables)
 stem_generator = AtomBasedWordGenerator(syllable_generator,
                                         CategoricalDistribution([0, 0, 0.4, 0.4, 0.1]))
 register_word_generator("german-stems", stem_generator)
+register_word_generator("GermanVerbs",
+                        PrefixSuffixWordGenerator(stem_generator,
+                                                  ListBasedWordGenerator(['en'])))
+register_word_generator("GermanPrepositions",
+                        ListBasedWordGenerator(["an", "auf", "hinter", "in", "neben",
+                                                "bei", "über", "unter", "vor", "zwischen",
+                                                "durch", "für",
+                                                "gegen", "ohne", "um",
+                                                "entlang"]))
+
+nahuatl_syllables = ['ca', 'que', 'qui', 'co', 'za', 'ci', 'li', 'te', 'pa', 'to',
+                     'ce', 'cu', 'ya', 'yo', 'xo', 'tzo', 'hu', 'uh', 'uc', 'tl',
+                     'mi', 'pi', 'lo']
+nahuatl_syllable_generator = ListBasedWordGenerator(nahuatl_syllables)
+stem_generator = AtomBasedWordGenerator(goose_generator(),
+                                        CategoricalDistribution([0, 0.2, 0.4, 0.2, 0.1]))
+register_word_generator("NahuatlStems", stem_generator)
+register_word_generator("NahuatlVerbs",
+                        PrefixSuffixWordGenerator(goose_generator(),
+                                                  ListBasedWordGenerator(['a'])))

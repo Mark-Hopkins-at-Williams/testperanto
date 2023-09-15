@@ -34,15 +34,19 @@ artificial languages. Among its intended uses:
     source tpo/bin/activate
     pip install -e .
     
-
 #### running the unit tests (from testperanto root directory)
 
     python -m unittest
 
-#### generating sentences from an example JSON config (from testperanto root directory)
+#### generating sentences from an example JSON config cascade (from testperanto root directory)
 
-    python scripts/generate.py -c examples/white/white.json --sents -n 5 -s 011101
+    python scripts/generate.py -c examples/svo/amr.json examples/svo/middleman.json examples/svo/english.json --sents -n 5
 
+#### generating a parallel corpus from an example YAML config (from testperanto root directory)
+
+    python scripts/parallel_gen.py -c experiments/eng-ger-1.yaml -o eng-ger -n 5
+
+This will generate files `eng-ger.0` (English renderings of the sentences) and `eng-ger.1` (German rendering of the sentences).
 
 ### tutorials
 

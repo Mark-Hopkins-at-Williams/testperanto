@@ -147,7 +147,7 @@ class EnglishVerbMorpher(Morpher):
         elif properties['TENSE'] == 'perfect' and properties['POLARITY'] == 'neg':
             return self.negative_perfect_tense(word, properties)
         else:
-            raise Exception(f"Tense not recognized: {properties['tense']}")
+            raise Exception(f"Tense not recognized: {properties['TENSE']}")
 
     def get_auxiliary(self, tense, person, count):        
         if tense == "present":
@@ -350,15 +350,19 @@ class EnglishNounMorpher(Morpher):
 
 class JapaneseVerbMorpher(Morpher):
     def __init__(self):
-        self.base_morpher = SuffixMorpher(property_names=('PERSON', 'COUNT', 'TENSE'),
-                                          suffix_map={('1', 'sng', 'present'): 'masu',
-                                                      ('1', 'plu', 'present'): 'masu',
-                                                      ('1', 'sng', 'perfect'): 'mashita',
-                                                      ('1', 'plu', 'perfect'): 'mashita',
-                                                      ('3', 'sng', 'present'): 'masu',
-                                                      ('3', 'plu', 'present'): 'masu',
-                                                      ('3', 'sng', 'perfect'): 'mashita',
-                                                      ('3', 'plu', 'perfect'): 'mashita'})
+        self.base_morpher = SuffixMorpher(property_names=('SUBJECT', 'TENSE'),
+                                          suffix_map={('1.sng', 'present_simple'): 'masu',
+                                                      ('1.plu', 'present_simple'): 'masu',
+                                                      ('1.sng', 'past_simple'): 'mashita',
+                                                      ('1.plu', 'past_simple'): 'mashita',
+                                                      ('2.sng', 'present_simple'): 'masu',
+                                                      ('2.plu', 'present_simple'): 'masu',
+                                                      ('2.sng', 'past_simple'): 'mashita',
+                                                      ('2.plu', 'past_simple'): 'mashita',
+                                                      ('3.sng', 'present_simple'): 'masu',
+                                                      ('3.plu', 'present_simple'): 'masu',
+                                                      ('3.sng', 'past_simple'): 'mashita',
+                                                      ('3.plu', 'past_simple'): 'mashita'})
 
     def morph(self, word, properties):
         return self.base_morpher.morph(word, properties)

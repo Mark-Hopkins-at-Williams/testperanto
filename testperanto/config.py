@@ -4,12 +4,12 @@
 ##
 
 import json
-from abc import ABC, abstractmethod
+import yaml
 from copy import deepcopy
 from tqdm import tqdm
 from testperanto.globals import EMPTY_STR
 from testperanto.voicebox import lookup_voicebox_theme
-from testperanto.transducer import TreeTransducer, run_transducer_cascade
+from testperanto.transducer import TreeTransducer, run_transducer_cascade, TransducerTree
 from testperanto.distmanager import DistributionManager
 from testperanto.rules import IndexedRuleSet
 
@@ -43,7 +43,7 @@ def configure_transducer(config, switching_code=None):
     return TreeTransducer(grammar)
 
 
-def init_transducer_cascade(config_files, switching_code=None, vbox_theme="english"):
+def init_transducer_cascade(config_files, switching_code=None, vbox_theme="universal"):
     """Initializes a transducer cascade from a sequence of JSON configurations.
 
     Parameters
@@ -73,6 +73,50 @@ def init_transducer_cascade(config_files, switching_code=None, vbox_theme="engli
     return cascade
 
 
+def init_transducer_tree(yaml_file, vbox_theme="universal"):
+    with open(yaml_file, 'r') as file:
+        config_files = yaml.safe_load(file)
+    return init_transducer_tree_helper(config_files, vbox_theme)
+
+
+def init_transducer_tree_helper(config_files, vbox_theme):
+    root = None
+    ttree = None
+    vbox = lookup_voicebox_theme(vbox_theme).init_vbox()
+    for element in config_files[:-1]:
+        with open(element, 'r') as reader:
+            config = json.load(reader)
+        transducer = configure_transducer(config)
+        child = TransducerTree(transducer)
+        if ttree is None:
+            root = child
+            ttree = root
+        else:
+            ttree.add_child(child)
+            ttree = child
+    element = config_files[-1]
+    if type(element) == str:
+        with open(element, 'r') as reader:
+            config = json.load(reader)
+        transducer = configure_transducer(config)
+        child = TransducerTree(transducer)
+        if ttree is None:
+            root = child
+            ttree = root
+        else:
+            ttree.add_child(child)
+            ttree = child
+        ttree.add_child(vbox)
+    elif type(element) == dict:
+        if 'branch' not in element:
+            raise Exception(f"Expected 'branch' key, but found the following keys instead: {element.keys()}")
+        branches = element['branch']
+        for key in branches:
+            child = init_transducer_tree_helper(branches[key], vbox_theme)
+            ttree.add_child(child)
+    return root
+
+
 def generate_sentence(cascade, start_state):
     output = run_transducer_cascade(cascade, start_state)
     leaves = ['.'.join(leaf.get_label()) for leaf in output.get_leaves()]
@@ -80,7 +124,7 @@ def generate_sentence(cascade, start_state):
     return ' '.join(leaves)
 
 
-def generate_sentences(transducer, num_to_generate, start_state, vbox_theme="english"):
+def generate_sentences(transducer, num_to_generate, start_state, vbox_theme="universal"):
     vbox = lookup_voicebox_theme(vbox_theme).init_vbox()
     cascade = [transducer, vbox]
     start_state = rewrite_wrig_symbol(start_state)
