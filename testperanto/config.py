@@ -5,7 +5,6 @@
 
 import json
 import yaml
-from abc import ABC, abstractmethod
 from copy import deepcopy
 from tqdm import tqdm
 from testperanto.globals import EMPTY_STR
