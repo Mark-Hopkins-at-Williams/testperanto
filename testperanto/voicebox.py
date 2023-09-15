@@ -6,14 +6,14 @@
 from abc import ABC, abstractmethod
 from testperanto.globals import COMPOUND_SEP, EMPTY_STR, VOICEBOX_THEMES
 from testperanto.morphology import SuffixMorpher
-from testperanto.english import EnglishVerbMorpher, EnglishNounMorpher, EnglishPronounMorpher
 from testperanto.morphology import JapaneseVerbMorpher
-from testperanto.french import FrenchVerbMorpher, FrenchNounMorpher, FrenchPronounMorpher
-from testperanto.german import GermanVerbMorpher, GermanNounMorpher, GermanPronounMorpher
-from testperanto.nahuatl import NahuatlVerbMorpher, NahuatlNounMorpher, NahuatlPronounMorpher
-from testperanto.japanese import JapanesePronounMorpher
 from testperanto.trees import TreeNode
 from testperanto.wordgenerators import lookup_word_generator
+from testperanto.langs.english import EnglishVerbMorpher, EnglishNounMorpher, EnglishPronounMorpher
+from testperanto.langs.french import FrenchVerbMorpher, FrenchNounMorpher, FrenchPronounMorpher
+from testperanto.langs.german import GermanVerbMorpher, GermanNounMorpher, GermanPronounMorpher
+from testperanto.langs.nahuatl import NahuatlVerbMorpher, NahuatlNounMorpher, NahuatlPronounMorpher
+from testperanto.langs.japanese import JapanesePronounMorpher
 
 
 def register_voicebox_theme(name, theme):

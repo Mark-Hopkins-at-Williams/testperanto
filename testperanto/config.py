@@ -44,7 +44,7 @@ def configure_transducer(config, switching_code=None):
     return TreeTransducer(grammar)
 
 
-def init_transducer_cascade(config_files, switching_code=None, vbox_theme="english"):
+def init_transducer_cascade(config_files, switching_code=None, vbox_theme="universal"):
     """Initializes a transducer cascade from a sequence of JSON configurations.
 
     Parameters
@@ -74,7 +74,7 @@ def init_transducer_cascade(config_files, switching_code=None, vbox_theme="engli
     return cascade
 
 
-def init_transducer_tree(yaml_file, vbox_theme="english"):
+def init_transducer_tree(yaml_file, vbox_theme="universal"):
     with open(yaml_file, 'r') as file:
         config_files = yaml.safe_load(file)
     return init_transducer_tree_helper(config_files, vbox_theme)
@@ -125,7 +125,7 @@ def generate_sentence(cascade, start_state):
     return ' '.join(leaves)
 
 
-def generate_sentences(transducer, num_to_generate, start_state, vbox_theme="english"):
+def generate_sentences(transducer, num_to_generate, start_state, vbox_theme="universal"):
     vbox = lookup_voicebox_theme(vbox_theme).init_vbox()
     cascade = [transducer, vbox]
     start_state = rewrite_wrig_symbol(start_state)
