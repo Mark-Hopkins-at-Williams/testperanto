@@ -75,7 +75,7 @@ class TreeTransducer:
         return str(self.grammar)
 
 
-def run_transducer_cascade(cascade, start_state='$qstart'):
+def run_transducer_cascade(cascade, start_state='$qstart', verbose=False):
     """Executes a cascade of tree transducers.
 
     A cascade is a sequence of tree transducers where the output of the kth transducer
@@ -97,7 +97,8 @@ def run_transducer_cascade(cascade, start_state='$qstart'):
     in_tree = TreeNode.from_str(start_state)
     for transducer in cascade[:-1]:
         out_tree = transducer.run(in_tree)
-        #print(out_tree.pretty_print())
+        if verbose:
+            print(out_tree.pretty_print())
         in_tree = TreeNode.from_str(f'({start_state} {out_tree})')
     output = cascade[-1].run(in_tree)
     if is_state(output.get_label()):

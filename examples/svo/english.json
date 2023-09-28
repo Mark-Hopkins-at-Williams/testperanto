@@ -4,9 +4,9 @@
     ],
     "rules": [
         {"rule": "($qstart $x1) -> ($qevent $x1)"},
-        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qvmods $x5) ($qlogverb $x1 $x6))"},
-        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qarg1 $x3) ($qvmods $x5) ($qlogverb $x1 $x6))"},
-        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3) (arg2 $x4)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qarg1 $x3) (PP to ($qarg2 $x4)) ($qvmods $x5) ($qlogverb $x1 $x6))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qvmods $x5))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qarg1 $x3) ($qvmods $x5))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3) (arg2 $x4)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qarg1 $x3) (PP to ($qarg2 $x4)) ($qvmods $x5))"},
         {"rule": "($qarg0 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
         {"rule": "($qarg1 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
         {"rule": "($qarg2 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},

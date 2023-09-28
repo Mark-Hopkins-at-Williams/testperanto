@@ -21,7 +21,7 @@ GRAMMAR1 = {
     "distributions": [
         {"name": "nn", "type": "pyor", "strength": 500, "discount": 0.5},
         {"name": "adj", "type": "pyor", "strength": 100, "discount": 0.8},
-        {"name": f"adj{DOT}$y1", "type": "pyor", "strength": 5, "discount": 0.5}
+        {"name": f"adj{DOT}$y0", "type": "pyor", "strength": 5, "discount": 0.5}
     ],
     "rules": [
         {"rule": f"$qstart -> $qnp{DOT}$z1", "zdists": ["nn"]},
@@ -92,11 +92,11 @@ class TestConfig(unittest.TestCase):
         rule4 = {'rule': 'VB.$y1 -> (@vb (STEM verb.$y1) (POLARITY pos) (COUNT sng) (PERSON 3) (TENSE perfect))'}
         config = {"distributions": [{"name": "vb", "type": 'alternating'},
                                     {'name': 'nn', 'type': 'alternating'},
-                                    {"name": f"nn{DOT}$y1", "type": 'averager'}],
+                                    {"name": f"nn{DOT}$y0", "type": 'averager'}],
                   "grammar": [rule1, rule2, rule3, rule4]}
         expected = {'distributions': [{'name': 'vb', 'type': 'alternating'},
                                       {'name': 'nn', 'type': 'alternating'},
-                                      {'name': f'nn{DOT}$y1', 'type': 'averager'}],
+                                      {'name': f'nn{DOT}$y0', 'type': 'averager'}],
                     'rules': [{'rule': f'$qtop -> (X $qs{DOT}$z1)', 'zdists': ['vb']},
                               {'rule': f'$qs{DOT}$y1 -> (X $qnn{DOT}$z1 $qvb{DOT}$y1)', 'zdists': [f'nn{DOT}$y1']},
                               {'rule': f'$qnn{DOT}$y1 -> (X (@verbatim noun{DOT}$y1))'},
@@ -121,7 +121,7 @@ class TestConfig(unittest.TestCase):
         rule4 = {'rule': 'VB.$y1 -> (@verbatim verb.$y1)'}
         config = {"distributions": [{"name": "vb", "type": 'alternating'},
                                     {'name': 'nn', 'type': 'alternating'},
-                                    {"name": "nn.$y1", "type": 'averager'}],
+                                    {"name": "nn.$y0", "type": 'averager'}],
                   "grammar": [rule1, rule2, rule3, rule4]}
         transducer = init_wrig(config)
         sents = generate_sentences(transducer, start_state='TOP', num_to_generate=5)
