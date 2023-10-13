@@ -1,5 +1,7 @@
 import os 
 import numpy as np
+import json
+import subprocess
 
 from treebank import TripleStore
 
@@ -7,6 +9,7 @@ SRC_PATH  = os.getcwd()
 MAIN_PATH = os.path.dirname(SRC_PATH)
 PER_PATH  = os.path.dirname(MAIN_PATH)
 DATA_PATH = f"{MAIN_PATH}/data"
+JSON_PATH = f"{DATA_PATH}/json_data"
 PARAM_PATH = f"{DATA_PATH}/parameters"
 """
 parameters:
@@ -30,8 +33,8 @@ class Config:
 
         if input_space is None:
             input_space: dict = {
-            "Strength" : np.linspace(20, 40, 11),
-            "Discount" : np.linspace(0, 1, 21)[:-1]
+            "Strength" : list(np.linspace(20, 40, 11)),
+            "Discount" : list(np.linspace(0, 1, 21)[:-1])
             }
         self.input_space = input_space
     
@@ -41,20 +44,23 @@ class Experiment:
             'nn.arg0', 'nn.arg1', 
             'nn.arg0.$y0', 'nn.arg1.$y0'
             ]
-    bank_store = TripleStore()
-    pron_count = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
+    #bank_store = TripleStore()
+    #pron_count = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
 
     def __init__(self, config: Config):
         self.initalize(config)
         self.dist          = config.distribution
         self.input_space   = config.input_space 
-        self.num_pron      = self.get_num_pron()
+        self.num_pron      = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
+        self.bank_store    = TripleStore()
         self.param_path    = f"{PARAM_PATH}/{self.dist}_params.txt"
-        self.json_path     = f"{DATA_PATH}/{self.dist}"
+        self.json_dict     = f"{JSON_PATH}"
+        self.json_path     = f"{JSON_PATH}/{self.dist}"
         self.sh_path       = f"{DATA_PATH}/sh_scripts"
-        self.output_path   = f"{DATA_PATH}/{self.dist}"
+        self.output_path   = f"{DATA_PATH}/peranto_output"
 
     def initalize(self, config):
+        # check config
         if not config.distribution in self.distributions:
             raise Exception("config.distribution must be either 'vb', 'nn', 'nn.arg0', 'nn.arg1', 'nn.arg0.$y0', or 'nn.arg1.$y0'")
 
@@ -63,25 +69,126 @@ class Experiment:
         
         for val in config.input_space.values():
             if not isinstance(val, list):
+                print(val)
+                print(type(val))
                 raise Exception("config.input_space values must be lists")
 
         ### make sure you run distributions sequentially (use self.distributions)
 
     def create_param_space(self):
-        ### writes parameters- very similar to write_input_space in experiment.py 
-        raise NotImplementedError
+        """
+        Given input space {"Strength" : [strengths], "Discount" : [discounts]}
+        this function creates a parameters.txt file that contains all (S, D) pair
+        """
+        # generate pairs
+        inputs = self.input_space
+        pairs = [(strength, discount) for strength in inputs["Strength"] for discount in inputs["Discount"]]
 
-    def create_json_configs(self):
-        ### similar to create_json_files()- there's a chance this need to be an 
-        ### abstract class and this an abstract method, but I think we can avoid that 
-        ### also this might need to be broken into 2 functions (pronoun adjusted here)
-        ### since pronouns adjusted need a TripleStore.get(dist, pronoun_filter) to fetch data 
-        raise NotImplementedError
+        # Create parameters.txt file and write in paramaters
+        with open(self.param_path, "w") as f:
+            for pair in pairs:
+                f.write(f"{pair[0]}, {pair[1]}\n")
 
-    def create_sh_script(self):
-        ### creates a .sh script that, when ran, will create testperanto generated output 
-        ### using the json files created above 
-        raise NotImplementedError 
+    def create_json_configs(self, base_file = "amr1.json"):
+        """
+        Uses output from create_param_space() input space (create_input_space()) and 
+        for each (S,D) pair copies the amr1.json file and changes the 
+        strength/discount to (S,D). All of this is saved in a folder of json files
+        """
+
+        json_file_to_read = f"{self.json_dict}/{base_file}"
+
+        with open(self.param_path, "r") as f:
+            lines = f.readlines()
+            parameters = [(float(line.split(",")[0].strip()), float(line.split(",")[1].strip())) for line in lines]
+        
+        # Read the original JSON content
+        with open(json_file_to_read, "r") as f:
+            json_content = json.load(f)
+
+        for strength, discount in parameters:
+            # modify pyor dists as appropriate
+            for dist in json_content["distributions"]:
+            # modify appropriate paramaters, according to the distribution
+                if self.dist == "vb" and dist["name"] == "vb":
+                    dist["strength"] = strength
+                    dist["discount"] = discount
+                elif self.dist == "nn" and dist["name"] == "nn":
+                    dist["strength"] = strength
+                    dist["discount"] = discount
+                elif self.dist == "nn.arg0" and dist["name"] == "nn.arg0":
+                    dist["strength"] = strength
+                    dist["discount"] = discount
+                elif self.dist == "nn.arg1" and dist["name"] == "nn.arg1":
+                    dist["strength"] = strength
+                    dist["discount"] = discount
+                elif self.dist == "nn.arg0.$y0" and dist["name"] == "nn.arg0.$y0":
+                    dist["strength"] = strength
+                    dist["discount"] = discount
+                elif self.dist == "nn.arg1.$y0" and dist["name"] == "nn.arg1.$y0":
+                    dist["strength"] = strength
+                    dist["discount"] = discount
+                else: 
+                    pass # cases do not encompase everything 
+            
+            # set proportion of pronouns as appropriate  
+            for rule in json_content["rules"]:
+                if rule["rule"] == "$qnn.arg0.$y1 -> (inst nn.$y1)":
+                    rule["base_weight"] = str(1 - self.num_pron[0])
+                if rule["rule"] == "$qnn.arg0.$y1 -> (inst pron.$z1)":
+                    rule["base_weight"] = str(self.num_pron[0])
+                if rule["rule"] == "$qnn.arg1.$y1 -> (inst nn.$y1)":
+                    rule["base_weight"] = str(1-self.num_pron[1])
+                if rule["rule"] == "$qnn.arg1.$y1 -> (inst pron.$z1)":
+                    rule["base_weight"] = str(self.num_pron[1])
+            
+
+            # Save the modified JSON content to a new file
+            new_file_name = f"{self.json_dict}/{self.dist}_amr_s{int(strength)}_d{int(discount*100)}.json"
+            with open(new_file_name, "w") as f:
+                json.dump(json_content, f, indent=4)
+
+    def create_sh_script(self, json_path=None, data_path=None, peranto_path=None):
+        """
+        runs the .sh script created by create_sh_script()
+        """
+        if json_path == None:
+            json_path=self.json_dict
+        if data_path == None:
+            data_path=self.output_path
+        if peranto_path == None:
+            peranto_path="/mnt/storage/tdean/testperanto"
+
+        script_name = f"{self.sh_path}/{self.dist}.sh"
+
+        shell_script_content = f"""#!/bin/sh
+        #SBATCH -c 1                # Request 1 CPU core
+        #SBATCH -t 0-02:00          # Runtime in D-HH:MM, minimum of 10 mins
+        #SBATCH -p dl               # Partition to submit to 
+        #SBATCH --mem=10G           # Request 10G of memory
+        #SBATCH -o output.out       # File to which STDOUT will be written
+        #SBATCH -e error.err        # File to which STDERR will be written
+        #SBATCH --gres=gpu:0        # Request 0 GPUs
+
+        JSON_PATH="{json_path}"
+        DATA_PATH="{data_path}"
+        PERANTO_PATH="{peranto_path}"
+
+        for json_file in $JSON_PATH/{self.dist}_amr_*.json; do
+            strength=$(echo $json_file | grep -o -E 's[0-9]+' | sed 's/s//')
+            discount=$(echo $json_file | grep -o -E 'd[0-9]+' | sed 's/d//')
+            
+            python $PERANTO_PATH/scripts/generate.py -c $json_file $PERANTO_PATH/examples/svo/middleman1.json $PERANTO_PATH/examples/svo/english1.json --sents -n 5897 > $DATA_PATH/peranto_{self.dist}_s${{strength}}_d${{discount}}.txt
+        done
+        """
+
+        with open(script_name, 'w') as script_file:
+            script_file.write(shell_script_content)
+    
+    def experiment_setup(self):
+        self.create_param_space()
+        self.create_json_configs()
+        self.create_sh_script()
 
     def clean_peranto_data(self):
         ### only call after experiment.setup()
@@ -107,8 +214,7 @@ class Experiment:
 if __name__ == "__main__":
     config = Config('nn')
     exp = Experiment(config)
-
-    exp.get_num_pron()
+    exp.experiment_setup()
     
     
 """
