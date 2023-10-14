@@ -177,31 +177,38 @@ class TripleStore:
 
 
 if __name__ == "__main__":
-    store = TripleStore() 
-    results = {
-        'triples'       : store.get_triples(),
-        'sv_pairs'      : store.get_sv_pairs(),
-        'sv_pairs_pron' : store.get_sv_pairs(pronoun_filter="both"),
-        'triples_pron'  : store.get_triples(pronoun_filter="both")
-        }
+    store = TripleStore()
+    triples = store.get_triples()
+    print(len(triples))
+    # file_path = "../../../../../../home/data/treebanks/UD_English-EWT/en_ewt-ud-train.conllu"
+    # sentances = read_conllu(file_path)
+    # tripples = scrape_svo(sentances)
+    # save_svo(tripples)
+    # store = TripleStore() 
+    # results = {
+    #     'triples'       : store.get_triples(),
+    #     'sv_pairs'      : store.get_sv_pairs(),
+    #     'sv_pairs_pron' : store.get_sv_pairs(pronoun_filter="both"),
+    #     'triples_pron'  : store.get_triples(pronoun_filter="both")
+    #     }
 
-    print("SVO Triples")
-    for triple in results['triples'][:10]:
-        print(triple)
+    # print("SVO Triples")
+    # for triple in results['triples'][:10]:
+    #     print(triple)
 
-    print("\n\nSV Pairs")
-    print('=' * 20)
-    for sv_pair in results['sv_pairs'][:10]:
-        print(sv_pair)
+    # print("\n\nSV Pairs")
+    # print('=' * 20)
+    # for sv_pair in results['sv_pairs'][:10]:
+    #     print(sv_pair)
 
-    print("\n\nSV Pairs (S pronoun)")
-    print('=' * 20)
-    for sv_pair in results['sv_pairs_pron'][:10]:
-        print(sv_pair)
+    # print("\n\nSV Pairs (S pronoun)")
+    # print('=' * 20)
+    # for sv_pair in results['sv_pairs_pron'][:10]:
+    #     print(sv_pair)
 
 
-    print("\n\nTriples (S & O pronouns)")
-    print('=' * 20)
-    for triple in results['triples_pron'][:10]:
-        print(triple)
+    # print("\n\nTriples (S & O pronouns)")
+    # print('=' * 20)
+    # for triple in results['triples_pron'][:10]:
+    #     print(triple)
 

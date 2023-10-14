@@ -70,3 +70,6 @@ You should now call experiment.run(), which does the following:
 
 Basically, the treebank scraping is probably done, so we just need to fill out the Experiment class
 and then start running these experiments on appa. 
+
+Note:
+in order to run these function properly, one must create a data directory within the hyperparam-tuning directory with the following sub-directories: json_data, parameters, peranto_output, and sh_scripts. 
