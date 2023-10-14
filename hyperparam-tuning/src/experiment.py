@@ -1,10 +1,10 @@
 import os 
 import numpy as np
 import json
-import subprocess
+import matplotlib.pyplot as plt 
 
 from treebank import TripleStore
-from peranto_triples import PerontoTrippleStore
+from peranto_triples import PerantoTripleStore
 
 SRC_PATH  = os.getcwd()
 MAIN_PATH = os.path.dirname(SRC_PATH)
@@ -12,21 +12,7 @@ PER_PATH  = os.path.dirname(MAIN_PATH)
 DATA_PATH = f"{MAIN_PATH}/data"
 JSON_PATH = f"{DATA_PATH}/json_data"
 PARAM_PATH = f"{DATA_PATH}/parameters"
-"""
-parameters:
-    {dist}_params.txt   (nn_params1.txt)
 
-json_configs:
-    {dist}:
-        {dist}_s{strength}_d{discount}.json
-
-sh_scripts:
-    {dist}.sh
-
-peranto_output:
-    {dist}:
-        {dist}_s{strength}_d{discount}_peranto.txt
-"""
 class Config:
 
     def __init__(self, distribution: str=None, input_space=None):
@@ -41,24 +27,24 @@ class Config:
     
 class Experiment:
     distributions = [
-            'vb', 'nn', 
+            'nn', 'vb',
             'nn.arg0', 'nn.arg1', 
             'nn.arg0.$y0', 'nn.arg1.$y0'
             ]
-    #bank_store = TripleStore()
-    #pron_count = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
 
     def __init__(self, config: Config):
         self.initalize(config)
         self.dist          = config.distribution
         self.input_space   = config.input_space 
         self.num_pron      = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
-        self.bank_store    = TripleStore()
+        self.store         = TripleStore()
         self.param_path    = f"{PARAM_PATH}/{self.dist}_params.txt"
         self.json_dict     = f"{JSON_PATH}"
         self.json_path     = f"{JSON_PATH}/{self.dist}"
         self.sh_path       = f"{DATA_PATH}/sh_scripts"
         self.output_path   = f"{DATA_PATH}/peranto_output"
+        self.mse_path      = f"{DATA_PATH}/mse_results"
+        self.plot_path     = f"{DATA_PATH}/plots"
 
     def initalize(self, config):
         # check config
@@ -111,6 +97,14 @@ class Experiment:
             # modify pyor dists as appropriate
             for dist in json_content["distributions"]:
             # modify appropriate paramaters, according to the distribution
+                if dist["name"] == self.dist:
+                    dist['strength'] = strength
+                    dist['discount'] = discount 
+            else: # for else hits iff above if statement never hits
+                print(f"Couldn't find distribution: {self.dist}")
+                """
+                I think the above works fine 
+
                 if self.dist == "vb" and dist["name"] == "vb":
                     dist["strength"] = strength
                     dist["discount"] = discount
@@ -131,7 +125,8 @@ class Experiment:
                     dist["discount"] = discount
                 else: 
                     pass # cases do not encompase everything 
-            
+                """
+
             # set proportion of pronouns as appropriate  
             for rule in json_content["rules"]:
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst nn.$y1)":
@@ -143,7 +138,6 @@ class Experiment:
                 if rule["rule"] == "$qnn.arg1.$y1 -> (inst pron.$z1)":
                     rule["base_weight"] = float(self.num_pron[1])
             
-
             # Save the modified JSON content to a new file
             new_file_name = f"{self.json_dict}/{self.dist}_amr_s{int(strength)}_d{int(discount*100)}.json"
             with open(new_file_name, "w") as f:
@@ -158,7 +152,7 @@ class Experiment:
         if data_path == None:
             data_path=self.output_path
         if peranto_path == None:
-            peranto_path="/mnt/storage/tdean/testperanto"
+            peranto_path=PER_PATH # this prevents errors when moving users
 
         script_name = f"{self.sh_path}/{self.dist}.sh"
 
@@ -186,7 +180,7 @@ class Experiment:
         with open(script_name, 'w') as script_file:
             script_file.write(shell_script_content)
     
-    def experiment_setup(self, base_file = "amr1.json"):
+    def setup(self, base_file="amr1.json"):
         """
         One-stop shop for creating all necessary files and sh scripts for an expirament. 
         Note that the base file argument determins which previous previous paramater settings are 
@@ -195,12 +189,14 @@ class Experiment:
         self.create_param_space()
         self.create_json_configs(base_file)
         self.create_sh_script()
+        print(f'Experiment setup completed. Please run shell script on appa.')
 
-    def clean_peranto_data(self):
+    def get_peranto_data(self):
         """
-        Overwrites Testperanto generated output files to only contian relevant information
-        based on the distrubtion that is being tuned.
+        Overwrites Testperanto generated output files to only contain relevant information
+        based on the distribution that is being tuned.
         """
+        peranto_data = {}
         # iterate through all files 
         with open(self.param_path, "r") as f:
             lines = f.readlines()
@@ -208,7 +204,7 @@ class Experiment:
 
         for strength, discount in parameters:
             file_path = f"{self.output_path}/peranto_{self.dist}_s{strength}_d{discount}.txt"
-            store = PerontoTrippleStore()
+            store = PerantoTripleStore() 
             try:
                 with open(file_path, 'r') as file:
                     for line in file.readlines():
@@ -223,7 +219,7 @@ class Experiment:
                 print(f"An error occurred: {str(e)}")
                 return None
             stuff_to_write = store.get(self.dist)  
-        
+            peranto_data[(strength, discount)] = stuff_to_write.copy()
             # write filtered content to files
             try:
                 with open(file_path, 'w') as file:
@@ -238,67 +234,93 @@ class Experiment:
             except Exception as e:
                 print(f"An error occurred: {str(e)}")
 
-    """
-    Also visualization.ipynb-like functions to read all data,
-    compute the mse and write results to a file (strength discount -> mse)
-    then create and save plot 
+        return peranto_data
 
-    this should all be wrapped in a .run() function
-    """
+    def get_singleton_prop(self):
+        data = self.get_peranto_data() # {(strength, discount) : [(he, eat), (my, name), ...]} 
+
+        def get_prop(lst):
+            singleton_count = 0
+            seen = set()
+            singletons = []
+            total = []
+
+            if len(lst[0]) == 1 or isinstance(str, lst[0]): # self.dist in [nn, vb, nn.arg0, nn.arg1]
+                # the isinstance checks in case data is (strength, discount) : ['he', 'my', ...]
+                lst = [(x, x) for x in lst] # this just makes things convenient
+
+            for idx, (a, b) in enumerate(lst):
+                if (a, b) not in seen: # singleton
+                    singleton_count += 1
+                    seen.add((a, b))
+                singletons.append(singleton_count)
+                total.append(idx + 1)
+
+            singleton_prop = np.array(singletons) / np.array(total)
+            return singleton_prop
+
+        peranto_prop = {(str, dis) : get_prop(lst) for (str, dis), lst in data.items()}
+        treebank_prop = get_prop(self.store.get(self.dist))
+        
+        return peranto_prop, treebank_prop
+
+    def get_top_k(self, singleton_prop, treebank_prop, k=10):
+        def mse(x, y):
+            return sum((a - b)**2 for a,b in zip(x, y))
+
+        mse_results = {(str, dis) : mse(treebank_prop, sing_prop)
+                        for (str, dis), sing_prop in singleton_prop.items()}
+
+        mse_results = sorted(mse_results.items(), key = lambda x : x[1]) # sort by mse
+
+        try:
+            file_path = f"{self.mse_path}/{self.dist}_mse_results.txt"
+            
+            with open(file_path, 'w') as file:
+                for (strength, discount), mse in mse_results.items():
+                    file.write(f"S ={str(strength)}, D={str(discount)} MSE: {mse}")
+                    file.write("\n")
+
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")
+        return [(str, dis) for (str, dis), _ in mse_results][:k]
+
+    def create_plot(self, singleton_prop, treebank_prop, best_params):
+        plt.figure(figsize=(10, 6))
+        
+        data = {f"S={strength}, D={discount}" : curve for (strength, discount), curve in singleton_prop.items() 
+                if (strength, discount) in best_params}
+        data["Treebank"] = treebank_prop
+
+        for name, curve in data.items():
+            plt.plot(list(range(1, len(lst) + 1)), curve, label=name)
+            
+        dist_map = {
+            "nn"          : "Nouns",
+            "vb"          : "Verbs",
+            'nn.arg0'     : "Subjects",
+            "nn.arg1"     : "Objects",
+            "nn.arg0.$y0" : "Subject Verb Pairs",
+            "nn.arg1.$y0" : "Verb Object Pairs"
+        }
+        plt.title(f"Singleton Proportion for {dist_map[self.dist]}")
+        plt.xlabel("Total Number of Entries")
+        plt.ylabel("Singleton Proportion")
+        plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
+        plt.grid(True)
+
+        path = f"{self.plot_path}/{self.dist}_curves.jpg"
+        plt.savefig(path)
+        plt.show()
     
-    def setup(self):
-        #self.create_param_space()
-        #self.create_json_configs() 
-        #self.create_sh_script()
-        print(f'Experiment setup completed. Please run shell script on appa.')
-        pass 
-    
+    def run(self, k=10):
+        singleton_prop, treebank_prop = self.get_singleton_prop()
+        best_params = self.get_top_k(singleton_prop, treebank_prop, k)
+        self.create_plot(singleton_prop, treebank_prop, best_params)
+
 if __name__ == "__main__":
     config = Config('nn')
     exp = Experiment(config)
-    exp.experiment_setup()
+    exp.setup()
     
     
-"""
-
-
-
-
-Each experiment is an experiment to generate data that can then be used
-to visualize/tune the hyperparameters 
-
-You specify a distribution (the distribution to run the experiment on)
-and whether or not it's only pronouns or not, as well as an input space 
-
-The experiment class has .steup(), which
-    will create a {dist}_pron_{if_pronouns}_params{num_runs}.txt file with parameters in parameters folder
-    will create a amr_s{strength}_d{discount}.json file in {dist}_pron{if_pronouns}/run_{num_runs} folder 
-    for each strength/discount pair (also adjusts pronoun so needs to learn distribution from TripleStore)
-    also creates shell script?? 
-
-After this one would use appa and run the experiment by just calling the created shell script 
-Then you could call the experiment.clean_data(), which will take the .txt file created and edit it to look
-exactly like associated treebank data
-"""
-
-"""
-class Experiment:
-
-    distribution = 'vb'
-    
-
-global_distributions = [vb, nn, nn.arg0, nn.arg1, nn.arg0.$y0, nn.arg1.$y0]
-    define input space
-    generate parameters.txt
-
-(2) define global distribution sequence
-    - global verb -> global noun -> ...
-(3) for distribution in global_distributions
-    - create input space (maybe fancy way of finding)
-    - define function that edits json 
-    - create json config files
-    - define function that edits bash
-    - create bash script
-    - find optimal parameters and set this from now on!
-
-"""
