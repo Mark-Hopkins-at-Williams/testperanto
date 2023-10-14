@@ -135,13 +135,13 @@ class Experiment:
             # set proportion of pronouns as appropriate  
             for rule in json_content["rules"]:
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst nn.$y1)":
-                    rule["base_weight"] = str(1 - self.num_pron[0])
+                    rule["base_weight"] = float(1 - self.num_pron[0])
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst pron.$z1)":
-                    rule["base_weight"] = str(self.num_pron[0])
+                    rule["base_weight"] = float(self.num_pron[0])
                 if rule["rule"] == "$qnn.arg1.$y1 -> (inst nn.$y1)":
-                    rule["base_weight"] = str(1-self.num_pron[1])
+                    rule["base_weight"] = float(1-self.num_pron[1])
                 if rule["rule"] == "$qnn.arg1.$y1 -> (inst pron.$z1)":
-                    rule["base_weight"] = str(self.num_pron[1])
+                    rule["base_weight"] = float(self.num_pron[1])
             
 
             # Save the modified JSON content to a new file

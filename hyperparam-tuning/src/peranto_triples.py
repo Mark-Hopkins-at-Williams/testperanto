@@ -20,24 +20,24 @@ class PerontoTrippleStore:
     def get_sv_pairs(self):
         return self._retrieve(['subject', 'verb'])
     
-    def get_vo_pairs(self)
+    def get_vo_pairs(self):
         return self._retrieve(['verb', 'object'])
     
-    def get_subjects(self)
+    def get_subjects(self):
         return self._retrieve(['subject'])
     
-    def get_verbs(self)
+    def get_verbs(self):
         return self._retrieve(['verb'])
     
-    def get_objects(self)
+    def get_objects(self):
         return self._retrieve(['object'])
     
-    def get_nouns(self)
+    def get_nouns(self):
         subjects = self._retrieve(['subject'])
         objects = self._retrieve(['object'])
         return list(set(subjects + objects))
     
-    def get(self, distribution)
+    def get(self, distribution):
         if distribution == 'vb':
             return self.get_verbs()
 
