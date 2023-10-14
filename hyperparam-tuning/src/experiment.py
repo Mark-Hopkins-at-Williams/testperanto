@@ -4,6 +4,7 @@ import json
 import subprocess
 
 from treebank import TripleStore
+from peranto_triples import PerontoTrippleStore
 
 SRC_PATH  = os.getcwd()
 MAIN_PATH = os.path.dirname(SRC_PATH)
@@ -185,16 +186,57 @@ class Experiment:
         with open(script_name, 'w') as script_file:
             script_file.write(shell_script_content)
     
-    def experiment_setup(self):
+    def experiment_setup(self, base_file = "amr1.json"):
+        """
+        One-stop shop for creating all necessary files and sh scripts for an expirament. 
+        Note that the base file argument determins which previous previous paramater settings are 
+        used to generate json files for subsequent iterations of tuning.
+        """
         self.create_param_space()
-        self.create_json_configs()
+        self.create_json_configs(base_file)
         self.create_sh_script()
 
     def clean_peranto_data(self):
-        ### only call after experiment.setup()
-        ### peranto data outputs he eat food #... so clean to match desired output 
-        ### might need some TripleStore like functionality here (if so make abstract)
-        raise NotImplementedError 
+        """
+        Overwrites Testperanto generated output files to only contian relevant information
+        based on the distrubtion that is being tuned.
+        """
+        # iterate through all files 
+        with open(self.param_path, "r") as f:
+            lines = f.readlines()
+            parameters = [(float(line.split(",")[0].strip()), float(line.split(",")[1].strip())) for line in lines]
+
+        for strength, discount in parameters:
+            file_path = f"{self.output_path}/peranto_{self.dist}_s{strength}_d{discount}.txt"
+            store = PerontoTrippleStore()
+            try:
+                with open(file_path, 'r') as file:
+                    for line in file.readlines():
+                        subject = line[0]
+                        verb = line[1]
+                        obj= line[2]
+                        store.add_triple(subject, verb, obj)      
+            except FileNotFoundError:
+                print(f"The file at path {file_path} was not found.")
+                return None
+            except Exception as e:
+                print(f"An error occurred: {str(e)}")
+                return None
+            stuff_to_write = store.get(self.dist)  
+        
+            # write filtered content to files
+            try:
+                with open(file_path, 'w') as file:
+                    # Iterate through each tuple in the list
+                    for tup in stuff_to_write:
+                        # Iterate through each item in the tuple
+                        for item in tup:
+                            # Write each item on a line separated by space 
+                            file.write(str(item) + " ")
+                        # Add an newline for separation between tuples
+                        file.write("\n")
+            except Exception as e:
+                print(f"An error occurred: {str(e)}")
 
     """
     Also visualization.ipynb-like functions to read all data,
