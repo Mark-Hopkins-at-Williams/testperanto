@@ -65,15 +65,15 @@ class Experiment:
         lvl2_dist = ["nn.arg0", 'nn.arg1']
         lvl3_dist = ['nn.arg0.$y0', 'nn.arg1.$y0']
 
-        if self.dist in lvl3_dist:
+        if config.distribution in lvl3_dist:
             for dist in lvl1_dist + lvl2_dist:
                 if not os.path.exists(get_param_path(dist)):
-                    raise Exception(f"Please tune {dist} before {self.dist}")
+                    raise Exception(f"Please tune {dist} before {config.distribution}")
         
-        if self.dist in lvl2_dist:
+        if config.distribution in lvl2_dist:
             for dist in lvl1_dist:
                 if not os.path.exists(get_param_path(dist)):
-                    raise Exception(f"Please tune {dist} before {self.dist}")
+                    raise Exception(f"Please tune {dist} before {config.distribution}")
 
     def create_param_space(self):
         """
@@ -113,9 +113,7 @@ class Experiment:
                 if dist["name"] == self.dist:
                     dist['strength'] = strength
                     dist['discount'] = discount 
-            else: # for else hits iff above if statement never hits
-                print(f"Couldn't find distribution: {self.dist}")
-    
+                
             # set proportion of pronouns as appropriate  
             for rule in json_content["rules"]:
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst nn.$y1)":
@@ -308,7 +306,7 @@ class Experiment:
         self.create_plot(singleton_prop, treebank_prop, best_params)
 
 if __name__ == "__main__":
-    config = Config('nn')
+    config = Config('vb')
     exp = Experiment(config)
     exp.setup()
     #exp.run()
