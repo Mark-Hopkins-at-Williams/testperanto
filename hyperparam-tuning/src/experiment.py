@@ -188,13 +188,14 @@ class Experiment:
         with open(self.param_path, "r") as f:
             lines = f.readlines()
             parameters = [(float(line.split(",")[0].strip()), float(line.split(",")[1].strip())) for line in lines]
-
+    
         for strength, discount in parameters:
-            file_path = f"{self.output_path}/peranto_{self.dist}_s{strength}_d{discount}.txt"
+            file_path = f"{self.output_path}/peranto_{self.dist}_s{int(strength)}_d{int(100* discount)}.txt"
             store = PerantoTripleStore() 
             try:
                 with open(file_path, 'r') as file:
                     for line in file.readlines():
+                        line = line.split()
                         subject = line[0]
                         verb = line[1]
                         obj= line[2]
@@ -204,12 +205,15 @@ class Experiment:
                 return None
             except Exception as e:
                 print(f"An error occurred: {str(e)}")
+
                 return None
             stuff_to_write = store.get(self.dist)  
             peranto_data[(strength, discount)] = stuff_to_write.copy()
             # write filtered content to files
+
             try:
-                with open(file_path, 'w') as file:
+                file_name = f"{self.output_path}/peranto_{self.dist}_s{int(strength)}_d{int(100* discount)}_modified.txt"
+                with open(file_name, 'w') as file:
                     # Iterate through each tuple in the list
                     for tup in stuff_to_write:
                         # Iterate through each item in the tuple
@@ -232,7 +236,7 @@ class Experiment:
             singletons = []
             total = []
 
-            if len(lst[0]) == 1 or isinstance(str, lst[0]): # self.dist in [nn, vb, nn.arg0, nn.arg1]
+            if len(lst[0]) == 1: # self.dist in [nn, vb, nn.arg0, nn.arg1]
                 # the isinstance checks in case data is (strength, discount) : ['he', 'my', ...]
                 lst = [(x, x) for x in lst] # this just makes things convenient
 
@@ -253,18 +257,17 @@ class Experiment:
 
     def get_top_k(self, singleton_prop, treebank_prop, k=10):
         def mse(x, y):
-            return sum((a - b)**2 for a,b in zip(x, y))
+            return np.mean((x-y)**2)
 
         mse_results = {(str, dis) : mse(treebank_prop, sing_prop)
                         for (str, dis), sing_prop in singleton_prop.items()}
 
         mse_results = sorted(mse_results.items(), key = lambda x : x[1]) # sort by mse
-
         try:
             file_path = f"{self.mse_path}/{self.dist}_mse_results.txt"
             
             with open(file_path, 'w') as file:
-                for (strength, discount), mse in mse_results.items():
+                for (strength, discount), mse in mse_results:
                     file.write(f"S ={str(strength)}, D={str(discount)} MSE: {mse}")
                     file.write("\n")
 
@@ -306,9 +309,8 @@ class Experiment:
         self.create_plot(singleton_prop, treebank_prop, best_params)
 
 if __name__ == "__main__":
-    config = Config('vb')
+    config = Config('nn.arg0')
     exp = Experiment(config)
-    exp.setup()
-    #exp.run()
+    exp.setup(base_file="nn_amr_s22_d20.json")
     
     

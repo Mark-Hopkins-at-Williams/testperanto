@@ -1,3 +1,6 @@
+import random 
+random.seed(42069)
+
 class PerantoTripleStore:
     """
     Basically a TripleStore where you 
@@ -7,7 +10,6 @@ class PerantoTripleStore:
     """
     def __init__(self):
         self.data = []    
-        self.load_from_file()
     
     def add_triple(self, s, v, o,):
         self.data.append({
@@ -41,7 +43,9 @@ class PerantoTripleStore:
     def get_nouns(self):
         subjects = self._retrieve(['subject'])
         objects = self._retrieve(['object'])
-        return list(set(subjects + objects))
+        result = list(subjects + objects)
+        random.shuffle(result)
+        return result
     
     def get(self, distribution):
         if distribution == 'vb':
