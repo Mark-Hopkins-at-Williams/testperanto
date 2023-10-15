@@ -9,7 +9,7 @@ from peranto_triples import PerantoTripleStore
 SRC_PATH  = os.getcwd()
 MAIN_PATH = os.path.dirname(SRC_PATH)
 PER_PATH  = os.path.dirname(MAIN_PATH)
-DATA_PATH = f"{MAIN_PATH}/data"
+DATA_PATH = f"{MAIN_PATH}/experiment_data"
 JSON_PATH = f"{DATA_PATH}/json_data"
 PARAM_PATH = f"{DATA_PATH}/parameters"
 
