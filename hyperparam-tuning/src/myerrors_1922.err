@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "experiment.py", line 7, in <module>
-    from peranto_triples import PerontoTrippleStore
-  File "/mnt/storage/tdean/testperanto/hyperparam-tuning/src/peranto_triples.py", line 23
-    def get_vo_pairs(self)
-                         ^
-SyntaxError: invalid syntax

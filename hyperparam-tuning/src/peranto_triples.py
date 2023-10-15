@@ -1,4 +1,10 @@
-class PerontoTrippleStore:
+class PerantoTripleStore:
+    """
+    Basically a TripleStore where you 
+    just add data and then are able to read different components of it
+
+    Similar to TripleStore functionality
+    """
     def __init__(self):
         self.data = []    
         self.load_from_file()
@@ -57,4 +63,4 @@ class PerontoTrippleStore:
             return self.get_vo_pairs()
 
         else:
-            raise Exception(f"Please enter a valid distribution. Note that my cousin TrippleStore will not be as kind.")
+            raise Exception(f"Please enter a valid distribution. Note that my cousin TripleStore will not be as kind.")
