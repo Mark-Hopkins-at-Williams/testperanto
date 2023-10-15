@@ -94,6 +94,23 @@ class IdiotException(Exception):
     pass
 
 class TripleStore:
+    """
+    TripleStore enables you to read the scraped treebank data quickly
+
+    The main functionality is
+        store.get(distribution, pronoun_filter)
+    
+    Here, 
+    distribution in [vb, nn, nn.arg0, nn.arg1, nn.arg0.$y0, nn.arg1.$y0] is the distribution
+    you want the data for (so for example nn.arg0 will give you a list of subjects)
+
+    pronoun_filter in [both, either, subject, object, None] is what pronouns you need
+    
+    One slight flaw is the following:
+        you might think that store.get(nn.arg0, 'both') == store.get(nn.arg0, 'subject')
+        since there is no object, which means that the 'both' is redundant. However, this
+        code is bugged so you need to do store.get(nn.arg0, 'subject')
+    """
     def __init__(self):
         self.data = []    
         self.load_from_file()
@@ -180,35 +197,4 @@ if __name__ == "__main__":
     store = TripleStore()
     triples = store.get_triples()
     print(len(triples))
-    # file_path = "../../../../../../home/data/treebanks/UD_English-EWT/en_ewt-ud-train.conllu"
-    # sentances = read_conllu(file_path)
-    # tripples = scrape_svo(sentances)
-    # save_svo(tripples)
-    # store = TripleStore() 
-    # results = {
-    #     'triples'       : store.get_triples(),
-    #     'sv_pairs'      : store.get_sv_pairs(),
-    #     'sv_pairs_pron' : store.get_sv_pairs(pronoun_filter="both"),
-    #     'triples_pron'  : store.get_triples(pronoun_filter="both")
-    #     }
-
-    # print("SVO Triples")
-    # for triple in results['triples'][:10]:
-    #     print(triple)
-
-    # print("\n\nSV Pairs")
-    # print('=' * 20)
-    # for sv_pair in results['sv_pairs'][:10]:
-    #     print(sv_pair)
-
-    # print("\n\nSV Pairs (S pronoun)")
-    # print('=' * 20)
-    # for sv_pair in results['sv_pairs_pron'][:10]:
-    #     print(sv_pair)
-
-
-    # print("\n\nTriples (S & O pronouns)")
-    # print('=' * 20)
-    # for triple in results['triples_pron'][:10]:
-    #     print(triple)
-
+   

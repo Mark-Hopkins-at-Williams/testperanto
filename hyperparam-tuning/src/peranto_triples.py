@@ -1,4 +1,10 @@
 class PerantoTripleStore:
+    """
+    Basically a TripleStore where you 
+    just add data and then are able to read different components of it
+
+    Similar to TripleStore functionality
+    """
     def __init__(self):
         self.data = []    
         self.load_from_file()

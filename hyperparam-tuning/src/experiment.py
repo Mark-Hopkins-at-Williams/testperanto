@@ -60,7 +60,20 @@ class Experiment:
                 print(type(val))
                 raise Exception("config.input_space values must be lists")
 
-        ### make sure you run distributions sequentially (use self.distributions)
+        get_param_path = lambda dist : f"{PARAM_PATH}/{dist}_params.txt"
+        lvl1_dist = ['vb', 'nn']
+        lvl2_dist = ["nn.arg0", 'nn.arg1']
+        lvl3_dist = ['nn.arg0.$y0', 'nn.arg1.$y0']
+
+        if self.dist in lvl3_dist:
+            for dist in lvl1_dist + lvl2_dist:
+                if not os.path.exists(get_param_path(dist)):
+                    raise Exception(f"Please tune {dist} before {self.dist}")
+        
+        if self.dist in lvl2_dist:
+            for dist in lvl1_dist:
+                if not os.path.exists(get_param_path(dist)):
+                    raise Exception(f"Please tune {dist} before {self.dist}")
 
     def create_param_space(self):
         """
@@ -102,31 +115,7 @@ class Experiment:
                     dist['discount'] = discount 
             else: # for else hits iff above if statement never hits
                 print(f"Couldn't find distribution: {self.dist}")
-                """
-                I think the above works fine 
-
-                if self.dist == "vb" and dist["name"] == "vb":
-                    dist["strength"] = strength
-                    dist["discount"] = discount
-                elif self.dist == "nn" and dist["name"] == "nn":
-                    dist["strength"] = strength
-                    dist["discount"] = discount
-                elif self.dist == "nn.arg0" and dist["name"] == "nn.arg0":
-                    dist["strength"] = strength
-                    dist["discount"] = discount
-                elif self.dist == "nn.arg1" and dist["name"] == "nn.arg1":
-                    dist["strength"] = strength
-                    dist["discount"] = discount
-                elif self.dist == "nn.arg0.$y0" and dist["name"] == "nn.arg0.$y0":
-                    dist["strength"] = strength
-                    dist["discount"] = discount
-                elif self.dist == "nn.arg1.$y0" and dist["name"] == "nn.arg1.$y0":
-                    dist["strength"] = strength
-                    dist["discount"] = discount
-                else: 
-                    pass # cases do not encompase everything 
-                """
-
+    
             # set proportion of pronouns as appropriate  
             for rule in json_content["rules"]:
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst nn.$y1)":
@@ -152,7 +141,7 @@ class Experiment:
         if data_path == None:
             data_path=self.output_path
         if peranto_path == None:
-            peranto_path=PER_PATH # this prevents errors when moving users
+            peranto_path=PER_PATH 
 
         script_name = f"{self.sh_path}/{self.dist}.sh"
 
@@ -293,7 +282,7 @@ class Experiment:
         data["Treebank"] = treebank_prop
 
         for name, curve in data.items():
-            plt.plot(list(range(1, len(lst) + 1)), curve, label=name)
+            plt.plot(list(range(1, len(curve) + 1)), curve, label=name)
             
         dist_map = {
             "nn"          : "Nouns",
@@ -322,5 +311,6 @@ if __name__ == "__main__":
     config = Config('nn')
     exp = Experiment(config)
     exp.setup()
+    #exp.run()
     
     
