@@ -5,24 +5,46 @@ The code in this folder tunes the two hyperparameters of **testperanto**, *stren
 ### Repo Structure: 
 
 ├── src                                    
-│   ├── treebank.py                        <- scrape/read treebank data
-│   ├── experiment.py                      <- experiment class, used to tune ind. dist.
-│   └── visualization.ipynb                <- visualize experiment results (to be deleted)
-├── data                                  
-│   ├── parameters                         <- folder for hyperparams tried per experiment
-│   ├── json_files                         <- folder of experiments containing JSON config files
-│   ├── sh_scripts                         <- folder for shell scripts to run experiments
-│   ├── scraped_treebank.json              <- scraped treebank data
-│   ├── treebank.conllu                    <- original treebank conllu data 
-│   ├── peranto_data                       <- folder for testperanto output of experiments
-│   ├── plots                              <- folder for singleton prop plots
-│   ├── mse_results                        <- folder for singleton prop plots
-│   └── final.json                         <- tuned hyperparameters
-├── README.md                              <- Project description/relevant links
+│   ├── treebank.py                                                   <- scrape/read treebank data
+│   ├── experiment.py                                                 <- experiment class, used to tune ind. dist.
+│   └── peranto_triples.py                                            <- storage class for peranto data 
+├── experiment_data                                  
+│   ├── parameters                                       
+│   │   └── {dist}_params.txt                                         <- parameters tried for {dist}
+│   ├── json_data                                                     
+│   │   ├── {dist}                                                    
+│   │   │   ├── {dist}_amr_s{strength}_d{discount}.json               <- json config file for {dist},s={strength},d={discount}
+│   │   │── baseline.json                                             <- baseline json config file 
+│   ├── sh_scripts                                
+│   │   └── {dist}.sh                                                 <- shell script for {dist}
+│   ├── peranto_output                                                
+│   │   ├── {dist}
+│   │   │   └── peranto_{dist}_s{strength}_d{discount}.txt            <- peranto output for {dist}, s={strength}, d={discount}
+│   │   ├── {dist}_modified
+│   │   │   └── peranto_{dist}_s{strength}_d{discount}_modified.txt   <- cleaned output for {dist},s={strength},d={discount}
+│   ├── plots                              
+│   │   └── {dist}_curves.jpg                                         <- singleton prop curve for {dist}
+│   ├── mse_results                        
+│   │   └── {dist}_mse_results.txt                                    <- mse results for {dist}
+│   ├── scraped_treebank.json                                         <- scraped treebank data
+│   └── treebank.conllu                                               <- original treebank conllu data 
+├── README.md                                                         <- Project description/relevant links
+
+### Results:
+
+          || Results ||
+==================================
+|| nn         : s = 22, d = .2  ||
+|| vb         : s = 22, d = .5  ||
+|| nn.arg0    : s = 40, d = .4  ||
+|| nn.arg1    : s = 26, d = .6  ||
+|| nn.arg0.$y0: s = 34, d = .8  ||
+|| nn.arg1.$y1: s = 34, d = .45 ||
+==================================
 
 ### Description of Treebank Scraping:
 
-We start with data/treebank.conllu, and in src/treebank.py we first scrape:
+We start with experiment_data/treebank.conllu, and in src/treebank.py we first scrape:
 - scrape (Subject, Verb, Object) triples and lemmatize, lowercase
 - allow (S,V,O) and (S',V,O) (i.e. allow if multiple triples with same verb)
 - keep track of stuff that are/aren't pronouns
@@ -73,3 +95,4 @@ and then start running these experiments on appa.
 
 Note:
 in order to run these function properly, one must create a data directory within the hyperparam-tuning directory with the following sub-directories: json_data, parameters, peranto_output, and sh_scripts. 
+

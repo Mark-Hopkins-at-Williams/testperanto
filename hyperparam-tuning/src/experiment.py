@@ -1,6 +1,7 @@
 import os 
-import numpy as np
 import json
+
+import numpy as np
 import matplotlib.pyplot as plt 
 
 from treebank import TripleStore
@@ -14,7 +15,15 @@ JSON_PATH = f"{DATA_PATH}/json_data"
 PARAM_PATH = f"{DATA_PATH}/parameters"
 
 class Config:
+    """
+    Config configures an Experiment (see below). Each experiment
+    grid searches through strength/discount pairs in order to tune a 
+    specific distribution.
 
+    So, to configure an Experiment you need to specify a distribution
+    and a input_space, which is a dict mapping "Strength" and "Discount"
+    to a list of strengths/discounts to search through. 
+    """
     def __init__(self, distribution: str=None, input_space=None):
         self.distribution = distribution
 
@@ -26,6 +35,41 @@ class Config:
         self.input_space = input_space
     
 class Experiment:
+    """
+    An Experiment grid searches through strength/discount pairs for
+    a given distribution. There are two key functionalities of the 
+    Experiment.
+
+    First, one should call:
+
+    exp = Experiment(config)
+    exp.setup()
+
+    Setup will do 3 things:
+        (1) Creates parameters/{dist}_params.txt file containing strength/discount pairs 
+        (2) Create a bunch of testperanto config json files
+            - located in json_data/{dist}
+            - filenames are {dist}_amr_s{strength}_d{discount}.json
+            - each modifies some base json file to specific strength/discount 
+        (3) Creates sh_scripts/{dist}.sh, which is a shell script to run all created json files
+
+    Once this shell script is created, one should run the sh script on appa:
+        sbatch {dist}.sh
+
+    This script will create peranto_output/{dist}/peranto_{dist}_s{str}_d{dis}.txt, containing
+    peranto output. This will take awhile (if num_sentences = 5897 ~ 2.5hr). Afterwards you should call
+
+    exp.run()
+
+    Run will do  things:
+        (1) Cleans each peranto output file to be in the correct form
+            - for example if dist == nn the cleaned file will only have nouns 
+        (2) Computes the singleton proportion of each peranto output (along with treebank data)
+        (3) Computes and saves the MSE between treebank and each peranto output
+            - Saved in mse_results/{dist}_mse_results.txt
+        (4) Saves a plot of the singleton proportion of the top k params and treebank data 
+            - Saved in plots/{dist}_curves.jpg
+    """
     distributions = [
             'nn', 'vb',
             'nn.arg0', 'nn.arg1', 
@@ -35,19 +79,20 @@ class Experiment:
     def __init__(self, config: Config):
         self.initalize(config)
         self.dist          = config.distribution
+        self.name          = self.dist.replace("$","")                # avoids sh scripts error 
         self.input_space   = config.input_space 
         self.num_pron      = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
         self.store         = TripleStore()
-        self.param_path    = f"{PARAM_PATH}/{self.dist}_params.txt"
-        self.json_dict     = f"{JSON_PATH}"
-        self.json_path     = f"{JSON_PATH}/{self.dist}"
-        self.sh_path       = f"{DATA_PATH}/sh_scripts"
-        self.output_path   = f"{DATA_PATH}/peranto_output"
+        self.param_path    = f"{PARAM_PATH}/{self.name}_params.txt"  
+        self.json_dict     = f"{JSON_PATH}"                            
+        self.json_path     = f"{JSON_PATH}/{self.name}"
+        self.sh_path       = f"{DATA_PATH}/sh_scripts"               
+        self.output_path   = f"{DATA_PATH}/peranto_output"            
         self.mse_path      = f"{DATA_PATH}/mse_results"
         self.plot_path     = f"{DATA_PATH}/plots"
 
     def initalize(self, config):
-        # check config
+        """Initalizes the configuration with some basic checks"""
         if not config.distribution in self.distributions:
             raise Exception("config.distribution must be either 'vb', 'nn', 'nn.arg0', 'nn.arg1', 'nn.arg0.$y0', or 'nn.arg1.$y0'")
 
@@ -60,6 +105,7 @@ class Experiment:
                 print(type(val))
                 raise Exception("config.input_space values must be lists")
 
+        ### tune lvl1 before lvl2 before lvl3
         get_param_path = lambda dist : f"{PARAM_PATH}/{dist}_params.txt"
         lvl1_dist = ['vb', 'nn']
         lvl2_dist = ["nn.arg0", 'nn.arg1']
@@ -89,10 +135,10 @@ class Experiment:
             for pair in pairs:
                 f.write(f"{pair[0]}, {pair[1]}\n")
 
-    def create_json_configs(self, base_file = "amr1.json"):
+    def create_json_configs(self, base_file="basefile.json"):
         """
         Uses output from create_param_space() input space (create_input_space()) and 
-        for each (S,D) pair copies the amr1.json file and changes the 
+        for each (S,D) pair copies the amr_tuned.json file and changes the 
         strength/discount to (S,D). All of this is saved in a folder of json files
         """
 
@@ -126,7 +172,7 @@ class Experiment:
                     rule["base_weight"] = float(self.num_pron[1])
             
             # Save the modified JSON content to a new file
-            new_file_name = f"{self.json_dict}/{self.dist}_amr_s{int(strength)}_d{int(discount*100)}.json"
+            new_file_name = f"{self.json_path}/{self.name}_amr_s{int(strength)}_d{int(discount*100)}.json"
             with open(new_file_name, "w") as f:
                 json.dump(json_content, f, indent=4)
 
@@ -135,20 +181,20 @@ class Experiment:
         runs the .sh script created by create_sh_script()
         """
         if json_path == None:
-            json_path=self.json_dict
+            json_path=self.json_path
         if data_path == None:
             data_path=self.output_path
         if peranto_path == None:
             peranto_path=PER_PATH 
 
-        script_name = f"{self.sh_path}/{self.dist}.sh"
+        script_name = f"{self.sh_path}/{self.name}.sh"
 
         shell_script_content = f"""#!/bin/sh
         #SBATCH -c 1                # Request 1 CPU core
         #SBATCH -t 0-02:00          # Runtime in D-HH:MM, minimum of 10 mins
         #SBATCH -p dl               # Partition to submit to 
         #SBATCH --mem=10G           # Request 10G of memory
-        #SBATCH -o output.out       # File to which STDOUT will be written
+        #SBATCH -o {self.name}.out  # File to which STDOUT will be written
         #SBATCH -e error.err        # File to which STDERR will be written
         #SBATCH --gres=gpu:0        # Request 0 GPUs
 
@@ -156,18 +202,18 @@ class Experiment:
         DATA_PATH="{data_path}"
         PERANTO_PATH="{peranto_path}"
 
-        for json_file in $JSON_PATH/{self.dist}_amr_*.json; do
+        for json_file in $JSON_PATH/{self.name}_amr_*.json; do
             strength=$(echo $json_file | grep -o -E 's[0-9]+' | sed 's/s//')
             discount=$(echo $json_file | grep -o -E 'd[0-9]+' | sed 's/d//')
             
-            python $PERANTO_PATH/scripts/generate.py -c $json_file $PERANTO_PATH/examples/svo/middleman1.json $PERANTO_PATH/examples/svo/english1.json --sents -n 5897 > $DATA_PATH/peranto_{self.dist}_s${{strength}}_d${{discount}}.txt
+            python $PERANTO_PATH/scripts/generate.py -c $json_file $PERANTO_PATH/examples/svo/middleman1.json $PERANTO_PATH/examples/svo/english1.json --sents -n 5897 > $DATA_PATH/{self.name}/peranto_{self.name}_s${{strength}}_d${{discount}}.txt
         done
         """
 
         with open(script_name, 'w') as script_file:
             script_file.write(shell_script_content)
     
-    def setup(self, base_file="amr1.json"):
+    def setup(self, base_file="basefile.json"):
         """
         One-stop shop for creating all necessary files and sh scripts for an expirament. 
         Note that the base file argument determins which previous previous paramater settings are 
@@ -190,7 +236,7 @@ class Experiment:
             parameters = [(float(line.split(",")[0].strip()), float(line.split(",")[1].strip())) for line in lines]
     
         for strength, discount in parameters:
-            file_path = f"{self.output_path}/peranto_{self.dist}_s{int(strength)}_d{int(100* discount)}.txt"
+            file_path = f"{self.output_path}/{self.name}/peranto_{self.name}_s{int(strength)}_d{int(100* discount)}.txt"
             store = PerantoTripleStore() 
             try:
                 with open(file_path, 'r') as file:
@@ -212,7 +258,7 @@ class Experiment:
             # write filtered content to files
 
             try:
-                file_name = f"{self.output_path}/peranto_{self.dist}_s{int(strength)}_d{int(100* discount)}_modified.txt"
+                file_name = f"{self.output_path}/{self.name} modified/peranto_{self.name}_s{int(strength)}_d{int(100* discount)}_modified.txt"
                 with open(file_name, 'w') as file:
                     # Iterate through each tuple in the list
                     for tup in stuff_to_write:
@@ -228,6 +274,15 @@ class Experiment:
         return peranto_data
 
     def get_singleton_prop(self):
+        """
+        Computes singleton proportion for treebank and generated data.
+        First creates a lst singletons s.t. singletons[i] = num singletons in data[:i]
+        Then normalizes with len(data[:i]).
+
+        Returns tuple of the form
+            {(str, dis) : [singleton prop], (str1, dis1) : [singleton prop1], ...},
+            [singleton prop of treebank data]
+        """
         data = self.get_peranto_data() # {(strength, discount) : [(he, eat), (my, name), ...]} 
 
         def get_prop(lst):
@@ -256,6 +311,11 @@ class Experiment:
         return peranto_prop, treebank_prop
 
     def get_top_k(self, singleton_prop, treebank_prop, k=10):
+        """
+        Computes and saves the MSE between treebank prop and each 
+        singleton_prop of generated data. Returns a list of the top
+        k (str, dis) params, measured by MSE. 
+        """
         def mse(x, y):
             return np.mean((x-y)**2)
 
@@ -264,8 +324,7 @@ class Experiment:
 
         mse_results = sorted(mse_results.items(), key = lambda x : x[1]) # sort by mse
         try:
-            file_path = f"{self.mse_path}/{self.dist}_mse_results.txt"
-            
+            file_path = f"{self.mse_path}/{self.name}_mse_results.txt"
             with open(file_path, 'w') as file:
                 for (strength, discount), mse in mse_results:
                     file.write(f"S ={str(strength)}, D={str(discount)} MSE: {mse}")
@@ -276,6 +335,10 @@ class Experiment:
         return [(str, dis) for (str, dis), _ in mse_results][:k]
 
     def create_plot(self, singleton_prop, treebank_prop, best_params):
+        """
+        Creates and saves a plot of the singleton proportion curves of the 
+        top k (str, dis) pairs.
+        """
         plt.figure(figsize=(10, 6))
         
         data = {f"S={strength}, D={discount}" : curve for (strength, discount), curve in singleton_prop.items() 
@@ -299,7 +362,7 @@ class Experiment:
         plt.legend(loc='upper left', bbox_to_anchor=(1, 1))
         plt.grid(True)
 
-        path = f"{self.plot_path}/{self.dist}_curves.jpg"
+        path = f"{self.plot_path}/{self.name}_curves.jpg"
         plt.savefig(path)
         plt.show()
     
@@ -309,8 +372,7 @@ class Experiment:
         self.create_plot(singleton_prop, treebank_prop, best_params)
 
 if __name__ == "__main__":
-    config = Config('nn.arg0')
+    config = Config('nn.arg1.$y0')
     exp = Experiment(config)
-    exp.setup(base_file="nn_amr_s22_d20.json")
-    
-    
+    exp.run()
+
