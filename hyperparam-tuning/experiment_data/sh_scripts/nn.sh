@@ -7,8 +7,8 @@
         #SBATCH -e error.err        # File to which STDERR will be written
         #SBATCH --gres=gpu:0        # Request 0 GPUs
 
-        JSON_PATH="/mnt/storage/tdean/testperanto/hyperparam-tuning/data/json_data"
-        DATA_PATH="/mnt/storage/tdean/testperanto/hyperparam-tuning/data/peranto_output"
+        JSON_PATH="/mnt/storage/tdean/testperanto/hyperparam-tuning/experiment_data/json_data"
+        DATA_PATH="/mnt/storage/tdean/testperanto/hyperparam-tuning/experiment_data/peranto_output"
         PERANTO_PATH="/mnt/storage/tdean/testperanto"
 
         for json_file in $JSON_PATH/nn_amr_*.json; do

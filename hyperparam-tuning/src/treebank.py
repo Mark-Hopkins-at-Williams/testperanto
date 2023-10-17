@@ -2,10 +2,12 @@ import os
 import json
 import random
 
+random.seed(42069)
+
 SRC_PATH  = os.getcwd()
 MAIN_PATH = os.path.dirname(SRC_PATH)
 PER_PATH  = os.path.dirname(MAIN_PATH)
-DATA_PATH = f"{MAIN_PATH}/data"
+DATA_PATH = f"{MAIN_PATH}/experiment_data"
 
 def read_conllu(filename=None):
     """
@@ -162,7 +164,10 @@ class TripleStore:
     def get_nouns(self, pronoun_filter=None):
         subjects = self._retrieve(['subject'], pronoun_filter)
         objects = self._retrieve(['object'], pronoun_filter)
-        return list(set(subjects + objects))
+        result = list(subjects + objects)
+        random.shuffle(result)
+        return result
+
     
     def get(self, distribution=None, pronoun_filter=None):
         if distribution == 'vb':
