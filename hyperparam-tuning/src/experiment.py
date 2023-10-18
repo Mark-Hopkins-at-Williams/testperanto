@@ -190,7 +190,7 @@ class Experiment:
         script_name = f"{self.sh_path}/{self.name}.sh"
 
         shell_script_content = f"""#!/bin/sh
-        #SBATCH -c 1                # Request 1 CPU core
+        #SBATCH -c 64                # Request 64 CPU core
         #SBATCH -t 0-02:00          # Runtime in D-HH:MM, minimum of 10 mins
         #SBATCH -p dl               # Partition to submit to 
         #SBATCH --mem=10G           # Request 10G of memory
@@ -202,13 +202,23 @@ class Experiment:
         DATA_PATH="{data_path}"
         PERANTO_PATH="{peranto_path}"
 
-        for json_file in $JSON_PATH/{self.name}_amr_*.json; do
-            strength=$(echo $json_file | grep -o -E 's[0-9]+' | sed 's/s//')
-            discount=$(echo $json_file | grep -o -E 'd[0-9]+' | sed 's/d//')
-            
-            python $PERANTO_PATH/scripts/generate.py -c $json_file $PERANTO_PATH/examples/svo/middleman1.json $PERANTO_PATH/examples/svo/english1.json --sents -n 5897 > $DATA_PATH/{self.name}/peranto_{self.name}_s${{strength}}_d${{discount}}.txt
-        done
+        find "$JSON_PATH" -name '{self.name}_amr_*.json' | xargs -I {{}} -P 64 bash -c '
+            json_file="$1"
+            strength=$(echo "$json_file" | grep -o -E "s[0-9]+" | sed "s/s//")
+            discount=$(echo "$json_file" | grep -o -E "d[0-9]+" | sed "s/d//")
+            python "'"$PERANTO_PATH"'/scripts/generate.py" -c "$json_file" "'"$PERANTO_PATH"'/examples/svo/middleman1.json" "'"$PERANTO_PATH"'/examples/svo/english1.json" --sents -n 5897 > "'"$DATA_PATH"'/{self.name}/peranto_{self.name}_s${{strength}}_d${{discount}}.txt"
+        ' _ {{}}
         """
+
+        # """
+
+        # for json_file in $JSON_PATH/{self.name}_amr_*.json; do
+        #     strength=$(echo $json_file | grep -o -E 's[0-9]+' | sed 's/s//')
+        #     discount=$(echo $json_file | grep -o -E 'd[0-9]+' | sed 's/d//')
+            
+        #     python $PERANTO_PATH/scripts/generate.py -c $json_file $PERANTO_PATH/examples/svo/middleman1.json $PERANTO_PATH/examples/svo/english1.json --sents -n 5897 > $DATA_PATH/{self.name}/peranto_{self.name}_s${{strength}}_d${{discount}}.txt
+        # done
+        # """
 
         with open(script_name, 'w') as script_file:
             script_file.write(shell_script_content)
@@ -372,7 +382,8 @@ class Experiment:
         self.create_plot(singleton_prop, treebank_prop, best_params)
 
 if __name__ == "__main__":
-    config = Config('nn.arg1.$y0')
+    config = Config('vb')
     exp = Experiment(config)
-    exp.run()
+    exp.setup()
+    #exp.run()
 
