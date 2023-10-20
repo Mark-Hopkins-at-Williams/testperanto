@@ -1,5 +1,7 @@
 import os 
 import json
+import random
+import argparse
 
 import numpy as np
 import matplotlib.pyplot as plt 
@@ -10,30 +12,51 @@ from peranto_triples import PerantoTripleStore
 SRC_PATH  = os.getcwd()
 MAIN_PATH = os.path.dirname(SRC_PATH)
 PER_PATH  = os.path.dirname(MAIN_PATH)
-DATA_PATH = f"{MAIN_PATH}/experiment_data"
-JSON_PATH = f"{DATA_PATH}/json_data"
-PARAM_PATH = f"{DATA_PATH}/parameters"
 
 class Config:
     """
     Config configures an Experiment (see below). Each experiment
     grid searches through strength/discount pairs in order to tune a 
-    specific distribution.
+    specific distribution. 
 
     So, to configure an Experiment you need to specify a distribution
     and a input_space, which is a dict mapping "Strength" and "Discount"
-    to a list of strengths/discounts to search through. 
+    to a list of strengths/discounts to search through. You also need 
+    to specify a folder to save the data in, as well as a base json peranto
+    config file to reference (should be located in experiment_data/base_file)
     """
-    def __init__(self, distribution: str=None, input_space=None):
+    def __init__(self,
+        distribution: str,
+        input_space       = None,
+        base_file  :  str = "basefile.json",
+        data_folder:  str = "experiment",
+        child_dists: list = None
+        ):
+
         self.distribution = distribution
 
         if input_space is None:
             input_space: dict = {
-            "Strength" : list(np.linspace(20, 40, 11)),
-            "Discount" : list(np.linspace(0, 1, 21)[:-1])
+            "Strength" : list(np.arange(0, 1050, 50)),
+            "Discount" : list(np.arange(0, 1, .1))
             }
+
         self.input_space = input_space
-    
+        self.base_file   = base_file 
+        self.data_folder = data_folder
+
+        if child_dists is None:
+            self.child_dists = [distribution]
+            # child_dist_map = {
+            #     'nn'          : ['nn', 'nn.arg0', 'nn.arg1', 'nn.arg0.$y0', 'nn.arg1.$y0'],
+            #     'vb'          : ['vb'],
+            #     'nn.arg0'     : ['nn.arg0', 'nn.arg0.$y0'],
+            #     'nn.arg1'     : ['nn.arg1', 'nn.arg1.$y0'],
+            #     'nn.arg0.$y0' : ['nn.arg0.$y0'],
+            #     'nn.arg1.$y0' : ['nn.arg1.$y0']
+            #     }
+            #self.child_dists = child_dist_map[distribution]
+
 class Experiment:
     """
     An Experiment grid searches through strength/discount pairs for
@@ -77,49 +100,70 @@ class Experiment:
             ]
 
     def __init__(self, config: Config):
-        self.initalize(config)
-        self.dist          = config.distribution
-        self.name          = self.dist.replace("$","")                # avoids sh scripts error 
-        self.input_space   = config.input_space 
-        self.num_pron      = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
-        self.store         = TripleStore()
-        self.param_path    = f"{PARAM_PATH}/{self.name}_params.txt"  
-        self.json_dict     = f"{JSON_PATH}"                            
-        self.json_path     = f"{JSON_PATH}/{self.name}"
-        self.sh_path       = f"{DATA_PATH}/sh_scripts"               
-        self.output_path   = f"{DATA_PATH}/peranto_output"            
-        self.mse_path      = f"{DATA_PATH}/mse_results"
-        self.plot_path     = f"{DATA_PATH}/plots"
+        self.dist        = config.distribution
+        self.name        = self.dist.replace("$","")                # avoids sh scripts error 
+        self.input_space = config.input_space 
+        self.child_dists = config.child_dists
+        self.num_pron    = (0.6981516025097507, 0.2518229608275394) # subj prop, obj prop
+        self.store       = TripleStore()
+        self.data_path   = f"{MAIN_PATH}/experiment_data/{config.data_folder}"
+        self.base_file   = f"{MAIN_PATH}/experiment_data/{config.base_file}"
+        self.param_path  = f"{self.data_path}/parameters/{self.name}_params.txt"
+        self.json_path   = f"{self.data_path}/json_data/{self.name}"
+        self.sh_path     = f"{self.data_path}/sh_scripts"
+        self.output_path = f"{self.data_path}/peranto_output"
+        self.mse_path    = f"{self.data_path}/mse_results"
+        self.plot_path   = f"{self.data_path}/plots"
+        self.initialize()
 
-    def initalize(self, config):
-        """Initalizes the configuration with some basic checks"""
-        if not config.distribution in self.distributions:
+    def initialize(self):
+        """Initializes the configuration with some basic checks"""
+        if not self.dist in self.distributions:
             raise Exception("config.distribution must be either 'vb', 'nn', 'nn.arg0', 'nn.arg1', 'nn.arg0.$y0', or 'nn.arg1.$y0'")
 
-        if not list(config.input_space.keys()) == ['Strength', 'Discount']:
+        if not list(self.input_space.keys()) == ['Strength', 'Discount']:
             raise Exception("config.input_space but have keys Strength/Discount")
         
-        for val in config.input_space.values():
+        for val in self.input_space.values():
             if not isinstance(val, list):
                 print(val)
                 print(type(val))
                 raise Exception("config.input_space values must be lists")
 
+        if not os.path.exists(self.base_file):
+            raise Exception(f"{self.base_file} path doesn't exist")
+    
+        paths = [
+            self.data_path,
+            f"{self.data_path}/parameters",
+            self.json_path,
+            self.sh_path,
+            f"{self.output_path}/{self.name}",
+            f"{self.output_path}/{self.name} modified",
+            self.mse_path,
+            self.plot_path
+            ]
+
+        ### create paths
+        for path in paths:
+            if not os.path.exists(path):
+                os.makedirs(path)
+
         ### tune lvl1 before lvl2 before lvl3
-        get_param_path = lambda dist : f"{PARAM_PATH}/{dist}_params.txt"
+        get_param_path = lambda dist : f"{self.data_path}/parameters/{dist}_params.txt"
         lvl1_dist = ['vb', 'nn']
         lvl2_dist = ["nn.arg0", 'nn.arg1']
-        lvl3_dist = ['nn.arg0.$y0', 'nn.arg1.$y0']
+        lvl3_dist = ['nn.arg0.y0', 'nn.arg1.y0']
 
-        if config.distribution in lvl3_dist:
+        if self.name in lvl3_dist:
             for dist in lvl1_dist + lvl2_dist:
                 if not os.path.exists(get_param_path(dist)):
-                    raise Exception(f"Please tune {dist} before {config.distribution}")
+                    raise Exception(f"Please tune {dist} before {self.name}")
         
-        if config.distribution in lvl2_dist:
+        if self.name in lvl2_dist:
             for dist in lvl1_dist:
                 if not os.path.exists(get_param_path(dist)):
-                    raise Exception(f"Please tune {dist} before {config.distribution}")
+                    raise Exception(f"Please tune {dist} before {self.name}")
 
     def create_param_space(self):
         """
@@ -135,14 +179,23 @@ class Experiment:
             for pair in pairs:
                 f.write(f"{pair[0]}, {pair[1]}\n")
 
-    def create_json_configs(self, base_file="basefile.json"):
+    def create_json_configs(self):
         """
         Uses output from create_param_space() input space (create_input_space()) and 
         for each (S,D) pair copies the amr_tuned.json file and changes the 
         strength/discount to (S,D). All of this is saved in a folder of json files
         """
 
-        json_file_to_read = f"{self.json_dict}/{base_file}"
+        json_file_to_read = self.base_file
+
+
+        zdists = {
+            "nn"          : ['nn'],
+            'nn.arg0'     : ['nn.$y1'],
+            'nn.arg1'     : ['nn.$y1'],
+            'nn.arg0.$y0' : ['nn.$y1.$y2'],
+            'nn.arg1.$y0' : ['nn.$y1.$y2']
+            }
 
         with open(self.param_path, "r") as f:
             lines = f.readlines()
@@ -155,13 +208,15 @@ class Experiment:
         for strength, discount in parameters:
             # modify pyor dists as appropriate
             for dist in json_content["distributions"]:
-            # modify appropriate paramaters, according to the distribution
-                if dist["name"] == self.dist:
+            # modify appropriate parameters, according to the distribution
+                if dist["name"] in self.child_dists:
                     dist['strength'] = strength
                     dist['discount'] = discount 
-                
+
             # set proportion of pronouns as appropriate  
             for rule in json_content["rules"]:
+                if self.dist != 'vb' and rule['rule'] == "$qentity.$y1.$y2 -> (ENTITY $qnn.$y1.$z1 $qentitymods)":
+                    rule['zdists'] = zdists[self.dist]
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst nn.$y1)":
                     rule["base_weight"] = float(1 - self.num_pron[0])
                 if rule["rule"] == "$qnn.arg0.$y1 -> (inst pron.$z1)":
@@ -176,17 +231,10 @@ class Experiment:
             with open(new_file_name, "w") as f:
                 json.dump(json_content, f, indent=4)
 
-    def create_sh_script(self, json_path=None, data_path=None, peranto_path=None):
+    def create_sh_script(self):
         """
         runs the .sh script created by create_sh_script()
         """
-        if json_path == None:
-            json_path=self.json_path
-        if data_path == None:
-            data_path=self.output_path
-        if peranto_path == None:
-            peranto_path=PER_PATH 
-
         script_name = f"{self.sh_path}/{self.name}.sh"
 
         shell_script_content = f"""#!/bin/sh
@@ -198,9 +246,9 @@ class Experiment:
         #SBATCH -e error.err        # File to which STDERR will be written
         #SBATCH --gres=gpu:0        # Request 0 GPUs
 
-        JSON_PATH="{json_path}"
-        DATA_PATH="{data_path}"
-        PERANTO_PATH="{peranto_path}"
+        JSON_PATH="{self.json_path}"
+        DATA_PATH="{self.output_path}"
+        PERANTO_PATH="{PER_PATH}"
 
         find "$JSON_PATH" -name '{self.name}_amr_*.json' | xargs -I {{}} -P 64 bash -c '
             json_file="$1"
@@ -210,27 +258,17 @@ class Experiment:
         ' _ {{}}
         """
 
-        # """
-
-        # for json_file in $JSON_PATH/{self.name}_amr_*.json; do
-        #     strength=$(echo $json_file | grep -o -E 's[0-9]+' | sed 's/s//')
-        #     discount=$(echo $json_file | grep -o -E 'd[0-9]+' | sed 's/d//')
-            
-        #     python $PERANTO_PATH/scripts/generate.py -c $json_file $PERANTO_PATH/examples/svo/middleman1.json $PERANTO_PATH/examples/svo/english1.json --sents -n 5897 > $DATA_PATH/{self.name}/peranto_{self.name}_s${{strength}}_d${{discount}}.txt
-        # done
-        # """
-
         with open(script_name, 'w') as script_file:
             script_file.write(shell_script_content)
     
-    def setup(self, base_file="basefile.json"):
+    def setup(self):
         """
         One-stop shop for creating all necessary files and sh scripts for an expirament. 
         Note that the base file argument determins which previous previous paramater settings are 
         used to generate json files for subsequent iterations of tuning.
         """
         self.create_param_space()
-        self.create_json_configs(base_file)
+        self.create_json_configs()
         self.create_sh_script()
         print(f'Experiment setup completed. Please run shell script on appa.')
 
@@ -342,7 +380,8 @@ class Experiment:
 
         except Exception as e:
             print(f"An error occurred: {str(e)}")
-        return [(str, dis) for (str, dis), _ in mse_results][:k]
+        res = [[(str, dis), mse] for (str, dis), mse in mse_results][:k]
+        return {x[0] : x[1] for x in res} #maps (str, dis) => mse
 
     def create_plot(self, singleton_prop, treebank_prop, best_params):
         """
@@ -351,8 +390,13 @@ class Experiment:
         """
         plt.figure(figsize=(10, 6))
         
-        data = {f"S={strength}, D={discount}" : curve for (strength, discount), curve in singleton_prop.items() 
-                if (strength, discount) in best_params}
+        data = {}
+
+        for (str, dis), mse in best_params.items():
+            curve = singleton_prop[(str, dis)]
+            name = f"S={str},D={round(dis, 3)},MSE={round(mse, 4)}"
+            data[name] = curve
+        
         data["Treebank"] = treebank_prop
 
         for name, curve in data.items():
@@ -373,7 +417,7 @@ class Experiment:
         plt.grid(True)
 
         path = f"{self.plot_path}/{self.name}_curves.jpg"
-        plt.savefig(path)
+        plt.savefig(path,bbox_inches="tight")
         plt.show()
     
     def run(self, k=10):
@@ -381,9 +425,72 @@ class Experiment:
         best_params = self.get_top_k(singleton_prop, treebank_prop, k)
         self.create_plot(singleton_prop, treebank_prop, best_params)
 
-if __name__ == "__main__":
-    config = Config('vb')
-    exp = Experiment(config)
-    exp.setup()
-    #exp.run()
+def main():
+    parser = argparse.ArgumentParser(description='Experiment parser')
+    parser.add_argument(
+            '-d', '--distribution',
+            type=str,
+            required=True,
+            help='Distribution: must be nn, nn.arg0, nn.arg1, nn.arg0.$y0, nn.arg1.$y0'
+            )
+    
+    parser.add_argument(
+            '-f', '--folder',
+            type=str,
+            required=False,
+            default="experiment",
+            help='Specify the folder name to save data'
+            )
 
+    parser.add_argument(
+            '-s', '--setup',
+            action='store_true',
+            help='If True, calls exp.setup()'
+            )
+
+    parser.add_argument(
+            '-r', '--run',
+            action='store_true',
+            help='If True, calls exp.run()'
+            )
+
+    parser.add_argument(
+            '-b', '--basefile',
+            type=str,
+            required=False, 
+            default="basefile.json",
+            help='specify the base json config file'
+            )
+
+    parser.add_argument(
+            '-k',
+            type=int,
+            required=False, 
+            default=3,
+            help='num curves to plot'
+            )
+
+    args = parser.parse_args()
+
+    config = Config(
+        args.distribution, 
+        data_folder=args.folder,
+        base_file=args.basefile
+        )
+    
+    exp = Experiment(config)
+
+    if args.setup:
+        exp.setup()
+    else:
+        exp.run(k=args.k)
+
+if __name__ == "__main__":
+    main()
+
+"""
+Usage:
+
+python experiment.py -d "nn" -f "new" -s (to setup)
+python experiment.py -d "nn" -f "new" -r (to run)
+"""
