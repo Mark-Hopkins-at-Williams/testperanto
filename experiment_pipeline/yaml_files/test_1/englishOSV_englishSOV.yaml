@@ -1,0 +1,7 @@
+- examples/svo/amr.json
+- examples/svo/middleman.json
+- branch:
+    1:
+    - experiment_pipeline/tesperonto_files/englishOSV.json
+    2:
+    - experiment_pipeline/tesperonto_files/englishSOV.json
