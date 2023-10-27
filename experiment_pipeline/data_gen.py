@@ -3,7 +3,6 @@ import yaml
 import itertools
 import os
 
-
 class DataGen:
     """
     Class for generating testperanto data for translations. 
@@ -93,10 +92,10 @@ class DataGen:
                 yaml.dump(data, yaml_file, default_flow_style=False)
 
     def create_sh_script(self, num_cores = 32): # working
-    """
-    Creates a .sh script, that when run from the TESPERONTO ROOT DIRECTORY, will generate text 
-    in paralell (default is 32 cores) for all translation + size combinations. 
-    """
+        """
+        Creates a .sh script, that when run from the TESPERONTO ROOT DIRECTORY, will generate text 
+        in paralell (default is 32 cores) for all translation + size combinations. 
+        """
 
         # make sure output path exists 
         os.makedirs(self.internal_output_path, exist_ok = True) # we might want to put this in init... not sure
@@ -141,13 +140,16 @@ class DataGen:
 
 
 if __name__ == "__main__":
-    root_to_current = "experiment_pipeline"
-    tesperonto_path = "tesperonto_files"
-    lang_list = [f"{root_to_current}/{tesperonto_path}/englishOSV.json", f"{root_to_current}/{tesperonto_path}/englishOVS.json"]
-    corp_sizes = [100, 200, 300]
-    gen = DataGen(lang_list, corp_sizes, 2, "test_1")
-    gen.generate_yaml()
-    gen.create_sh_script()
+    print(os.getcwd())
+    print(os.path.dirname(os.getcwd()))
+
+    # root_to_current = "experiment_pipeline"
+    # tesperonto_path = "tesperonto_files"
+    # lang_list = [f"{root_to_current}/{tesperonto_path}/englishOSV.json", f"{root_to_current}/{tesperonto_path}/englishOVS.json"]
+    # corp_sizes = [100, 200, 300]
+    # gen = DataGen(lang_list, corp_sizes, 2, "test_1")
+    # gen.generate_yaml()
+    # gen.create_sh_script()
 
 
 

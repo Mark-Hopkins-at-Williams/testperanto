@@ -1,0 +1,15 @@
+- /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/amr_files/amr.json
+- /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/middleman_files/middleman.json
+- branch:
+    1:
+    - /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/language_files/englishSVO.json
+    2:
+    - /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/language_files/englishSOV.json
+    3:
+    - /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/language_files/englishVSO.json
+    4:
+    - /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/language_files/englishVOS.json
+    5:
+    - /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/language_files/englishOSV.json
+    6:
+    - /mnt/storage/jcheigh/testperanto/experiment_pipeline/experiment_data/peranto_files/language_files/englishOVS.json
