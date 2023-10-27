@@ -20,7 +20,9 @@ class DataGen:
         for example, if num translations is 2, then we will generate translation data for every pair of languages in the lang_list.
         if it were 3, we would generate translations for every tripple, and so on. 
 
-
+        Please note that there a lot of path variables right now. If anyone has a better way to 1) keep track of root paths in a way that 
+        preserves the funcitonality of the _generate_filemap function and 2) still allows things to be run from root while also allowing for checking 
+        the existance of directories, that would be fantastic. 
         """
         self.lang_list = lang_list
         self.corp_sizes = corp_sizes
@@ -31,12 +33,18 @@ class DataGen:
         self.external_yaml_path = f"experiment_pipeline/{self.yaml_path}"
         self.testperanto_path = f"experiment_pipeline/tesperonto_files" # path to access all tesperonto files that are used. 
         self.output_path = f"experiment_pipeline/tesperonto_output/{self.experiment_name}"
+        self.internal_output_path = f"tesperonto_output/{self.experiment_name}"
         self.sh_path = f"sh_scripts/{self.experiment_name}"
         self.file_map = self._generate_filemap()
         # initialize testperonto_files directory
-        os.makedirs(self.testperanto_path, exist_ok = True)
+        #os.makedirs(self.testperanto_path, exist_ok = True)
     
     def _generate_filemap(self):
+        """
+        naming conventions will be important in this class. Having a data structure that maps source file groups from the lang list to file names 
+        will be useful. This function creates a dictionary of {tuple(string): string}, where tuple(string) denotes the combination of source files for a file name, 
+        and the string that the tuple maps to is the file name.
+        """
         maping = dict()
         combos = list(itertools.combinations(self.lang_list, self.num_translations)) # list of tuples of file names that go together for translation
         for combo in combos:
@@ -50,6 +58,9 @@ class DataGen:
                     file_name = file_name + striped_name + "_"
             maping[combo] = file_name
         return maping
+
+    def get_file_map(self):
+        return self.file_map
             
             
     def set_lang_list(self, lang_list):
@@ -62,7 +73,7 @@ class DataGen:
     
     def generate_yaml(self): # working 
         """
-        Generates yaml files for all translations
+        Generates yaml files for all translation combinations. 
         """
         # ensure path exists 
         os.makedirs(self.yaml_path, exist_ok = True)
@@ -81,41 +92,52 @@ class DataGen:
             with open(f"{self.yaml_path}/{yaml_name}", "w") as yaml_file:
                 yaml.dump(data, yaml_file, default_flow_style=False)
 
-    def create_sh_script(self): # messed up
+    def create_sh_script(self, num_cores = 32): # working
+    """
+    Creates a .sh script, that when run from the TESPERONTO ROOT DIRECTORY, will generate text 
+    in paralell (default is 32 cores) for all translation + size combinations. 
+    """
 
         # make sure output path exists 
-        #os.makedirs(self.output_path, exist_ok = True) # we might want to put this in init... not sure
-        #os.makedirs(self.sh_path, exist_ok = True)
+        os.makedirs(self.internal_output_path, exist_ok = True) # we might want to put this in init... not sure
+        os.makedirs(self.sh_path, exist_ok = True)
 
         with open(f"{self.sh_path}/{self.experiment_name}.sh", 'w') as f:
-        # Write the initial part of the script
+
+            # Write the initial part of the script
             f.write("""#!/bin/sh\n""")
+
+            # initialize the slerm stuff 
+            f.write(f"""
+#SBATCH -c {num_cores} # Request {num_cores} CPU cores
+#SBATCH -t 0-02:00 # Runtime in D-HH:MM
+#SBATCH -p dl # Partition to submit to
+#SBATCH --mem=2G # Request 2G of memory
+#SBATCH -o output.out # File to which STDOUT will be written
+#SBATCH -e error.err # File to which STDERR will be written
+#SBATCH --gres=gpu:0 # Request 0 GPUs\n""")
+
+            # Begin the parallel section
+            f.write(f"parallel --jobs {num_cores} <<EOT\n")
 
             # Loop through each combination and append to the script
             for key in self.file_map:
                 file_name = self.file_map[key]
                 yaml_file_name = f"{self.external_yaml_path}/{file_name}.yaml"
                 for num_sentences in self.corp_sizes:
-                    # Construct the output directory for each job
-                    #output_dir = f"{self.output_path}/{file_name}_{num_sentences}"
+                    #os.makedirs(f"{self.internal_output_path}/{num_sentences}")
+                    # Construct the Python call for each job and add it to the commands to be run by parallel
+                    python_call = f"python scripts/parallel_gen.py -c {yaml_file_name} -n {num_sentences} -o {self.output_path}/{num_sentences}\n"
+                    f.write(python_call)
 
-                    # Append the job details to the script
-                    f.write(f"""
-sbatch <<EOT
-#!/bin/sh
-#SBATCH -c 1 # Request 1 CPU cores
-#SBATCH -t 0-02:00 # Runtime in D-HH:MM
-#SBATCH -p dl # Partition to submit to
-#SBATCH --mem=2G # Request 2G of memory
-#SBATCH -o output.out # File to which STDOUT will be written
-#SBATCH -e error.err # File to which STDERR will be written
-#SBATCH --gres=gpu:0 # Request 0 GPUs
-
-python ../../../scripts/parallel_gen.py -c {yaml_file_name} -n {num_sentences} -o {self.output_path}
-EOT
-                    """)
-
-        
+            # End the parallel section
+            f.write("EOT\n")
+    
+    def run_sh_script(self):
+        pass
+    
+    def train_test_split(self):
+        pass
 
 
 if __name__ == "__main__":
