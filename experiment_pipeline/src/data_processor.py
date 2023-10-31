@@ -6,23 +6,6 @@ class DataProcessor:
     """
     class for processing generated testperanto data
     """
-
-    """
-    generated data is all in 
-        config.OUT_PATH/{self.exp_name}{corp_len}.i 
-
-
-    i here is determined by config.peranto_tree 
-
-
-    right now have 18 files 
-
-    for each corp size:
-        for each of 6 files
-            clean by getting rid of # ...
-            split into train test dev 
-            add to all folders where relevant (so 15)
-    """
     def __init__(self, config: Config):
         self.corp_lens = config.corp_lens
         self.output_path = config.OUT_PATH

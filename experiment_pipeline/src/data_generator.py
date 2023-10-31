@@ -56,7 +56,7 @@ class DataGenerator:
             # initialize the slurm stuff 
             f.write(f"""
 #SBATCH -c {self.num_cores} # Request {self.num_cores} CPU cores
-#SBATCH -t 0-02:00 # Runtime in D-HH:MM
+#SBATCH -t 0-05:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
 #SBATCH -o {self.output_path}/output.out # File to which STDOUT will be written

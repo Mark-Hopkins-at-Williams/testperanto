@@ -2,6 +2,9 @@ import os
 import itertools
 
 class PerantoTree:
+    """
+    PerantoTree specifies a tree of files that config testperanto
+    """
 
     def __init__(self, 
             json_path,
@@ -58,7 +61,7 @@ class Config:
             names           = ['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS'],
             languages       = ['en', 'de', 'fr', 'es', 'ko', 'it'] 
             )
-        self.corp_lens    = list(range(100, 400, 100))                      # lens of corpori
+        self.corp_lens    = [1000 * (2 ** i) for i in range(9)]            # 1000, 2000, ..., 256000
         self.num_cores    = 32
        
         ### data processor configs 
@@ -97,6 +100,7 @@ class Config:
         for key, value in config_dict.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+        self.initalize()
 
     def to_dict(self):
         """

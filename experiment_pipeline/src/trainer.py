@@ -1,4 +1,5 @@
 import itertools 
+import os 
 
 from config import Config
 from data_processor import DataProcessor
@@ -23,7 +24,8 @@ class Trainer:
         else:
             return str(num)
 
-    def train(self):
+    def train(self, n=2):
+        cnt = 0
         for corp_len in self.corp_lens:
             for idxs in itertools.combinations(range(len(self.per_tree.names)), self.num_trans):
                 folder_name = f"{'_'.join([self.per_tree.names[i] for i in idxs])}_{self.format_number(corp_len)}" 
@@ -31,11 +33,15 @@ class Trainer:
                 work_dir = f"{self.results_path}/{folder_name}"
                 src      = self.per_tree.languages[idxs[0]] # [en, ...]  idxs (3, 5)
                 tgt      = self.per_tree.languages[idxs[1]] # assumes only 2 for now
-                print(work_dir)
-                print('=' * 15)
-                call = f"sbatch {self.appa_path}/train.sh {work_dir} {data_dir} {src} {tgt} {self.num_epochs}"
-                print(call)
-                print('=' * 15)
+
+                if not os.path.exists(work_dir):
+                    cnt += 1
+                    print('=' * 15)
+                    call = f"sbatch {self.appa_path}/train.sh {work_dir} {data_dir} {src} {tgt} {self.num_epochs}"
+                    print(call)
+                    print('=' * 15)
+                    if cnt == n:
+                        return None
 
 
 if __name__ == '__main__':
