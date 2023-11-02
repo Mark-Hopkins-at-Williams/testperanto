@@ -71,7 +71,7 @@ class Config:
         self.dev_size     = .1
 
         ### trainer configs
-        self.num_epochs = 100
+        self.num_epochs = 500
 
         self.initialize()
 
