@@ -45,7 +45,7 @@ class Config:
         self.EXP_PATH     = f"{self.DATA_PATH}/experiments/{self.exp_name}" # path for this experiment
         self.TRAIN_PATH   = f"{self.EXP_PATH}/data"                         # for train/test/dev sets
         self.RESULTS_PATH = f'{self.EXP_PATH}/results'                      # for model results
-        self.APPA_PATH    = f"/mnt/storage/hopkins/mt/appa-mt/fairseq"      # for appa fairseq training
+        self.APPA_PATH    = f"{self.PERANTO_PATH}/appa-mt/fairseq"          # for appa fairseq training
         self.JSON_PATH    = f"{self.DATA_PATH}/peranto_files"               # contains 3 folders w/ tp config 
         self.OUT_PATH     = f"{self.EXP_PATH}/output"                       # path for generated data 
         self.YAML_FPATH   = f"{self.EXP_PATH}/{self.exp_name}.yaml"         # yaml filepath (filepath so don't os.makedirs)
@@ -71,7 +71,9 @@ class Config:
         self.dev_size     = .1
 
         ### trainer configs
-        self.num_epochs = 500
+        self.num_epochs = 1000
+        self.num_gpus   = 2
+        self.patience   = 40
 
         self.initialize()
 
