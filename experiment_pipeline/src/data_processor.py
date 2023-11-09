@@ -11,11 +11,13 @@ class DataProcessor:
         self.output_path = config.OUT_PATH
         self.exp_name = config.exp_name
         self.per_tree = config.peranto_tree
+        self.train_path = config.TRAIN_PATH
+        
         self.num_trans = config.num_trans
         self.train_size = config.train_size
         self.test_size = config.test_size 
         self.dev_size = config.dev_size
-        self.train_path = config.TRAIN_PATH
+
 
     def format_number(self, num):
         if num >= 1000000:

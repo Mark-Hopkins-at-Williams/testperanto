@@ -1,21 +1,45 @@
+from collections import defaultdict
 import itertools 
-import os 
+
+import matplotlib.pyplot as plt 
 
 from config import Config
 from data_processor import DataProcessor
 from data_generator import DataGenerator
 
+class ModelConfig:
+    ### this configures each model run- I think this allows for more flexibility down the road but for now doesn't do much
+    def __init__(self, config, work_dir, data_dir, src, tgt, **kwargs):
+        ### required 
+        self.config = config
+        self.work_dir = work_dir
+        self.data_dir = data_dir
+        self.src = src
+        self.tgt = tgt
+        
+        ### optional (default vals specified)
+        self.patience   = config.patience
+        self.num_epochs = config.num_epochs
+        
+        ### changing optional if given in kwargs
+        for key, value in kwargs.items():
+            setattr(self, key, value)
+
 class Trainer:
 
     def __init__(self, config: Config):
-        self.per_tree = config.peranto_tree
-        self.num_trans = config.num_trans
-        self.corp_lens = config.corp_lens
-        self.train_path = config.TRAIN_PATH
+        self.config       = config
+        self.per_tree     = config.peranto_tree
+        self.num_trans    = config.num_trans
+        self.corp_lens    = config.corp_lens
+        self.train_path   = config.TRAIN_PATH
         self.results_path = config.RESULTS_PATH
-        self.exp_path = config.EXP_PATH
+        self.exp_path     = config.EXP_PATH
         self.appa_path    = config.APPA_PATH
-        self.num_epochs = config.num_epochs
+
+        self.num_epochs   = config.num_epochs
+        self.num_gpus     = config.num_gpus
+        self.patience     = config.patience
 
     def format_number(self, num):
         if num >= 1000000:
@@ -25,45 +49,50 @@ class Trainer:
         else:
             return str(num)
 
-    def create_train_script_alternate(self, num_files = 1):
-        configs = self.get_calls_alternate()
+    def create_model_configs(self):
+        model_configs = []
+        for corp_len in self.corp_lens:
+            for idxs in itertools.combinations(range(len(self.per_tree.names)), self.num_trans):
+                folder_name = f"{'_'.join([self.per_tree.names[i] for i in idxs])}_{self.format_number(corp_len)}" 
+                data_dir = f"{self.train_path}/{folder_name}"
+                work_dir = f"{self.results_path}/{folder_name}"
+
+                ### FOR NOW GENERATES ALL SO WILL OVERWRITE
+                ### calls are only things to still be trained so you can call this again if it screws up midway
+                #if not os.path.exists(work_dir):
+                #    src = self.per_tree.languages[idxs[0]] 
+                #    tgt = self.per_tree.languages[idxs[1]] 
+                src = self.per_tree.languages[idxs[0]]
+                tgt = self.per_tree.languages[idxs[1]]
+
+                model_config = ModelConfig(
+                    config   = self.config,
+                    work_dir = work_dir,
+                    data_dir = data_dir,
+                    src      = src,
+                    tgt      = tgt
+                    )
+                model_configs.append(model_config)
+        return model_configs
+
+    def create_train_script(self):
+        model_configs = self.create_model_configs()
 
         scripts = []
-        for config in configs:
-            # TODO: add flag for early stopping
-            work_dir, data_dir, src, tgt, max_epochs = config
-
+        for c in model_configs:
             source_file = f"""
-SRC={src}
-TGT={tgt}
-MAX_EPOCHS={max_epochs}
+SRC={c.src}
+TGT={c.tgt}
+MAX_EPOCHS={c.num_epochs}
 
-mkdir {work_dir}
-cp -R {data_dir} {work_dir}/data
+mkdir {c.work_dir}
+cp -R {c.data_dir} {c.work_dir}/data
 
-###########
-# THIS PART OF THE CODE FIGURES OUT THE DIRECTORY OF THE SHELL SCRIPT.
-# THIS IS SOMEWHAT COMPLICATED WHEN WE RUN THROUGH SLURM.
-# check if script is started via SLURM or bash
-# if with SLURM: there variable '$SLURM_JOB_ID' will exist
-# `if [ -n $SLURM_JOB_ID ]` checks if $SLURM_JOB_ID is not an empty string
-if [ -n $SLURM_JOB_ID ];  then
-    # check the original location through scontrol and $SLURM_JOB_ID
-    SCRIPT_COMMAND=$(scontrol show job $SLURM_JOBID | awk -F= '/Command=/{{print {data_dir}}}')
-else
-    # otherwise: started with bash. Get the real location.
-    SCRIPT_COMMAND=$(realpath $0)
-fi
-SCRIPT_COMMAND_ARRAY=($SCRIPT_COMMAND)
-SCRIPT_NAME=${{SCRIPT_COMMAND_ARRAY[0]}}
-SCRIPT_PATH=$(dirname $SCRIPT_NAME)
-#
-###########
+SCRIPT_PATH={self.appa_path}
+bash $SCRIPT_PATH/prepare-data.sh {c.work_dir} $SRC $TGT {self.appa_path}
 
-bash $SCRIPT_PATH/prepare-data.sh {work_dir} $SRC $TGT
-
-TEXT={work_dir}/data-tokenized
-BINARY_TEXT={work_dir}/data-bin
+TEXT={c.work_dir}/data-tokenized
+BINARY_TEXT={c.work_dir}/data-bin
 
 fairseq-preprocess --source-lang $SRC --target-lang $TGT \\
     --trainpref $TEXT/train --validpref $TEXT/dev --testpref $TEXT/test \\
@@ -87,114 +116,81 @@ CUDA_VISIBLE_DEVICES=0 fairseq-train \\
     --eval-bleu-print-samples \\
     --scoring chrf \\
     --no-epoch-checkpoints \\
-    --save-dir {work_dir}/checkpoints \\
+    --save-dir {c.work_dir}/checkpoints \\
     --skip-invalid-size-inputs-valid-test \\
-    --best-checkpoint-metric bleu --maximize-best-checkpoint-metric
+    --best-checkpoint-metric bleu --maximize-best-checkpoint-metric \\
+    --patience {c.patience} \\
+    --tensorboard-logdir {c.work_dir}/tensorboard_logs/
 
 fairseq-generate $BINARY_TEXT \\
-    --path {work_dir}/checkpoints/checkpoint_best.pt \\
-    --batch-size 128 --beam 5 --remove-bpe > {work_dir}/translations
+    --path {c.work_dir}/checkpoints/checkpoint_best.pt \\
+    --batch-size 128 --beam 5 --remove-bpe > {c.work_dir}/translations
 
-python $SCRIPT_PATH/extract_hyp_and_ref.py {work_dir}/translations
+python $SCRIPT_PATH/extract_hyp_and_ref.py {c.work_dir}/translations
 
-sacrebleu {work_dir}/translations.ref -i {work_dir}/translations.hyp -m bleu chrf > {work_dir}/scores
+sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu chrf > {c.work_dir}/scores
 """
             scripts.append(source_file)
         
-        for i in range(0, num_files):
+        ### split into list of self.num_gpus lists, each of which has a bunch of scripts
+        scripts = [scripts[i :: self.num_gpus] for i in range(self.num_gpus)]
 
-            shell_script = f'{self.exp_path}/train_alt_{i}.sh'
+        ### turning into self.num_gpu scripts
+        for i in range(self.num_gpus):
+
+            shell_script = f'{self.exp_path}/train{i}.sh'
 
             with open(shell_script, 'w') as f: 
-                f.write("""#!/bin/sh\n""")
+                f.write("""#!/bin/bash\n""")
                 f.write(f"""
 #SBATCH -c 8 # Request 8 CPU cores
 #SBATCH -t 2-00:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
-#SBATCH -o {self.results_path}/output.out # File to which STDOUT will be written
-#SBATCH -e {self.results_path}/error.err # File to which STDERR will be written
+#SBATCH -o {self.exp_path}/output{i}.out # File to which STDOUT will be written
+#SBATCH -e {self.exp_path}/error{i}.err # File to which STDERR will be written
 #SBATCH --gres=gpu:1 # Request 1 GPUs\n""")
+                
+                for script in scripts[i]:
+                    f.write(script)
+                    f.write("\n")
 
-                for script_num, script in enumerate(scripts):
-                    if script_num % num_files == 0:
-                        f.write(script)
-                        f.write("\n")
-            # function done 
-
-
-    def create_train_script(self):
-        shell_script = f'{self.exp_path}/train.sh'
-
-        with open(shell_script, 'w') as f: 
-            f.write("""#!/bin/sh\n""")
-            f.write(f"""
-#SBATCH -c 8 # Request 8 CPU cores
-#SBATCH -t 2-00:00 # Runtime in D-HH:MM
-#SBATCH -p dl # Partition to submit to
-#SBATCH --mem=2G # Request 2G of memory
-#SBATCH -o {self.results_path}/output.out # File to which STDOUT will be written
-#SBATCH -e {self.results_path}/error.err # File to which STDERR will be written
-#SBATCH --gres=gpu:2 # Request 2 GPUs\n""")
-            
-            calls = self.get_calls()
-
-            # Initialize an empty list to store job IDs
-            job_ids = []
-
-            for call in calls:
-                f.write("OUTPUT=$( " + call.strip() + " )\n")  # Get the output of sbatch command
-                f.write("JOB_ID=$(echo $OUTPUT | awk '{print $NF}')\n")  # Extract the job ID
-                job_ids.append("$JOB_ID")
-
-                # If there are more than 1 job IDs stored, wait for the earliest job to complete
-                if len(job_ids) > 1:
-                    f.write(f"""srun -n 1 -c 1 --mem=1M sh -c "while squeue -j {job_ids.pop(0)} | grep -q ' R\| PD'; do sleep 60; done"\n""")
-                        # Ensure all jobs complete at the end
-            for job_id in job_ids:
-                f.write(f"""srun -n 1 -c 1 --mem=1M sh -c "while squeue -j {job_id} | grep -q ' R\| PD'; do sleep 60; done"\n""")
-            
-            f.write("EOT\n")
-
-    def get_calls(self):
-
-        # all the calls generated here
-        calls = []
+    def get_scores(self):
+        scores = defaultdict(list)
         for corp_len in self.corp_lens:
             for idxs in itertools.combinations(range(len(self.per_tree.names)), self.num_trans):
-                folder_name = f"{'_'.join([self.per_tree.names[i] for i in idxs])}_{self.format_number(corp_len)}" 
-                data_dir = f"{self.train_path}/{folder_name}"
-                work_dir = f"{self.results_path}/{folder_name}"
+                names = '_'.join([self.per_tree.names[i] for i in idxs]) #SVO_OVS
+                folder_name = f"{names}_{self.format_number(corp_len)}" 
+                result_dir = f"{self.results_path}/{folder_name}"
+                
+                try:
+                    with open(f'{result_dir}/scores') as f:
+                        contents = eval(f.read())
+                        bleu = contents[0]['score']
+                        scores[names].append((corp_len, bleu))
+                except:
+                    pass 
+        return scores 
 
-                ### calls are only things to still be trained so you can call this again if it screws up midway
-                if not os.path.exists(work_dir):
-                    src = self.per_tree.languages[idxs[0]] 
-                    tgt = self.per_tree.languages[idxs[1]] 
-                    
-                    call = f"sbatch {self.appa_path}/train.sh {work_dir} {data_dir} {src} {tgt} {self.num_epochs}\n"
-                    calls.append(call)
-        return calls
-    
-    def get_calls_alternate(self):
-        # all the calls generated here
-        calls = []
-        for corp_len in self.corp_lens:
-            for idxs in itertools.combinations(range(len(self.per_tree.names)), self.num_trans):
-                folder_name = f"{'_'.join([self.per_tree.names[i] for i in idxs])}_{self.format_number(corp_len)}" 
-                data_dir = f"{self.train_path}/{folder_name}"
-                work_dir = f"{self.results_path}/{folder_name}"
+    def plot_scores(self):
+        scores = self.get_scores()
+        plt.figure(figsize=(15,10))
 
-                ### calls are only things to still be trained so you can call this again if it screws up midway
-                if not os.path.exists(work_dir):
-                    src = self.per_tree.languages[idxs[0]] 
-                    tgt = self.per_tree.languages[idxs[1]] 
+        for name, points in scores.items():
+            lengths, bleus = zip(*points)
+            plt.plot(lengths, bleus, label=name, marker='o', linestyle='-')
 
-                    call = (work_dir, data_dir, src, tgt, self.num_epochs)
-                    calls.append(call)
-        return calls
+        plt.legend()
+        plt.title('BLEU Scores vs. Corpus Lengths')
+        plt.xlabel("Corpus Size")
+        plt.ylabel("BLEU Score")
 
+        plt.grid(True)
+        plt.show()
+        plt.savefig('test.png')
 
 if __name__ == '__main__':
     config = Config()
     trainer = Trainer(config)
-    trainer.create_train_script_alternate(1)
+    trainer.create_train_script()
+    #trainer.plot_scores()
