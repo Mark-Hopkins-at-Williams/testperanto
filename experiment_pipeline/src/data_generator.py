@@ -26,11 +26,18 @@ class DataGenerator:
             if len(paths) == 1:
                 return paths[0]
             
-            return {
-                "branch" : {idx + 1 : [path] for idx, path in enumerate(paths)}
-                }
+            # add duplicates of each thing to the yaml file
+            branch = {}
+            for idx, path in enumerate(paths):
+                branch[idx * 2 + 1] = [path]
+                branch[idx * 2 + 2] = [path]
+            return {"branch": branch}
+
+            # return {
+            #     "branch" : {idx + 1 : [path] for idx, path in enumerate(paths)}
+            #     }
             
-        data = [format(paths) for paths in self.per_tree.data]
+        data = [format(paths) for paths in self.per_tree.data] # modified to get 2 copies of all langs 
 
         with open(self.yaml_fpath, "w") as yaml_file:
             yaml.dump(data, yaml_file, default_flow_style=False)
@@ -55,6 +62,7 @@ class DataGenerator:
 
             # initialize the slurm stuff 
             f.write(f"""
+            shit
 #SBATCH -c {self.num_cores} # Request {self.num_cores} CPU cores
 #SBATCH -t 0-05:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
@@ -105,7 +113,8 @@ class DataGenerator:
 if __name__ == "__main__":
     config = Config()
     data_gen = DataGenerator(config)
-    data_gen.generate()
+    data_gen.generate_yaml()
+    data_gen.create_sh_script()
 
 
 

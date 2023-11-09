@@ -27,9 +27,10 @@ class DataProcessor:
         else:
             return str(num)
 
-    def clean(self):
+    def clean(self): # TODO: check - modified to allow for duplicate generations 
         for corp_len in self.corp_lens:
-            for i in range(len(self.per_tree.names)):
+            # TODO - account for extra paths
+            for i in range(2 * len(self.per_tree.names)): # now cleaning all duplicate translations as well
                 ### A here is for the new experiment
                 file_path = f"{self.output_path}/{self.exp_name}A{self.format_number(corp_len)}.{i}"
 
@@ -50,16 +51,19 @@ class DataProcessor:
             test_len  = int(corp_len * self.test_size)
             dev_len   = corp_len - train_len - test_len 
 
-            for i, name in enumerate(self.per_tree.names):
+            for i, name in enumerate(self.per_tree.names): # TODO: find a way to handle duplicates
                 folder_name = f"{name}_{name}_{form_len}"
                 folder_path = f"{self.train_path}/{folder_name}"
                 os.makedirs(folder_path, exist_ok=True)
 
-                file_path  = f'{self.output_path}/{self.exp_name}{form_len}.{i}'  # original
-                file_pathA = f'{self.output_path}/{self.exp_name}A{form_len}.{i}' # new
+                #file_path  = f'{self.output_path}/{self.exp_name}{form_len}.{i}'  # original
+                file_path_origional = f'{self.output_path}/{self.exp_name}A{form_len}.{2*i}'
+                #print(file_path_origional)
+                file_path_duplicate = f'{self.output_path}/{self.exp_name}A{form_len}.{2*i + 1}'
+                #print(file_path_duplicate)
 
-                for fpath in [file_path, file_pathA]:
-                    language = self.per_tree.languages[i] if fpath == file_path else 'da' 
+                for fpath in [file_path_origional, file_path_duplicate]:
+                    language = self.per_tree.languages[i] if fpath == file_path_origional else 'da' 
                     with open(fpath, 'r') as file:
                         lines = file.readlines()
 
@@ -120,4 +124,5 @@ class DataProcessor:
 if __name__ == "__main__":
     config = Config()
     data_proc = DataProcessor(config)
-    data_proc.process()
+    #data_proc.clean()
+    data_proc.identity_tt_split()
