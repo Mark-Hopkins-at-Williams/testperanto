@@ -1,5 +1,6 @@
 from collections import defaultdict
 import itertools 
+import os 
 
 import matplotlib.pyplot as plt 
 
@@ -51,28 +52,36 @@ class Trainer:
 
     def create_model_configs(self):
         model_configs = []
+        num = len(self.per_tree.names)
+        combinations = list(itertools.combinations(range(num), self.num_trans))
+        identity     = list(zip(range(num), range(num))) #[(0,0), (1,1), ..., (5,5)]
+        all_combos = combinations + identity 
+
         for corp_len in self.corp_lens:
-            for idxs in itertools.combinations(range(len(self.per_tree.names)), self.num_trans):
+            for idxs in all_combos:
                 folder_name = f"{'_'.join([self.per_tree.names[i] for i in idxs])}_{self.format_number(corp_len)}" 
                 data_dir = f"{self.train_path}/{folder_name}"
                 work_dir = f"{self.results_path}/{folder_name}"
 
-                ### FOR NOW GENERATES ALL SO WILL OVERWRITE
                 ### calls are only things to still be trained so you can call this again if it screws up midway
-                #if not os.path.exists(work_dir):
-                #    src = self.per_tree.languages[idxs[0]] 
-                #    tgt = self.per_tree.languages[idxs[1]] 
-                src = self.per_tree.languages[idxs[0]]
-                tgt = self.per_tree.languages[idxs[1]]
+                if not os.path.exists(work_dir):
+                    src = self.per_tree.languages[idxs[0]] 
+                    if idxs[0] == idxs[1]:
+                        tgt = "da"
+                    else:
+                        tgt = self.per_tree.languages[idxs[1]] 
+                
+                #src = self.per_tree.languages[idxs[0]]
+                #tgt = self.per_tree.languages[idxs[1]]
 
-                model_config = ModelConfig(
-                    config   = self.config,
-                    work_dir = work_dir,
-                    data_dir = data_dir,
-                    src      = src,
-                    tgt      = tgt
-                    )
-                model_configs.append(model_config)
+                    model_config = ModelConfig(
+                        config   = self.config,
+                        work_dir = work_dir,
+                        data_dir = data_dir,
+                        src      = src,
+                        tgt      = tgt
+                        )
+                    model_configs.append(model_config)
         return model_configs
 
     def create_train_script(self):
@@ -156,9 +165,14 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
                     f.write("\n")
 
     def get_scores(self):
+        num = len(self.per_tree.names)
+        combinations = list(itertools.combinations(range(num), self.num_trans))
+        identity     = list(zip(range(num), range(num))) #[(0,0), (1,1), ..., (5,5)]
+        all_combos = combinations + identity 
+
         scores = defaultdict(list)
         for corp_len in self.corp_lens:
-            for idxs in itertools.combinations(range(len(self.per_tree.names)), self.num_trans):
+            for idxs in all_combos:
                 names = '_'.join([self.per_tree.names[i] for i in idxs]) #SVO_OVS
                 folder_name = f"{names}_{self.format_number(corp_len)}" 
                 result_dir = f"{self.results_path}/{folder_name}"
@@ -187,10 +201,12 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
 
         plt.grid(True)
         plt.show()
-        plt.savefig('test.png')
+
+        plot_path = f"{self.exp_path}/bleu.jpg"
+        plt.savefig(plot_path)
 
 if __name__ == '__main__':
     config = Config()
     trainer = Trainer(config)
-    trainer.create_train_script()
-    #trainer.plot_scores()
+    #trainer.create_train_script()
+    trainer.plot_scores()
