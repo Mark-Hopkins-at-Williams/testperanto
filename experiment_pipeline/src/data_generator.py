@@ -69,7 +69,8 @@ class DataGenerator:
             for num_sent in self.corp_lens:
                 formatted_num = format_number(num_sent)
                 # Construct the Python call for each job and add it to the commands to be run by parallel
-                python_call = f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {num_sent} -o {self.output_path}/{self.exp_name}{formatted_num}\n"
+                ### A here at end of call is for 2nd run 
+                python_call = f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {num_sent} -o {self.output_path}/{self.exp_name}A{formatted_num}\n"
                 f.write(python_call)
 
             # End the parallel section
@@ -96,11 +97,10 @@ class DataGenerator:
                 time.sleep(max(est_time // 10, 1))
 
     def generate(self):
-        self.generate_yaml()
+        #self.generate_yaml()
         self.create_sh_script()
-        job_id = self.run_sh_script() 
-        self.monitor_job(job_id)
-        self.clean_data()
+        #job_id = self.run_sh_script() 
+        #self.monitor_job(job_id)
 
 if __name__ == "__main__":
     config = Config()
