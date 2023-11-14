@@ -11,3 +11,5 @@ docs/*/*.idx
 docs/*/*.ind
 docs/*/*.pdf
 docs/*/.texpadtmp
+experiment_pipeline/experiment_data*
+hyperparam_tuning/experiment_data*
