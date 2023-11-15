@@ -5,8 +5,7 @@ import os
 import matplotlib.pyplot as plt 
 
 from config import Config
-from data_processor import DataProcessor
-from data_generator import DataGenerator
+from helper import format_number
 
 class ModelConfig:
     ### this configures each model run- I think this allows for more flexibility down the road but for now doesn't do much
@@ -37,42 +36,27 @@ class Trainer:
         self.results_path = config.RESULTS_PATH
         self.exp_path     = config.EXP_PATH
         self.appa_path    = config.APPA_PATH
-
+        self.combos       = config.combos
         self.num_epochs   = config.num_epochs
         self.num_gpus     = config.num_gpus
         self.patience     = config.patience
 
-    def format_number(self, num):
-        if num >= 1000000:
-            return f"{num/1000000:.1f}m"
-        elif num >= 1000:
-            return f"{num/1000:.1f}k"
-        else:
-            return str(num)
-
     def create_model_configs(self):
         model_configs = []
-        num = len(self.per_tree.names)
-        combinations = list(itertools.combinations(range(num), self.num_trans))
-        identity     = list(zip(range(num), range(num))) #[(0,0), (1,1), ..., (5,5)]
-        all_combos = combinations + identity 
 
         for corp_len in self.corp_lens:
-            for idxs in all_combos:
-                folder_name = f"{'_'.join([self.per_tree.names[i] for i in idxs])}_{self.format_number(corp_len)}" 
+            form_len = format_number(corp_len)
+            
+            for combo in self.combos:
+                folder_name = f"{'_'.join(combo)}_{form_len}"
+
                 data_dir = f"{self.train_path}/{folder_name}"
                 work_dir = f"{self.results_path}/{folder_name}"
 
                 ### calls are only things to still be trained so you can call this again if it screws up midway
                 if not os.path.exists(work_dir):
-                    src = self.per_tree.languages[idxs[0]] 
-                    if idxs[0] == idxs[1]:
-                        tgt = "da"
-                    else:
-                        tgt = self.per_tree.languages[idxs[1]] 
-                
-                #src = self.per_tree.languages[idxs[0]]
-                #tgt = self.per_tree.languages[idxs[1]]
+                    src = combo[0].lower()
+                    tgt = combo[1].lower()
 
                     model_config = ModelConfig(
                         config   = self.config,
@@ -153,7 +137,7 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
                 f.write("""#!/bin/bash\n""")
                 f.write(f"""
 #SBATCH -c 8 # Request 8 CPU cores
-#SBATCH -t 2-00:00 # Runtime in D-HH:MM
+#SBATCH -t 5-00:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
 #SBATCH -o {self.exp_path}/output{i}.out # File to which STDOUT will be written
@@ -165,16 +149,13 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
                     f.write("\n")
 
     def get_scores(self):
-        num = len(self.per_tree.names)
-        combinations = list(itertools.combinations(range(num), self.num_trans))
-        identity     = list(zip(range(num), range(num))) #[(0,0), (1,1), ..., (5,5)]
-        all_combos = combinations + identity 
-
         scores = defaultdict(list)
+
         for corp_len in self.corp_lens:
-            for idxs in all_combos:
-                names = '_'.join([self.per_tree.names[i] for i in idxs]) #SVO_OVS
-                folder_name = f"{names}_{self.format_number(corp_len)}" 
+            form_len = format_number(corp_len)
+            for combo in self.combos:
+                names = '_'.join(combo)
+                folder_name = f"{names}_{form_len}"
                 result_dir = f"{self.results_path}/{folder_name}"
                 
                 try:
@@ -190,11 +171,29 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
         scores = self.get_scores()
         plt.figure(figsize=(15,10))
 
+        # Defining a list of distinct colors
+        colors = ['#00BFFF', '#228B22', '#FF6347', '#7851A9', '#FFA500', '#008080', '#708090']
+        color_cycle = itertools.cycle(colors)
+
+        # Defining different line markers
+        markers = ['o', 's', '^', 'x', '*', '+', 'd']
+        marker_cycle = itertools.cycle(markers)
+
+        handles, labels = [], []
+
         for name, points in scores.items():
             lengths, bleus = zip(*points)
-            plt.plot(lengths, bleus, label=name, marker='o', linestyle='-')
+            color = next(color_cycle)
+            marker = next(marker_cycle)
+            line, = plt.plot(lengths, bleus, label=name, color=color, marker=marker, linestyle='-')
+            handles.append(line)
+            labels.append((name, max(bleus)))
 
-        plt.legend()
+        labels, handles = zip(*sorted(zip(labels, handles), key=lambda x: x[0][1], reverse=True))
+        labels = [label[0] for label in labels]
+
+        plt.legend(handles, labels)
+
         plt.title('BLEU Scores vs. Corpus Lengths')
         plt.xlabel("Corpus Size")
         plt.ylabel("BLEU Score")
@@ -210,3 +209,22 @@ if __name__ == '__main__':
     trainer = Trainer(config)
     #trainer.create_train_script()
     trainer.plot_scores()
+
+
+"""
+Analysis:
+
+(1) BLEU vs. Corpus Size for all Training
+(2) Create Dataframe (combination, bleu, corpus size, ...)
+(3) Python function that automatically opens tensorboard to easily get that going
+    You would need to go to terminal and call
+    tensorboard --logdir {work_dir}/tensorboard_logs/
+
+    where tensorboard {work_dir} = f"{self.results_path}/{'_'.join(combo)}_{form_len}" 
+    (see model config function for what these all are)
+(4) Collect data to understand what to set epochs/patience etc. 
+(5) Or generally analyzing data from training at each individual model training level 
+    i.e. how fast/slow did 1k train, when did it stop, etc.
+
+
+"""

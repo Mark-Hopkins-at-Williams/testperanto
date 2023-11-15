@@ -1,5 +1,5 @@
-import os
 import itertools
+import os
 
 class PerantoTree:
     """
@@ -11,25 +11,25 @@ class PerantoTree:
             amr_files,
             middleman_files,
             language_files,
-            names,  
-            languages   
+            names
             ):
 
         self.amr_paths    = [f'{json_path}/amr_files/{amr_file}.json' for amr_file in amr_files]
         self.middle_paths = [f'{json_path}/middleman_files/{mid_file}.json' for mid_file in middleman_files]
         self.lang_paths   = [f'{json_path}/language_files/{lang_file}.json' for lang_file in language_files]
-        self.data         = (self.amr_paths, self.middle_paths, self.lang_paths)
-        self.names        = names
-        self.languages    = languages
+        self.lang_paths  += self.lang_paths # duplicate to allow for identity mapping
+        self.data         = [self.amr_paths, self.middle_paths, self.lang_paths]
+        self.names        = names #[SVO, OVS, ...]
+        self.dup_names    = [f'{name}1' for name in names] # duplicate for identity mapping
+
+        self.file_order = {i : name for i, name in enumerate(self.names + self.dup_names)} # SVO,  ..., SVo1, 
+        self.num_paths  = len(self.amr_paths) * len(self.middle_paths) * len(self.lang_paths)
 
     def get(self):
         return self.data
 
     def get_names(self):
         return self.names
-
-    def get_languages(self):
-        return self.languages
 
 class Config:
     ### TO DO: check if from/to_dict are working/add reinitialization 
@@ -58,22 +58,25 @@ class Config:
             middleman_files = ['middleman'],                                # json_path/middleman_files/middleman.json
             language_files  = [f"english{''.join(p)}"                       # json_path/language_files/englishSVO.json ...
                                  for p in itertools.permutations("SVO")],
-            names           = ['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS'],
-            languages       = ['en', 'de', 'fr', 'es', 'ko', 'it'] 
+            names           = ['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']
             )
-        self.corp_lens    = [1000 * (2 ** i) for i in range(9)]            # 1000, 2000, ..., 256000
+
+        self.corp_lens    = [1000 * (2 ** i) for i in range(10)]            # 1000, 2000, ..., 512000
         self.num_cores    = 32
        
         ### data processor configs 
         self.num_trans    = 2                                               # if 2 takes pairs of languages, 3 triples, ...
+        combos = list((itertools.combinations(self.peranto_tree.names, self.num_trans)))
+        id_maps = [(name, f"{name}1") for name in self.peranto_tree.names]
+        self.combos       = combos + id_maps
         self.train_size   = .8
         self.test_size    = .1
         self.dev_size     = .1
 
         ### trainer configs
-        self.num_epochs = 1000
+        self.num_epochs = 750
         self.num_gpus   = 2
-        self.patience   = 40
+        self.patience   = 30
 
         self.initialize()
 
@@ -87,7 +90,8 @@ class Config:
             self.JSON_PATH,
             self.OUT_PATH,
             self.TRAIN_PATH,
-            self.RESULTS_PATH
+            self.RESULTS_PATH,
+            f"{self.OUT_PATH}/temporary"
             ]
         
         for path in paths:

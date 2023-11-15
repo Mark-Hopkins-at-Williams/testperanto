@@ -2,6 +2,7 @@ import yaml
 import subprocess 
 import time
 from config import Config
+from helper import format_number
 
 class DataGenerator:
     """
@@ -17,6 +18,8 @@ class DataGenerator:
         self.output_path = config.OUT_PATH
         self.tp_path = config.PERANTO_PATH
         self.exp_name = config.exp_name
+        self.file_order = self.per_tree.file_order
+        self.num_paths  = self.per_tree.num_paths
 
     def generate_yaml(self): 
         """
@@ -29,84 +32,70 @@ class DataGenerator:
             return {
                 "branch" : {idx + 1 : [path] for idx, path in enumerate(paths)}
                 }
-            
-        data = [format(paths) for paths in self.per_tree.data]
+        
+        per_tree = self.per_tree.data 
+
+        data = [format(paths) for paths in per_tree]
 
         with open(self.yaml_fpath, "w") as yaml_file:
             yaml.dump(data, yaml_file, default_flow_style=False)
 
-    def create_sh_script(self): 
+    def create_sh_script(self):
         """
-        Creates a .sh script, that when run from the TESPERONTO ROOT DIRECTORY, will generate text 
-        in paralell (default is 32 cores) for all translation + size combinations. 
+        Modifies the script to generate only the largest corpus length in parallel and
+        then splits it into smaller lengths as specified in self.corp_lens. It handles
+        multiple output files from parallel_gen.py and dynamically determines the range
+        of j based on self.num_paths.
         """
-        def format_number(num):
-            if num >= 1000000:
-                return f"{num/1000000:.1f}m"
-            elif num >= 1000:
-                return f"{num/1000:.1f}k"
-            else:
-                return str(num)
 
         with open(self.sh_fpath, 'w') as f:
-
             # Write the initial part of the script
-            f.write("""#!/bin/sh\n""")
+            f.write("#!/bin/sh\n")
 
-            # initialize the slurm stuff 
+            # Initialize the slurm stuff 
             f.write(f"""
 #SBATCH -c {self.num_cores} # Request {self.num_cores} CPU cores
-#SBATCH -t 0-05:00 # Runtime in D-HH:MM
+#SBATCH -t 0-10:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
 #SBATCH -o {self.output_path}/output.out # File to which STDOUT will be written
 #SBATCH -e {self.output_path}/error.err # File to which STDERR will be written
 #SBATCH --gres=gpu:0 # Request 0 GPUs\n""")
 
+            # Calculate the chunk size for parallel generation
+            max_corp_len = self.corp_lens[-1]  # largest one 
+            chunk_size = max_corp_len // self.num_cores
+
             # Begin the parallel section
             f.write(f"parallel --jobs {self.num_cores} <<EOT\n")
-
-            for num_sent in self.corp_lens:
-                formatted_num = format_number(num_sent)
-                # Construct the Python call for each job and add it to the commands to be run by parallel
-                ### A here at end of call is for 2nd run 
-                python_call = f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {num_sent} -o {self.output_path}/{self.exp_name}A{formatted_num}\n"
+            
+            for i in range(self.num_cores):
+                # Call parallel_gen.py to generate a chunk of the largest corpus size
+                temp_file_base = f"{self.output_path}/temporary/temp_{i}"
+                python_call = f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {chunk_size} -o {temp_file_base}\n"
                 f.write(python_call)
 
             # End the parallel section
             f.write("EOT\n")
-    
-    def run_sh_script(self):
-        # submit the job via slurm
-        result = subprocess.run(['sbatch', self.sh_fpath], capture_output=True, text=True)
-        job_id = result.stdout.split()[-1]  # get the job ID from the output
-        return job_id
 
-    def monitor_job(self, job_id):
-        # assuming 35it/s, time in sec ~ sum(corp_lens)/35
-        est_time = sum(self.corp_lens) // 35
+            # generate the script for aggregating and splitting files- group by j (not by which core)
+            for j in range(self.num_paths):
+                f.write(f"cat {self.output_path}/temporary/temp_*.{j} > {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{self.file_order[j]}\n")
+                for corp_len in self.corp_lens[:-1]:
+                    # pipe first corp_len to new file 
+                    f.write(f"head -n {corp_len} {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{self.file_order[j]} > {self.output_path}/{self.exp_name}{format_number(corp_len)}.{self.file_order[j]}\n")
 
-        while True:
-            # check the job status using squeue
-            squeue_result = subprocess.run(['squeue', '-j', job_id], capture_output=True, text=True)
-            if job_id not in squeue_result.stdout:
-                # job has completed
-                break
-            else:
-                # wait for a while before checking again
-                time.sleep(max(est_time // 10, 1))
+            # Delete the temporary files
+            f.write(f"rm -f {self.output_path}/temporary/temp_*.*\n")
 
     def generate(self):
-        #self.generate_yaml()
+        self.generate_yaml()
         self.create_sh_script()
-        #job_id = self.run_sh_script() 
-        #self.monitor_job(job_id)
 
 if __name__ == "__main__":
     config = Config()
     data_gen = DataGenerator(config)
     data_gen.generate()
-
 
 
 
