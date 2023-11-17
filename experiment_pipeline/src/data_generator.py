@@ -1,7 +1,9 @@
 import yaml
 import subprocess 
 import time
-from config import Config
+import numpy as np 
+
+from config import *
 from helper import format_number
 
 class DataGenerator:
@@ -9,7 +11,7 @@ class DataGenerator:
     Class for generating testperanto data for translations. 
     """
 
-    def __init__(self, config: Config):
+    def __init__(self, config: AbstractConfig):
         self.per_tree = config.peranto_tree 
         self.corp_lens = config.corp_lens
         self.yaml_fpath = config.YAML_FPATH
@@ -26,7 +28,7 @@ class DataGenerator:
         Generates yaml file
         """
         def format(paths):
-            if len(paths) == 1:
+            if len(paths) == 1:  
                 return paths[0]
             
             return {
@@ -41,20 +43,13 @@ class DataGenerator:
             yaml.dump(data, yaml_file, default_flow_style=False)
 
     def create_sh_script(self):
-        """
-        Modifies the script to generate only the largest corpus length in parallel and
-        then splits it into smaller lengths as specified in self.corp_lens. It handles
-        multiple output files from parallel_gen.py and dynamically determines the range
-        of j based on self.num_paths.
-        """
-
-        with open(self.sh_fpath, 'w') as f:
+      with open(self.sh_fpath, 'w') as f:
             # Write the initial part of the script
             f.write("#!/bin/sh\n")
 
             # Initialize the slurm stuff 
             f.write(f"""
-#SBATCH -c {self.num_cores} # Request {self.num_cores} CPU cores
+#SBATCH -c 1 # Request 1 CPU cores
 #SBATCH -t 0-10:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
@@ -62,38 +57,26 @@ class DataGenerator:
 #SBATCH -e {self.output_path}/error.err # File to which STDERR will be written
 #SBATCH --gres=gpu:0 # Request 0 GPUs\n""")
 
-            # Calculate the chunk size for parallel generation
-            max_corp_len = self.corp_lens[-1]  # largest one 
-            chunk_size = max_corp_len // self.num_cores
-
-            # Begin the parallel section
-            f.write(f"parallel --jobs {self.num_cores} <<EOT\n")
+            max_corp_len = max(self.corp_lens)
+            #max_idx      = np.argmax(self.corp_lens)
             
-            for i in range(self.num_cores):
-                # Call parallel_gen.py to generate a chunk of the largest corpus size
-                temp_file_base = f"{self.output_path}/temporary/temp_{i}"
-                python_call = f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {chunk_size} -o {temp_file_base}\n"
-                f.write(python_call)
+            f.write(f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {max_corp_len} -o {self.output_path}/{self.exp_name}{format_number(max_corp_len)}\n") # high_patience_512k 
 
-            # End the parallel section
-            f.write("EOT\n")
-
-            # generate the script for aggregating and splitting files- group by j (not by which core)
             for j in range(self.num_paths):
-                f.write(f"cat {self.output_path}/temporary/temp_*.{j} > {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{self.file_order[j]}\n")
-                for corp_len in self.corp_lens[:-1]:
-                    # pipe first corp_len to new file 
-                    f.write(f"head -n {corp_len} {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{self.file_order[j]} > {self.output_path}/{self.exp_name}{format_number(corp_len)}.{self.file_order[j]}\n")
+                name = self.file_order[j]
+                output_name = f"{self.output_path}/{self.exp_name}"
+                f.write(f"mv {output_name}{format_number(max_corp_len)}.{j} {output_name}{format_number(max_corp_len)}.{name}\n")
 
-            # Delete the temporary files
-            f.write(f"rm -f {self.output_path}/temporary/temp_*.*\n")
+                for corp_len in self.corp_lens:
+                    if corp_len != max_corp_len:
+                        f.write(f"head -n {corp_len} {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{name} > {self.output_path}/{self.exp_name}{format_number(corp_len)}.{name}\n")
 
     def generate(self):
         self.generate_yaml()
         self.create_sh_script()
 
 if __name__ == "__main__":
-    config = Config()
+    config = VarConfig()
     data_gen = DataGenerator(config)
     data_gen.generate()
 

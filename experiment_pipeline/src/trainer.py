@@ -4,7 +4,7 @@ import os
 
 import matplotlib.pyplot as plt 
 
-from config import Config
+from config import *
 from helper import format_number
 
 class ModelConfig:
@@ -27,7 +27,7 @@ class ModelConfig:
 
 class Trainer:
 
-    def __init__(self, config: Config):
+    def __init__(self, config: AbstractConfig):
         self.config       = config
         self.per_tree     = config.peranto_tree
         self.num_trans    = config.num_trans
@@ -47,25 +47,41 @@ class Trainer:
         for corp_len in self.corp_lens:
             form_len = format_number(corp_len)
             
-            for combo in self.combos:
+            for combo in self.combos: #(SVO, SOV)
                 folder_name = f"{'_'.join(combo)}_{form_len}"
+                # src to tgt and tgt to src
+                rev_fldr_name = f"{'_'.join(combo[::-1])}"
 
+                # data comes from the same place
                 data_dir = f"{self.train_path}/{folder_name}"
+                
+                # but save to two different places
                 work_dir = f"{self.results_path}/{folder_name}"
+                rev_work_dir = f"{self.results_path}/{rev_fldr_name}"
 
                 ### calls are only things to still be trained so you can call this again if it screws up midway
                 if not os.path.exists(work_dir):
-                    src = combo[0].lower()
-                    tgt = combo[1].lower()
+                    lang1 = combo[0].lower()
+                    lang2 = combo[1].lower()
 
                     model_config = ModelConfig(
                         config   = self.config,
                         work_dir = work_dir,
                         data_dir = data_dir,
-                        src      = src,
-                        tgt      = tgt
+                        src      = lang1,
+                        tgt      = lang2
                         )
                     model_configs.append(model_config)
+
+                    model_config = ModelConfig(
+                        config   = self.config,
+                        work_dir = rev_work_dir,
+                        data_dir = data_dir,
+                        src      = lang2,
+                        tgt      = lang1
+                        )
+                    model_configs.append(model_config)
+
         return model_configs
 
     def create_train_script(self):
@@ -148,83 +164,9 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
                     f.write(script)
                     f.write("\n")
 
-    def get_scores(self):
-        scores = defaultdict(list)
-
-        for corp_len in self.corp_lens:
-            form_len = format_number(corp_len)
-            for combo in self.combos:
-                names = '_'.join(combo)
-                folder_name = f"{names}_{form_len}"
-                result_dir = f"{self.results_path}/{folder_name}"
-                
-                try:
-                    with open(f'{result_dir}/scores') as f:
-                        contents = eval(f.read())
-                        bleu = contents[0]['score']
-                        scores[names].append((corp_len, bleu))
-                except:
-                    pass 
-        return scores 
-
-    def plot_scores(self):
-        scores = self.get_scores()
-        plt.figure(figsize=(15,10))
-
-        # Defining a list of distinct colors
-        colors = ['#00BFFF', '#228B22', '#FF6347', '#7851A9', '#FFA500', '#008080', '#708090']
-        color_cycle = itertools.cycle(colors)
-
-        # Defining different line markers
-        markers = ['o', 's', '^', 'x', '*', '+', 'd']
-        marker_cycle = itertools.cycle(markers)
-
-        handles, labels = [], []
-
-        for name, points in scores.items():
-            lengths, bleus = zip(*points)
-            color = next(color_cycle)
-            marker = next(marker_cycle)
-            line, = plt.plot(lengths, bleus, label=name, color=color, marker=marker, linestyle='-')
-            handles.append(line)
-            labels.append((name, max(bleus)))
-
-        labels, handles = zip(*sorted(zip(labels, handles), key=lambda x: x[0][1], reverse=True))
-        labels = [label[0] for label in labels]
-
-        plt.legend(handles, labels)
-
-        plt.title('BLEU Scores vs. Corpus Lengths')
-        plt.xlabel("Corpus Size")
-        plt.ylabel("BLEU Score")
-
-        plt.grid(True)
-        plt.show()
-
-        plot_path = f"{self.exp_path}/bleu.jpg"
-        plt.savefig(plot_path)
-
 if __name__ == '__main__':
-    config = Config()
+    config = SVOConfig()
     trainer = Trainer(config)
-    #trainer.create_train_script()
-    trainer.plot_scores()
+    trainer.create_train_script()
 
 
-"""
-Analysis:
-
-(1) BLEU vs. Corpus Size for all Training
-(2) Create Dataframe (combination, bleu, corpus size, ...)
-(3) Python function that automatically opens tensorboard to easily get that going
-    You would need to go to terminal and call
-    tensorboard --logdir {work_dir}/tensorboard_logs/
-
-    where tensorboard {work_dir} = f"{self.results_path}/{'_'.join(combo)}_{form_len}" 
-    (see model config function for what these all are)
-(4) Collect data to understand what to set epochs/patience etc. 
-(5) Or generally analyzing data from training at each individual model training level 
-    i.e. how fast/slow did 1k train, when did it stop, etc.
-
-
-"""

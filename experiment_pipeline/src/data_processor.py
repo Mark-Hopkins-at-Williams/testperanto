@@ -2,14 +2,14 @@ import itertools
 import os 
 import glob 
 
-from config import Config
+from config import *
 from helper import format_number
 
 class DataProcessor:
     """
     class for processing generated testperanto data
     """
-    def __init__(self, config: Config):
+    def __init__(self, config: AbstractConfig):
         self.corp_lens = config.corp_lens
         self.output_path = config.OUT_PATH
         self.exp_name = config.exp_name
@@ -73,6 +73,6 @@ class DataProcessor:
         self.train_test_split()
 
 if __name__ == "__main__":
-    config = Config()
+    config = SVOConfig()
     data_proc = DataProcessor(config)
     data_proc.process()
