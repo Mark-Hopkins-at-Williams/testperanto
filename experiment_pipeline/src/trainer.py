@@ -50,7 +50,7 @@ class Trainer:
             for combo in self.combos: #(SVO, SOV)
                 folder_name = f"{'_'.join(combo)}_{form_len}"
                 # src to tgt and tgt to src
-                rev_fldr_name = f"{'_'.join(combo[::-1])}"
+                rev_fldr_name = f"{'_'.join(combo[::-1])}_{form_len}"
 
                 # data comes from the same place
                 data_dir = f"{self.train_path}/{folder_name}"
@@ -168,5 +168,3 @@ if __name__ == '__main__':
     config = SVOConfig()
     trainer = Trainer(config)
     trainer.create_train_script()
-
-

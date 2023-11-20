@@ -40,8 +40,7 @@ class PerantoTree:
 
     def get_names(self):
         return self.names
-
-    # exp_name **kwargs 
+ 
 
 class AbstractConfig(ABC):
     def __init__(self, **kwargs):
@@ -136,7 +135,7 @@ class SVOConfig(AbstractConfig):
         return 'svo_perm'
 
     def __init__(self, **kwargs):
-        kwargs['identity'] = False 
+        kwargs['identity'] = True
         kwargs['corp_lens'] = [1000 * (2 ** i) for i in range(1, 6)]
         super().__init__(**kwargs)
 
