@@ -1,4 +1,3 @@
-import itertools 
 import os 
 import glob 
 
@@ -10,19 +9,17 @@ class DataProcessor:
     class for processing generated testperanto data
     """
     def __init__(self, config: AbstractConfig):
-        self.corp_lens = config.corp_lens
+        self.corp_lens   = config.corp_lens
         self.output_path = config.OUT_PATH
-        self.exp_name = config.exp_name
-        self.per_tree = config.peranto_tree
-        self.train_path = config.TRAIN_PATH
-        self.combos = config.combos
-        self.num_trans = config.num_trans
-        self.train_size = config.train_size
-        self.test_size = config.test_size 
-        self.dev_size = config.dev_size
+        self.exp_name    = config.exp_name
+        self.train_path  = config.TRAIN_PATH
+        self.combos      = config.combos
+        self.train_size  = config.train_size
+        self.test_size   = config.test_size 
 
     def clean(self):
-        pattern = f"{self.output_path}/{self.exp_name}*"
+        ### take generated data and clen it 
+        pattern = f"{self.output_path}/{self.exp_name}*" # anything w/ this pattern
         for file_path in glob.glob(pattern):
             # read the file
             with open(file_path, 'r') as file:
@@ -34,12 +31,13 @@ class DataProcessor:
                 file.write('\n'.join(cleaned_lines))
 
     def train_test_split(self):
+        ### take data and create datasets in form fairseq needs it 
         for corp_len in self.corp_lens:
             form_len  = format_number(corp_len)
             train_len = int(corp_len * self.train_size)
             test_len  = int(corp_len * self.test_size)
             dev_len   = corp_len - train_len - test_len 
-
+            
             for combo in self.combos:
                 folder_name = f"{'_'.join(combo)}_{form_len}"
                 folder_path = f"{self.train_path}/{folder_name}"
@@ -63,12 +61,15 @@ class DataProcessor:
 
                     with open(f"{folder_path}/train.{language}", "w") as f:
                         f.write("".join(train_data))
+
                     with open(f"{folder_path}/test.{language}", "w") as f:
                         f.write("".join(test_data))
+
                     with open(f"{folder_path}/dev.{language}", "w") as f:
                         f.write("".join(dev_data))
 
     def process(self):
+        ### process data- clean it and then split it into datasets
         self.clean()
         self.train_test_split()
 

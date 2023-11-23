@@ -1,21 +1,21 @@
-from collections import defaultdict
-import itertools 
 import os 
-
-import matplotlib.pyplot as plt 
 
 from config import *
 from helper import format_number
 
 class ModelConfig:
-    ### this configures each model run- I think this allows for more flexibility down the road but for now doesn't do much
+    """
+    ModelConfig defines the config for a specific model being trained
+
+    For now doesn't have too much but allows for more flexibility if we need it.
+    """
     def __init__(self, config, work_dir, data_dir, src, tgt, **kwargs):
         ### required 
-        self.config = config
+        self.config   = config
         self.work_dir = work_dir
         self.data_dir = data_dir
-        self.src = src
-        self.tgt = tgt
+        self.src      = src
+        self.tgt      = tgt
         
         ### optional (default vals specified)
         self.patience   = config.patience
@@ -26,11 +26,11 @@ class ModelConfig:
             setattr(self, key, value)
 
 class Trainer:
-
+    """
+    Trainer class takes all the processed dataset and trains models on them
+    """
     def __init__(self, config: AbstractConfig):
         self.config       = config
-        self.per_tree     = config.peranto_tree
-        self.num_trans    = config.num_trans
         self.corp_lens    = config.corp_lens
         self.train_path   = config.TRAIN_PATH
         self.results_path = config.RESULTS_PATH
@@ -42,6 +42,9 @@ class Trainer:
         self.patience     = config.patience
 
     def create_model_configs(self):
+        """
+        Take all combos to train and create list of model configs for them.
+        """
         model_configs = []
 
         for corp_len in self.corp_lens:
@@ -59,36 +62,46 @@ class Trainer:
                 work_dir = f"{self.results_path}/{folder_name}"
                 rev_work_dir = f"{self.results_path}/{rev_fldr_name}"
 
-                ### calls are only things to still be trained so you can call this again if it screws up midway
-                if not os.path.exists(work_dir):
-                    lang1 = combo[0].lower()
-                    lang2 = combo[1].lower()
+                ### calls are only things to still be trained 
+                ### so you can call this again if it screws up halfway
+                if os.path.exists(work_dir):
+                    with open(f"{work_dir}/scores") as f:
+                        if f.read() != '': # has scores so was trained
+                            continue 
+                        
+                lang1 = combo[0].lower()
+                lang2 = combo[1].lower()
 
-                    model_config = ModelConfig(
-                        config   = self.config,
-                        work_dir = work_dir,
-                        data_dir = data_dir,
-                        src      = lang1,
-                        tgt      = lang2
-                        )
-                    model_configs.append(model_config)
+                model_config = ModelConfig(
+                    config   = self.config,
+                    work_dir = work_dir,
+                    data_dir = data_dir,
+                    src      = lang1,
+                    tgt      = lang2
+                    )
+                model_configs.append(model_config)
 
-                    model_config = ModelConfig(
-                        config   = self.config,
-                        work_dir = rev_work_dir,
-                        data_dir = data_dir,
-                        src      = lang2,
-                        tgt      = lang1
-                        )
-                    model_configs.append(model_config)
+                model_config = ModelConfig(
+                    config   = self.config,
+                    work_dir = rev_work_dir,
+                    data_dir = data_dir,
+                    src      = lang2,
+                    tgt      = lang1
+                    )
+                model_configs.append(model_config)
 
         return model_configs
 
     def create_train_script(self):
+        """
+        Create num_gpus shell scripts to train. Uses the above function to create lst
+        of model configs
+        """
         model_configs = self.create_model_configs()
 
         scripts = []
         for c in model_configs:
+            ### base training shell script
             source_file = f"""
 SRC={c.src}
 TGT={c.tgt}

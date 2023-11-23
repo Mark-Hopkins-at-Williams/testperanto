@@ -6,7 +6,18 @@ __all__ = ['AbstractConfig', 'VarConfig', 'SVOConfig']
 
 class PerantoTree:
     """
-    PerantoTree specifies a tree of files that config testperanto
+    PerantoTree specfies a tree of json files. This tree configures the data generation, 
+    which is performed by testperanto.
+
+    The tree is a 3 level tree, with top level amr files, middle level middleman files, and
+    bottom level language files. 
+
+    json_path: path to a folder with subfolders amr_files, language_files, middleman_files w/ json files
+    amr_files: name of amr_file(s)
+    middleman_files: name of middleman file(s)
+    language_files: name of language file(s)
+    names: name to associate each path in the tree 
+    identity: true iff training identity maps (e.g. src to src_id)
     """
 
     def __init__(self, 
@@ -22,7 +33,7 @@ class PerantoTree:
         self.middle_paths = [f'{json_path}/middleman_files/{mid_file}.json' for mid_file in middleman_files]
         self.lang_paths   = [f'{json_path}/language_files/{lang_file}.json' for lang_file in language_files]
         self.identity     = identity
-        self.names        = names #[SVO, OVS, ...] #[]
+        self.names        = names #[SVO, OVS, ...] 
 
         if self.identity:
             self.lang_paths += self.lang_paths # duplicate to allow for identity mapping
@@ -43,6 +54,13 @@ class PerantoTree:
  
 
 class AbstractConfig(ABC):
+    """
+    AbstractConfig is an abstract experiment configuration. Subclasses need an exp_name, 
+    and they can override any default params defined here.
+    
+    The params here help streamline stuff down the line. For example all the paths are 
+    defined here, as well as things like whether or not to train identity maps etc.
+    """
     def __init__(self, **kwargs):
         super().__init__()
 
@@ -61,27 +79,27 @@ class AbstractConfig(ABC):
         self.SH_FPATH     = f"{self.EXP_PATH}/{self.exp_name}.sh"           # sh filepath 
 
         ### data generator configs
-        self.identity        = True
+        self.identity        = True                                         # true if training src to src_id
         self.amr_files       = ['amr']
-        self.middleman_files = ['middleman']                                 # json_path/middleman_files/middleman.json
-        self.language_files  = [f"english{''.join(p)}"                       # json_path/language_files/englishSVO.json ...
+        self.middleman_files = ['middleman']                                # json_path/middleman_files/middleman.json
+        self.language_files  = [f"english{''.join(p)}"                      # json_path/language_files/englishSVO.json ...
                                 for p in itertools.permutations("SVO")]     
         self.names           = ['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']
 
         self.corp_lens    = [1000 * (2 ** i) for i in range(10)]            # 1000, 2000, ..., 512000
-        self.num_cores    = 1 # prob irrelevant but it's fine
+        self.num_cores    = 1                                               # this is probably not used anymore but ok
 
        
         ### data processor configs 
         self.num_trans    = 2                                               # if 2 takes pairs of languages, 3 triples, ...
-        self.train_size   = .8
-        self.test_size    = .1
-        self.dev_size     = .1
+        self.train_size   = .8                                              # train proprortion 
+        self.test_size    = .1                                              # test proportion
+        self.dev_size     = .1                                              # dev proportion
 
-        ### trainer configs
+        ### trainer configs- we can add more here if needed 
         self.num_epochs    = 1000
         self.num_gpus      = 2
-        self.patience      = 75
+        self.patience      = 75                                             # num epochs of no bleu improvement before early stopping
 
 
         for key, value in kwargs.items():
@@ -129,6 +147,10 @@ class AbstractConfig(ABC):
         ### check json_path has correct subfolders 
 
 class SVOConfig(AbstractConfig):
+    """
+    SVOConfig trains pairwise between permutations of svo
+    
+    """
 
     @property
     def exp_name(self):
@@ -141,7 +163,12 @@ class SVOConfig(AbstractConfig):
 
 
 class VarConfig(AbstractConfig):
-
+    """
+    VarConfig tests the variability of model results by generating
+    5 datasets under the same configuration, training pairwise, and 
+    checking the variability of model results. 
+    
+    """
     @property
     def exp_name(self):
         return 'data_variability'
