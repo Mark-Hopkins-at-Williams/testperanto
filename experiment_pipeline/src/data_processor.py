@@ -74,6 +74,6 @@ class DataProcessor:
         self.train_test_split()
 
 if __name__ == "__main__":
-    config = SVOConfig()
+    config = NoPro1Config()
     data_proc = DataProcessor(config)
     data_proc.process()

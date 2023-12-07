@@ -40,6 +40,7 @@ class Trainer:
         self.num_epochs   = config.num_epochs
         self.num_gpus     = config.num_gpus
         self.patience     = config.patience
+        self.train_rev    = config.train_rev
 
     def create_model_configs(self):
         """
@@ -52,23 +53,16 @@ class Trainer:
             
             for combo in self.combos: #(SVO, SOV)
                 folder_name = f"{'_'.join(combo)}_{form_len}"
-                # src to tgt and tgt to src
-                rev_fldr_name = f"{'_'.join(combo[::-1])}_{form_len}"
-
-                # data comes from the same place
                 data_dir = f"{self.train_path}/{folder_name}"
-                
-                # but save to two different places
                 work_dir = f"{self.results_path}/{folder_name}"
-                rev_work_dir = f"{self.results_path}/{rev_fldr_name}"
 
                 ### calls are only things to still be trained 
                 ### so you can call this again if it screws up halfway
-                if os.path.exists(work_dir):
+                if os.path.exists(f"{work_dir}/scores"):
                     with open(f"{work_dir}/scores") as f:
                         if f.read() != '': # has scores so was trained
                             continue 
-                        
+
                 lang1 = combo[0].lower()
                 lang2 = combo[1].lower()
 
@@ -81,14 +75,18 @@ class Trainer:
                     )
                 model_configs.append(model_config)
 
-                model_config = ModelConfig(
-                    config   = self.config,
-                    work_dir = rev_work_dir,
-                    data_dir = data_dir,
-                    src      = lang2,
-                    tgt      = lang1
-                    )
-                model_configs.append(model_config)
+                if self.train_rev: #also train tgt-src 
+                    ### here we use same data dir but save to different place 
+                    rev_fldr_name = f"{'_'.join(combo[::-1])}_{form_len}"
+                    rev_work_dir = f"{self.results_path}/{rev_fldr_name}"
+                    model_config = ModelConfig(
+                        config   = self.config,
+                        work_dir = rev_work_dir,
+                        data_dir = data_dir,
+                        src      = lang2,
+                        tgt      = lang1
+                        )
+                    model_configs.append(model_config)
 
         return model_configs
 
@@ -178,6 +176,6 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
                     f.write("\n")
 
 if __name__ == '__main__':
-    config = SVOConfig()
+    config = NoPro1Config()
     trainer = Trainer(config)
     trainer.create_train_script()

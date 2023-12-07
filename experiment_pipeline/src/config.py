@@ -2,11 +2,11 @@ import itertools
 import os
 from abc import ABC, abstractmethod
 
-__all__ = ['AbstractConfig', 'VarConfig', 'SVOConfig']
+__all__ = ['AbstractConfig', 'VarConfig', 'SVOConfig', "NoProConfig", 'NoDepConfig', "NoPro1Config"]
 
 class PerantoTree:
     """
-    PerantoTree specfies a tree of json files. This tree configures the data generation, 
+    PerantoTree specifies a tree of json files. This tree configures the data generation, 
     which is performed by testperanto.
 
     The tree is a 3 level tree, with top level amr files, middle level middleman files, and
@@ -65,7 +65,7 @@ class AbstractConfig(ABC):
         super().__init__()
 
         ### path configurations
-        self.SRC_PATH     = os.getcwd()                                     # src code
+        self.SRC_PATH     = os.getcwd()                                     # path to src code 
         self.MAIN_PATH    = os.path.dirname(self.SRC_PATH)                  # main experiment_pipeline path
         self.PERANTO_PATH = os.path.dirname(self.MAIN_PATH)                 # testperanto main path
         self.DATA_PATH    = f"{self.MAIN_PATH}/experiment_data"             # data path
@@ -75,8 +75,8 @@ class AbstractConfig(ABC):
         self.APPA_PATH    = f"{self.PERANTO_PATH}/appa-mt/fairseq"          # for appa fairseq training
         self.JSON_PATH    = f"{self.DATA_PATH}/peranto_files"               # contains 3 folders w/ tp config 
         self.OUT_PATH     = f"{self.EXP_PATH}/output"                       # path for generated data 
-        self.YAML_FPATH   = f"{self.EXP_PATH}/{self.exp_name}.yaml"         # yaml filepath (filepath so don't os.makedirs)
-        self.SH_FPATH     = f"{self.EXP_PATH}/{self.exp_name}.sh"           # sh filepath 
+        self.YAML_FPATH   = f"{self.EXP_PATH}/{self.exp_name}.yaml"         
+        self.SH_FPATH     = f"{self.EXP_PATH}/{self.exp_name}.sh"           
 
         ### data generator configs
         self.identity        = True                                         # true if training src to src_id
@@ -87,11 +87,11 @@ class AbstractConfig(ABC):
         self.names           = ['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']
 
         self.corp_lens    = [1000 * (2 ** i) for i in range(10)]            # 1000, 2000, ..., 512000
-        self.num_cores    = 1                                               # this is probably not used anymore but ok
+        self.num_cores    = 1                                               # this param is prob deprecated 
 
        
         ### data processor configs 
-        self.num_trans    = 2                                               # if 2 takes pairs of languages, 3 triples, ...
+        self.num_trans    = 2                                               # if 2 takes pairs of languages, 3 triples, (for now only 2 works)
         self.train_size   = .8                                              # train proprortion 
         self.test_size    = .1                                              # test proportion
         self.dev_size     = .1                                              # dev proportion
@@ -100,7 +100,9 @@ class AbstractConfig(ABC):
         self.num_epochs    = 1000
         self.num_gpus      = 2
         self.patience      = 75                                             # num epochs of no bleu improvement before early stopping
+        self.train_rev     = True                                           # whether or not to train src-tgt and tgt-src
 
+        self.articles      = True                                           # contains articles or not (a/the)
 
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -114,10 +116,16 @@ class AbstractConfig(ABC):
             identity        = self.identity
             )
 
-        self.combos = list((itertools.combinations(self.peranto_tree.names, self.num_trans)))
+        # combos are models to train for each corp size- here taking all combos (SVO, SOV), (SVO, VSO), ...
+        # if you want to train SVO-SOV and SOV-SVO just include SVO-SOV here, as setting self.train_rev == True will suffice (see trainer.py for more info)
+        self.combos = list((itertools.combinations(self.peranto_tree.names, self.num_trans))) 
 
-        if self.peranto_tree.identity: # needs identiy map
+        if self.peranto_tree.identity: # needs identity map
             self.combos += [(name, f"{name}_id") for name in self.peranto_tree.names]
+
+        # if you don't want all combos you can manually override here
+        if 'combos' in kwargs:
+            self.combos = kwargs['combos']
 
         self.initialize()
 
@@ -149,7 +157,11 @@ class AbstractConfig(ABC):
 class SVOConfig(AbstractConfig):
     """
     SVOConfig trains pairwise between permutations of svo
-    
+
+    identity  = True bc we want to train svo to svo_id 
+    corp_lens = [2000, ..., 32000]
+
+    There are 2((6c2) + 6) = 42 total models per corpus length 
     """
 
     @property
@@ -157,7 +169,7 @@ class SVOConfig(AbstractConfig):
         return 'svo_perm'
 
     def __init__(self, **kwargs):
-        kwargs['identity'] = True
+        kwargs['identity']  = True
         kwargs['corp_lens'] = [1000 * (2 ** i) for i in range(1, 6)]
         super().__init__(**kwargs)
 
@@ -168,6 +180,9 @@ class VarConfig(AbstractConfig):
     5 datasets under the same configuration, training pairwise, and 
     checking the variability of model results. 
     
+    corp_lens      = [2000] bc we will hold corpus length constant 
+    language_files = ['englishSVO'] * 5 bc we hold tp configs constant 
+    identity       = False bc we don't need identity on top of what we have 
     """
     @property
     def exp_name(self):
@@ -180,6 +195,68 @@ class VarConfig(AbstractConfig):
         kwargs['names']          = [f'SVO{i}' for i in range(1,6)]
         super().__init__(**kwargs) 
 
+class NoProConfig(AbstractConfig):
+    """
+    NoPro is an experiment translating with no pronouns.
+
+    Since we've seen empirically that src doesn't really matter, we fix a src SVO
+    and train SVO-tgt models 
+
+    amr_files = ['no_pro_amr'] is an amr json with no pronouns (and no "the"/"a")
+    train_rev = False bc we don't need to train SVO-VSO and VSO-SVO (no rev src to tgt/tgt to src)
+    articles  = False bc doesn't contain 'a' or 'the'
+    
+    Note, to run again without "the"/"a", one must change the language files 
+    """
+    @property
+    def exp_name(self):
+        return 'no_pro'
+
+    def __init__(self, **kwargs):
+        kwargs['identity']  = True
+        kwargs['corp_lens'] = [1000 * (2 ** i) for i in range(6)]
+        kwargs['combos']    = [('SVO',tgt) for tgt in ['SVO_id', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']]
+        kwargs['amr_files'] = ['no_pro_amr']
+        kwargs['train_rev'] = False
+        kwargs['articles']  = False 
+        super().__init__(**kwargs)
+
+class NoPro1Config(AbstractConfig):
+    """
+    NoPro1 is NoPro but with articles "a"/"the" 
+    """
+    @property
+    def exp_name(self):
+        return 'no_pro1'
+
+    def __init__(self, **kwargs):
+        kwargs['identity']  = True
+        kwargs['corp_lens'] = [1000 * (2 ** i) for i in range(6)]
+        kwargs['combos']    = [('SVO',tgt) for tgt in ['SVO_id', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']]
+        kwargs['amr_files'] = ['no_pro_amr']
+        kwargs['train_rev'] = False
+        super().__init__(**kwargs)
+
+class NoDepConfig(AbstractConfig):
+    """
+    NoDep modifies the amr json config so that everything is drawn from an unconditional distribution.
+    For example, rather than having nouns drawn from a distribution depending on verbs, we modify it
+    so it's drawn from a distribution that has no knowledge of the verb.
+
+    amr_files = ['no_dep_amr'] is an amr file that does this (changes nn.y1.y2 dist to nn)
+    """
+    @property
+    def exp_name(self):
+        return 'no_dep'
+
+    def __init__(self, **kwargs):
+        kwargs['identity']  = True
+        kwargs['corp_lens'] = [1000 * (2 ** i) for i in range(6)]
+        kwargs['combos']    = [('SVO',tgt) for tgt in ['SVO_id', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']]
+        kwargs['amr_files'] = ['no_dep_amr']
+        kwargs['train_rev'] = False
+        super().__init__(**kwargs)
+        
 if __name__ == '__main__':
     pass 
 

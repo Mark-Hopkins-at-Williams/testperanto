@@ -74,7 +74,7 @@ class DataGenerator:
         self.create_sh_script()
 
 if __name__ == "__main__":
-    config = VarConfig()
+    config = NoPro1Config()
     data_gen = DataGenerator(config)
     data_gen.generate()
 
