@@ -1,0 +1,34 @@
+{
+    "svo_perm": {
+        "SVO": [
+            "amr",
+            "middleman",
+            "englishSVO"
+        ],
+        "SOV": [
+            "amr",
+            "middleman",
+            "englishSOV"
+        ],
+        "VSO": [
+            "amr",
+            "middleman",
+            "englishVSO"
+        ],
+        "VOS": [
+            "amr",
+            "middleman",
+            "englishVOS"
+        ],
+        "OSV": [
+            "amr",
+            "middleman",
+            "englishOSV"
+        ],
+        "OVS": [
+            "amr",
+            "middleman",
+            "englishOVS"
+        ]
+    }
+}

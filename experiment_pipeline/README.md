@@ -1,64 +1,81 @@
-## Training Pipeline 
+## Training Pipeline
 
-**Repo Description:** this repository enables one to run various *experiments*. An *experiment* typically consists of training multiple neural machine translation models on testperanto generated artificial language. For a high level workflow look below, and for more granular instructions go straight to the bottom.
+**Repo Description:** this repository enables one to run various *experiments*. An *experiment* typically consists of training multiple neural machine translation models on testperanto generated artificial language. At a high level there are 4 (distinct) steps: data generation, data splitting, training, and analysis of results. Below is a high level workflow, and under that there are more specific instructions for each step.
 
 **High Level Workflow:**
-- Configure a new experiment by adding a subclass to config.py
-- Call data_generator.py, which creates a .sh script to generate testperanto data
-- Run the .sh script and clean/split the data using data_processor.py
-- Call trainer.py to create multiple .sh training scripts
-- After training, call results.py to create a pd.DataFrame with results
-- Analyze the data in analysis.ipynb 
+The data_generator.py file enables you to generate raw testperanto data. Then, data_splitter.py enables you to take generated data and compile them into datasets ready to be trained on. You can instantiate any number of models to train on various datasets in trainer.py, and finally you can analyze the results in analysis.ipynb. I'll now go through each of these:
 
-**Repo Layout:**
-experiment_pipeline/                                          
-├── experiment_data/                                      contains all data
-│   ├── experiments/                                      
-│   │   └── svo_perm/                                     ex: svo permutation experiment
-│   │       ├── results/                                  model results/data
-│   │       │   └── SVO_SOV_2.0k/                         ex: 2k corp len model trained from SVO to SOV
-│   │       │       ├── scores/                           scores of model (bleu, etc.)
-│   │       │       ├── translations/                     translations (src, hyp, ref)
-│   │       ├── example_outputs.txt                       example translations 
-│   │       └── results.csv                               csv of model results
-│   └── peranto_files/                                      
-│       └── amr_files/                                    amr json files for tp
-├── src/
-│   ├── analysis.ipynb                                    model results analysis
-│   ├── config.py                          
-│   ├── results.py                                        creates results.csv
-│   ├── data_generator.py                             
-│   ├── data_processor.py       
-│   └── trainer.py  
-└── README.md
+**Data Generation:**
 
-**Specific Instructions:**
+Goal: generate a .sh script that generates testperanto data in parallel via parallel_gen.py
 
-Important Notes:
-- for each file, make sure config is set to whatever config you are using (config = HiMark())
-- to run the data_gen .sh script, you need testperanto (conda activate jhc5 works)
-- to run the train .sh script(s), you need fairseq (conda activate fairseq.v2 works)
+Description: Generation begins with a PerantoTree: a 3 lvl tree structure that resembles a configuration for testperanto (i.e. a tree of amr -> middleman -> language json config files). A Generator is defined by a (P,c) tuple, where P is a PerantoTree and c is a corpus length to generate. 
 
-1. Create config subclass
-    - go to config.py and create a new subclass: say class HiMark(AbstractConfig):
-    - add a function def exp_name(self) which returns the name of the experiment (here name is "mark")
-    - in the init override any default params you want (look at other subclasses for examples)
-    - add this new class to the __all__ list
-2. Call data_generator.py
-    - call data_generator.py 
-    - this file will create a .sh script that calls tp/parallel_gen.py in order to create the data
-    - this will create a mark.sh script in experiment_data/experiments/mark/
-    - sbatch mark.sh (with default params prob takes <1hr, but you can't see progress until it finishes)
-3. Call data_processor.py
-    - make sure that the data has been fully generated (you can check by looking at output folder)
-    - call data_processor.py, which should (immediately) clean/split the generated data
-4. Call trainer.py
-    - call trainer.py, which will create config.num_gpus training scripts (one per gpu)
-    - these will be called train0.sh, train1.sh (located in experiment_data/experiments/mark)
-    - sbatch both (conda activate fairseq.v2 works)
-5. Call results.py
-    - one the models are trained (or you can do it during), call results.py
-    - this will create a results.csv with model results 
-6. Analyze data in analysis.ipynb
-    - Go to analysis.ipynb and add an elif to get_data(): elif exp_name == 'mark': config = HiMark()
-    - Use built in data visualizion functionality to analyze (look at notebook for usage)
+Usage: 
+1. Add a new type of PerantoTree in get_per_tree() to specify another preset generation configuration
+2. Define a new Generator G with a clear name (e.g. 'svo_perm'), a PerantoTree, and a corpus length (should be 64k)
+3. Call G.generate() and run the .sh script (found in experiments/run_outputs/) using a conda venv like jhc5 
+
+Output: running the .sh script mentioned above will add new data to experiments/tp_data with the naming convention {data.name}{generator.name} (e.g. SVO.svo_perm). There will also be "metadata" added to experiments/data_info.json, which looks like this:
+
+{
+    "svo_perm": {
+        "SVO": [
+            "amr",
+            "middleman",
+            "englishSVO"
+        ],
+        ...
+}
+
+**Data Splitting:**
+
+Goal: take raw testperanto data generated above and split it into datasets that are able to be trained 
+
+Description: Data splitting takes the data above and turns them into Datasets. A Dataset includes train/test/dev sets for src/tgt, and src/tgt can potentially include multiple "languages" (i.e. multilingual support). However, it's annoying to define a ton of Datasets, so there's an abstract Splitter object that takes data and defines ways to split the data into Datasets. 
+ 
+
+Usage:
+1. Fetch data generated in the Generator step using the fetch_data function
+2. Specify a type of Splitter S (or define a new one) to split the fetched data into Datasets
+3. Call S.update_metadata()
+
+Output: following the above steps will create folders in experiments/datasets that are in the form fairseq requires to be trained. There will also be "metadata" added to experiments/dataset_info.json, which looks like this:
+
+{
+    "svo_pairwise": [
+        {
+            "SOV_OSV_1.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+
+
+**Training:**
+
+Goal: take datasets and train them 
+
+Description: training takes the datasets above and trains them using Models. Models are transformers with slightly varying hyperparameters/architecture size. Everything is done through a Trainer object. 
+
+Usage:
+1. Fetch datasets created above using fetch_data()
+2. Specify a list of Model objects (each model will be trained on each dataset)
+3. Define a Trainer object and call trainer.create_train_script()
+4. Run the .sh scripts created (found in run_outputs) using a conda venv w/ fairseq (fairseq.v2 works)
+
+Output: following the above steps will create folders in experiments/results with model results. It will also update results.csv, which looks like this:
+
+exp_name,work_dir,dataset_name,model_name,bleu,chrF2,num_steps,src,tgt,corp_lens,model_arch,num_epochs,patience
+svo_perm,XS_OSV_OVS_1.0k,OSV_OVS_1.0k,XS,9.2,44.7,2460.0,['OSV.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75
+
+As the models are training, you can call python results.py, which will update the csv with the scores (replacing BLEU = None to the actual BLEU score for example).
+
+Finally, you can analyze the data using analysis.ipynb. 
