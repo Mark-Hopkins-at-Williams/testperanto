@@ -179,3 +179,11 @@ svo_perm,XS_VSO_OVS_32.0k,VSO_OVS_32.0k,XS,59.3,76.2,28575.0,['VSO.svo_perm'],['
 svo_perm,XS_VSO_SOV_32.0k,VSO_SOV_32.0k,XS,49.8,73.8,30900.0,['VSO.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
 svo_perm,XS_VSO_SVO_32.0k,VSO_SVO_32.0k,XS,55.4,76.2,32452.0,['VSO.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
 svo_perm,XS_VSO_VOS_32.0k,VSO_VOS_32.0k,XS,59.8,76.7,21675.0,['VSO.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
+num_lang,XS_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",XS,1000,75
+num_lang,S_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",S,1000,75
+num_lang,XS_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",XS,1000,75
+num_lang,S_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",S,1000,75
+num_lang,XS_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",XS,1000,75
+num_lang,S_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",S,1000,75
+num_lang,XS_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",XS,1000,75
+num_lang,S_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",S,1000,75

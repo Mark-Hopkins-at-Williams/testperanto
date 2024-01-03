@@ -162,6 +162,37 @@ class Splitter(ABC):
         with open(json_file, 'w') as file:
             json.dump(data, file, indent=4)
 
+class MultiSplitter(Splitter):
+    """
+    MultiSplitter is used for multilingual training. This is a dumb class rn
+    """
+    def __init__(self, splitter_name, names, corp_lens, src, tgt):
+        super().__init__(splitter_name, names)    
+        self.corp_lens = corp_lens
+        self.src = src
+        self.tgt = tgt
+        self.others = [n for n in names if n != src and n != tgt]
+
+    def create_datasets(self):
+        get_name = lambda c, k : f"{self.src.split('.')[0]}_{self.tgt.split('.')[0]}_{k}_{format_number(c)}"
+        datasets = []
+        for c in self.corp_lens:
+            for k in range(len(self.others)):
+                corp_lens = [int(.5 * c)] + [int(.5*c/(k+1))] * (k)
+                corp_lens = corp_lens + [c - sum(corp_lens)]
+                dataset = Dataset(
+                    name = get_name(c, k+1),
+                    src = [self.src] * (k+2),
+                    tgt = [self.tgt] + self.others[:k+1], # multilingual
+                    corp_lens = corp_lens
+                )
+                datasets.append(dataset)
+
+        for dataset in datasets:
+            dataset.create()
+
+        return datasets 
+     
 class PairwiseSplitter(Splitter):
     """
     One splitting example is taking pairwise within the names. For example
@@ -211,6 +242,5 @@ class PairwiseSplitter(Splitter):
 
 if __name__ == "__main__":
     names     = fetch_data(['svo_perm'])
-    corp_lens = [1000 * (2 ** i) for i in range(6)]
-    splitter  = PairwiseSplitter('svo_pairwise', names, corp_lens)
+    splitter  = MultiSplitter('num_lang', names, [32000], 'SVO.svo_perm', 'OSV.svo_perm')
     splitter.update_metadata()

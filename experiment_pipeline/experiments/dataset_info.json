@@ -2340,5 +2340,89 @@
                 ]
             }
         }
+    ],
+    "num_lang": [
+        {
+            "SVO_OSV_1_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_2_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm",
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    8000,
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_3_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm",
+                    "VOS.svo_perm",
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    5333,
+                    5333,
+                    5334
+                ]
+            }
+        },
+        {
+            "SVO_OSV_4_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm",
+                    "VOS.svo_perm",
+                    "OVS.svo_perm",
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    4000,
+                    4000,
+                    4000,
+                    4000
+                ]
+            }
+        }
     ]
 }
