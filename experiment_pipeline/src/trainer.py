@@ -208,16 +208,13 @@ def fetch_data(splitter_names=None, corp_lens=None):
     return [dataset for _,dataset in sorted_res]
 
 if __name__ == '__main__':
-    datasets = fetch_data(['num_lang'])
+    datasets = fetch_data(['svo_pairwise'])
+    datasets = [dataset for dataset in datasets if dataset.src ==['SVO.svo_perm']]
     models   = [
-            Model('XS', size = "XS"),
-            Model('S',  size = 'S')
+            Model('S', size = "S"),
+            Model('M',  size = 'M')
             ]
 
-    trainer = Trainer('num_lang', datasets, models)
+    trainer = Trainer('svo_perm', datasets, models)
     trainer.create_train_script()
 
-    """
-    TO DO:
-    make it so that different size models don't always go to diff script 
-    """

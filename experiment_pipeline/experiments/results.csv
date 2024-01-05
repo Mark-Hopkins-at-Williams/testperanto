@@ -179,11 +179,71 @@ svo_perm,XS_VSO_OVS_32.0k,VSO_OVS_32.0k,XS,59.3,76.2,28575.0,['VSO.svo_perm'],['
 svo_perm,XS_VSO_SOV_32.0k,VSO_SOV_32.0k,XS,49.8,73.8,30900.0,['VSO.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
 svo_perm,XS_VSO_SVO_32.0k,VSO_SVO_32.0k,XS,55.4,76.2,32452.0,['VSO.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
 svo_perm,XS_VSO_VOS_32.0k,VSO_VOS_32.0k,XS,59.8,76.7,21675.0,['VSO.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
-num_lang,XS_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",XS,1000,75
-num_lang,S_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",S,1000,75
-num_lang,XS_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",XS,1000,75
-num_lang,S_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",S,1000,75
-num_lang,XS_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",XS,1000,75
-num_lang,S_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",S,1000,75
-num_lang,XS_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,XS,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",XS,1000,75
-num_lang,S_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,S,,,,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",S,1000,75
+num_lang,XS_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,XS,28.2,47.2,24320.0,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",XS,1000,75
+num_lang,S_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,S,27.3,46.5,18080.0,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",S,1000,75
+num_lang,XS_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,XS,22.9,39.9,17712.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",XS,1000,75
+num_lang,S_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,S,23.1,40.1,18532.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",S,1000,75
+num_lang,XS_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,XS,20.7,38.9,23800.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",XS,1000,75
+num_lang,S_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,S,17.5,35.5,12750.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",S,1000,75
+num_lang,XS_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,XS,17.5,36.8,16915.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",XS,1000,75
+num_lang,S_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,S,16.6,35.1,18275.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",S,1000,75
+svo_perm,S_SVO_OSV_1.0k,SVO_OSV_1.0k,S,6.7,42.4,2064.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],S,1000,75
+svo_perm,M_SVO_OSV_1.0k,SVO_OSV_1.0k,M,7.6,43.1,1424.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],M,1000,75
+svo_perm,S_SVO_OVS_1.0k,SVO_OVS_1.0k,S,13.3,48.0,2192.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],S,1000,75
+svo_perm,M_SVO_OVS_1.0k,SVO_OVS_1.0k,M,12.2,47.0,2380.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],M,1000,75
+svo_perm,S_SVO_SOV_1.0k,SVO_SOV_1.0k,S,8.8,43.3,1974.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],S,1000,75
+svo_perm,M_SVO_SOV_1.0k,SVO_SOV_1.0k,M,8.8,43.8,1695.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],M,1000,75
+svo_perm,S_SVO_VOS_1.0k,SVO_VOS_1.0k,S,11.7,46.8,1869.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],S,1000,75
+svo_perm,M_SVO_VOS_1.0k,SVO_VOS_1.0k,M,12.1,49.7,2040.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],M,1000,75
+svo_perm,S_SVO_VSO_1.0k,SVO_VSO_1.0k,S,14.3,49.0,2324.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],S,1000,75
+svo_perm,M_SVO_VSO_1.0k,SVO_VSO_1.0k,M,15.0,47.2,1644.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],M,1000,75
+svo_perm,S_SVO_OSV_2.0k,SVO_OSV_2.0k,S,22.9,57.9,3798.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],S,1000,75
+svo_perm,M_SVO_OSV_2.0k,SVO_OSV_2.0k,M,21.1,56.7,2808.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],M,1000,75
+svo_perm,S_SVO_OVS_2.0k,SVO_OVS_2.0k,S,26.8,58.4,3264.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],S,1000,75
+svo_perm,M_SVO_OVS_2.0k,SVO_OVS_2.0k,M,26.7,58.7,2850.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],M,1000,75
+svo_perm,S_SVO_SOV_2.0k,SVO_SOV_2.0k,S,20.4,54.2,2262.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],S,1000,75
+svo_perm,M_SVO_SOV_2.0k,SVO_SOV_2.0k,M,20.2,54.4,2418.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],M,1000,75
+svo_perm,S_SVO_VOS_2.0k,SVO_VOS_2.0k,S,25.4,59.5,2700.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],S,1000,75
+svo_perm,M_SVO_VOS_2.0k,SVO_VOS_2.0k,M,24.9,59.3,2178.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],M,1000,75
+svo_perm,S_SVO_VSO_2.0k,SVO_VSO_2.0k,S,29.9,60.5,3570.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],S,1000,75
+svo_perm,M_SVO_VSO_2.0k,SVO_VSO_2.0k,M,27.3,59.9,2274.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],M,1000,75
+svo_perm,S_SVO_OSV_4.0k,SVO_OSV_4.0k,S,28.4,60.6,4653.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],S,1000,75
+svo_perm,M_SVO_OSV_4.0k,SVO_OSV_4.0k,M,27.1,59.2,4642.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],M,1000,75
+svo_perm,S_SVO_OVS_4.0k,SVO_OVS_4.0k,S,35.5,63.0,5313.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],S,1000,75
+svo_perm,M_SVO_OVS_4.0k,SVO_OVS_4.0k,M,34.4,61.9,4389.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],M,1000,75
+svo_perm,S_SVO_SOV_4.0k,SVO_SOV_4.0k,S,27.3,59.5,5532.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],S,1000,75
+svo_perm,M_SVO_SOV_4.0k,SVO_SOV_4.0k,M,23.8,55.9,3360.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],M,1000,75
+svo_perm,S_SVO_VOS_4.0k,SVO_VOS_4.0k,S,36.3,63.7,5368.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],S,1000,75
+svo_perm,M_SVO_VOS_4.0k,SVO_VOS_4.0k,M,33.3,62.9,4125.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],M,1000,75
+svo_perm,S_SVO_VSO_4.0k,SVO_VSO_4.0k,S,36.7,64.3,5181.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],S,1000,75
+svo_perm,M_SVO_VSO_4.0k,SVO_VSO_4.0k,M,36.6,61.6,3058.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],M,1000,75
+svo_perm,S_SVO_OSV_8.0k,SVO_OSV_8.0k,S,36.3,65.7,6980.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],S,1000,75
+svo_perm,M_SVO_OSV_8.0k,SVO_OSV_8.0k,M,30.3,61.2,5140.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],M,1000,75
+svo_perm,S_SVO_OVS_8.0k,SVO_OVS_8.0k,S,43.5,67.7,7000.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],S,1000,75
+svo_perm,M_SVO_OVS_8.0k,SVO_OVS_8.0k,M,32.5,62.9,6380.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],M,1000,75
+svo_perm,S_SVO_SOV_8.0k,SVO_SOV_8.0k,S,34.5,64.7,7308.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],S,1000,75
+svo_perm,M_SVO_SOV_8.0k,SVO_SOV_8.0k,M,28.0,59.2,4536.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],M,1000,75
+svo_perm,S_SVO_VOS_8.0k,SVO_VOS_8.0k,S,44.4,68.7,8043.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],S,1000,75
+svo_perm,M_SVO_VOS_8.0k,SVO_VOS_8.0k,M,30.9,64.7,4683.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],M,1000,75
+svo_perm,S_SVO_VSO_8.0k,SVO_VSO_8.0k,S,42.3,68.6,7728.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],S,1000,75
+svo_perm,M_SVO_VSO_8.0k,SVO_VSO_8.0k,M,41.4,67.4,6783.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],M,1000,75
+svo_perm,S_SVO_OSV_16.0k,SVO_OSV_16.0k,S,40.9,68.5,12792.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],S,1000,75
+svo_perm,M_SVO_OSV_16.0k,SVO_OSV_16.0k,M,27.7,52.5,5772.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],M,1000,75
+svo_perm,S_SVO_OVS_16.0k,SVO_OVS_16.0k,S,49.1,70.3,11934.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],S,1000,75
+svo_perm,M_SVO_OVS_16.0k,SVO_OVS_16.0k,M,,,,['SVO.svo_perm'],['OVS.svo_perm'],[16000],M,1000,75
+svo_perm,S_SVO_SOV_16.0k,SVO_SOV_16.0k,S,39.9,67.8,11076.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],S,1000,75
+svo_perm,M_SVO_SOV_16.0k,SVO_SOV_16.0k,M,,,,['SVO.svo_perm'],['SOV.svo_perm'],[16000],M,1000,75
+svo_perm,S_SVO_VOS_16.0k,SVO_VOS_16.0k,S,48.5,71.2,12730.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],S,1000,75
+svo_perm,M_SVO_VOS_16.0k,SVO_VOS_16.0k,M,,,,['SVO.svo_perm'],['VOS.svo_perm'],[16000],M,1000,75
+svo_perm,S_SVO_VSO_16.0k,SVO_VSO_16.0k,S,45.7,70.3,12760.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],S,1000,75
+svo_perm,M_SVO_VSO_16.0k,SVO_VSO_16.0k,M,,,,['SVO.svo_perm'],['VSO.svo_perm'],[16000],M,1000,75
+svo_perm,S_SVO_OSV_32.0k,SVO_OSV_32.0k,S,51.0,74.4,29250.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],S,1000,75
+svo_perm,M_SVO_OSV_32.0k,SVO_OSV_32.0k,M,,,,['SVO.svo_perm'],['OSV.svo_perm'],[32000],M,1000,75
+svo_perm,S_SVO_OVS_32.0k,SVO_OVS_32.0k,S,,,,['SVO.svo_perm'],['OVS.svo_perm'],[32000],S,1000,75
+svo_perm,M_SVO_OVS_32.0k,SVO_OVS_32.0k,M,,,,['SVO.svo_perm'],['OVS.svo_perm'],[32000],M,1000,75
+svo_perm,S_SVO_SOV_32.0k,SVO_SOV_32.0k,S,,,,['SVO.svo_perm'],['SOV.svo_perm'],[32000],S,1000,75
+svo_perm,M_SVO_SOV_32.0k,SVO_SOV_32.0k,M,,,,['SVO.svo_perm'],['SOV.svo_perm'],[32000],M,1000,75
+svo_perm,S_SVO_VOS_32.0k,SVO_VOS_32.0k,S,,,,['SVO.svo_perm'],['VOS.svo_perm'],[32000],S,1000,75
+svo_perm,M_SVO_VOS_32.0k,SVO_VOS_32.0k,M,,,,['SVO.svo_perm'],['VOS.svo_perm'],[32000],M,1000,75
+svo_perm,S_SVO_VSO_32.0k,SVO_VSO_32.0k,S,,,,['SVO.svo_perm'],['VSO.svo_perm'],[32000],S,1000,75
+svo_perm,M_SVO_VSO_32.0k,SVO_VSO_32.0k,M,,,,['SVO.svo_perm'],['VSO.svo_perm'],[32000],M,1000,75
