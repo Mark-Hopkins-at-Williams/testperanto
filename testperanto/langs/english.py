@@ -90,7 +90,9 @@ def conjugate_infinitive(stem, tense, modal="will"):
 class EnglishVerbMorpher(Morpher):
 
     def morph(self, stem, properties):
-        person, count = properties['SUBJECT'].split('.')
+        #person, count = properties['SUBJECT'].split('.')
+        person = properties['PERSON']
+        count = properties['COUNT']
         tense = properties['TENSE']
         modal = properties['MODAL'] if tense.startswith("modal") else "will"
         if count == 'inf':

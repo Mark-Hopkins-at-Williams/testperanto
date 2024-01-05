@@ -1,6 +1,6 @@
 {
     "distributions": [
-        {"name": "vb", "type": "pyor", "strength": 100, "discount": 0.5},
+        {"name": "vb", "type": "pyor", "strength": 1, "discount": 0.5},
         {"name": "nn", "type": "pyor", "strength": 100, "discount": 0.5},
         {"name": "nn.arg0", "type": "pyor", "strength": 100, "discount": 0.5},
         {"name": "nn.arg1", "type": "pyor", "strength": 100, "discount": 0.5},
@@ -24,8 +24,8 @@
         {"rule": "$qarg1.$y1 -> (arg1 $qentity.arg1.$y1)"},
         {"rule": "$qarg2.$y1 -> (arg2 $qentity.arg2.$y1)"},
         {"rule": "$qentity.$y1.$y2 -> (ENTITY $qnn.$z1 $qentitymods)", "base_weight": 0.2, "zdists": ["nn.$y1.$y2"]},        
-        {"rule": "$qnn.$y1 -> (inst nn.$y1)", "base_weight": 0},
-        {"rule": "$qnn.$y1 -> (inst pron.$z1)", "base_weight": 0.1, "zdists": ["pron"]},
+        {"rule": "$qnn.$y1 -> (inst nn.$y1)", "base_weight": 1.0},
+        {"rule": "$qnn.$y1 -> (inst pron.$z1)", "base_weight": 0, "zdists": ["pron"]},
         {"rule": "$qentitymods -> -null-"},
         {"rule": "$qeventmods -> -null-"}
     ]
