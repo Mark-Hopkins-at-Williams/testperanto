@@ -1,0 +1,30 @@
+{
+    "distributions": [
+        {"name": "lang", "type": "uniform", "domain": ["en"]},
+        {"name": "prep", "type": "uniform", "domain": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
+
+    ],
+    "rules": [
+        {"rule": "($qstart $x1) -> ($qevent $x1)"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qvmods $x5))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qarg1 $x3) ($qvmods $x5))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3) (arg2 $x4)) $x5 $x6)) -> (S ($qarg0 $x2) ($qvb $x1 $x6) ($qarg1 $x3) (PP to ($qarg2 $x4)) ($qvmods $x5))"},
+        {"rule": "($qarg0 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
+        {"rule": "($qarg1 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
+        {"rule": "($qarg2 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
+        {"rule": "($qrcevent (EVENT (inst $x1) (args (arg1 $x2)) $x4 $x5)) -> (S ($qvb $x1 $x5) ($qarg1 $x2) ($qvmods $x4))"},
+        {"rule": "($qentity (ENTITY (inst nn.$y1) $x2 $x3)) -> (NP ($qpp $x3) ($qdt $x3) ($qnmods $x2) ($qnn nn.$y1 $x3))"},
+        {"rule": "($qentity (ENTITY (inst pron.$y1) $x2 $x3)) -> (NP ($qnn pron.$y1 $x3))"},
+        {"rule": "($qdt (props (count $x1) (def def) (case $x2))) -> (DT the)"},
+        {"rule": "($qdt (props (count sng) (def indef) (case $x2))) -> (DT a)"},
+        {"rule": "($qdt (props (count plu) (def indef) (case $x2))) -> (DT *eps*)"},
+        {"rule": "($qpp (props (count $x1) (def $x2) (case $x3))) -> (PP (@prep.$z1 (STEM pp.$z2)))", "zdists": ["lang", "prep"]},
+        {"rule": "($qnn nn.$y1 (props (count $x2) (def $x3) (case $x4))) -> (NN (@nn.$z1 (STEM nn.$y1) (PERSON 3) (COUNT $x2) (CASE $x4)))", "zdists": ["lang"]},
+        {"rule": "($qnn pron.$y1 (props (count $x2) (def $x3) (case $x4))) -> (NN (@pron.$z1 (STEM pron) (PERSON $y1) (COUNT $x2) (CASE $x4)))", "zdists": ["lang"]},
+        {"rule": "($qnmods -null-) -> (MOD *eps*)"},
+        {"rule": "($qnmods (np adj.$y1)) -> (ADJ (@adj.$z1 (STEM adj.$y1)))", "zdists": ["lang"]},
+        {"rule": "($qvb vb.$y1 (props (tense $x1) (polarity $x4) (voice $x2) (subject $x3) (object $x5))) -> (VB (@vb.$z1 (STEM vb.$y1) (SUBJECT $x3) (OBJECT $x5) (POLARITY $x4) (TENSE $x1) (VOICE $x2)))", "zdists": ["lang"]},
+        {"rule": "($qlogverb vb.$y1 $x1) -> (COMMENT # (@vb.$z1 (STEM vb.$y1) (SUBJECT 1.sng) (OBJECT none) (POLARITY pos) (TENSE present_simple) (VOICE active)))", "zdists": ["lang"]},
+        {"rule": "($qvmods -null-) -> (MOD *eps*)"}
+    ]
+}
