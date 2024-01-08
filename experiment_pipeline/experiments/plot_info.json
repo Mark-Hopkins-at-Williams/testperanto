@@ -1,0 +1,1 @@
+{"svo_perm_bleu": "Plotting BLEU vs. corpus length for SVO perm experiment. Color coded by last letter of tgt language to highlight issue with BLEU as metric", "svo_perm_svo_acc": "Plotting svo_acc vs. corpus length for SVO perm experiment. Color coded by last to show no longer trend."}

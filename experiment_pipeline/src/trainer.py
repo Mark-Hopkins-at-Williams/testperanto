@@ -1,137 +1,173 @@
-from collections import defaultdict
-import itertools 
-import os 
+import json 
+import csv 
 
-import matplotlib.pyplot as plt 
+from globals import *
+from data_splitter import Dataset
 
-from config import Config
-from helper import format_number
+class Model:
+    """
+    Specifies a type of model, really just can update the size:
+    XS, S, and M are analogous to the models in Shaham 2023 
+    Causes and Cures for Interference in Multilingual Translation  
+    """
 
-class ModelConfig:
-    ### this configures each model run- I think this allows for more flexibility down the road but for now doesn't do much
-    def __init__(self, config, work_dir, data_dir, src, tgt, **kwargs):
-        ### required 
-        self.config = config
-        self.work_dir = work_dir
-        self.data_dir = data_dir
-        self.src = src
-        self.tgt = tgt
-        
-        ### optional (default vals specified)
-        self.patience   = config.patience
-        self.num_epochs = config.num_epochs
-        
-        ### changing optional if given in kwargs
+    def __init__(self, name=None, **kwargs):
+        self.name       = name
+        self.num_epochs = NUM_EPOCHS
+        self.patience   = PATIENCE
+        self.size       = MODEL_SIZE
+
+        size_map = {
+            "XS" : 'transformer_iwslt_de_en',
+            "S"  : 'transformer',
+            'M'  : "transformer_vaswani_wmt_en_de_big"
+            }
+
         for key, value in kwargs.items():
             setattr(self, key, value)
 
+        self.model = size_map[self.size] # which model to use 
+
+
 class Trainer:
+    """
+    Train a list of Datasets. For each dataset, train one model
+    for each Model in models.
+    """
 
-    def __init__(self, config: Config):
-        self.config       = config
-        self.per_tree     = config.peranto_tree
-        self.num_trans    = config.num_trans
-        self.corp_lens    = config.corp_lens
-        self.train_path   = config.TRAIN_PATH
-        self.results_path = config.RESULTS_PATH
-        self.exp_path     = config.EXP_PATH
-        self.appa_path    = config.APPA_PATH
-        self.combos       = config.combos
-        self.num_epochs   = config.num_epochs
-        self.num_gpus     = config.num_gpus
-        self.patience     = config.patience
+    def __init__(self, exp_name, datasets, models):
+        self.exp_name = exp_name 
+        self.datasets = datasets
+        self.models   = models 
 
-    def create_model_configs(self):
-        model_configs = []
+    def update_metadata(self):
+        csv_file_path = f"{DATA_PATH}/results.csv"
+        
+        existing_data = {}  
+        try:
+            with open(csv_file_path, 'r', newline='') as file:
+                reader = csv.DictReader(file)
+                for row in reader:
+                    existing_data[row['work_dir']] = row['bleu']
+        except FileNotFoundError:
+            pass
 
-        for corp_len in self.corp_lens:
-            form_len = format_number(corp_len)
+        # Open the CSV file for appending
+        with open(csv_file_path, 'a', newline='') as file:
+            fieldnames = ['exp_name', 'work_dir', 'dataset_name', 'model_name', 'bleu', 'chrF2', 'num_steps', 
+                        'src', 'tgt', 'corp_lens', 'model_arch', 'num_epochs', 'patience']
             
-            for combo in self.combos:
-                folder_name = f"{'_'.join(combo)}_{form_len}"
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            
+            # write header if the file was newly created or empty
+            if not existing_data:
+                writer.writeheader()
 
-                data_dir = f"{self.train_path}/{folder_name}"
-                work_dir = f"{self.results_path}/{folder_name}"
+            to_train = []
+            for dataset in self.datasets:
+                for m in self.models:
+                    add = f"{m.name}_" if m.name is not None else ''
+                    work_dir = f"{add}{dataset.name}"
+                    
+                    # if row doesn't exist add to df 
+                    if work_dir not in existing_data: 
+                        to_train.append((dataset, m))
+                        row = {
+                            'exp_name': self.exp_name,
+                            'work_dir': work_dir,
+                            'dataset_name': dataset.name,
+                            'model_name': m.name,
+                            'bleu': '',
+                            'chrF2': '',
+                            'num_steps': '',
+                            'src': dataset.src,
+                            'tgt': dataset.tgt,
+                            'corp_lens': dataset.corp_lens,
+                            'model_arch': m.size,
+                            'num_epochs': m.num_epochs,
+                            'patience': m.patience
+                        }
+                        writer.writerow(row)
+                        # Update the existing_data to prevent duplicate entries
+                        existing_data[work_dir] = None
+                    
+                    # but still train if haven't been trained yet 
+                    elif not existing_data[work_dir]: 
+                        to_train.append((dataset, m))
 
-                ### calls are only things to still be trained so you can call this again if it screws up midway
-                if not os.path.exists(work_dir):
-                    src = combo[0].lower()
-                    tgt = combo[1].lower()
-
-                    model_config = ModelConfig(
-                        config   = self.config,
-                        work_dir = work_dir,
-                        data_dir = data_dir,
-                        src      = src,
-                        tgt      = tgt
-                        )
-                    model_configs.append(model_config)
-        return model_configs
-
+            return to_train
+            
     def create_train_script(self):
-        model_configs = self.create_model_configs()
-
         scripts = []
-        for c in model_configs:
+        to_train = self.update_metadata()
+        
+        if len(to_train) == 0:
+            return None 
+            
+        for (dataset, m) in to_train:
+            add = f"{m.name}_" if m.name is not None else ''
+            data_dir = f'{DATASET_PATH}/{dataset.name}'
+            work_dir = f"{RESULTS_PATH}/{add}{dataset.name}" #M_SVO_SOV_32k
+            ### base training shell script
             source_file = f"""
-SRC={c.src}
-TGT={c.tgt}
-MAX_EPOCHS={c.num_epochs}
+SRC=src
+TGT=tgt
+MAX_EPOCHS={m.num_epochs}
 
-mkdir {c.work_dir}
-cp -R {c.data_dir} {c.work_dir}/data
+mkdir {work_dir}
+cp -R {data_dir} {work_dir}/data
 
-SCRIPT_PATH={self.appa_path}
-bash $SCRIPT_PATH/prepare-data.sh {c.work_dir} $SRC $TGT {self.appa_path}
+SCRIPT_PATH={APPA_PATH}
+bash $SCRIPT_PATH/prepare-data.sh {work_dir} $SRC $TGT {APPA_PATH}
 
-TEXT={c.work_dir}/data-tokenized
-BINARY_TEXT={c.work_dir}/data-bin
+TEXT={work_dir}/data-tokenized
+BINARY_TEXT={work_dir}/data-bin
 
 fairseq-preprocess --source-lang $SRC --target-lang $TGT \\
-    --trainpref $TEXT/train --validpref $TEXT/dev --testpref $TEXT/test \\
-    --destdir $BINARY_TEXT \\
-    --scoring chrf \\
-    --workers 20
+--trainpref $TEXT/train --validpref $TEXT/dev --testpref $TEXT/test \\
+--destdir $BINARY_TEXT \\
+--scoring chrf \\
+--workers 20
 
 CUDA_VISIBLE_DEVICES=0 fairseq-train \\
-    $BINARY_TEXT \\
-    --max-epoch $MAX_EPOCHS \\
-    --arch transformer_iwslt_de_en --share-decoder-input-output-embed \\
-    --optimizer adam --adam-betas '(0.9, 0.98)' --clip-norm 0.0 \\
-    --lr 5e-4 --lr-scheduler inverse_sqrt --warmup-updates 4000 \\
-    --dropout 0.3 --weight-decay 0.0001 \\
-    --criterion label_smoothed_cross_entropy --label-smoothing 0.1 \\
-    --max-tokens 4096 \\
-    --eval-bleu \\
-    --eval-bleu-args '{{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}}' \\
-    --eval-bleu-detok moses \\
-    --eval-bleu-remove-bpe \\
-    --eval-bleu-print-samples \\
-    --scoring chrf \\
-    --no-epoch-checkpoints \\
-    --save-dir {c.work_dir}/checkpoints \\
-    --skip-invalid-size-inputs-valid-test \\
-    --best-checkpoint-metric bleu --maximize-best-checkpoint-metric \\
-    --patience {c.patience} \\
-    --tensorboard-logdir {c.work_dir}/tensorboard_logs/
+$BINARY_TEXT \\
+--max-epoch $MAX_EPOCHS \\
+--arch {m.model} --share-decoder-input-output-embed \\
+--optimizer adam --adam-betas '(0.9, 0.98)' --clip-norm 0.0 \\
+--lr 5e-4 --lr-scheduler inverse_sqrt --warmup-updates 4000 \\
+--dropout 0.3 --weight-decay 0.0001 \\
+--criterion label_smoothed_cross_entropy --label-smoothing 0.1 \\
+--max-tokens 4096 \\
+--eval-bleu \\
+--eval-bleu-args '{{"beam": 5, "max_len_a": 1.2, "max_len_b": 10}}' \\
+--eval-bleu-detok moses \\
+--eval-bleu-remove-bpe \\
+--eval-bleu-print-samples \\
+--scoring chrf \\
+--no-epoch-checkpoints \\
+--save-dir {work_dir}/checkpoints \\
+--skip-invalid-size-inputs-valid-test \\
+--best-checkpoint-metric bleu --maximize-best-checkpoint-metric \\
+--patience {m.patience} \\
+--tensorboard-logdir {work_dir}/tensorboard_logs/
 
 fairseq-generate $BINARY_TEXT \\
-    --path {c.work_dir}/checkpoints/checkpoint_best.pt \\
-    --batch-size 128 --beam 5 --remove-bpe > {c.work_dir}/translations
+--path {work_dir}/checkpoints/checkpoint_best.pt \\
+--batch-size 128 --beam 5 --remove-bpe > {work_dir}/translations
 
-python $SCRIPT_PATH/extract_hyp_and_ref.py {c.work_dir}/translations
+python $SCRIPT_PATH/extract_hyp_and_ref.py {work_dir}/translations
 
-sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu chrf > {c.work_dir}/scores
+sacrebleu {work_dir}/translations.ref -i {work_dir}/translations.hyp -m bleu chrf > {work_dir}/scores
 """
             scripts.append(source_file)
-        
+    
         ### split into list of self.num_gpus lists, each of which has a bunch of scripts
-        scripts = [scripts[i :: self.num_gpus] for i in range(self.num_gpus)]
+        scripts = [scripts[i :: NUM_GPUS] for i in range(NUM_GPUS)]
 
         ### turning into self.num_gpu scripts
-        for i in range(self.num_gpus):
+        for i in range(NUM_GPUS):
 
-            shell_script = f'{self.exp_path}/train{i}.sh'
+            shell_script = f'{RUN_PATH}/train{i}.sh'
 
             with open(shell_script, 'w') as f: 
                 f.write("""#!/bin/bash\n""")
@@ -140,91 +176,43 @@ sacrebleu {c.work_dir}/translations.ref -i {c.work_dir}/translations.hyp -m bleu
 #SBATCH -t 5-00:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
-#SBATCH -o {self.exp_path}/output{i}.out # File to which STDOUT will be written
-#SBATCH -e {self.exp_path}/error{i}.err # File to which STDERR will be written
+#SBATCH -o {RUN_PATH}/train{i}.out # File to which STDOUT will be written
+#SBATCH -e {RUN_PATH}/train{i}.err # File to which STDERR will be written
 #SBATCH --gres=gpu:1 # Request 1 GPUs\n""")
                 
                 for script in scripts[i]:
                     f.write(script)
                     f.write("\n")
 
-    def get_scores(self):
-        scores = defaultdict(list)
+def fetch_data(splitter_names=None, corp_lens=None):
+    result    = []
+    data_path = f"{DATA_PATH}/dataset_info.json"
 
-        for corp_len in self.corp_lens:
-            form_len = format_number(corp_len)
-            for combo in self.combos:
-                names = '_'.join(combo)
-                folder_name = f"{names}_{form_len}"
-                result_dir = f"{self.results_path}/{folder_name}"
-                
-                try:
-                    with open(f'{result_dir}/scores') as f:
-                        contents = eval(f.read())
-                        bleu = contents[0]['score']
-                        scores[names].append((corp_len, bleu))
-                except:
-                    pass 
-        return scores 
+    with open(data_path, 'r', encoding='utf-8') as file:
+        data = json.load(file)
 
-    def plot_scores(self):
-        scores = self.get_scores()
-        plt.figure(figsize=(15,10))
+    if splitter_names is not None:
+        for splitter_name in splitter_names:
+            for dataset_dict in data[splitter_name]:
+                corp_len = sum(list(dataset_dict.values())[0]['corp_lens'])
+                if corp_lens is None or corp_len in corp_lens:
+                    dataset = Dataset(
+                        list(dataset_dict.keys())[0],
+                        list(dataset_dict.values())[0]['src'],
+                        list(dataset_dict.values())[0]['tgt'],
+                        list(dataset_dict.values())[0]['corp_lens']
+                        )
+                    result.append((corp_len, dataset))
 
-        # Defining a list of distinct colors
-        colors = ['#00BFFF', '#228B22', '#FF6347', '#7851A9', '#FFA500', '#008080', '#708090']
-        color_cycle = itertools.cycle(colors)
-
-        # Defining different line markers
-        markers = ['o', 's', '^', 'x', '*', '+', 'd']
-        marker_cycle = itertools.cycle(markers)
-
-        handles, labels = [], []
-
-        for name, points in scores.items():
-            lengths, bleus = zip(*points)
-            color = next(color_cycle)
-            marker = next(marker_cycle)
-            line, = plt.plot(lengths, bleus, label=name, color=color, marker=marker, linestyle='-')
-            handles.append(line)
-            labels.append((name, max(bleus)))
-
-        labels, handles = zip(*sorted(zip(labels, handles), key=lambda x: x[0][1], reverse=True))
-        labels = [label[0] for label in labels]
-
-        plt.legend(handles, labels)
-
-        plt.title('BLEU Scores vs. Corpus Lengths')
-        plt.xlabel("Corpus Size")
-        plt.ylabel("BLEU Score")
-
-        plt.grid(True)
-        plt.show()
-
-        plot_path = f"{self.exp_path}/bleu.jpg"
-        plt.savefig(plot_path)
+    sorted_res = sorted(result, key=lambda x: (x[0], x[1].name))  
+    return [dataset for _,dataset in sorted_res]
 
 if __name__ == '__main__':
-    config = Config()
-    trainer = Trainer(config)
-    #trainer.create_train_script()
-    trainer.plot_scores()
+    datasets = fetch_data(['basic_multi'])
+    models   = [
+            Model('XS', size = "XS")
+            ]
 
+    trainer = Trainer('basic_multi', datasets, models)
+    trainer.create_train_script()
 
-"""
-Analysis:
-
-(1) BLEU vs. Corpus Size for all Training
-(2) Create Dataframe (combination, bleu, corpus size, ...)
-(3) Python function that automatically opens tensorboard to easily get that going
-    You would need to go to terminal and call
-    tensorboard --logdir {work_dir}/tensorboard_logs/
-
-    where tensorboard {work_dir} = f"{self.results_path}/{'_'.join(combo)}_{form_len}" 
-    (see model config function for what these all are)
-(4) Collect data to understand what to set epochs/patience etc. 
-(5) Or generally analyzing data from training at each individual model training level 
-    i.e. how fast/slow did 1k train, when did it stop, etc.
-
-
-"""

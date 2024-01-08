@@ -1,39 +1,65 @@
 import yaml
-import subprocess 
-import time
-from config import Config
-from helper import format_number
+import itertools 
+import json
 
-class DataGenerator:
+from globals import *
+
+class PerantoTree:
     """
-    Class for generating testperanto data for translations. 
+    PerantoTree specifies a 3 level tree for generating testperanto data in parallel. This
+    tree resembles the structure of the yaml file to be created/passed to parallel_gen.py.
+
+    amr_files, middleman_files, language_files are lists of json filenames
+    names is a list of names to assign to each (amr, mm, lang) triple, where amr in amr_files,
+    mm in middleman_files, and lang in language_files.
+    """
+    def __init__(self,
+            amr_files,
+            middleman_files,
+            language_files,
+            names
+            ):
+        self.amr_paths    = [f'{JSON_PATH}/amr_files/{amr_file}.json' for amr_file in amr_files]
+        self.middle_paths = [f'{JSON_PATH}/middleman_files/{mid_file}.json' for mid_file in middleman_files]
+        self.lang_paths   = [f'{JSON_PATH}/language_files/{lang_file}.json' for lang_file in language_files]
+
+        self.names        = names 
+        self.file_order   = {i : name for i, name in enumerate(self.names)}
+        self.data         = [self.amr_paths, self.middle_paths, self.lang_paths]
+        self.num_paths    = len(self.amr_paths) * len(self.middle_paths) * len(self.lang_paths)
+
+        file_info     = [[amr, mm, lang] for amr in amr_files for mm in middleman_files for lang in language_files]
+        self.name_map = {name : info for (name, info) in zip(names, file_info)}
+
+class Generator:
+    """
+    A Generator generates data. Generation involves a tuple (P,c), where 
+    P is a PerantoTree and c is a corpus size. This class creates a .sh script 
+    that generates the data, as well as updates the metadata data_info.json, 
+    which has info on data created. 
     """
 
-    def __init__(self, config: Config):
-        self.per_tree = config.peranto_tree 
-        self.corp_lens = config.corp_lens
-        self.yaml_fpath = config.YAML_FPATH
-        self.sh_fpath = config.SH_FPATH
-        self.num_cores = config.num_cores
-        self.output_path = config.OUT_PATH
-        self.tp_path = config.PERANTO_PATH
-        self.exp_name = config.exp_name
-        self.file_order = self.per_tree.file_order
-        self.num_paths  = self.per_tree.num_paths
+    def __init__(self, name: str, per_tree: PerantoTree, max_len: int):
+        self.name     = name 
+        self.per_tree = per_tree
+        self.max_len  = max_len
+
+        self.yaml_fpath = f"{RUN_PATH}/{name}.yaml"
+        self.sh_fpath   = f"{RUN_PATH}/{name}_gen.sh"
+        self.data_fpath = f"{DATA_PATH}/data_info.json" 
 
     def generate_yaml(self): 
-        """
-        Generates yaml file
-        """
+        """Generates yaml file"""
         def format(paths):
-            if len(paths) == 1:
+            ### how yaml config must look 
+            if len(paths) == 1:  
                 return paths[0]
             
             return {
                 "branch" : {idx + 1 : [path] for idx, path in enumerate(paths)}
                 }
         
-        per_tree = self.per_tree.data 
+        per_tree = self.per_tree.data # [[amr_path1, ...], [middle_path1, ...], [lang_path1, ...]]
 
         data = [format(paths) for paths in per_tree]
 
@@ -41,64 +67,75 @@ class DataGenerator:
             yaml.dump(data, yaml_file, default_flow_style=False)
 
     def create_sh_script(self):
-        """
-        Modifies the script to generate only the largest corpus length in parallel and
-        then splits it into smaller lengths as specified in self.corp_lens. It handles
-        multiple output files from parallel_gen.py and dynamically determines the range
-        of j based on self.num_paths.
-        """
-
+        """Creates sh script to run generate data assoc. w/ above yaml file"""
         with open(self.sh_fpath, 'w') as f:
-            # Write the initial part of the script
             f.write("#!/bin/sh\n")
 
-            # Initialize the slurm stuff 
             f.write(f"""
-#SBATCH -c {self.num_cores} # Request {self.num_cores} CPU cores
+#SBATCH -c 1 # Request 1 CPU cores
 #SBATCH -t 0-10:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
-#SBATCH -o {self.output_path}/output.out # File to which STDOUT will be written
-#SBATCH -e {self.output_path}/error.err # File to which STDERR will be written
+#SBATCH -o {RUN_PATH}/{self.name}_gen.out # File to which STDOUT will be written
+#SBATCH -e {RUN_PATH}/{self.name}_gen.err # File to which STDERR will be written
 #SBATCH --gres=gpu:0 # Request 0 GPUs\n""")
 
-            # Calculate the chunk size for parallel generation
-            max_corp_len = self.corp_lens[-1]  # largest one 
-            chunk_size = max_corp_len // self.num_cores
+            ### call parallel gen and generate data 
+            max_len = self.max_len
+            f.write(f"python {PERANTO_PATH}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {max_len} -o {TP_DATA_PATH}\n") 
 
-            # Begin the parallel section
-            f.write(f"parallel --jobs {self.num_cores} <<EOT\n")
-            
-            for i in range(self.num_cores):
-                # Call parallel_gen.py to generate a chunk of the largest corpus size
-                temp_file_base = f"{self.output_path}/temporary/temp_{i}"
-                python_call = f"python {self.tp_path}/scripts/parallel_gen.py -c {self.yaml_fpath} -n {chunk_size} -o {temp_file_base}\n"
-                f.write(python_call)
+            ### mv data to TP_DATA_PATH with correct naming convention
+            for j in range(self.per_tree.num_paths):
+                name = self.per_tree.file_order[j]
+                f.write(f"mv {TP_DATA_PATH}.{j} {TP_DATA_PATH}/{name}.{self.name}\n")
 
-            # End the parallel section
-            f.write("EOT\n")
+    def update_metadata(self):
+        ### updates data_info.json, which collects info on what the data is (SVO is [amr.json -> mm.json -> englishSVO.json])
+        with open(self.data_fpath, 'r') as file:
+                data = json.load(file)
 
-            # generate the script for aggregating and splitting files- group by j (not by which core)
-            for j in range(self.num_paths):
-                f.write(f"cat {self.output_path}/temporary/temp_*.{j} > {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{self.file_order[j]}\n")
-                for corp_len in self.corp_lens[:-1]:
-                    # pipe first corp_len to new file 
-                    f.write(f"head -n {corp_len} {self.output_path}/{self.exp_name}{format_number(max_corp_len)}.{self.file_order[j]} > {self.output_path}/{self.exp_name}{format_number(corp_len)}.{self.file_order[j]}\n")
+        data[self.name] = self.per_tree.name_map
 
-            # Delete the temporary files
-            f.write(f"rm -f {self.output_path}/temporary/temp_*.*\n")
+        with open(self.data_fpath, 'w') as file:
+            json.dump(data, file, indent=4)
 
     def generate(self):
         self.generate_yaml()
         self.create_sh_script()
+        self.update_metadata()
+
+def get_per_tree(type='svo_perm'):
+    """fetch PerantoTree for different types of data generation schemes"""
+    if type == 'svo_perm':
+        amr_files        = ['amr']
+        middleman_files  = ['middleman']                            
+        language_files   = [f"english{''.join(p)}"                     
+                         for p in itertools.permutations("SVO")]     
+        names            = ['SVO', 'SOV', 'VSO', 'VOS', 'OSV', 'OVS']
+
+        per_tree = PerantoTree(
+            amr_files = amr_files,
+            middleman_files = middleman_files,
+            language_files = language_files,
+            names = names
+            )
+    elif type == 'basic_multi':
+        """
+        names = [engl1, engl2, engl3, japn]
+        generate engl 3x and jap 1x
+        """
+        pass 
+
+    else:
+        raise ValueError("wrong type bro")
+
+    return per_tree 
 
 if __name__ == "__main__":
-    config = Config()
-    data_gen = DataGenerator(config)
-    data_gen.generate()
-
-
-
+    per_tree = get_per_tree()
+    max_len = 32000
+    generator = Generator("basic_multi", per_tree, max_len)
+    generator.generate()
 
 
 
