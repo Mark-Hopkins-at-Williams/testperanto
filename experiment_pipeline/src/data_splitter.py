@@ -162,32 +162,45 @@ class Splitter(ABC):
         with open(json_file, 'w') as file:
             json.dump(data, file, indent=4)
 
-class MultiSplitter(Splitter):
+class BasicMultiSplitter(Splitter):
     """
-    MultiSplitter is used for multilingual training. This is a dumb class rn
+    BasicMultiSplitter is used for multilingual training. Right now this
+    works for the basic multi experiment
     """
-    def __init__(self, splitter_name, names, corp_lens, src, tgt):
+    def __init__(self, splitter_name, names, corp_lens, main, other):
         super().__init__(splitter_name, names)    
         self.corp_lens = corp_lens
-        self.src = src
-        self.tgt = tgt
-        self.others = [n for n in names if n != src and n != tgt]
+        self.main = main
+        self.other = other
 
     def create_datasets(self):
-        get_name = lambda c, k : f"{self.src.split('.')[0]}_{self.tgt.split('.')[0]}_{k}_{format_number(c)}"
+        get_main_i = lambda i : [n for n in self.names if self.name in n and i in n][0]
+        other_data = [n for n in self.names if self.other in n][0]
         datasets = []
         for c in self.corp_lens:
-            for k in range(len(self.others)):
-                corp_lens = [int(.5 * c)] + [int(.5*c/(k+1))] * (k)
-                corp_lens = corp_lens + [c - sum(corp_lens)]
-                dataset = Dataset(
-                    name = get_name(c, k+1),
-                    src = [self.src] * (k+2),
-                    tgt = [self.tgt] + self.others[:k+1], # multilingual
-                    corp_lens = corp_lens
+            reg_dataset = Dataset(
+                name = f"{self.main}1_{self.main}2",
+                src  = [get_main_i(1)],
+                tgt  = [get_main_i(2)],
+                corp_lens = c
                 )
-                datasets.append(dataset)
-
+            
+            main_dataset = Dataset(
+                name = f"{self.main}1/3_{self.main}2",
+                src = [get_main_i(1), get_main_i(3)],
+                tgt = [get_main_i(2), get_main_i(2)],
+                corp_lens = [c//2] * 2 #16000, 16000
+            )
+        
+            mixed_dataset = Dataset(
+                name = f"{self.main}1/{self.other}1_{self.main}2",
+                src = [get_main_i(1), other_data],
+                tgt = [get_main_i(2), get_main_i(2)],
+                corp_lens = [c//2] * 2 #16000, 16000
+                )
+            
+            datasets.extend([reg_dataset, main_dataset, mixed_dataset])
+         
         for dataset in datasets:
             dataset.create()
 
@@ -241,6 +254,6 @@ class PairwiseSplitter(Splitter):
         return datasets 
 
 if __name__ == "__main__":
-    names     = fetch_data(['svo_perm'])
-    splitter  = MultiSplitter('num_lang', names, [32000], 'SVO.svo_perm', 'OSV.svo_perm')
+    names     = fetch_data(['basic_multi']) # ['engl1.basic_multi', ... 'japn.basic_multi]
+    splitter = BasicMultiSplitter('basic_multi', names, [32000], main='engl', other='japn')
     splitter.update_metadata()

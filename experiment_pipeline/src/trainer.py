@@ -208,13 +208,11 @@ def fetch_data(splitter_names=None, corp_lens=None):
     return [dataset for _,dataset in sorted_res]
 
 if __name__ == '__main__':
-    datasets = fetch_data(['svo_pairwise'])
-    datasets = [dataset for dataset in datasets if dataset.src ==['SVO.svo_perm']]
+    datasets = fetch_data(['basic_multi'])
     models   = [
-            Model('S', size = "S"),
-            Model('M',  size = 'M')
+            Model('XS', size = "XS")
             ]
 
-    trainer = Trainer('svo_perm', datasets, models)
+    trainer = Trainer('basic_multi', datasets, models)
     trainer.create_train_script()
 

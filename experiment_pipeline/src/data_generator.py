@@ -119,6 +119,13 @@ def get_per_tree(type='svo_perm'):
             language_files = language_files,
             names = names
             )
+    elif type == 'basic_multi':
+        """
+        names = [engl1, engl2, engl3, japn]
+        generate engl 3x and jap 1x
+        """
+        pass 
+
     else:
         raise ValueError("wrong type bro")
 
@@ -126,8 +133,8 @@ def get_per_tree(type='svo_perm'):
 
 if __name__ == "__main__":
     per_tree = get_per_tree()
-    max_len = 64000
-    generator = Generator("svo_perm", per_tree, max_len)
+    max_len = 32000
+    generator = Generator("basic_multi", per_tree, max_len)
     generator.generate()
 
 
