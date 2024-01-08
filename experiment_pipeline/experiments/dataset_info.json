@@ -1,0 +1,2428 @@
+{
+    "svo_pairwise": [
+        {
+            "SOV_OSV_1.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SOV_OSV_2.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SOV_OSV_4.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SOV_OSV_8.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SOV_OSV_16.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SOV_OSV_32.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SOV_SVO_1.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SOV_SVO_2.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SOV_SVO_4.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SOV_SVO_8.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SOV_SVO_16.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SOV_SVO_32.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SOV_VSO_1.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SOV_VSO_2.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SOV_VSO_4.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SOV_VSO_8.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SOV_VSO_16.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SOV_VSO_32.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SOV_VOS_1.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SOV_VOS_2.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SOV_VOS_4.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SOV_VOS_8.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SOV_VOS_16.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SOV_VOS_32.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SOV_OVS_1.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SOV_OVS_2.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SOV_OVS_4.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SOV_OVS_8.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SOV_OVS_16.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SOV_OVS_32.0k": {
+                "src": [
+                    "SOV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OSV_SOV_1.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OSV_SOV_2.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OSV_SOV_4.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OSV_SOV_8.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OSV_SOV_16.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OSV_SOV_32.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OSV_SVO_1.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OSV_SVO_2.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OSV_SVO_4.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OSV_SVO_8.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OSV_SVO_16.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OSV_SVO_32.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OSV_VSO_1.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OSV_VSO_2.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OSV_VSO_4.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OSV_VSO_8.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OSV_VSO_16.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OSV_VSO_32.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OSV_VOS_1.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OSV_VOS_2.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OSV_VOS_4.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OSV_VOS_8.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OSV_VOS_16.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OSV_VOS_32.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OSV_OVS_1.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OSV_OVS_2.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OSV_OVS_4.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OSV_OVS_8.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OSV_OVS_16.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OSV_OVS_32.0k": {
+                "src": [
+                    "OSV.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SVO_SOV_1.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SVO_SOV_2.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SVO_SOV_4.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SVO_SOV_8.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_SOV_16.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_SOV_32.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_1.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_2.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_4.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_8.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_16.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_32.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SVO_VSO_1.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SVO_VSO_2.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SVO_VSO_4.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SVO_VSO_8.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_VSO_16.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_VSO_32.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SVO_VOS_1.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SVO_VOS_2.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SVO_VOS_4.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SVO_VOS_8.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_VOS_16.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_VOS_32.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "SVO_OVS_1.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "SVO_OVS_2.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "SVO_OVS_4.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "SVO_OVS_8.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_OVS_16.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_OVS_32.0k": {
+                "src": [
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VSO_SOV_1.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VSO_SOV_2.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VSO_SOV_4.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VSO_SOV_8.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VSO_SOV_16.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VSO_SOV_32.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VSO_OSV_1.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VSO_OSV_2.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VSO_OSV_4.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VSO_OSV_8.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VSO_OSV_16.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VSO_OSV_32.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VSO_SVO_1.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VSO_SVO_2.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VSO_SVO_4.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VSO_SVO_8.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VSO_SVO_16.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VSO_SVO_32.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VSO_VOS_1.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VSO_VOS_2.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VSO_VOS_4.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VSO_VOS_8.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VSO_VOS_16.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VSO_VOS_32.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VSO_OVS_1.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VSO_OVS_2.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VSO_OVS_4.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VSO_OVS_8.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VSO_OVS_16.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VSO_OVS_32.0k": {
+                "src": [
+                    "VSO.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VOS_SOV_1.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VOS_SOV_2.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VOS_SOV_4.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VOS_SOV_8.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VOS_SOV_16.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VOS_SOV_32.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VOS_OSV_1.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VOS_OSV_2.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VOS_OSV_4.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VOS_OSV_8.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VOS_OSV_16.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VOS_OSV_32.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VOS_SVO_1.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VOS_SVO_2.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VOS_SVO_4.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VOS_SVO_8.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VOS_SVO_16.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VOS_SVO_32.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VOS_VSO_1.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VOS_VSO_2.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VOS_VSO_4.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VOS_VSO_8.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VOS_VSO_16.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VOS_VSO_32.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "VOS_OVS_1.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "VOS_OVS_2.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "VOS_OVS_4.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "VOS_OVS_8.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "VOS_OVS_16.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "VOS_OVS_32.0k": {
+                "src": [
+                    "VOS.svo_perm"
+                ],
+                "tgt": [
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OVS_SOV_1.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OVS_SOV_2.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OVS_SOV_4.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OVS_SOV_8.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OVS_SOV_16.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OVS_SOV_32.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OVS_OSV_1.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OVS_OSV_2.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OVS_OSV_4.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OVS_OSV_8.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OVS_OSV_16.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OVS_OSV_32.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OVS_SVO_1.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OVS_SVO_2.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OVS_SVO_4.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OVS_SVO_8.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OVS_SVO_16.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OVS_SVO_32.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "SVO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OVS_VSO_1.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OVS_VSO_2.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OVS_VSO_4.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OVS_VSO_8.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OVS_VSO_16.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OVS_VSO_32.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "OVS_VOS_1.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    1000
+                ]
+            }
+        },
+        {
+            "OVS_VOS_2.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "OVS_VOS_4.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "OVS_VOS_8.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "OVS_VOS_16.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "OVS_VOS_32.0k": {
+                "src": [
+                    "OVS.svo_perm"
+                ],
+                "tgt": [
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        }
+    ],
+    "num_lang": [
+        {
+            "SVO_OSV_1_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    16000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_2_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm",
+                    "VOS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    8000,
+                    8000
+                ]
+            }
+        },
+        {
+            "SVO_OSV_3_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm",
+                    "VOS.svo_perm",
+                    "OVS.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    5333,
+                    5333,
+                    5334
+                ]
+            }
+        },
+        {
+            "SVO_OSV_4_32.0k": {
+                "src": [
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm",
+                    "SVO.svo_perm"
+                ],
+                "tgt": [
+                    "OSV.svo_perm",
+                    "VSO.svo_perm",
+                    "VOS.svo_perm",
+                    "OVS.svo_perm",
+                    "SOV.svo_perm"
+                ],
+                "corp_lens": [
+                    16000,
+                    4000,
+                    4000,
+                    4000,
+                    4000
+                ]
+            }
+        }
+    ]
+}
