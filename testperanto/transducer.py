@@ -58,7 +58,6 @@ class TreeTransducer:
             If there is a point when no indexed rule in the grammar can be applied to
             the input tree
         """
-
         if is_state(in_tree.get_label()):
             rule = self.grammar.choose_rule(in_tree, recursion_depth)
             retval = self.run(rule.apply(in_tree), recursion_depth + 1)

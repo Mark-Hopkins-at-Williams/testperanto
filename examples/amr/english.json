@@ -1,5 +1,6 @@
 {
     "distributions": [
+        {"name": "lang", "type": "uniform", "domain": ["en"]},
         {"name": "count", "type": "uniform", "domain": ["sng", "plu"]},
         {"name": "def", "type": "uniform", "domain": ["def", "indef"]},
         {"name": "prep.loc", "type": "uniform", "domain": [1, 2, 3, 4, 5, 6]},
