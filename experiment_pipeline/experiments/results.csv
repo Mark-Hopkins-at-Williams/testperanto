@@ -247,3 +247,18 @@ svo_perm,S_SVO_VOS_32.0k,SVO_VOS_32.0k,S,59.9,76.6,19050.0,['SVO.svo_perm'],['VO
 svo_perm,M_SVO_VOS_32.0k,SVO_VOS_32.0k,M,24.2,64.1,8250.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],M,1000,75
 svo_perm,S_SVO_VSO_32.0k,SVO_VSO_32.0k,S,54.1,76.0,19866.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],S,1000,75
 svo_perm,M_SVO_VSO_32.0k,SVO_VSO_32.0k,M,52.3,74.6,29029.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],M,1000,75
+basic_multi,XS_en_svo_en_sov_2.0k,en_svo_en_sov_2.0k,XS,35.3,58.3,9900.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[2000],XS,1000,75
+basic_multi,XS_en_svo_fr_en_sov_2.0k,en_svo_fr_en_sov_2.0k,XS,25.3,50.5,9506.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[1000, 1000]",XS,1000,75
+basic_multi,XS_fr_en_sov_2.0k,fr_en_sov_2.0k,XS,28.6,53.1,6258.0,['fr.basic_multi'],['en_sov.basic_multi'],[2000],XS,1000,75
+basic_multi,XS_en_svo_en_sov_4.0k,en_svo_en_sov_4.0k,XS,45.1,63.7,12408.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[4000],XS,1000,75
+basic_multi,XS_en_svo_fr_en_sov_4.0k,en_svo_fr_en_sov_4.0k,XS,40.0,59.3,14210.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[2000, 2000]",XS,1000,75
+basic_multi,XS_fr_en_sov_4.0k,fr_en_sov_4.0k,XS,43.8,62.7,15912.0,['fr.basic_multi'],['en_sov.basic_multi'],[4000],XS,1000,75
+basic_multi,XS_en_svo_en_sov_8.0k,en_svo_en_sov_8.0k,XS,52.2,69.2,18018.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[8000],XS,1000,75
+basic_multi,XS_en_svo_fr_en_sov_8.0k,en_svo_fr_en_sov_8.0k,XS,47.5,64.8,17864.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[4000, 4000]",XS,1000,75
+basic_multi,XS_fr_en_sov_8.0k,fr_en_sov_8.0k,XS,50.7,67.4,23961.0,['fr.basic_multi'],['en_sov.basic_multi'],[8000],XS,1000,75
+basic_multi,XS_en_svo_en_sov_16.0k,en_svo_en_sov_16.0k,XS,56.6,72.8,26649.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[16000],XS,1000,75
+basic_multi,XS_en_svo_fr_en_sov_16.0k,en_svo_fr_en_sov_16.0k,XS,52.0,68.5,34239.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[8000, 8000]",XS,1000,75
+basic_multi,XS_fr_en_sov_16.0k,fr_en_sov_16.0k,XS,54.8,70.8,30616.0,['fr.basic_multi'],['en_sov.basic_multi'],[16000],XS,1000,75
+basic_multi,XS_en_svo_en_sov_32.0k,en_svo_en_sov_32.0k,XS,62.2,76.9,67144.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[32000],XS,1000,75
+basic_multi,XS_en_svo_fr_en_sov_32.0k,en_svo_fr_en_sov_32.0k,XS,55.5,71.3,59940.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[16000, 16000]",XS,1000,75
+basic_multi,XS_fr_en_sov_32.0k,fr_en_sov_32.0k,XS,60.8,75.5,79048.0,['fr.basic_multi'],['en_sov.basic_multi'],[32000],XS,1000,75

@@ -121,10 +121,42 @@ def get_per_tree(type='svo_perm'):
             )
     elif type == 'basic_multi':
         """
-        names = [engl1, engl2, engl3, japn]
-        generate engl 3x and jap 1x
+        Generate 2 fancy english SVO, 1 french, 1 fancy english SOV
+
+        To Train:
+
+        en_svo1 -> en_sov
+        en_svo1 + en_svo2 -> en_sov
+        en_svo1 + fr -> en_sov
         """
-        pass 
+        amr_files = ['amr_fancy']
+        middleman_files = ['middleman_fancy']
+        language_files = ['english', 'english', 'french', 'english_sov']
+        names = ['en_svo1', 'en_svo2', 'fr', 'en_sov']
+
+        per_tree = PerantoTree(
+            amr_files = amr_files,
+            middleman_files = middleman_files,
+            language_files = language_files,
+            names = names
+            )
+    elif type == 'switches':
+        amr_files = ['amr_fancy']
+        middleman_files = ['middleman_fancy']
+
+        binary_strings = [''.join(bits) for bits in itertools.product('01', repeat=6)]
+        language_files = [
+            f"lang_{b}" for b in binary_strings
+        ]
+        names = [
+            f's{b}' for b in binary_strings
+        ]
+        per_tree = PerantoTree(
+            amr_files = amr_files,
+            middleman_files = middleman_files,
+            language_files = language_files,
+            names = names
+            )
 
     else:
         raise ValueError("wrong type bro")
@@ -132,9 +164,9 @@ def get_per_tree(type='svo_perm'):
     return per_tree 
 
 if __name__ == "__main__":
-    per_tree = get_per_tree()
+    per_tree = get_per_tree(type='switches')
     max_len = 32000
-    generator = Generator("basic_multi", per_tree, max_len)
+    generator = Generator("switches", per_tree, max_len)
     generator.generate()
 
 

@@ -167,35 +167,38 @@ class BasicMultiSplitter(Splitter):
     BasicMultiSplitter is used for multilingual training. Right now this
     works for the basic multi experiment
     """
-    def __init__(self, splitter_name, names, corp_lens, main, other):
+    def __init__(self, splitter_name, names, corp_lens, main_src, main_tgt, other):
         super().__init__(splitter_name, names)    
         self.corp_lens = corp_lens
-        self.main = main
+        self.main_src = main_src
+        self.main_tgt = main_tgt
         self.other = other
 
     def create_datasets(self):
-        get_main_i = lambda i : [n for n in self.names if self.name in n and i in n][0]
+        src_data = [n for n in self.names if self.main_src in n][0]
+        tgt_data = [n for n in self.names if self.main_tgt in n][0]
         other_data = [n for n in self.names if self.other in n][0]
+
         datasets = []
         for c in self.corp_lens:
             reg_dataset = Dataset(
-                name = f"{self.main}1_{self.main}2",
-                src  = [get_main_i(1)],
-                tgt  = [get_main_i(2)],
-                corp_lens = c
+                name = f"{self.main_src}_{self.main_tgt}_{format_number(c)}",
+                src  = [src_data],
+                tgt  = [tgt_data],
+                corp_lens = [c]
                 )
             
             main_dataset = Dataset(
-                name = f"{self.main}1/3_{self.main}2",
-                src = [get_main_i(1), get_main_i(3)],
-                tgt = [get_main_i(2), get_main_i(2)],
-                corp_lens = [c//2] * 2 #16000, 16000
+                name = f"{self.other}_{self.main_tgt}_{format_number(c)}",
+                src = [other_data],
+                tgt = [tgt_data],
+                corp_lens = [c]
             )
         
             mixed_dataset = Dataset(
-                name = f"{self.main}1/{self.other}1_{self.main}2",
-                src = [get_main_i(1), other_data],
-                tgt = [get_main_i(2), get_main_i(2)],
+                name = f"{self.main_src}_{self.other}_{self.main_tgt}_{format_number(c)}",
+                src = [src_data, other_data],
+                tgt = [tgt_data, tgt_data],
                 corp_lens = [c//2] * 2 #16000, 16000
                 )
             
@@ -255,5 +258,7 @@ class PairwiseSplitter(Splitter):
 
 if __name__ == "__main__":
     names     = fetch_data(['basic_multi']) # ['engl1.basic_multi', ... 'japn.basic_multi]
-    splitter = BasicMultiSplitter('basic_multi', names, [32000], main='engl', other='japn')
+    names = [n for n in names if '2' not in n]
+    splitter = BasicMultiSplitter('basic_multi', names, [1000 * (2 ** i) for i in range(1,6)], 
+    main_src='en_svo', main_tgt ='en_sov', other='fr')
     splitter.update_metadata()

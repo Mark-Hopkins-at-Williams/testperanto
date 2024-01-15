@@ -30,5 +30,349 @@
             "middleman",
             "englishOVS"
         ]
+    },
+    "basic_multi": {
+        "en_svo1": [
+            "amr_fancy",
+            "middleman_fancy",
+            "english"
+        ],
+        "en_svo2": [
+            "amr_fancy",
+            "middleman_fancy",
+            "english"
+        ],
+        "fr": [
+            "amr_fancy",
+            "middleman_fancy",
+            "french"
+        ],
+        "en_sov": [
+            "amr_fancy",
+            "middleman_fancy",
+            "english_sov"
+        ]
+    },
+    "switches": {
+        "s000000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000000"
+        ],
+        "s000001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000001"
+        ],
+        "s000010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000010"
+        ],
+        "s000011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000011"
+        ],
+        "s000100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000100"
+        ],
+        "s000101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000101"
+        ],
+        "s000110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000110"
+        ],
+        "s000111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_000111"
+        ],
+        "s001000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001000"
+        ],
+        "s001001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001001"
+        ],
+        "s001010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001010"
+        ],
+        "s001011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001011"
+        ],
+        "s001100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001100"
+        ],
+        "s001101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001101"
+        ],
+        "s001110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001110"
+        ],
+        "s001111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_001111"
+        ],
+        "s010000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010000"
+        ],
+        "s010001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010001"
+        ],
+        "s010010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010010"
+        ],
+        "s010011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010011"
+        ],
+        "s010100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010100"
+        ],
+        "s010101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010101"
+        ],
+        "s010110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010110"
+        ],
+        "s010111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_010111"
+        ],
+        "s011000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011000"
+        ],
+        "s011001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011001"
+        ],
+        "s011010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011010"
+        ],
+        "s011011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011011"
+        ],
+        "s011100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011100"
+        ],
+        "s011101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011101"
+        ],
+        "s011110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011110"
+        ],
+        "s011111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_011111"
+        ],
+        "s100000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100000"
+        ],
+        "s100001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100001"
+        ],
+        "s100010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100010"
+        ],
+        "s100011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100011"
+        ],
+        "s100100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100100"
+        ],
+        "s100101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100101"
+        ],
+        "s100110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100110"
+        ],
+        "s100111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_100111"
+        ],
+        "s101000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101000"
+        ],
+        "s101001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101001"
+        ],
+        "s101010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101010"
+        ],
+        "s101011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101011"
+        ],
+        "s101100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101100"
+        ],
+        "s101101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101101"
+        ],
+        "s101110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101110"
+        ],
+        "s101111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_101111"
+        ],
+        "s110000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110000"
+        ],
+        "s110001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110001"
+        ],
+        "s110010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110010"
+        ],
+        "s110011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110011"
+        ],
+        "s110100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110100"
+        ],
+        "s110101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110101"
+        ],
+        "s110110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110110"
+        ],
+        "s110111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_110111"
+        ],
+        "s111000": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111000"
+        ],
+        "s111001": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111001"
+        ],
+        "s111010": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111010"
+        ],
+        "s111011": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111011"
+        ],
+        "s111100": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111100"
+        ],
+        "s111101": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111101"
+        ],
+        "s111110": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111110"
+        ],
+        "s111111": [
+            "amr_fancy",
+            "middleman_fancy",
+            "lang_111111"
+        ]
     }
 }

@@ -2424,5 +2424,217 @@
                 ]
             }
         }
+    ],
+    "basic_multi": [
+        {
+            "en_svo_en_sov_2.0k": {
+                "src": [
+                    "en_svo1.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "fr_en_sov_2.0k": {
+                "src": [
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    2000
+                ]
+            }
+        },
+        {
+            "en_svo_fr_en_sov_2.0k": {
+                "src": [
+                    "en_svo1.basic_multi",
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi",
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    1000,
+                    1000
+                ]
+            }
+        },
+        {
+            "en_svo_en_sov_4.0k": {
+                "src": [
+                    "en_svo1.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "fr_en_sov_4.0k": {
+                "src": [
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    4000
+                ]
+            }
+        },
+        {
+            "en_svo_fr_en_sov_4.0k": {
+                "src": [
+                    "en_svo1.basic_multi",
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi",
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    2000,
+                    2000
+                ]
+            }
+        },
+        {
+            "en_svo_en_sov_8.0k": {
+                "src": [
+                    "en_svo1.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "fr_en_sov_8.0k": {
+                "src": [
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    8000
+                ]
+            }
+        },
+        {
+            "en_svo_fr_en_sov_8.0k": {
+                "src": [
+                    "en_svo1.basic_multi",
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi",
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    4000,
+                    4000
+                ]
+            }
+        },
+        {
+            "en_svo_en_sov_16.0k": {
+                "src": [
+                    "en_svo1.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "fr_en_sov_16.0k": {
+                "src": [
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    16000
+                ]
+            }
+        },
+        {
+            "en_svo_fr_en_sov_16.0k": {
+                "src": [
+                    "en_svo1.basic_multi",
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi",
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    8000,
+                    8000
+                ]
+            }
+        },
+        {
+            "en_svo_en_sov_32.0k": {
+                "src": [
+                    "en_svo1.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "fr_en_sov_32.0k": {
+                "src": [
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    32000
+                ]
+            }
+        },
+        {
+            "en_svo_fr_en_sov_32.0k": {
+                "src": [
+                    "en_svo1.basic_multi",
+                    "fr.basic_multi"
+                ],
+                "tgt": [
+                    "en_sov.basic_multi",
+                    "en_sov.basic_multi"
+                ],
+                "corp_lens": [
+                    16000,
+                    16000
+                ]
+            }
+        }
     ]
 }
