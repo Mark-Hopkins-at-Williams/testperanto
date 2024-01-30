@@ -157,6 +157,24 @@ def get_per_tree(type='svo_perm'):
             language_files = language_files,
             names = names
             )
+    elif type == 'new_switches':
+        amr_files = ['amr_fancy']
+        middleman_files = ['middleman_fancy']
+
+        binary_strings = [''.join(bits) for bits in itertools.product('01', repeat=6)]
+        language_files = [
+            f"lang_{b}" for b in binary_strings
+        ] + ['lang_011101'] # double src 
+        names = [
+            f's{b}' for b in binary_strings
+        ] + [f's011101_2']
+
+        per_tree = PerantoTree(
+            amr_files = amr_files,
+            middleman_files = middleman_files,
+            language_files = language_files,
+            names = names
+            )
 
     else:
         raise ValueError("wrong type bro")
@@ -164,9 +182,9 @@ def get_per_tree(type='svo_perm'):
     return per_tree 
 
 if __name__ == "__main__":
-    per_tree = get_per_tree(type='switches')
+    per_tree = get_per_tree(type='new_switches')
     max_len = 32000
-    generator = Generator("switches", per_tree, max_len)
+    generator = Generator("new_switches", per_tree, max_len)
     generator.generate()
 
 

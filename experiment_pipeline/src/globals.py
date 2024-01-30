@@ -20,6 +20,6 @@ DEV_SIZE     = .1                                 # dev proportion
 
 ### MODEL CONFIGS
 NUM_GPUS     = 2                                  # num gpus
-NUM_EPOCHS   = 1000                               # num epochs   (can be overwritten)
-PATIENCE     = 75                                 # num patience (can be overwritten)
+NUM_EPOCHS   = 300                               # num epochs   (can be overwritten)
+PATIENCE     = 30                                 # num patience (can be overwritten)
 MODEL_SIZE   = "XS"                               # model size   (can be overwritten)

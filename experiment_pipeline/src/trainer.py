@@ -172,8 +172,8 @@ sacrebleu {work_dir}/translations.ref -i {work_dir}/translations.hyp -m bleu chr
             with open(shell_script, 'w') as f: 
                 f.write("""#!/bin/bash\n""")
                 f.write(f"""
-#SBATCH -c 8 # Request 8 CPU cores
-#SBATCH -t 5-00:00 # Runtime in D-HH:MM
+#SBATCH -c 2 # Request 8 CPU cores
+#SBATCH -t 10-00:00 # Runtime in D-HH:MM
 #SBATCH -p dl # Partition to submit to
 #SBATCH --mem=2G # Request 2G of memory
 #SBATCH -o {RUN_PATH}/train{i}.out # File to which STDOUT will be written
@@ -208,11 +208,11 @@ def fetch_data(splitter_names=None, corp_lens=None):
     return [dataset for _,dataset in sorted_res]
 
 if __name__ == '__main__':
-    datasets = fetch_data(['basic_multi'])
+    datasets = fetch_data(['new_switches'])
     models   = [
             Model('XS', size = "XS")
             ]
 
-    trainer = Trainer('basic_multi', datasets, models)
+    trainer = Trainer('new_switches', datasets, models)
     trainer.create_train_script()
 

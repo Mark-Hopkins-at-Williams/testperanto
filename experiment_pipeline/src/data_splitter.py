@@ -9,68 +9,78 @@ import itertools
 
 class Dataset:
     """
-    A Dataset takes generated data and assembles a dataset. To allow for 
-    multilingual training, a Dataset is configured by a list of data names
-    (for example OSV.svo_perm) for both src/tgt, as well as an associated 
-    corp_lens lst. 
+    A Dataset assembles a multilingual training set from specified data sources.
 
-    Example:
-
-    src = ['OSV.svo_perm', 'SOV.svo_perm']
-    tgt = ['SVO.svo_perm', 'SVO.svo_perm']
-    corp_lens = [32000, 16000]
-
-    this will create a many to one model, where the corpus is comprised of 
-    32k sentences mapping OSV -> SVO, and 16k mapping SOV-SVO. 
-
-    See self.create() to see conventions that avoid data contamination
-    See Splitter/fetch_data() to see quick ways to create Datasets
+    Attributes:
+        name (str): Name of the dataset.
+        src (list of str): Source data names.
+        tgt (list of str): Target data names.
+        corp_lens (list of int): Corpus lengths for each src-tgt pair.
+        test_lp (tuple of str, optional): Language pair for specialized test set creation.
+    
+    Methods:
+        create(): Creates train, test, dev sets for src/tgt.
+        read_to_list(): Reads lines from a file and adds them to a list.
+        write_list_to_file(): Writes lines from a list to a file.
     """
-    def __init__(self, name, src, tgt, corp_lens):
+
+    def __init__(self, name, src, tgt, corp_lens, test_lp=None):
         self.name = name
         self.src = src
         self.tgt = tgt
         self.corp_lens = corp_lens
+        self.test_lp = test_lp
 
     def create(self):
-        """
-        This creates train, test, dev sets for src/tgt. To see why we can't naively take 
-        the first corp_lens[i] sentences of src[i]/tgt[i], note that in the example in the 
-        constructor that would repeat SOV sentences (and since all the sentences are from 
-        the same generator technically it would have multiple sentences that are all translations
-        of each other, which would contaminate the data)
-        """
         train_src, test_src, dev_src = [], [], []
         train_tgt, test_tgt, dev_tgt = [], [], []
-
         dataset_folder = os.path.join(DATASET_PATH, self.name)
         os.makedirs(dataset_folder, exist_ok=True)
+        start_line = 0
 
-        start_line = 0  # to keep track of where to start reading for each language pair
-        for i in range(len(self.src)):
-            # calculate the number of lines for each subset
-            train_end = start_line + int(self.corp_lens[i] * TRAIN_SIZE)
-            test_end = train_end + int(self.corp_lens[i] * TEST_SIZE)
+        # Iterate through language pairs
+        if False: #im lazy
+            for i, (src_name, tgt_name) in enumerate(zip(self.src, self.tgt)):
+                train_end = start_line + int(self.corp_lens[i] * TRAIN_SIZE)
+                test_end = train_end + int(self.corp_lens[i] * TEST_SIZE)
 
-            # append the lines to the respective lists
-            self.read_to_list(self.src[i], start_line, train_end, train_src)
-            self.read_to_list(self.src[i], train_end, test_end, test_src)
-            self.read_to_list(self.src[i], test_end, start_line + self.corp_lens[i], dev_src)
+                # Read and append data to respective lists
+                self.read_to_list(src_name, start_line, train_end, train_src)
+                self.read_to_list(tgt_name, start_line, train_end, train_tgt)
 
-            self.read_to_list(self.tgt[i], start_line, train_end, train_tgt)
-            self.read_to_list(self.tgt[i], train_end, test_end, test_tgt)
-            self.read_to_list(self.tgt[i], test_end, start_line + self.corp_lens[i], dev_tgt)
+                # Handle test data
+                if self.test_lp: # always just add test_lp data bc just testing on that 
+                    self.read_to_list(self.test_lp[0], train_end, test_end, test_src)
+                    self.read_to_list(self.test_lp[1], train_end, test_end, test_tgt)
+                else:
+                    self.read_to_list(src_name, train_end, test_end, test_src)
+                    self.read_to_list(tgt_name, train_end, test_end, test_tgt)
 
-            start_line += self.corp_lens[i]  # update the start line for the next file
+                # Handle dev data
+                self.read_to_list(src_name, test_end, start_line + self.corp_lens[i], dev_src)
+                self.read_to_list(tgt_name, test_end, start_line + self.corp_lens[i], dev_tgt)
 
-        # write the lists to files
-        self.write_list_to_file(train_src, os.path.join(dataset_folder, 'train.src'))
-        self.write_list_to_file(test_src, os.path.join(dataset_folder, 'test.src'))
-        self.write_list_to_file(dev_src, os.path.join(dataset_folder, 'dev.src'))
-        self.write_list_to_file(train_tgt, os.path.join(dataset_folder, 'train.tgt'))
-        self.write_list_to_file(test_tgt, os.path.join(dataset_folder, 'test.tgt'))
-        self.write_list_to_file(dev_tgt, os.path.join(dataset_folder, 'dev.tgt'))
+                start_line += self.corp_lens[i]
 
+            # Write to files
+            self.write_to_files(dataset_folder, train_src, test_src, dev_src, train_tgt, test_tgt, dev_tgt)
+        else:
+            for i, (src_name, tgt_name) in enumerate(zip(self.src, self.tgt)):
+                train_end = start_line + self.corp_lens[i]
+                # Read and append data to respective lists
+                self.read_to_list(src_name, start_line, train_end, train_src)
+                self.read_to_list(tgt_name, start_line, train_end, train_tgt)
+
+                start_line += self.corp_lens[i]
+
+            # test/dev
+            test_end = train_end + 1000
+            self.read_to_list(self.test_lp[0], train_end, test_end, test_src)
+            self.read_to_list(self.test_lp[1], train_end, test_end, test_tgt)
+            self.read_to_list(self.test_lp[0], test_end, test_end + 1000, dev_src)
+            self.read_to_list(self.test_lp[1], test_end, test_end + 1000, dev_tgt)
+            self.write_to_files(dataset_folder, train_src, test_src, dev_src, train_tgt, test_tgt, dev_tgt)
+            
     def read_to_list(self, file_name, start_line, end_line, target_list):
         fpath = f"{TP_DATA_PATH}/{file_name}"
         with open(fpath, 'r', encoding='utf-8') as file:
@@ -80,7 +90,22 @@ class Dataset:
                 if i >= start_line:
                     target_list.append(line.strip())
 
+    def write_to_files(self, dataset_folder, train_src, test_src, dev_src, train_tgt, test_tgt, dev_tgt):
+        file_pairs = {
+            'train.src': train_src, 'test.src': test_src, 'dev.src': dev_src,
+            'train.tgt': train_tgt, 'test.tgt': test_tgt, 'dev.tgt': dev_tgt
+        }
+        for filename, data_list in file_pairs.items():
+            self.write_list_to_file(data_list, os.path.join(dataset_folder, filename))
+
     def write_list_to_file(self, data_list, file_path):
+        """
+        Writes each line from a list into a file.
+
+        Args:
+            data_list (list of str): The list of lines to write.
+            file_path (str): The path to the file to write to.
+        """
         with open(file_path, 'w', encoding='utf-8') as file:
             for line in data_list:
                 file.write(f"{line}\n")
@@ -209,6 +234,82 @@ class BasicMultiSplitter(Splitter):
 
         return datasets 
      
+class SwitchesSplitter(Splitter):
+    """
+    SwitchesSplitter is used for multilingual training. Right now this
+    works for the basic multi experiment
+    """
+    def __init__(self, splitter_name, names, corp_lens, src, src_name, tgt, tgt_name):
+        super().__init__(splitter_name, names)    
+        self.corp_lens = corp_lens
+        self.src = src
+        self.tgt = tgt
+        self.src_name = src_name 
+        self.tgt_name = tgt_name
+        self.auxilaries = [n for n in names if n != src and n != tgt]
+
+    def create_datasets(self):
+        datasets = []
+
+        for c in self.corp_lens:
+            main = Dataset(
+                name = f"{self.src_name}_{self.tgt_name}_{format_number(c)}",
+                src = [self.src],
+                tgt = [self.tgt],
+                corp_lens = [c]
+                )
+            
+            datasets.append(main)
+            for aux in self.auxilaries:
+                dataset = Dataset(
+                    name = f"{aux.split('.')[0]}_{self.src_name}_{self.tgt_name}_{format_number(c)}",
+                    src = [self.src, aux],
+                    tgt = [self.tgt, self.tgt],
+                    corp_lens = [c // 2] * 2,
+                    test_lp = (src, tgt)
+                    )
+
+                datasets.append(dataset)
+         
+        for dataset in datasets:
+            dataset.create()
+
+        return datasets 
+
+class NewSwitchesSplitter(Splitter):
+    """
+    SwitchesSplitter is used for multilingual training. Right now this
+    works for the basic multi experiment
+    """
+    def __init__(self, splitter_name, names, corp_lens, src, src_name, tgt, tgt_name):
+        super().__init__(splitter_name, names)    
+        self.corp_lens = corp_lens
+        self.src = src
+        self.tgt = tgt
+        self.src_name = src_name 
+        self.tgt_name = tgt_name
+        self.auxilaries = [n for n in names if n != src and n != tgt]
+
+    def create_datasets(self):
+        datasets = []
+
+        for c in self.corp_lens:
+            for aux in self.auxilaries:
+                dataset = Dataset(
+                    name = f"{aux.split('.')[0]}_{self.src_name}_{self.tgt_name}_{format_number(c)}_new",
+                    src = [self.src, aux],
+                    tgt = [self.tgt, self.tgt],
+                    corp_lens = [c // 2] * 2,
+                    test_lp = (self.src, self.tgt)
+                    )
+
+                datasets.append(dataset)
+         
+        for dataset in datasets:
+            dataset.create()
+
+        return datasets 
+
 class PairwiseSplitter(Splitter):
     """
     One splitting example is taking pairwise within the names. For example
@@ -257,8 +358,9 @@ class PairwiseSplitter(Splitter):
         return datasets 
 
 if __name__ == "__main__":
-    names     = fetch_data(['basic_multi']) # ['engl1.basic_multi', ... 'japn.basic_multi]
-    names = [n for n in names if '2' not in n]
-    splitter = BasicMultiSplitter('basic_multi', names, [1000 * (2 ** i) for i in range(1,6)], 
-    main_src='en_svo', main_tgt ='en_sov', other='fr')
+    names = fetch_data(['new_switches']) 
+    corp_lens = [1000 * (2 ** i) for i in range(1,5)]
+    src = 's011101.new_switches'
+    tgt = 's000000.new_switches'
+    splitter = NewSwitchesSplitter('new_switches', names, corp_lens, src, 'en', tgt, 'japn')
     splitter.update_metadata()
