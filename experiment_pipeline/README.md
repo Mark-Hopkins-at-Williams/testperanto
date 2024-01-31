@@ -86,6 +86,7 @@ Finally, you can analyze the data using analysis.ipynb.
 
 Here's the repo layout I'm using (though you can change these easily by just adjusting globals.py):
 
+```
 ├── src/ 
 │ ├── globals.py # global variables
 │ ├── data_generator.py # generate raw tp data
@@ -109,6 +110,7 @@ Here's the repo layout I'm using (though you can change these easily by just adj
 ├── data_info.json # metadata about tp_data
 ├── dataset_info.json # metadata about datasets
 └── plot_info.json # metadata about plots
+```
 
 Additionally, you need to add a directory appa-mt in testperanto, which just is exactly [https://github.com/Mark-Hopkins-at-Williams/appa-mt/tree/main/fairseq](this) directory, except train.sh/prepare_data.sh are slightly modified (these updated files are located in experiments). 
 
