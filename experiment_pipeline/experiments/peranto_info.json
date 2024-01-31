@@ -1,0 +1,22 @@
+{
+    "amr_files" : {
+        "amr_fancy"  : "amr config with lots built in (idk tp so not sure exactly)",
+        "amr"        : "basic sentences (just subj, vb, obj + the)",
+        "no_dep_amr" : "basic sentences with no dependencies btwn words",
+        "no_pro_amr" : "basic sentences with no pronouns",
+        "og_amr"     : "amr but not tuned strength/discount"
+    },
+    "middleman_files" : {
+        "middleman_fancy" : "mm config with lots built in (mm analog of amr_fancy)",
+        "middleman"       : "mm analog of amr",
+        "og_middleman"    : "older version of mm"
+    },  
+    "language_files" : {
+        "english_sov"  : "fancy english SOV",
+        "english"      : "fancy english",
+        "english{SVO}" : "basic {SVO} perm",
+        "french"       : "fancy french",
+        "lang_{s}"     : "fancy lang with {s} switch config"
+    }
+}
+    

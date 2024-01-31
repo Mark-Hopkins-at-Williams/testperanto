@@ -1,6 +1,7 @@
 from globals import TP_DATA_PATH
 
 def format_number(num):
+    """formats large integers (5000 -> 5k, 8000000 -> 8m)"""
     if num >= 1000000:
         return f"{num/1000000:.1f}m"
     elif num >= 1000:
@@ -9,17 +10,18 @@ def format_number(num):
         return str(num)
 
 def map_to_burmese(text):
+    """takes str text and adds 4031 to utf-8 encoding"""
     translated = []
     for char in text:
-        if char != ' ' and char != '\n':  # Preserve spaces and newlines
-            # Convert character to UTF-8 bytes, add 4031 to each byte, and convert back
+        if char != ' ' and char != '\n': # preserve spaces/new lines
             for byte in char.encode('utf-8'):
                 translated.append(chr(byte + 4031))
         else:
-            translated.append(char)  # Preserve the character as-is (space or newline)
+            translated.append(char)  
     return ''.join(translated)
 
 def process_files(file_paths):
+    """takes list of paths, opens the txt and changes it to map_to_burmese(txt)"""
     for path in file_paths:
         with open(path, 'r', encoding='utf-8') as file:
             content = file.readlines()
@@ -52,7 +54,6 @@ if __name__ == "__main__":
     's110100.new_switches', 's111011.new_switches', 's101001.new_switches', 
     's101000.new_switches', 's100111.new_switches', 's000001.new_switches', 
     's011001.new_switches', 's101011.new_switches']
-
 
     paths = [f'{TP_DATA_PATH}/{switch}' for switch in names]
     process_files(paths) # process all but s011101

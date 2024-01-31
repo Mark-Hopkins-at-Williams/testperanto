@@ -1,0 +1,38 @@
+{
+    "distributions": [
+        {"name": "lang", "type": "uniform", "domain": ["en"]},
+        {"name": "count", "type": "uniform", "domain": ["sng", "plu"]},
+        {"name": "def", "type": "uniform", "domain": ["def", "indef"]},
+        {"name": "prep.loc", "type": "uniform", "domain": [1, 2, 3, 4, 5, 6]},
+        {"name": "prep.loc.$y0", "type": "pyor", "strength": 1, "discount": 0.2}
+    ],
+    "rules": [
+        {"rule": "($qstart $x1) -> ($qevent $x1)"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg1 $x2)) $x4 $x5)) -> (S ($qarg0 $x2) ($qvb $x1 $x5) ($qvmods $x4))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3)) $x4 $x5)) -> (S ($qarg0 $x2) ($qvb $x1 $x5) ($qarg1 $x3) ($qvmods $x4))"},
+        {"rule": "($qevent (EVENT (inst $x1) (args (arg0 $x2) (arg1 $x3)) (mods $x4) $x5)) -> (S ($qvmods (mods $x4)) , ($qarg0 $x2) ($qvb $x1 $x5) ($qarg1 $x3))"},
+        {"rule": "($qccomp (EVENT (inst $x1) (args (arg1 $x2)) $x4 $x5)) -> (S ($qvbinf $x1 $x5) ($qarg1 $x2) ($qvmods $x4))"},
+        {"rule": "($qrcevent (EVENT (inst $x1) (args (arg1 $x2)) $x4 $x5)) -> (S ($qvb $x1 $x5) ($qarg1 $x2) ($qvmods $x4))"},
+        {"rule": "($qsubclause (EVENT (inst cause.0) (args (arg0 $x1)) $x2 $x3)) -> (S because ($qevent $x1))"},
+        {"rule": "($qarg0 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
+        {"rule": "($qarg0 (EVENT $x1 $x2 $x3 $x4)) -> ($qccomp (EVENT $x1 $x2 $x3 $x4))"},
+        {"rule": "($qarg1 (ENTITY $x1 $x2 $x3)) -> ($qentity (ENTITY $x1 $x2 $x3))"},
+        {"rule": "($qarg1 (EVENT $x1 $x2 $x3 $x4)) -> ($qccomp (EVENT $x1 $x2 $x3 $x4))"},
+        {"rule": "($qentity (ENTITY (inst nn.$y1) $x2 $x3)) -> (NP ($qdt $x3) ($qnn nn.$y1 $x3) ($qnmods $x2))"},
+        {"rule": "($qentity (ENTITY (inst pron.$y1) $x2 $x3)) -> (NP ($qnn pron.$y1 $x3))"},
+        {"rule": "($qdt (props (count $x1) (def def) (case $x2))) -> (DT the)"},
+        {"rule": "($qdt (props (count sng) (def indef) (case $x2))) -> (DT a)"},
+        {"rule": "($qdt (props (count plu) (def indef) (case $x2))) -> (DT *eps*)"},
+        {"rule": "($qnn nn.$y1 (props (count $x2) (def $x3) (case $x4))) -> (NN (@nn.en (STEM nn.$y1) (PERSON 3) (COUNT $x2) (CASE $x4)))"},
+        {"rule": "($qnn pron.$y1 (props (count $x2) (def $x3) (case $x4))) -> (NN (@pron.en (STEM pron) (PERSON $y1) (COUNT $x2) (CASE $x4)))"},
+        {"rule": "($qnmods -null-) -> (MOD *eps*)"},
+        {"rule": "($qnmods (mods (arg0-of $x1))) -> (RC that ($qrcevent $x1))"},
+        {"rule": "($qvb vb.$y1 (props (tense $x1) (polarity $x4) (voice $x2) (count $x3) (person $x5))) -> (VB (@vb.en (STEM vb.$y1) (PERSON $x5) (COUNT $x3) (POLARITY $x4) (TENSE $x1) (VOICE $x2)))"},
+        {"rule": "($qvbinf vb.$y1 (props (tense $x1) (polarity $x4) (voice $x2) (count $x3) (person $x5))) -> ($qvb vb.$y1 (props (tense $x1) (polarity $x4) (voice $x2) (count inf) (person $x5)))"},
+        {"rule": "($qvmods -null-) -> (MOD *eps*)"},
+        {"rule": "($qvmods (mods (location (ENTITY (inst nn.$y1) $x2 $x3)))) -> (PP (@prep.en (STEM prep.$z1)) ($qentity (ENTITY (inst nn.$y1) $x2 $x3)))", "zdists": ["prep.loc.$y1"]},
+        {"rule": "($qvmods (mods (location (ENTITY (inst pron.$y1) $x2 $x3)))) -> (PP (@prep.$z2 (STEM prep.$z1)) ($qentity (ENTITY (inst pron.$y1) $x2 $x3)))", "zdists": ["prep.loc.pron", "lang"]},
+        {"rule": "($qvmods (mods (time $x1))) -> (PP after ($qevent $x1))"},
+        {"rule": "($qvmods (mods (arg1-of $x1))) -> ($qsubclause $x1)"}
+    ]
+}
