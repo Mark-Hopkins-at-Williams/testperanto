@@ -1,249 +1,670 @@
-exp_name,work_dir,dataset_name,model_name,bleu,chrF2,num_steps,src,tgt,corp_lens,model_arch,num_epochs,patience
-svo_perm,XS_OSV_OVS_1.0k,OSV_OVS_1.0k,XS,9.2,44.7,2460.0,['OSV.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OSV_SOV_1.0k,OSV_SOV_1.0k,XS,7.4,44.3,1797.0,['OSV.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OSV_SVO_1.0k,OSV_SVO_1.0k,XS,9.0,48.5,2487.0,['OSV.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OSV_VOS_1.0k,OSV_VOS_1.0k,XS,11.5,48.1,2079.0,['OSV.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OSV_VSO_1.0k,OSV_VSO_1.0k,XS,12.7,48.4,1755.0,['OSV.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OVS_OSV_1.0k,OVS_OSV_1.0k,XS,6.4,44.1,1677.0,['OVS.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OVS_SOV_1.0k,OVS_SOV_1.0k,XS,4.1,6.9,399.0,['OVS.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OVS_SVO_1.0k,OVS_SVO_1.0k,XS,10.9,47.0,2700.0,['OVS.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OVS_VOS_1.0k,OVS_VOS_1.0k,XS,13.1,49.8,2991.0,['OVS.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OVS_VSO_1.0k,OVS_VSO_1.0k,XS,12.1,50.6,2640.0,['OVS.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SOV_OSV_1.0k,SOV_OSV_1.0k,XS,8.1,42.4,2232.0,['SOV.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SOV_OVS_1.0k,SOV_OVS_1.0k,XS,11.5,45.8,2172.0,['SOV.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SOV_SVO_1.0k,SOV_SVO_1.0k,XS,9.4,46.7,2133.0,['SOV.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SOV_VOS_1.0k,SOV_VOS_1.0k,XS,11.3,50.2,2511.0,['SOV.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SOV_VSO_1.0k,SOV_VSO_1.0k,XS,10.4,49.6,2144.0,['SOV.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SVO_OSV_1.0k,SVO_OSV_1.0k,XS,7.9,42.6,2696.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SVO_OVS_1.0k,SVO_OVS_1.0k,XS,12.5,45.4,2016.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SVO_SOV_1.0k,SVO_SOV_1.0k,XS,2.5,7.3,411.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SVO_VOS_1.0k,SVO_VOS_1.0k,XS,11.9,47.9,2079.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_SVO_VSO_1.0k,SVO_VSO_1.0k,XS,14.2,49.2,2088.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VOS_OSV_1.0k,VOS_OSV_1.0k,XS,9.5,46.7,2272.0,['VOS.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VOS_OVS_1.0k,VOS_OVS_1.0k,XS,11.6,48.3,1953.0,['VOS.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VOS_SOV_1.0k,VOS_SOV_1.0k,XS,5.1,25.3,828.0,['VOS.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VOS_SVO_1.0k,VOS_SVO_1.0k,XS,10.4,48.8,2244.0,['VOS.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VOS_VSO_1.0k,VOS_VSO_1.0k,XS,10.5,51.1,2154.0,['VOS.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VSO_OSV_1.0k,VSO_OSV_1.0k,XS,8.2,44.9,2200.0,['VSO.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VSO_OVS_1.0k,VSO_OVS_1.0k,XS,10.2,45.9,2092.0,['VSO.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VSO_SOV_1.0k,VSO_SOV_1.0k,XS,9.1,46.6,2400.0,['VSO.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VSO_SVO_1.0k,VSO_SVO_1.0k,XS,10.4,48.5,2118.0,['VSO.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_VSO_VOS_1.0k,VSO_VOS_1.0k,XS,12.0,51.8,2211.0,['VSO.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75
-svo_perm,XS_OSV_OVS_2.0k,OSV_OVS_2.0k,XS,28.9,59.9,3990.0,['OSV.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OSV_SOV_2.0k,OSV_SOV_2.0k,XS,20.3,56.1,2802.0,['OSV.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OSV_SVO_2.0k,OSV_SVO_2.0k,XS,30.2,61.4,4254.0,['OSV.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OSV_VOS_2.0k,OSV_VOS_2.0k,XS,28.7,61.5,3192.0,['OSV.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OSV_VSO_2.0k,OSV_VSO_2.0k,XS,28.8,61.5,3852.0,['OSV.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OVS_OSV_2.0k,OVS_OSV_2.0k,XS,21.2,57.1,3462.0,['OVS.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OVS_SOV_2.0k,OVS_SOV_2.0k,XS,19.8,54.9,2694.0,['OVS.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OVS_SVO_2.0k,OVS_SVO_2.0k,XS,29.8,60.7,4182.0,['OVS.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OVS_VOS_2.0k,OVS_VOS_2.0k,XS,29.1,61.4,4026.0,['OVS.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OVS_VSO_2.0k,OVS_VSO_2.0k,XS,27.2,56.9,2496.0,['OVS.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SOV_OSV_2.0k,SOV_OSV_2.0k,XS,21.3,57.4,3012.0,['SOV.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SOV_OVS_2.0k,SOV_OVS_2.0k,XS,26.5,59.0,3360.0,['SOV.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SOV_SVO_2.0k,SOV_SVO_2.0k,XS,27.8,59.5,2916.0,['SOV.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SOV_VOS_2.0k,SOV_VOS_2.0k,XS,27.5,60.8,3978.0,['SOV.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SOV_VSO_2.0k,SOV_VSO_2.0k,XS,26.8,61.1,2928.0,['SOV.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SVO_OSV_2.0k,SVO_OSV_2.0k,XS,22.7,57.6,3948.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SVO_OVS_2.0k,SVO_OVS_2.0k,XS,29.4,59.9,4428.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SVO_SOV_2.0k,SVO_SOV_2.0k,XS,20.2,54.4,2514.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SVO_VOS_2.0k,SVO_VOS_2.0k,XS,28.3,60.7,4212.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_SVO_VSO_2.0k,SVO_VSO_2.0k,XS,30.1,61.6,3786.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VOS_OSV_2.0k,VOS_OSV_2.0k,XS,21.5,58.5,3582.0,['VOS.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VOS_OVS_2.0k,VOS_OVS_2.0k,XS,27.9,60.6,3960.0,['VOS.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VOS_SOV_2.0k,VOS_SOV_2.0k,XS,21.2,56.1,3012.0,['VOS.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VOS_SVO_2.0k,VOS_SVO_2.0k,XS,31.8,58.5,3810.0,['VOS.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VOS_VSO_2.0k,VOS_VSO_2.0k,XS,28.4,61.2,3912.0,['VOS.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VSO_OSV_2.0k,VSO_OSV_2.0k,XS,25.1,59.3,4266.0,['VSO.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VSO_OVS_2.0k,VSO_OVS_2.0k,XS,26.6,59.9,3180.0,['VSO.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VSO_SOV_2.0k,VSO_SOV_2.0k,XS,19.7,56.3,2682.0,['VSO.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VSO_SVO_2.0k,VSO_SVO_2.0k,XS,30.1,61.5,5526.0,['VSO.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_VSO_VOS_2.0k,VSO_VOS_2.0k,XS,27.6,61.7,4110.0,['VSO.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75
-svo_perm,XS_OSV_OVS_4.0k,OSV_OVS_4.0k,XS,36.3,63.3,5720.0,['OSV.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OSV_SOV_4.0k,OSV_SOV_4.0k,XS,27.8,60.4,6516.0,['OSV.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OSV_SVO_4.0k,OSV_SVO_4.0k,XS,37.3,64.3,6006.0,['OSV.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OSV_VOS_4.0k,OSV_VOS_4.0k,XS,35.7,64.4,5643.0,['OSV.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OSV_VSO_4.0k,OSV_VSO_4.0k,XS,36.3,64.3,5196.0,['OSV.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OVS_OSV_4.0k,OVS_OSV_4.0k,XS,29.0,61.2,4444.0,['OVS.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OVS_SOV_4.0k,OVS_SOV_4.0k,XS,28.7,60.7,5027.0,['OVS.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OVS_SVO_4.0k,OVS_SVO_4.0k,XS,37.0,64.0,6193.0,['OVS.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OVS_VOS_4.0k,OVS_VOS_4.0k,XS,35.8,63.6,6457.0,['OVS.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OVS_VSO_4.0k,OVS_VSO_4.0k,XS,36.9,65.1,7752.0,['OVS.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SOV_OSV_4.0k,SOV_OSV_4.0k,XS,28.1,60.5,4532.0,['SOV.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SOV_OVS_4.0k,SOV_OVS_4.0k,XS,35.5,63.4,5522.0,['SOV.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SOV_SVO_4.0k,SOV_SVO_4.0k,XS,36.6,63.9,6348.0,['SOV.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SOV_VOS_4.0k,SOV_VOS_4.0k,XS,36.8,64.1,5643.0,['SOV.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SOV_VSO_4.0k,SOV_VSO_4.0k,XS,36.0,64.7,6996.0,['SOV.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SVO_OSV_4.0k,SVO_OSV_4.0k,XS,28.6,60.8,6336.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SVO_OVS_4.0k,SVO_OVS_4.0k,XS,36.7,63.2,5962.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SVO_SOV_4.0k,SVO_SOV_4.0k,XS,28.1,59.5,7032.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SVO_VOS_4.0k,SVO_VOS_4.0k,XS,35.1,63.4,6644.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_SVO_VSO_4.0k,SVO_VSO_4.0k,XS,36.2,64.0,4510.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VOS_OSV_4.0k,VOS_OSV_4.0k,XS,29.4,61.6,5621.0,['VOS.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VOS_OVS_4.0k,VOS_OVS_4.0k,XS,36.4,63.8,5962.0,['VOS.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VOS_SOV_4.0k,VOS_SOV_4.0k,XS,28.9,60.7,5368.0,['VOS.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VOS_SVO_4.0k,VOS_SVO_4.0k,XS,37.9,64.8,6072.0,['VOS.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VOS_VSO_4.0k,VOS_VSO_4.0k,XS,36.8,64.7,6149.0,['VOS.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VSO_OSV_4.0k,VSO_OSV_4.0k,XS,28.9,61.5,6633.0,['VSO.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VSO_OVS_4.0k,VSO_OVS_4.0k,XS,35.9,63.4,5610.0,['VSO.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VSO_SOV_4.0k,VSO_SOV_4.0k,XS,28.8,60.7,5423.0,['VSO.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VSO_SVO_4.0k,VSO_SVO_4.0k,XS,36.2,64.2,6325.0,['VSO.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_VSO_VOS_4.0k,VSO_VOS_4.0k,XS,35.1,64.0,7425.0,['VSO.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75
-svo_perm,XS_OSV_OVS_8.0k,OSV_OVS_8.0k,XS,45.8,68.8,9840.0,['OSV.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OSV_SOV_8.0k,OSV_SOV_8.0k,XS,37.3,66.5,10480.0,['OSV.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OSV_SVO_8.0k,OSV_SVO_8.0k,XS,44.6,69.6,10020.0,['OSV.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OSV_VOS_8.0k,OSV_VOS_8.0k,XS,46.2,69.8,10040.0,['OSV.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OSV_VSO_8.0k,OSV_VSO_8.0k,XS,44.5,69.8,10700.0,['OSV.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OVS_OSV_8.0k,OVS_OSV_8.0k,XS,37.9,67.0,10680.0,['OVS.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OVS_SOV_8.0k,OVS_SOV_8.0k,XS,36.6,66.2,13460.0,['OVS.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OVS_SVO_8.0k,OVS_SVO_8.0k,XS,45.9,69.6,10140.0,['OVS.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OVS_VOS_8.0k,OVS_VOS_8.0k,XS,46.0,69.6,8500.0,['OVS.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OVS_VSO_8.0k,OVS_VSO_8.0k,XS,43.1,69.7,8120.0,['OVS.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SOV_OSV_8.0k,SOV_OSV_8.0k,XS,37.0,66.5,11120.0,['SOV.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SOV_OVS_8.0k,SOV_OVS_8.0k,XS,44.9,68.5,9560.0,['SOV.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SOV_SVO_8.0k,SOV_SVO_8.0k,XS,44.5,69.4,10340.0,['SOV.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SOV_VOS_8.0k,SOV_VOS_8.0k,XS,45.4,69.3,7480.0,['SOV.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SOV_VSO_8.0k,SOV_VSO_8.0k,XS,43.8,69.2,14760.0,['SOV.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SVO_OSV_8.0k,SVO_OSV_8.0k,XS,36.3,65.9,8640.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SVO_OVS_8.0k,SVO_OVS_8.0k,XS,45.2,68.4,8980.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SVO_SOV_8.0k,SVO_SOV_8.0k,XS,36.6,65.8,10731.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SVO_VOS_8.0k,SVO_VOS_8.0k,XS,44.3,69.0,9786.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_SVO_VSO_8.0k,SVO_VSO_8.0k,XS,43.1,68.9,5103.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VOS_OSV_8.0k,VOS_OSV_8.0k,XS,38.3,67.1,9440.0,['VOS.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VOS_OVS_8.0k,VOS_OVS_8.0k,XS,45.4,68.7,13650.0,['VOS.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VOS_SOV_8.0k,VOS_SOV_8.0k,XS,36.8,66.7,14595.0,['VOS.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VOS_SVO_8.0k,VOS_SVO_8.0k,XS,44.9,69.8,10380.0,['VOS.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VOS_VSO_8.0k,VOS_VSO_8.0k,XS,43.4,69.8,11970.0,['VOS.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VSO_OSV_8.0k,VSO_OSV_8.0k,XS,37.1,67.0,11000.0,['VSO.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VSO_OVS_8.0k,VSO_OVS_8.0k,XS,44.8,68.9,8100.0,['VSO.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VSO_SOV_8.0k,VSO_SOV_8.0k,XS,35.2,65.6,8980.0,['VSO.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VSO_SVO_8.0k,VSO_SVO_8.0k,XS,42.9,68.7,14154.0,['VSO.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_VSO_VOS_8.0k,VSO_VOS_8.0k,XS,44.4,69.2,10360.0,['VSO.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75
-svo_perm,XS_OSV_OVS_16.0k,OSV_OVS_16.0k,XS,51.0,71.6,21294.0,['OSV.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OSV_SOV_16.0k,OSV_SOV_16.0k,XS,41.9,69.1,18915.0,['OSV.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OSV_SVO_16.0k,OSV_SVO_16.0k,XS,48.9,72.0,,['OSV.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OSV_VOS_16.0k,OSV_VOS_16.0k,XS,51.1,72.2,,['OSV.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OSV_VSO_16.0k,OSV_VSO_16.0k,XS,47.7,72.0,12285.0,['OSV.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OVS_OSV_16.0k,OVS_OSV_16.0k,XS,42.0,69.2,12207.0,['OVS.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OVS_SOV_16.0k,OVS_SOV_16.0k,XS,42.4,69.3,12464.0,['OVS.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OVS_SVO_16.0k,OVS_SVO_16.0k,XS,48.7,71.8,15756.0,['OVS.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OVS_VOS_16.0k,OVS_VOS_16.0k,XS,51.0,72.1,12831.0,['OVS.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OVS_VSO_16.0k,OVS_VSO_16.0k,XS,47.4,71.6,12441.0,['OVS.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SOV_OSV_16.0k,SOV_OSV_16.0k,XS,41.5,68.7,16692.0,['SOV.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SOV_OVS_16.0k,SOV_OVS_16.0k,XS,49.7,70.7,13923.0,['SOV.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SOV_SVO_16.0k,SOV_SVO_16.0k,XS,48.0,71.8,15483.0,['SOV.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SOV_VOS_16.0k,SOV_VOS_16.0k,XS,49.3,71.6,12480.0,['SOV.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SOV_VSO_16.0k,SOV_VSO_16.0k,XS,46.9,71.7,13065.0,['SOV.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SVO_OSV_16.0k,SVO_OSV_16.0k,XS,41.9,69.1,18564.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SVO_OVS_16.0k,SVO_OVS_16.0k,XS,49.6,70.7,14898.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SVO_SOV_16.0k,SVO_SOV_16.0k,XS,40.8,68.2,11895.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SVO_VOS_16.0k,SVO_VOS_16.0k,XS,49.6,71.6,14972.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_SVO_VSO_16.0k,SVO_VSO_16.0k,XS,46.3,71.0,13440.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VOS_OSV_16.0k,VOS_OSV_16.0k,XS,42.0,69.3,18954.0,['VOS.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VOS_OVS_16.0k,VOS_OVS_16.0k,XS,50.5,71.1,19578.0,['VOS.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VOS_SOV_16.0k,VOS_SOV_16.0k,XS,41.1,69.1,19851.0,['VOS.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VOS_SVO_16.0k,VOS_SVO_16.0k,XS,48.3,71.9,27027.0,['VOS.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VOS_VSO_16.0k,VOS_VSO_16.0k,XS,47.5,71.9,14937.0,['VOS.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VSO_OSV_16.0k,VSO_OSV_16.0k,XS,41.1,69.0,19929.0,['VSO.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VSO_OVS_16.0k,VSO_OVS_16.0k,XS,48.7,70.9,16185.0,['VSO.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VSO_SOV_16.0k,VSO_SOV_16.0k,XS,40.2,68.5,13455.0,['VSO.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VSO_SVO_16.0k,VSO_SVO_16.0k,XS,47.3,71.4,12760.0,['VSO.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_VSO_VOS_16.0k,VSO_VOS_16.0k,XS,48.9,71.5,13260.0,['VSO.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75
-svo_perm,XS_OSV_OVS_32.0k,OSV_OVS_32.0k,XS,60.6,76.5,37800.0,['OSV.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OSV_SOV_32.0k,OSV_SOV_32.0k,XS,51.3,74.4,35775.0,['OSV.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OSV_SVO_32.0k,OSV_SVO_32.0k,XS,56.1,76.4,31950.0,['OSV.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OSV_VOS_32.0k,OSV_VOS_32.0k,XS,60.5,76.9,30600.0,['OSV.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OSV_VSO_32.0k,OSV_VSO_32.0k,XS,54.8,76.3,23550.0,['OSV.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OVS_OSV_32.0k,OVS_OSV_32.0k,XS,51.5,74.6,36778.0,['OVS.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OVS_SOV_32.0k,OVS_SOV_32.0k,XS,51.2,74.3,36112.0,['OVS.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OVS_SVO_32.0k,OVS_SVO_32.0k,XS,56.3,76.5,30044.0,['OVS.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OVS_VOS_32.0k,OVS_VOS_32.0k,XS,60.4,76.8,19875.0,['OVS.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_OVS_VSO_32.0k,OVS_VSO_32.0k,XS,54.8,76.4,21600.0,['OVS.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SOV_OSV_32.0k,SOV_OSV_32.0k,XS,50.3,73.9,32925.0,['SOV.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SOV_OVS_32.0k,SOV_OVS_32.0k,XS,59.1,75.9,31450.0,['SOV.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SOV_SVO_32.0k,SOV_SVO_32.0k,XS,55.5,76.1,22350.0,['SOV.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SOV_VOS_32.0k,SOV_VOS_32.0k,XS,59.9,76.6,26250.0,['SOV.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SOV_VSO_32.0k,SOV_VSO_32.0k,XS,54.1,75.9,20400.0,['SOV.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SVO_OSV_32.0k,SVO_OSV_32.0k,XS,51.2,74.6,32475.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SVO_OVS_32.0k,SVO_OVS_32.0k,XS,60.3,76.4,39220.0,['SVO.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SVO_SOV_32.0k,SVO_SOV_32.0k,XS,50.9,74.2,28500.0,['SVO.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SVO_VOS_32.0k,SVO_VOS_32.0k,XS,60.0,76.8,30150.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_SVO_VSO_32.0k,SVO_VSO_32.0k,XS,54.1,76.0,24948.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VOS_OSV_32.0k,VOS_OSV_32.0k,XS,51.0,74.4,38776.0,['VOS.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VOS_OVS_32.0k,VOS_OVS_32.0k,XS,60.0,76.3,29475.0,['VOS.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VOS_SOV_32.0k,VOS_SOV_32.0k,XS,50.7,74.2,31800.0,['VOS.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VOS_SVO_32.0k,VOS_SVO_32.0k,XS,55.5,76.2,39960.0,['VOS.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VOS_VSO_32.0k,VOS_VSO_32.0k,XS,54.2,76.1,26775.0,['VOS.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VSO_OSV_32.0k,VSO_OSV_32.0k,XS,50.5,74.2,47700.0,['VSO.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VSO_OVS_32.0k,VSO_OVS_32.0k,XS,59.3,76.2,28575.0,['VSO.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VSO_SOV_32.0k,VSO_SOV_32.0k,XS,49.8,73.8,30900.0,['VSO.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VSO_SVO_32.0k,VSO_SVO_32.0k,XS,55.4,76.2,32452.0,['VSO.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75
-svo_perm,XS_VSO_VOS_32.0k,VSO_VOS_32.0k,XS,59.8,76.7,21675.0,['VSO.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75
-num_lang,XS_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,XS,28.2,47.2,24320.0,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",XS,1000,75
-num_lang,S_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,S,27.3,46.5,18080.0,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",S,1000,75
-num_lang,XS_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,XS,22.9,39.9,17712.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",XS,1000,75
-num_lang,S_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,S,23.1,40.1,18532.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",S,1000,75
-num_lang,XS_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,XS,20.7,38.9,23800.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",XS,1000,75
-num_lang,S_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,S,17.5,35.5,12750.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",S,1000,75
-num_lang,XS_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,XS,17.5,36.8,16915.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",XS,1000,75
-num_lang,S_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,S,16.6,35.1,18275.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",S,1000,75
-svo_perm,S_SVO_OSV_1.0k,SVO_OSV_1.0k,S,6.7,42.4,2064.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],S,1000,75
-svo_perm,M_SVO_OSV_1.0k,SVO_OSV_1.0k,M,7.6,43.1,1424.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],M,1000,75
-svo_perm,S_SVO_OVS_1.0k,SVO_OVS_1.0k,S,13.3,48.0,2192.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],S,1000,75
-svo_perm,M_SVO_OVS_1.0k,SVO_OVS_1.0k,M,12.2,47.0,2380.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],M,1000,75
-svo_perm,S_SVO_SOV_1.0k,SVO_SOV_1.0k,S,8.8,43.3,1974.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],S,1000,75
-svo_perm,M_SVO_SOV_1.0k,SVO_SOV_1.0k,M,8.8,43.8,1695.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],M,1000,75
-svo_perm,S_SVO_VOS_1.0k,SVO_VOS_1.0k,S,11.7,46.8,1869.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],S,1000,75
-svo_perm,M_SVO_VOS_1.0k,SVO_VOS_1.0k,M,12.1,49.7,2040.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],M,1000,75
-svo_perm,S_SVO_VSO_1.0k,SVO_VSO_1.0k,S,14.3,49.0,2324.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],S,1000,75
-svo_perm,M_SVO_VSO_1.0k,SVO_VSO_1.0k,M,15.0,47.2,1644.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],M,1000,75
-svo_perm,S_SVO_OSV_2.0k,SVO_OSV_2.0k,S,22.9,57.9,3798.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],S,1000,75
-svo_perm,M_SVO_OSV_2.0k,SVO_OSV_2.0k,M,21.1,56.7,2808.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],M,1000,75
-svo_perm,S_SVO_OVS_2.0k,SVO_OVS_2.0k,S,26.8,58.4,3264.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],S,1000,75
-svo_perm,M_SVO_OVS_2.0k,SVO_OVS_2.0k,M,26.7,58.7,2850.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],M,1000,75
-svo_perm,S_SVO_SOV_2.0k,SVO_SOV_2.0k,S,20.4,54.2,2262.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],S,1000,75
-svo_perm,M_SVO_SOV_2.0k,SVO_SOV_2.0k,M,20.2,54.4,2418.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],M,1000,75
-svo_perm,S_SVO_VOS_2.0k,SVO_VOS_2.0k,S,25.4,59.5,2700.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],S,1000,75
-svo_perm,M_SVO_VOS_2.0k,SVO_VOS_2.0k,M,24.9,59.3,2178.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],M,1000,75
-svo_perm,S_SVO_VSO_2.0k,SVO_VSO_2.0k,S,29.9,60.5,3570.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],S,1000,75
-svo_perm,M_SVO_VSO_2.0k,SVO_VSO_2.0k,M,27.3,59.9,2274.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],M,1000,75
-svo_perm,S_SVO_OSV_4.0k,SVO_OSV_4.0k,S,28.4,60.6,4653.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],S,1000,75
-svo_perm,M_SVO_OSV_4.0k,SVO_OSV_4.0k,M,27.1,59.2,4642.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],M,1000,75
-svo_perm,S_SVO_OVS_4.0k,SVO_OVS_4.0k,S,35.5,63.0,5313.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],S,1000,75
-svo_perm,M_SVO_OVS_4.0k,SVO_OVS_4.0k,M,34.4,61.9,4389.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],M,1000,75
-svo_perm,S_SVO_SOV_4.0k,SVO_SOV_4.0k,S,27.3,59.5,5532.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],S,1000,75
-svo_perm,M_SVO_SOV_4.0k,SVO_SOV_4.0k,M,23.8,55.9,3360.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],M,1000,75
-svo_perm,S_SVO_VOS_4.0k,SVO_VOS_4.0k,S,36.3,63.7,5368.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],S,1000,75
-svo_perm,M_SVO_VOS_4.0k,SVO_VOS_4.0k,M,33.3,62.9,4125.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],M,1000,75
-svo_perm,S_SVO_VSO_4.0k,SVO_VSO_4.0k,S,36.7,64.3,5181.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],S,1000,75
-svo_perm,M_SVO_VSO_4.0k,SVO_VSO_4.0k,M,36.6,61.6,3058.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],M,1000,75
-svo_perm,S_SVO_OSV_8.0k,SVO_OSV_8.0k,S,36.3,65.7,6980.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],S,1000,75
-svo_perm,M_SVO_OSV_8.0k,SVO_OSV_8.0k,M,30.3,61.2,5140.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],M,1000,75
-svo_perm,S_SVO_OVS_8.0k,SVO_OVS_8.0k,S,43.5,67.7,7000.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],S,1000,75
-svo_perm,M_SVO_OVS_8.0k,SVO_OVS_8.0k,M,32.5,62.9,6380.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],M,1000,75
-svo_perm,S_SVO_SOV_8.0k,SVO_SOV_8.0k,S,34.5,64.7,7308.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],S,1000,75
-svo_perm,M_SVO_SOV_8.0k,SVO_SOV_8.0k,M,28.0,59.2,4536.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],M,1000,75
-svo_perm,S_SVO_VOS_8.0k,SVO_VOS_8.0k,S,44.4,68.7,8043.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],S,1000,75
-svo_perm,M_SVO_VOS_8.0k,SVO_VOS_8.0k,M,30.9,64.7,4683.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],M,1000,75
-svo_perm,S_SVO_VSO_8.0k,SVO_VSO_8.0k,S,42.3,68.6,7728.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],S,1000,75
-svo_perm,M_SVO_VSO_8.0k,SVO_VSO_8.0k,M,41.4,67.4,6783.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],M,1000,75
-svo_perm,S_SVO_OSV_16.0k,SVO_OSV_16.0k,S,40.9,68.5,12792.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],S,1000,75
-svo_perm,M_SVO_OSV_16.0k,SVO_OSV_16.0k,M,27.7,52.5,5772.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],M,1000,75
-svo_perm,S_SVO_OVS_16.0k,SVO_OVS_16.0k,S,49.1,70.3,11934.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],S,1000,75
-svo_perm,M_SVO_OVS_16.0k,SVO_OVS_16.0k,M,38.5,65.7,6279.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],M,1000,75
-svo_perm,S_SVO_SOV_16.0k,SVO_SOV_16.0k,S,39.9,67.8,11076.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],S,1000,75
-svo_perm,M_SVO_SOV_16.0k,SVO_SOV_16.0k,M,30.1,64.0,6513.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],M,1000,75
-svo_perm,S_SVO_VOS_16.0k,SVO_VOS_16.0k,S,48.5,71.2,12730.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],S,1000,75
-svo_perm,M_SVO_VOS_16.0k,SVO_VOS_16.0k,M,34.9,65.5,5966.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],M,1000,75
-svo_perm,S_SVO_VSO_16.0k,SVO_VSO_16.0k,S,45.7,70.3,12760.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],S,1000,75
-svo_perm,M_SVO_VSO_16.0k,SVO_VSO_16.0k,M,44.9,70.1,13000.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],M,1000,75
-svo_perm,S_SVO_OSV_32.0k,SVO_OSV_32.0k,S,51.0,74.4,29250.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],S,1000,75
-svo_perm,M_SVO_OSV_32.0k,SVO_OSV_32.0k,M,15.2,57.0,8100.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],M,1000,75
-svo_perm,S_SVO_OVS_32.0k,SVO_OVS_32.0k,S,60.1,76.3,25086.0,['SVO.svo_perm'],['OVS.svo_perm'],[32000],S,1000,75
-svo_perm,M_SVO_OVS_32.0k,SVO_OVS_32.0k,M,34.3,65.1,8436.0,['SVO.svo_perm'],['OVS.svo_perm'],[32000],M,1000,75
-svo_perm,S_SVO_SOV_32.0k,SVO_SOV_32.0k,S,50.6,74.0,16875.0,['SVO.svo_perm'],['SOV.svo_perm'],[32000],S,1000,75
-svo_perm,M_SVO_SOV_32.0k,SVO_SOV_32.0k,M,25.0,61.2,8625.0,['SVO.svo_perm'],['SOV.svo_perm'],[32000],M,1000,75
-svo_perm,S_SVO_VOS_32.0k,SVO_VOS_32.0k,S,59.9,76.6,19050.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],S,1000,75
-svo_perm,M_SVO_VOS_32.0k,SVO_VOS_32.0k,M,24.2,64.1,8250.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],M,1000,75
-svo_perm,S_SVO_VSO_32.0k,SVO_VSO_32.0k,S,54.1,76.0,19866.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],S,1000,75
-svo_perm,M_SVO_VSO_32.0k,SVO_VSO_32.0k,M,52.3,74.6,29029.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],M,1000,75
+exp_name,work_dir,dataset_name,model_name,bleu,chrF2,num_steps,src,tgt,corp_lens,model_arch,num_epochs,patience,trained,is_multi,corpus_len,norm_steps,model
+svo_perm,XS_OSV_OVS_1.0k,OSV_OVS_1.0k,XS,9.2,44.7,2460.0,['OSV.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.46,transformer_iwslt_de_en
+svo_perm,XS_OSV_SOV_1.0k,OSV_SOV_1.0k,XS,7.4,44.3,1797.0,['OSV.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75,True,False,1000,1.797,transformer_iwslt_de_en
+svo_perm,XS_OSV_SVO_1.0k,OSV_SVO_1.0k,XS,9.0,48.5,2487.0,['OSV.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.487,transformer_iwslt_de_en
+svo_perm,XS_OSV_VOS_1.0k,OSV_VOS_1.0k,XS,11.5,48.1,2079.0,['OSV.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.079,transformer_iwslt_de_en
+svo_perm,XS_OSV_VSO_1.0k,OSV_VSO_1.0k,XS,12.7,48.4,1755.0,['OSV.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75,True,False,1000,1.755,transformer_iwslt_de_en
+svo_perm,XS_OVS_OSV_1.0k,OVS_OSV_1.0k,XS,6.4,44.1,1677.0,['OVS.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75,True,False,1000,1.677,transformer_iwslt_de_en
+svo_perm,XS_OVS_SOV_1.0k,OVS_SOV_1.0k,XS,4.1,6.9,399.0,['OVS.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75,True,False,1000,0.399,transformer_iwslt_de_en
+svo_perm,XS_OVS_SVO_1.0k,OVS_SVO_1.0k,XS,10.9,47.0,2700.0,['OVS.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.7,transformer_iwslt_de_en
+svo_perm,XS_OVS_VOS_1.0k,OVS_VOS_1.0k,XS,13.1,49.8,2991.0,['OVS.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.991,transformer_iwslt_de_en
+svo_perm,XS_OVS_VSO_1.0k,OVS_VSO_1.0k,XS,12.1,50.6,2640.0,['OVS.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.64,transformer_iwslt_de_en
+svo_perm,XS_SOV_OSV_1.0k,SOV_OSV_1.0k,XS,8.1,42.4,2232.0,['SOV.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75,True,False,1000,2.232,transformer_iwslt_de_en
+svo_perm,XS_SOV_OVS_1.0k,SOV_OVS_1.0k,XS,11.5,45.8,2172.0,['SOV.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.172,transformer_iwslt_de_en
+svo_perm,XS_SOV_SVO_1.0k,SOV_SVO_1.0k,XS,9.4,46.7,2133.0,['SOV.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.133,transformer_iwslt_de_en
+svo_perm,XS_SOV_VOS_1.0k,SOV_VOS_1.0k,XS,11.3,50.2,2511.0,['SOV.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.511,transformer_iwslt_de_en
+svo_perm,XS_SOV_VSO_1.0k,SOV_VSO_1.0k,XS,10.4,49.6,2144.0,['SOV.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.144,transformer_iwslt_de_en
+svo_perm,XS_SVO_OSV_1.0k,SVO_OSV_1.0k,XS,7.9,42.6,2696.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75,True,False,1000,2.696,transformer_iwslt_de_en
+svo_perm,XS_SVO_OVS_1.0k,SVO_OVS_1.0k,XS,12.5,45.4,2016.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.016,transformer_iwslt_de_en
+svo_perm,XS_SVO_SOV_1.0k,SVO_SOV_1.0k,XS,2.5,7.3,411.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75,True,False,1000,0.411,transformer_iwslt_de_en
+svo_perm,XS_SVO_VOS_1.0k,SVO_VOS_1.0k,XS,11.9,47.9,2079.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.079,transformer_iwslt_de_en
+svo_perm,XS_SVO_VSO_1.0k,SVO_VSO_1.0k,XS,14.2,49.2,2088.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.088,transformer_iwslt_de_en
+svo_perm,XS_VOS_OSV_1.0k,VOS_OSV_1.0k,XS,9.5,46.7,2272.0,['VOS.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75,True,False,1000,2.272,transformer_iwslt_de_en
+svo_perm,XS_VOS_OVS_1.0k,VOS_OVS_1.0k,XS,11.6,48.3,1953.0,['VOS.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75,True,False,1000,1.953,transformer_iwslt_de_en
+svo_perm,XS_VOS_SOV_1.0k,VOS_SOV_1.0k,XS,5.1,25.3,828.0,['VOS.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75,True,False,1000,0.828,transformer_iwslt_de_en
+svo_perm,XS_VOS_SVO_1.0k,VOS_SVO_1.0k,XS,10.4,48.8,2244.0,['VOS.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.244,transformer_iwslt_de_en
+svo_perm,XS_VOS_VSO_1.0k,VOS_VSO_1.0k,XS,10.5,51.1,2154.0,['VOS.svo_perm'],['VSO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.154,transformer_iwslt_de_en
+svo_perm,XS_VSO_OSV_1.0k,VSO_OSV_1.0k,XS,8.2,44.9,2200.0,['VSO.svo_perm'],['OSV.svo_perm'],[1000],XS,1000,75,True,False,1000,2.2,transformer_iwslt_de_en
+svo_perm,XS_VSO_OVS_1.0k,VSO_OVS_1.0k,XS,10.2,45.9,2092.0,['VSO.svo_perm'],['OVS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.092,transformer_iwslt_de_en
+svo_perm,XS_VSO_SOV_1.0k,VSO_SOV_1.0k,XS,9.1,46.6,2400.0,['VSO.svo_perm'],['SOV.svo_perm'],[1000],XS,1000,75,True,False,1000,2.4,transformer_iwslt_de_en
+svo_perm,XS_VSO_SVO_1.0k,VSO_SVO_1.0k,XS,10.4,48.5,2118.0,['VSO.svo_perm'],['SVO.svo_perm'],[1000],XS,1000,75,True,False,1000,2.118,transformer_iwslt_de_en
+svo_perm,XS_VSO_VOS_1.0k,VSO_VOS_1.0k,XS,12.0,51.8,2211.0,['VSO.svo_perm'],['VOS.svo_perm'],[1000],XS,1000,75,True,False,1000,2.211,transformer_iwslt_de_en
+svo_perm,XS_OSV_OVS_2.0k,OSV_OVS_2.0k,XS,28.9,59.9,3990.0,['OSV.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75,True,False,2000,1.995,transformer_iwslt_de_en
+svo_perm,XS_OSV_SOV_2.0k,OSV_SOV_2.0k,XS,20.3,56.1,2802.0,['OSV.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.401,transformer_iwslt_de_en
+svo_perm,XS_OSV_SVO_2.0k,OSV_SVO_2.0k,XS,30.2,61.4,4254.0,['OSV.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75,True,False,2000,2.127,transformer_iwslt_de_en
+svo_perm,XS_OSV_VOS_2.0k,OSV_VOS_2.0k,XS,28.7,61.5,3192.0,['OSV.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75,True,False,2000,1.596,transformer_iwslt_de_en
+svo_perm,XS_OSV_VSO_2.0k,OSV_VSO_2.0k,XS,28.8,61.5,3852.0,['OSV.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.926,transformer_iwslt_de_en
+svo_perm,XS_OVS_OSV_2.0k,OVS_OSV_2.0k,XS,21.2,57.1,3462.0,['OVS.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.731,transformer_iwslt_de_en
+svo_perm,XS_OVS_SOV_2.0k,OVS_SOV_2.0k,XS,19.8,54.9,2694.0,['OVS.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.347,transformer_iwslt_de_en
+svo_perm,XS_OVS_SVO_2.0k,OVS_SVO_2.0k,XS,29.8,60.7,4182.0,['OVS.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75,True,False,2000,2.091,transformer_iwslt_de_en
+svo_perm,XS_OVS_VOS_2.0k,OVS_VOS_2.0k,XS,29.1,61.4,4026.0,['OVS.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75,True,False,2000,2.013,transformer_iwslt_de_en
+svo_perm,XS_OVS_VSO_2.0k,OVS_VSO_2.0k,XS,27.2,56.9,2496.0,['OVS.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.248,transformer_iwslt_de_en
+svo_perm,XS_SOV_OSV_2.0k,SOV_OSV_2.0k,XS,21.3,57.4,3012.0,['SOV.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.506,transformer_iwslt_de_en
+svo_perm,XS_SOV_OVS_2.0k,SOV_OVS_2.0k,XS,26.5,59.0,3360.0,['SOV.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75,True,False,2000,1.68,transformer_iwslt_de_en
+svo_perm,XS_SOV_SVO_2.0k,SOV_SVO_2.0k,XS,27.8,59.5,2916.0,['SOV.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.458,transformer_iwslt_de_en
+svo_perm,XS_SOV_VOS_2.0k,SOV_VOS_2.0k,XS,27.5,60.8,3978.0,['SOV.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75,True,False,2000,1.989,transformer_iwslt_de_en
+svo_perm,XS_SOV_VSO_2.0k,SOV_VSO_2.0k,XS,26.8,61.1,2928.0,['SOV.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.464,transformer_iwslt_de_en
+svo_perm,XS_SVO_OSV_2.0k,SVO_OSV_2.0k,XS,22.7,57.6,3948.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.974,transformer_iwslt_de_en
+svo_perm,XS_SVO_OVS_2.0k,SVO_OVS_2.0k,XS,29.4,59.9,4428.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75,True,False,2000,2.214,transformer_iwslt_de_en
+svo_perm,XS_SVO_SOV_2.0k,SVO_SOV_2.0k,XS,20.2,54.4,2514.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.257,transformer_iwslt_de_en
+svo_perm,XS_SVO_VOS_2.0k,SVO_VOS_2.0k,XS,28.3,60.7,4212.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75,True,False,2000,2.106,transformer_iwslt_de_en
+svo_perm,XS_SVO_VSO_2.0k,SVO_VSO_2.0k,XS,30.1,61.6,3786.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.893,transformer_iwslt_de_en
+svo_perm,XS_VOS_OSV_2.0k,VOS_OSV_2.0k,XS,21.5,58.5,3582.0,['VOS.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.791,transformer_iwslt_de_en
+svo_perm,XS_VOS_OVS_2.0k,VOS_OVS_2.0k,XS,27.9,60.6,3960.0,['VOS.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75,True,False,2000,1.98,transformer_iwslt_de_en
+svo_perm,XS_VOS_SOV_2.0k,VOS_SOV_2.0k,XS,21.2,56.1,3012.0,['VOS.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.506,transformer_iwslt_de_en
+svo_perm,XS_VOS_SVO_2.0k,VOS_SVO_2.0k,XS,31.8,58.5,3810.0,['VOS.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.905,transformer_iwslt_de_en
+svo_perm,XS_VOS_VSO_2.0k,VOS_VSO_2.0k,XS,28.4,61.2,3912.0,['VOS.svo_perm'],['VSO.svo_perm'],[2000],XS,1000,75,True,False,2000,1.956,transformer_iwslt_de_en
+svo_perm,XS_VSO_OSV_2.0k,VSO_OSV_2.0k,XS,25.1,59.3,4266.0,['VSO.svo_perm'],['OSV.svo_perm'],[2000],XS,1000,75,True,False,2000,2.133,transformer_iwslt_de_en
+svo_perm,XS_VSO_OVS_2.0k,VSO_OVS_2.0k,XS,26.6,59.9,3180.0,['VSO.svo_perm'],['OVS.svo_perm'],[2000],XS,1000,75,True,False,2000,1.59,transformer_iwslt_de_en
+svo_perm,XS_VSO_SOV_2.0k,VSO_SOV_2.0k,XS,19.7,56.3,2682.0,['VSO.svo_perm'],['SOV.svo_perm'],[2000],XS,1000,75,True,False,2000,1.341,transformer_iwslt_de_en
+svo_perm,XS_VSO_SVO_2.0k,VSO_SVO_2.0k,XS,30.1,61.5,5526.0,['VSO.svo_perm'],['SVO.svo_perm'],[2000],XS,1000,75,True,False,2000,2.763,transformer_iwslt_de_en
+svo_perm,XS_VSO_VOS_2.0k,VSO_VOS_2.0k,XS,27.6,61.7,4110.0,['VSO.svo_perm'],['VOS.svo_perm'],[2000],XS,1000,75,True,False,2000,2.055,transformer_iwslt_de_en
+svo_perm,XS_OSV_OVS_4.0k,OSV_OVS_4.0k,XS,36.3,63.3,5720.0,['OSV.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.43,transformer_iwslt_de_en
+svo_perm,XS_OSV_SOV_4.0k,OSV_SOV_4.0k,XS,27.8,60.4,6516.0,['OSV.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.629,transformer_iwslt_de_en
+svo_perm,XS_OSV_SVO_4.0k,OSV_SVO_4.0k,XS,37.3,64.3,6006.0,['OSV.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.5015,transformer_iwslt_de_en
+svo_perm,XS_OSV_VOS_4.0k,OSV_VOS_4.0k,XS,35.7,64.4,5643.0,['OSV.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.41075,transformer_iwslt_de_en
+svo_perm,XS_OSV_VSO_4.0k,OSV_VSO_4.0k,XS,36.3,64.3,5196.0,['OSV.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.299,transformer_iwslt_de_en
+svo_perm,XS_OVS_OSV_4.0k,OVS_OSV_4.0k,XS,29.0,61.2,4444.0,['OVS.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.111,transformer_iwslt_de_en
+svo_perm,XS_OVS_SOV_4.0k,OVS_SOV_4.0k,XS,28.7,60.7,5027.0,['OVS.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.25675,transformer_iwslt_de_en
+svo_perm,XS_OVS_SVO_4.0k,OVS_SVO_4.0k,XS,37.0,64.0,6193.0,['OVS.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.54825,transformer_iwslt_de_en
+svo_perm,XS_OVS_VOS_4.0k,OVS_VOS_4.0k,XS,35.8,63.6,6457.0,['OVS.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.61425,transformer_iwslt_de_en
+svo_perm,XS_OVS_VSO_4.0k,OVS_VSO_4.0k,XS,36.9,65.1,7752.0,['OVS.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.938,transformer_iwslt_de_en
+svo_perm,XS_SOV_OSV_4.0k,SOV_OSV_4.0k,XS,28.1,60.5,4532.0,['SOV.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.133,transformer_iwslt_de_en
+svo_perm,XS_SOV_OVS_4.0k,SOV_OVS_4.0k,XS,35.5,63.4,5522.0,['SOV.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.3805,transformer_iwslt_de_en
+svo_perm,XS_SOV_SVO_4.0k,SOV_SVO_4.0k,XS,36.6,63.9,6348.0,['SOV.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.587,transformer_iwslt_de_en
+svo_perm,XS_SOV_VOS_4.0k,SOV_VOS_4.0k,XS,36.8,64.1,5643.0,['SOV.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.41075,transformer_iwslt_de_en
+svo_perm,XS_SOV_VSO_4.0k,SOV_VSO_4.0k,XS,36.0,64.7,6996.0,['SOV.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.749,transformer_iwslt_de_en
+svo_perm,XS_SVO_OSV_4.0k,SVO_OSV_4.0k,XS,28.6,60.8,6336.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.584,transformer_iwslt_de_en
+svo_perm,XS_SVO_OVS_4.0k,SVO_OVS_4.0k,XS,36.7,63.2,5962.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.4905,transformer_iwslt_de_en
+svo_perm,XS_SVO_SOV_4.0k,SVO_SOV_4.0k,XS,28.1,59.5,7032.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.758,transformer_iwslt_de_en
+svo_perm,XS_SVO_VOS_4.0k,SVO_VOS_4.0k,XS,35.1,63.4,6644.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.661,transformer_iwslt_de_en
+svo_perm,XS_SVO_VSO_4.0k,SVO_VSO_4.0k,XS,36.2,64.0,4510.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.1275,transformer_iwslt_de_en
+svo_perm,XS_VOS_OSV_4.0k,VOS_OSV_4.0k,XS,29.4,61.6,5621.0,['VOS.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.40525,transformer_iwslt_de_en
+svo_perm,XS_VOS_OVS_4.0k,VOS_OVS_4.0k,XS,36.4,63.8,5962.0,['VOS.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.4905,transformer_iwslt_de_en
+svo_perm,XS_VOS_SOV_4.0k,VOS_SOV_4.0k,XS,28.9,60.7,5368.0,['VOS.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.342,transformer_iwslt_de_en
+svo_perm,XS_VOS_SVO_4.0k,VOS_SVO_4.0k,XS,37.9,64.8,6072.0,['VOS.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.518,transformer_iwslt_de_en
+svo_perm,XS_VOS_VSO_4.0k,VOS_VSO_4.0k,XS,36.8,64.7,6149.0,['VOS.svo_perm'],['VSO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.53725,transformer_iwslt_de_en
+svo_perm,XS_VSO_OSV_4.0k,VSO_OSV_4.0k,XS,28.9,61.5,6633.0,['VSO.svo_perm'],['OSV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.65825,transformer_iwslt_de_en
+svo_perm,XS_VSO_OVS_4.0k,VSO_OVS_4.0k,XS,35.9,63.4,5610.0,['VSO.svo_perm'],['OVS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.4025,transformer_iwslt_de_en
+svo_perm,XS_VSO_SOV_4.0k,VSO_SOV_4.0k,XS,28.8,60.7,5423.0,['VSO.svo_perm'],['SOV.svo_perm'],[4000],XS,1000,75,True,False,4000,1.35575,transformer_iwslt_de_en
+svo_perm,XS_VSO_SVO_4.0k,VSO_SVO_4.0k,XS,36.2,64.2,6325.0,['VSO.svo_perm'],['SVO.svo_perm'],[4000],XS,1000,75,True,False,4000,1.58125,transformer_iwslt_de_en
+svo_perm,XS_VSO_VOS_4.0k,VSO_VOS_4.0k,XS,35.1,64.0,7425.0,['VSO.svo_perm'],['VOS.svo_perm'],[4000],XS,1000,75,True,False,4000,1.85625,transformer_iwslt_de_en
+svo_perm,XS_OSV_OVS_8.0k,OSV_OVS_8.0k,XS,45.8,68.8,9840.0,['OSV.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.23,transformer_iwslt_de_en
+svo_perm,XS_OSV_SOV_8.0k,OSV_SOV_8.0k,XS,37.3,66.5,10480.0,['OSV.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.31,transformer_iwslt_de_en
+svo_perm,XS_OSV_SVO_8.0k,OSV_SVO_8.0k,XS,44.6,69.6,10020.0,['OSV.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.2525,transformer_iwslt_de_en
+svo_perm,XS_OSV_VOS_8.0k,OSV_VOS_8.0k,XS,46.2,69.8,10040.0,['OSV.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.255,transformer_iwslt_de_en
+svo_perm,XS_OSV_VSO_8.0k,OSV_VSO_8.0k,XS,44.5,69.8,10700.0,['OSV.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.3375,transformer_iwslt_de_en
+svo_perm,XS_OVS_OSV_8.0k,OVS_OSV_8.0k,XS,37.9,67.0,10680.0,['OVS.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.335,transformer_iwslt_de_en
+svo_perm,XS_OVS_SOV_8.0k,OVS_SOV_8.0k,XS,36.6,66.2,13460.0,['OVS.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.6825,transformer_iwslt_de_en
+svo_perm,XS_OVS_SVO_8.0k,OVS_SVO_8.0k,XS,45.9,69.6,10140.0,['OVS.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.2675,transformer_iwslt_de_en
+svo_perm,XS_OVS_VOS_8.0k,OVS_VOS_8.0k,XS,46.0,69.6,8500.0,['OVS.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.0625,transformer_iwslt_de_en
+svo_perm,XS_OVS_VSO_8.0k,OVS_VSO_8.0k,XS,43.1,69.7,8120.0,['OVS.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.015,transformer_iwslt_de_en
+svo_perm,XS_SOV_OSV_8.0k,SOV_OSV_8.0k,XS,37.0,66.5,11120.0,['SOV.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.39,transformer_iwslt_de_en
+svo_perm,XS_SOV_OVS_8.0k,SOV_OVS_8.0k,XS,44.9,68.5,9560.0,['SOV.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.195,transformer_iwslt_de_en
+svo_perm,XS_SOV_SVO_8.0k,SOV_SVO_8.0k,XS,44.5,69.4,10340.0,['SOV.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.2925,transformer_iwslt_de_en
+svo_perm,XS_SOV_VOS_8.0k,SOV_VOS_8.0k,XS,45.4,69.3,7480.0,['SOV.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75,True,False,8000,0.935,transformer_iwslt_de_en
+svo_perm,XS_SOV_VSO_8.0k,SOV_VSO_8.0k,XS,43.8,69.2,14760.0,['SOV.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.845,transformer_iwslt_de_en
+svo_perm,XS_SVO_OSV_8.0k,SVO_OSV_8.0k,XS,36.3,65.9,8640.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.08,transformer_iwslt_de_en
+svo_perm,XS_SVO_OVS_8.0k,SVO_OVS_8.0k,XS,45.2,68.4,8980.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.1225,transformer_iwslt_de_en
+svo_perm,XS_SVO_SOV_8.0k,SVO_SOV_8.0k,XS,36.6,65.8,10731.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.341375,transformer_iwslt_de_en
+svo_perm,XS_SVO_VOS_8.0k,SVO_VOS_8.0k,XS,44.3,69.0,9786.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.22325,transformer_iwslt_de_en
+svo_perm,XS_SVO_VSO_8.0k,SVO_VSO_8.0k,XS,43.1,68.9,5103.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75,True,False,8000,0.637875,transformer_iwslt_de_en
+svo_perm,XS_VOS_OSV_8.0k,VOS_OSV_8.0k,XS,38.3,67.1,9440.0,['VOS.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.18,transformer_iwslt_de_en
+svo_perm,XS_VOS_OVS_8.0k,VOS_OVS_8.0k,XS,45.4,68.7,13650.0,['VOS.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.70625,transformer_iwslt_de_en
+svo_perm,XS_VOS_SOV_8.0k,VOS_SOV_8.0k,XS,36.8,66.7,14595.0,['VOS.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.824375,transformer_iwslt_de_en
+svo_perm,XS_VOS_SVO_8.0k,VOS_SVO_8.0k,XS,44.9,69.8,10380.0,['VOS.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.2975,transformer_iwslt_de_en
+svo_perm,XS_VOS_VSO_8.0k,VOS_VSO_8.0k,XS,43.4,69.8,11970.0,['VOS.svo_perm'],['VSO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.49625,transformer_iwslt_de_en
+svo_perm,XS_VSO_OSV_8.0k,VSO_OSV_8.0k,XS,37.1,67.0,11000.0,['VSO.svo_perm'],['OSV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.375,transformer_iwslt_de_en
+svo_perm,XS_VSO_OVS_8.0k,VSO_OVS_8.0k,XS,44.8,68.9,8100.0,['VSO.svo_perm'],['OVS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.0125,transformer_iwslt_de_en
+svo_perm,XS_VSO_SOV_8.0k,VSO_SOV_8.0k,XS,35.2,65.6,8980.0,['VSO.svo_perm'],['SOV.svo_perm'],[8000],XS,1000,75,True,False,8000,1.1225,transformer_iwslt_de_en
+svo_perm,XS_VSO_SVO_8.0k,VSO_SVO_8.0k,XS,42.9,68.7,14154.0,['VSO.svo_perm'],['SVO.svo_perm'],[8000],XS,1000,75,True,False,8000,1.76925,transformer_iwslt_de_en
+svo_perm,XS_VSO_VOS_8.0k,VSO_VOS_8.0k,XS,44.4,69.2,10360.0,['VSO.svo_perm'],['VOS.svo_perm'],[8000],XS,1000,75,True,False,8000,1.295,transformer_iwslt_de_en
+svo_perm,XS_OSV_OVS_16.0k,OSV_OVS_16.0k,XS,51.0,71.6,21294.0,['OSV.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75,True,False,16000,1.330875,transformer_iwslt_de_en
+svo_perm,XS_OSV_SOV_16.0k,OSV_SOV_16.0k,XS,41.9,69.1,18915.0,['OSV.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75,True,False,16000,1.1821875,transformer_iwslt_de_en
+svo_perm,XS_OSV_SVO_16.0k,OSV_SVO_16.0k,XS,48.9,72.0,,['OSV.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75,True,False,16000,,transformer_iwslt_de_en
+svo_perm,XS_OSV_VOS_16.0k,OSV_VOS_16.0k,XS,51.1,72.2,,['OSV.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75,True,False,16000,,transformer_iwslt_de_en
+svo_perm,XS_OSV_VSO_16.0k,OSV_VSO_16.0k,XS,47.7,72.0,12285.0,['OSV.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.7678125,transformer_iwslt_de_en
+svo_perm,XS_OVS_OSV_16.0k,OVS_OSV_16.0k,XS,42.0,69.2,12207.0,['OVS.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75,True,False,16000,0.7629375,transformer_iwslt_de_en
+svo_perm,XS_OVS_SOV_16.0k,OVS_SOV_16.0k,XS,42.4,69.3,12464.0,['OVS.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75,True,False,16000,0.779,transformer_iwslt_de_en
+svo_perm,XS_OVS_SVO_16.0k,OVS_SVO_16.0k,XS,48.7,71.8,15756.0,['OVS.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.98475,transformer_iwslt_de_en
+svo_perm,XS_OVS_VOS_16.0k,OVS_VOS_16.0k,XS,51.0,72.1,12831.0,['OVS.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75,True,False,16000,0.8019375,transformer_iwslt_de_en
+svo_perm,XS_OVS_VSO_16.0k,OVS_VSO_16.0k,XS,47.4,71.6,12441.0,['OVS.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.7775625,transformer_iwslt_de_en
+svo_perm,XS_SOV_OSV_16.0k,SOV_OSV_16.0k,XS,41.5,68.7,16692.0,['SOV.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75,True,False,16000,1.04325,transformer_iwslt_de_en
+svo_perm,XS_SOV_OVS_16.0k,SOV_OVS_16.0k,XS,49.7,70.7,13923.0,['SOV.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75,True,False,16000,0.8701875,transformer_iwslt_de_en
+svo_perm,XS_SOV_SVO_16.0k,SOV_SVO_16.0k,XS,48.0,71.8,15483.0,['SOV.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.9676875,transformer_iwslt_de_en
+svo_perm,XS_SOV_VOS_16.0k,SOV_VOS_16.0k,XS,49.3,71.6,12480.0,['SOV.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75,True,False,16000,0.78,transformer_iwslt_de_en
+svo_perm,XS_SOV_VSO_16.0k,SOV_VSO_16.0k,XS,46.9,71.7,13065.0,['SOV.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.8165625,transformer_iwslt_de_en
+svo_perm,XS_SVO_OSV_16.0k,SVO_OSV_16.0k,XS,41.9,69.1,18564.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75,True,False,16000,1.16025,transformer_iwslt_de_en
+svo_perm,XS_SVO_OVS_16.0k,SVO_OVS_16.0k,XS,49.6,70.7,14898.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75,True,False,16000,0.931125,transformer_iwslt_de_en
+svo_perm,XS_SVO_SOV_16.0k,SVO_SOV_16.0k,XS,40.8,68.2,11895.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75,True,False,16000,0.7434375,transformer_iwslt_de_en
+svo_perm,XS_SVO_VOS_16.0k,SVO_VOS_16.0k,XS,49.6,71.6,14972.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75,True,False,16000,0.93575,transformer_iwslt_de_en
+svo_perm,XS_SVO_VSO_16.0k,SVO_VSO_16.0k,XS,46.3,71.0,13440.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.84,transformer_iwslt_de_en
+svo_perm,XS_VOS_OSV_16.0k,VOS_OSV_16.0k,XS,42.0,69.3,18954.0,['VOS.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75,True,False,16000,1.184625,transformer_iwslt_de_en
+svo_perm,XS_VOS_OVS_16.0k,VOS_OVS_16.0k,XS,50.5,71.1,19578.0,['VOS.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75,True,False,16000,1.223625,transformer_iwslt_de_en
+svo_perm,XS_VOS_SOV_16.0k,VOS_SOV_16.0k,XS,41.1,69.1,19851.0,['VOS.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75,True,False,16000,1.2406875,transformer_iwslt_de_en
+svo_perm,XS_VOS_SVO_16.0k,VOS_SVO_16.0k,XS,48.3,71.9,27027.0,['VOS.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75,True,False,16000,1.6891875,transformer_iwslt_de_en
+svo_perm,XS_VOS_VSO_16.0k,VOS_VSO_16.0k,XS,47.5,71.9,14937.0,['VOS.svo_perm'],['VSO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.9335625,transformer_iwslt_de_en
+svo_perm,XS_VSO_OSV_16.0k,VSO_OSV_16.0k,XS,41.1,69.0,19929.0,['VSO.svo_perm'],['OSV.svo_perm'],[16000],XS,1000,75,True,False,16000,1.2455625,transformer_iwslt_de_en
+svo_perm,XS_VSO_OVS_16.0k,VSO_OVS_16.0k,XS,48.7,70.9,16185.0,['VSO.svo_perm'],['OVS.svo_perm'],[16000],XS,1000,75,True,False,16000,1.0115625,transformer_iwslt_de_en
+svo_perm,XS_VSO_SOV_16.0k,VSO_SOV_16.0k,XS,40.2,68.5,13455.0,['VSO.svo_perm'],['SOV.svo_perm'],[16000],XS,1000,75,True,False,16000,0.8409375,transformer_iwslt_de_en
+svo_perm,XS_VSO_SVO_16.0k,VSO_SVO_16.0k,XS,47.3,71.4,12760.0,['VSO.svo_perm'],['SVO.svo_perm'],[16000],XS,1000,75,True,False,16000,0.7975,transformer_iwslt_de_en
+svo_perm,XS_VSO_VOS_16.0k,VSO_VOS_16.0k,XS,48.9,71.5,13260.0,['VSO.svo_perm'],['VOS.svo_perm'],[16000],XS,1000,75,True,False,16000,0.82875,transformer_iwslt_de_en
+svo_perm,XS_OSV_OVS_32.0k,OSV_OVS_32.0k,XS,60.6,76.5,37800.0,['OSV.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75,True,False,32000,1.18125,transformer_iwslt_de_en
+svo_perm,XS_OSV_SOV_32.0k,OSV_SOV_32.0k,XS,51.3,74.4,35775.0,['OSV.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.11796875,transformer_iwslt_de_en
+svo_perm,XS_OSV_SVO_32.0k,OSV_SVO_32.0k,XS,56.1,76.4,31950.0,['OSV.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.9984375,transformer_iwslt_de_en
+svo_perm,XS_OSV_VOS_32.0k,OSV_VOS_32.0k,XS,60.5,76.9,30600.0,['OSV.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.95625,transformer_iwslt_de_en
+svo_perm,XS_OSV_VSO_32.0k,OSV_VSO_32.0k,XS,54.8,76.3,23550.0,['OSV.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.7359375,transformer_iwslt_de_en
+svo_perm,XS_OVS_OSV_32.0k,OVS_OSV_32.0k,XS,51.5,74.6,36778.0,['OVS.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.1493125,transformer_iwslt_de_en
+svo_perm,XS_OVS_SOV_32.0k,OVS_SOV_32.0k,XS,51.2,74.3,36112.0,['OVS.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.1285,transformer_iwslt_de_en
+svo_perm,XS_OVS_SVO_32.0k,OVS_SVO_32.0k,XS,56.3,76.5,30044.0,['OVS.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.938875,transformer_iwslt_de_en
+svo_perm,XS_OVS_VOS_32.0k,OVS_VOS_32.0k,XS,60.4,76.8,19875.0,['OVS.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.62109375,transformer_iwslt_de_en
+svo_perm,XS_OVS_VSO_32.0k,OVS_VSO_32.0k,XS,54.8,76.4,21600.0,['OVS.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.675,transformer_iwslt_de_en
+svo_perm,XS_SOV_OSV_32.0k,SOV_OSV_32.0k,XS,50.3,73.9,32925.0,['SOV.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.02890625,transformer_iwslt_de_en
+svo_perm,XS_SOV_OVS_32.0k,SOV_OVS_32.0k,XS,59.1,75.9,31450.0,['SOV.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.9828125,transformer_iwslt_de_en
+svo_perm,XS_SOV_SVO_32.0k,SOV_SVO_32.0k,XS,55.5,76.1,22350.0,['SOV.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.6984375,transformer_iwslt_de_en
+svo_perm,XS_SOV_VOS_32.0k,SOV_VOS_32.0k,XS,59.9,76.6,26250.0,['SOV.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.8203125,transformer_iwslt_de_en
+svo_perm,XS_SOV_VSO_32.0k,SOV_VSO_32.0k,XS,54.1,75.9,20400.0,['SOV.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.6375,transformer_iwslt_de_en
+svo_perm,XS_SVO_OSV_32.0k,SVO_OSV_32.0k,XS,51.2,74.6,32475.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.01484375,transformer_iwslt_de_en
+svo_perm,XS_SVO_OVS_32.0k,SVO_OVS_32.0k,XS,60.3,76.4,39220.0,['SVO.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75,True,False,32000,1.225625,transformer_iwslt_de_en
+svo_perm,XS_SVO_SOV_32.0k,SVO_SOV_32.0k,XS,50.9,74.2,28500.0,['SVO.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75,True,False,32000,0.890625,transformer_iwslt_de_en
+svo_perm,XS_SVO_VOS_32.0k,SVO_VOS_32.0k,XS,60.0,76.8,30150.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.9421875,transformer_iwslt_de_en
+svo_perm,XS_SVO_VSO_32.0k,SVO_VSO_32.0k,XS,54.1,76.0,24948.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.779625,transformer_iwslt_de_en
+svo_perm,XS_VOS_OSV_32.0k,VOS_OSV_32.0k,XS,51.0,74.4,38776.0,['VOS.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.21175,transformer_iwslt_de_en
+svo_perm,XS_VOS_OVS_32.0k,VOS_OVS_32.0k,XS,60.0,76.3,29475.0,['VOS.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.92109375,transformer_iwslt_de_en
+svo_perm,XS_VOS_SOV_32.0k,VOS_SOV_32.0k,XS,50.7,74.2,31800.0,['VOS.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75,True,False,32000,0.99375,transformer_iwslt_de_en
+svo_perm,XS_VOS_SVO_32.0k,VOS_SVO_32.0k,XS,55.5,76.2,39960.0,['VOS.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75,True,False,32000,1.24875,transformer_iwslt_de_en
+svo_perm,XS_VOS_VSO_32.0k,VOS_VSO_32.0k,XS,54.2,76.1,26775.0,['VOS.svo_perm'],['VSO.svo_perm'],[32000],XS,1000,75,True,False,32000,0.83671875,transformer_iwslt_de_en
+svo_perm,XS_VSO_OSV_32.0k,VSO_OSV_32.0k,XS,50.5,74.2,47700.0,['VSO.svo_perm'],['OSV.svo_perm'],[32000],XS,1000,75,True,False,32000,1.490625,transformer_iwslt_de_en
+svo_perm,XS_VSO_OVS_32.0k,VSO_OVS_32.0k,XS,59.3,76.2,28575.0,['VSO.svo_perm'],['OVS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.89296875,transformer_iwslt_de_en
+svo_perm,XS_VSO_SOV_32.0k,VSO_SOV_32.0k,XS,49.8,73.8,30900.0,['VSO.svo_perm'],['SOV.svo_perm'],[32000],XS,1000,75,True,False,32000,0.965625,transformer_iwslt_de_en
+svo_perm,XS_VSO_SVO_32.0k,VSO_SVO_32.0k,XS,55.4,76.2,32452.0,['VSO.svo_perm'],['SVO.svo_perm'],[32000],XS,1000,75,True,False,32000,1.014125,transformer_iwslt_de_en
+svo_perm,XS_VSO_VOS_32.0k,VSO_VOS_32.0k,XS,59.8,76.7,21675.0,['VSO.svo_perm'],['VOS.svo_perm'],[32000],XS,1000,75,True,False,32000,0.67734375,transformer_iwslt_de_en
+num_lang,XS_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,XS,28.2,47.2,24320.0,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",XS,1000,75,True,True,32000,0.76,transformer_iwslt_de_en
+num_lang,S_SVO_OSV_1_32.0k,SVO_OSV_1_32.0k,S,27.3,46.5,18080.0,"['SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm']","[16000, 16000]",S,1000,75,True,True,32000,0.565,transformer
+num_lang,XS_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,XS,22.9,39.9,17712.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",XS,1000,75,True,True,32000,0.5535,transformer_iwslt_de_en
+num_lang,S_SVO_OSV_2_32.0k,SVO_OSV_2_32.0k,S,23.1,40.1,18532.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm']","[16000, 8000, 8000]",S,1000,75,True,True,32000,0.579125,transformer
+num_lang,XS_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,XS,20.7,38.9,23800.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",XS,1000,75,True,True,32000,0.74375,transformer_iwslt_de_en
+num_lang,S_SVO_OSV_3_32.0k,SVO_OSV_3_32.0k,S,17.5,35.5,12750.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm']","[16000, 5333, 5333, 5334]",S,1000,75,True,True,32000,0.3984375,transformer
+num_lang,XS_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,XS,17.5,36.8,16915.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",XS,1000,75,True,True,32000,0.52859375,transformer_iwslt_de_en
+num_lang,S_SVO_OSV_4_32.0k,SVO_OSV_4_32.0k,S,16.6,35.1,18275.0,"['SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm', 'SVO.svo_perm']","['OSV.svo_perm', 'VSO.svo_perm', 'VOS.svo_perm', 'OVS.svo_perm', 'SOV.svo_perm']","[16000, 4000, 4000, 4000, 4000]",S,1000,75,True,True,32000,0.57109375,transformer
+svo_perm_size,S_SVO_OSV_1.0k,SVO_OSV_1.0k,S,6.7,42.4,2064.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],S,1000,75,True,False,1000,2.064,transformer
+svo_perm_size,M_SVO_OSV_1.0k,SVO_OSV_1.0k,M,7.6,43.1,1424.0,['SVO.svo_perm'],['OSV.svo_perm'],[1000],M,1000,75,True,False,1000,1.424,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OVS_1.0k,SVO_OVS_1.0k,S,13.3,48.0,2192.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],S,1000,75,True,False,1000,2.192,transformer
+svo_perm_size,M_SVO_OVS_1.0k,SVO_OVS_1.0k,M,12.2,47.0,2380.0,['SVO.svo_perm'],['OVS.svo_perm'],[1000],M,1000,75,True,False,1000,2.38,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_SOV_1.0k,SVO_SOV_1.0k,S,8.8,43.3,1974.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],S,1000,75,True,False,1000,1.974,transformer
+svo_perm_size,M_SVO_SOV_1.0k,SVO_SOV_1.0k,M,8.8,43.8,1695.0,['SVO.svo_perm'],['SOV.svo_perm'],[1000],M,1000,75,True,False,1000,1.695,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VOS_1.0k,SVO_VOS_1.0k,S,11.7,46.8,1869.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],S,1000,75,True,False,1000,1.869,transformer
+svo_perm_size,M_SVO_VOS_1.0k,SVO_VOS_1.0k,M,12.1,49.7,2040.0,['SVO.svo_perm'],['VOS.svo_perm'],[1000],M,1000,75,True,False,1000,2.04,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VSO_1.0k,SVO_VSO_1.0k,S,14.3,49.0,2324.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],S,1000,75,True,False,1000,2.324,transformer
+svo_perm_size,M_SVO_VSO_1.0k,SVO_VSO_1.0k,M,15.0,47.2,1644.0,['SVO.svo_perm'],['VSO.svo_perm'],[1000],M,1000,75,True,False,1000,1.644,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OSV_2.0k,SVO_OSV_2.0k,S,22.9,57.9,3798.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],S,1000,75,True,False,2000,1.899,transformer
+svo_perm_size,M_SVO_OSV_2.0k,SVO_OSV_2.0k,M,21.1,56.7,2808.0,['SVO.svo_perm'],['OSV.svo_perm'],[2000],M,1000,75,True,False,2000,1.404,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OVS_2.0k,SVO_OVS_2.0k,S,26.8,58.4,3264.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],S,1000,75,True,False,2000,1.632,transformer
+svo_perm_size,M_SVO_OVS_2.0k,SVO_OVS_2.0k,M,26.7,58.7,2850.0,['SVO.svo_perm'],['OVS.svo_perm'],[2000],M,1000,75,True,False,2000,1.425,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_SOV_2.0k,SVO_SOV_2.0k,S,20.4,54.2,2262.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],S,1000,75,True,False,2000,1.131,transformer
+svo_perm_size,M_SVO_SOV_2.0k,SVO_SOV_2.0k,M,20.2,54.4,2418.0,['SVO.svo_perm'],['SOV.svo_perm'],[2000],M,1000,75,True,False,2000,1.209,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VOS_2.0k,SVO_VOS_2.0k,S,25.4,59.5,2700.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],S,1000,75,True,False,2000,1.35,transformer
+svo_perm_size,M_SVO_VOS_2.0k,SVO_VOS_2.0k,M,24.9,59.3,2178.0,['SVO.svo_perm'],['VOS.svo_perm'],[2000],M,1000,75,True,False,2000,1.089,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VSO_2.0k,SVO_VSO_2.0k,S,29.9,60.5,3570.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],S,1000,75,True,False,2000,1.785,transformer
+svo_perm_size,M_SVO_VSO_2.0k,SVO_VSO_2.0k,M,27.3,59.9,2274.0,['SVO.svo_perm'],['VSO.svo_perm'],[2000],M,1000,75,True,False,2000,1.137,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OSV_4.0k,SVO_OSV_4.0k,S,28.4,60.6,4653.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],S,1000,75,True,False,4000,1.16325,transformer
+svo_perm_size,M_SVO_OSV_4.0k,SVO_OSV_4.0k,M,27.1,59.2,4642.0,['SVO.svo_perm'],['OSV.svo_perm'],[4000],M,1000,75,True,False,4000,1.1605,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OVS_4.0k,SVO_OVS_4.0k,S,35.5,63.0,5313.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],S,1000,75,True,False,4000,1.32825,transformer
+svo_perm_size,M_SVO_OVS_4.0k,SVO_OVS_4.0k,M,34.4,61.9,4389.0,['SVO.svo_perm'],['OVS.svo_perm'],[4000],M,1000,75,True,False,4000,1.09725,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_SOV_4.0k,SVO_SOV_4.0k,S,27.3,59.5,5532.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],S,1000,75,True,False,4000,1.383,transformer
+svo_perm_size,M_SVO_SOV_4.0k,SVO_SOV_4.0k,M,23.8,55.9,3360.0,['SVO.svo_perm'],['SOV.svo_perm'],[4000],M,1000,75,True,False,4000,0.84,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VOS_4.0k,SVO_VOS_4.0k,S,36.3,63.7,5368.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],S,1000,75,True,False,4000,1.342,transformer
+svo_perm_size,M_SVO_VOS_4.0k,SVO_VOS_4.0k,M,33.3,62.9,4125.0,['SVO.svo_perm'],['VOS.svo_perm'],[4000],M,1000,75,True,False,4000,1.03125,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VSO_4.0k,SVO_VSO_4.0k,S,36.7,64.3,5181.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],S,1000,75,True,False,4000,1.29525,transformer
+svo_perm_size,M_SVO_VSO_4.0k,SVO_VSO_4.0k,M,36.6,61.6,3058.0,['SVO.svo_perm'],['VSO.svo_perm'],[4000],M,1000,75,True,False,4000,0.7645,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OSV_8.0k,SVO_OSV_8.0k,S,36.3,65.7,6980.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],S,1000,75,True,False,8000,0.8725,transformer
+svo_perm_size,M_SVO_OSV_8.0k,SVO_OSV_8.0k,M,30.3,61.2,5140.0,['SVO.svo_perm'],['OSV.svo_perm'],[8000],M,1000,75,True,False,8000,0.6425,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OVS_8.0k,SVO_OVS_8.0k,S,43.5,67.7,7000.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],S,1000,75,True,False,8000,0.875,transformer
+svo_perm_size,M_SVO_OVS_8.0k,SVO_OVS_8.0k,M,32.5,62.9,6380.0,['SVO.svo_perm'],['OVS.svo_perm'],[8000],M,1000,75,True,False,8000,0.7975,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_SOV_8.0k,SVO_SOV_8.0k,S,34.5,64.7,7308.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],S,1000,75,True,False,8000,0.9135,transformer
+svo_perm_size,M_SVO_SOV_8.0k,SVO_SOV_8.0k,M,28.0,59.2,4536.0,['SVO.svo_perm'],['SOV.svo_perm'],[8000],M,1000,75,True,False,8000,0.567,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VOS_8.0k,SVO_VOS_8.0k,S,44.4,68.7,8043.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],S,1000,75,True,False,8000,1.005375,transformer
+svo_perm_size,M_SVO_VOS_8.0k,SVO_VOS_8.0k,M,30.9,64.7,4683.0,['SVO.svo_perm'],['VOS.svo_perm'],[8000],M,1000,75,True,False,8000,0.585375,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VSO_8.0k,SVO_VSO_8.0k,S,42.3,68.6,7728.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],S,1000,75,True,False,8000,0.966,transformer
+svo_perm_size,M_SVO_VSO_8.0k,SVO_VSO_8.0k,M,41.4,67.4,6783.0,['SVO.svo_perm'],['VSO.svo_perm'],[8000],M,1000,75,True,False,8000,0.847875,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OSV_16.0k,SVO_OSV_16.0k,S,40.9,68.5,12792.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],S,1000,75,True,False,16000,0.7995,transformer
+svo_perm_size,M_SVO_OSV_16.0k,SVO_OSV_16.0k,M,27.7,52.5,5772.0,['SVO.svo_perm'],['OSV.svo_perm'],[16000],M,1000,75,True,False,16000,0.36075,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OVS_16.0k,SVO_OVS_16.0k,S,49.1,70.3,11934.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],S,1000,75,True,False,16000,0.745875,transformer
+svo_perm_size,M_SVO_OVS_16.0k,SVO_OVS_16.0k,M,38.5,65.7,6279.0,['SVO.svo_perm'],['OVS.svo_perm'],[16000],M,1000,75,True,False,16000,0.3924375,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_SOV_16.0k,SVO_SOV_16.0k,S,39.9,67.8,11076.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],S,1000,75,True,False,16000,0.69225,transformer
+svo_perm_size,M_SVO_SOV_16.0k,SVO_SOV_16.0k,M,30.1,64.0,6513.0,['SVO.svo_perm'],['SOV.svo_perm'],[16000],M,1000,75,True,False,16000,0.4070625,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VOS_16.0k,SVO_VOS_16.0k,S,48.5,71.2,12730.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],S,1000,75,True,False,16000,0.795625,transformer
+svo_perm_size,M_SVO_VOS_16.0k,SVO_VOS_16.0k,M,34.9,65.5,5966.0,['SVO.svo_perm'],['VOS.svo_perm'],[16000],M,1000,75,True,False,16000,0.372875,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VSO_16.0k,SVO_VSO_16.0k,S,45.7,70.3,12760.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],S,1000,75,True,False,16000,0.7975,transformer
+svo_perm_size,M_SVO_VSO_16.0k,SVO_VSO_16.0k,M,44.9,70.1,13000.0,['SVO.svo_perm'],['VSO.svo_perm'],[16000],M,1000,75,True,False,16000,0.8125,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OSV_32.0k,SVO_OSV_32.0k,S,51.0,74.4,29250.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],S,1000,75,True,False,32000,0.9140625,transformer
+svo_perm_size,M_SVO_OSV_32.0k,SVO_OSV_32.0k,M,15.2,57.0,8100.0,['SVO.svo_perm'],['OSV.svo_perm'],[32000],M,1000,75,True,False,32000,0.253125,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_OVS_32.0k,SVO_OVS_32.0k,S,60.1,76.3,25086.0,['SVO.svo_perm'],['OVS.svo_perm'],[32000],S,1000,75,True,False,32000,0.7839375,transformer
+svo_perm_size,M_SVO_OVS_32.0k,SVO_OVS_32.0k,M,34.3,65.1,8436.0,['SVO.svo_perm'],['OVS.svo_perm'],[32000],M,1000,75,True,False,32000,0.263625,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_SOV_32.0k,SVO_SOV_32.0k,S,50.6,74.0,16875.0,['SVO.svo_perm'],['SOV.svo_perm'],[32000],S,1000,75,True,False,32000,0.52734375,transformer
+svo_perm_size,M_SVO_SOV_32.0k,SVO_SOV_32.0k,M,25.0,61.2,8625.0,['SVO.svo_perm'],['SOV.svo_perm'],[32000],M,1000,75,True,False,32000,0.26953125,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VOS_32.0k,SVO_VOS_32.0k,S,59.9,76.6,19050.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],S,1000,75,True,False,32000,0.5953125,transformer
+svo_perm_size,M_SVO_VOS_32.0k,SVO_VOS_32.0k,M,24.2,64.1,8250.0,['SVO.svo_perm'],['VOS.svo_perm'],[32000],M,1000,75,True,False,32000,0.2578125,transformer_vaswani_wmt_en_de_big
+svo_perm_size,S_SVO_VSO_32.0k,SVO_VSO_32.0k,S,54.1,76.0,19866.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],S,1000,75,True,False,32000,0.6208125,transformer
+svo_perm_size,M_SVO_VSO_32.0k,SVO_VSO_32.0k,M,52.3,74.6,29029.0,['SVO.svo_perm'],['VSO.svo_perm'],[32000],M,1000,75,True,False,32000,0.90715625,transformer_vaswani_wmt_en_de_big
+basic_multi,XS_en_svo_en_sov_2.0k,en_svo_en_sov_2.0k,XS,35.3,58.3,9900.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[2000],XS,1000,75,True,False,2000,4.95,transformer_iwslt_de_en
+basic_multi,XS_en_svo_fr_en_sov_2.0k,en_svo_fr_en_sov_2.0k,XS,25.3,50.5,9506.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[1000, 1000]",XS,1000,75,True,True,2000,4.753,transformer_iwslt_de_en
+basic_multi,XS_fr_en_sov_2.0k,fr_en_sov_2.0k,XS,28.6,53.1,6258.0,['fr.basic_multi'],['en_sov.basic_multi'],[2000],XS,1000,75,True,False,2000,3.129,transformer_iwslt_de_en
+basic_multi,XS_en_svo_en_sov_4.0k,en_svo_en_sov_4.0k,XS,45.1,63.7,12408.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[4000],XS,1000,75,True,False,4000,3.102,transformer_iwslt_de_en
+basic_multi,XS_en_svo_fr_en_sov_4.0k,en_svo_fr_en_sov_4.0k,XS,40.0,59.3,14210.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[2000, 2000]",XS,1000,75,True,True,4000,3.5525,transformer_iwslt_de_en
+basic_multi,XS_fr_en_sov_4.0k,fr_en_sov_4.0k,XS,43.8,62.7,15912.0,['fr.basic_multi'],['en_sov.basic_multi'],[4000],XS,1000,75,True,False,4000,3.978,transformer_iwslt_de_en
+basic_multi,XS_en_svo_en_sov_8.0k,en_svo_en_sov_8.0k,XS,52.2,69.2,18018.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[8000],XS,1000,75,True,False,8000,2.25225,transformer_iwslt_de_en
+basic_multi,XS_en_svo_fr_en_sov_8.0k,en_svo_fr_en_sov_8.0k,XS,47.5,64.8,17864.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[4000, 4000]",XS,1000,75,True,True,8000,2.233,transformer_iwslt_de_en
+basic_multi,XS_fr_en_sov_8.0k,fr_en_sov_8.0k,XS,50.7,67.4,23961.0,['fr.basic_multi'],['en_sov.basic_multi'],[8000],XS,1000,75,True,False,8000,2.995125,transformer_iwslt_de_en
+basic_multi,XS_en_svo_en_sov_16.0k,en_svo_en_sov_16.0k,XS,56.6,72.8,26649.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[16000],XS,1000,75,True,False,16000,1.6655625,transformer_iwslt_de_en
+basic_multi,XS_en_svo_fr_en_sov_16.0k,en_svo_fr_en_sov_16.0k,XS,52.0,68.5,34239.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[8000, 8000]",XS,1000,75,True,True,16000,2.1399375,transformer_iwslt_de_en
+basic_multi,XS_fr_en_sov_16.0k,fr_en_sov_16.0k,XS,54.8,70.8,30616.0,['fr.basic_multi'],['en_sov.basic_multi'],[16000],XS,1000,75,True,False,16000,1.9135,transformer_iwslt_de_en
+basic_multi,XS_en_svo_en_sov_32.0k,en_svo_en_sov_32.0k,XS,62.2,76.9,67144.0,['en_svo1.basic_multi'],['en_sov.basic_multi'],[32000],XS,1000,75,True,False,32000,2.09825,transformer_iwslt_de_en
+basic_multi,XS_en_svo_fr_en_sov_32.0k,en_svo_fr_en_sov_32.0k,XS,55.5,71.3,59940.0,"['en_svo1.basic_multi', 'fr.basic_multi']","['en_sov.basic_multi', 'en_sov.basic_multi']","[16000, 16000]",XS,1000,75,True,True,32000,1.873125,transformer_iwslt_de_en
+basic_multi,XS_fr_en_sov_32.0k,fr_en_sov_32.0k,XS,60.8,75.5,79048.0,['fr.basic_multi'],['en_sov.basic_multi'],[32000],XS,1000,75,True,False,32000,2.47025,transformer_iwslt_de_en
+switches,XS_en_japn_2.0k,en_japn_2.0k,XS,53.9,67.5,6564.0,['s011101.switches'],['s000000.switches'],[2000],XS,1000,75,True,False,2000,3.282,transformer_iwslt_de_en
+switches,XS_s000001_en_japn_2.0k,s000001_en_japn_2.0k,XS,48.5,65.1,6600.0,"['s011101.switches', 's000001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.3,transformer_iwslt_de_en
+switches,XS_s000010_en_japn_2.0k,s000010_en_japn_2.0k,XS,48.2,65.0,7176.0,"['s011101.switches', 's000010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.588,transformer_iwslt_de_en
+switches,XS_s000011_en_japn_2.0k,s000011_en_japn_2.0k,XS,47.2,64.7,4248.0,"['s011101.switches', 's000011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.124,transformer_iwslt_de_en
+switches,XS_s000100_en_japn_2.0k,s000100_en_japn_2.0k,XS,49.6,65.5,5472.0,"['s011101.switches', 's000100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.736,transformer_iwslt_de_en
+switches,XS_s000101_en_japn_2.0k,s000101_en_japn_2.0k,XS,48.8,65.4,6456.0,"['s011101.switches', 's000101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.228,transformer_iwslt_de_en
+switches,XS_s000110_en_japn_2.0k,s000110_en_japn_2.0k,XS,50.9,66.7,9336.0,"['s011101.switches', 's000110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,4.668,transformer_iwslt_de_en
+switches,XS_s000111_en_japn_2.0k,s000111_en_japn_2.0k,XS,49.0,65.4,7416.0,"['s011101.switches', 's000111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.708,transformer_iwslt_de_en
+switches,XS_s001000_en_japn_2.0k,s001000_en_japn_2.0k,XS,48.7,65.3,5952.0,"['s011101.switches', 's001000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.976,transformer_iwslt_de_en
+switches,XS_s001001_en_japn_2.0k,s001001_en_japn_2.0k,XS,48.3,65.6,7668.0,"['s011101.switches', 's001001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.834,transformer_iwslt_de_en
+switches,XS_s001010_en_japn_2.0k,s001010_en_japn_2.0k,XS,48.3,65.3,7068.0,"['s011101.switches', 's001010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.534,transformer_iwslt_de_en
+switches,XS_s001011_en_japn_2.0k,s001011_en_japn_2.0k,XS,48.7,65.2,7536.0,"['s011101.switches', 's001011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.768,transformer_iwslt_de_en
+switches,XS_s001100_en_japn_2.0k,s001100_en_japn_2.0k,XS,49.2,65.5,6732.0,"['s011101.switches', 's001100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.366,transformer_iwslt_de_en
+switches,XS_s001101_en_japn_2.0k,s001101_en_japn_2.0k,XS,49.9,65.5,7752.0,"['s011101.switches', 's001101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.876,transformer_iwslt_de_en
+switches,XS_s001110_en_japn_2.0k,s001110_en_japn_2.0k,XS,50.2,65.8,8184.0,"['s011101.switches', 's001110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,4.092,transformer_iwslt_de_en
+switches,XS_s001111_en_japn_2.0k,s001111_en_japn_2.0k,XS,48.3,65.0,6384.0,"['s011101.switches', 's001111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.192,transformer_iwslt_de_en
+switches,XS_s010000_en_japn_2.0k,s010000_en_japn_2.0k,XS,48.6,65.0,6420.0,"['s011101.switches', 's010000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.21,transformer_iwslt_de_en
+switches,XS_s010001_en_japn_2.0k,s010001_en_japn_2.0k,XS,46.8,64.3,5472.0,"['s011101.switches', 's010001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.736,transformer_iwslt_de_en
+switches,XS_s010010_en_japn_2.0k,s010010_en_japn_2.0k,XS,47.3,65.2,6420.0,"['s011101.switches', 's010010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.21,transformer_iwslt_de_en
+switches,XS_s010011_en_japn_2.0k,s010011_en_japn_2.0k,XS,48.4,64.8,7476.0,"['s011101.switches', 's010011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.738,transformer_iwslt_de_en
+switches,XS_s010100_en_japn_2.0k,s010100_en_japn_2.0k,XS,48.6,65.1,6228.0,"['s011101.switches', 's010100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.114,transformer_iwslt_de_en
+switches,XS_s010101_en_japn_2.0k,s010101_en_japn_2.0k,XS,50.3,65.4,7872.0,"['s011101.switches', 's010101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.936,transformer_iwslt_de_en
+switches,XS_s010110_en_japn_2.0k,s010110_en_japn_2.0k,XS,50.2,65.9,7032.0,"['s011101.switches', 's010110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.516,transformer_iwslt_de_en
+switches,XS_s010111_en_japn_2.0k,s010111_en_japn_2.0k,XS,49.5,65.3,7968.0,"['s011101.switches', 's010111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.984,transformer_iwslt_de_en
+switches,XS_s011000_en_japn_2.0k,s011000_en_japn_2.0k,XS,49.5,65.1,7272.0,"['s011101.switches', 's011000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.636,transformer_iwslt_de_en
+switches,XS_s011001_en_japn_2.0k,s011001_en_japn_2.0k,XS,48.5,64.8,5052.0,"['s011101.switches', 's011001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.526,transformer_iwslt_de_en
+switches,XS_s011010_en_japn_2.0k,s011010_en_japn_2.0k,XS,46.7,64.9,4860.0,"['s011101.switches', 's011010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.43,transformer_iwslt_de_en
+switches,XS_s011011_en_japn_2.0k,s011011_en_japn_2.0k,XS,49.8,66.3,7320.0,"['s011101.switches', 's011011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.66,transformer_iwslt_de_en
+switches,XS_s011100_en_japn_2.0k,s011100_en_japn_2.0k,XS,48.2,65.0,7080.0,"['s011101.switches', 's011100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.54,transformer_iwslt_de_en
+switches,XS_s011110_en_japn_2.0k,s011110_en_japn_2.0k,XS,48.1,64.6,7896.0,"['s011101.switches', 's011110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.948,transformer_iwslt_de_en
+switches,XS_s011111_en_japn_2.0k,s011111_en_japn_2.0k,XS,47.1,64.9,7020.0,"['s011101.switches', 's011111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.51,transformer_iwslt_de_en
+switches,XS_s100000_en_japn_2.0k,s100000_en_japn_2.0k,XS,48.8,65.4,5736.0,"['s011101.switches', 's100000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.868,transformer_iwslt_de_en
+switches,XS_s100001_en_japn_2.0k,s100001_en_japn_2.0k,XS,48.4,64.8,7596.0,"['s011101.switches', 's100001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.798,transformer_iwslt_de_en
+switches,XS_s100010_en_japn_2.0k,s100010_en_japn_2.0k,XS,49.3,65.3,7524.0,"['s011101.switches', 's100010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.762,transformer_iwslt_de_en
+switches,XS_s100011_en_japn_2.0k,s100011_en_japn_2.0k,XS,48.5,65.2,6024.0,"['s011101.switches', 's100011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.012,transformer_iwslt_de_en
+switches,XS_s100100_en_japn_2.0k,s100100_en_japn_2.0k,XS,49.2,65.2,5508.0,"['s011101.switches', 's100100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.754,transformer_iwslt_de_en
+switches,XS_s100101_en_japn_2.0k,s100101_en_japn_2.0k,XS,49.9,65.9,6876.0,"['s011101.switches', 's100101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.438,transformer_iwslt_de_en
+switches,XS_s100110_en_japn_2.0k,s100110_en_japn_2.0k,XS,47.6,64.7,5472.0,"['s011101.switches', 's100110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.736,transformer_iwslt_de_en
+switches,XS_s100111_en_japn_2.0k,s100111_en_japn_2.0k,XS,48.4,64.9,6636.0,"['s011101.switches', 's100111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.318,transformer_iwslt_de_en
+switches,XS_s101000_en_japn_2.0k,s101000_en_japn_2.0k,XS,47.7,64.1,4956.0,"['s011101.switches', 's101000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.478,transformer_iwslt_de_en
+switches,XS_s101001_en_japn_2.0k,s101001_en_japn_2.0k,XS,49.3,65.2,7104.0,"['s011101.switches', 's101001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.552,transformer_iwslt_de_en
+switches,XS_s101010_en_japn_2.0k,s101010_en_japn_2.0k,XS,49.3,64.7,7500.0,"['s011101.switches', 's101010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.75,transformer_iwslt_de_en
+switches,XS_s101011_en_japn_2.0k,s101011_en_japn_2.0k,XS,48.9,65.2,7536.0,"['s011101.switches', 's101011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.768,transformer_iwslt_de_en
+switches,XS_s101100_en_japn_2.0k,s101100_en_japn_2.0k,XS,47.2,64.6,4524.0,"['s011101.switches', 's101100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.262,transformer_iwslt_de_en
+switches,XS_s101101_en_japn_2.0k,s101101_en_japn_2.0k,XS,48.9,65.0,5316.0,"['s011101.switches', 's101101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.658,transformer_iwslt_de_en
+switches,XS_s101110_en_japn_2.0k,s101110_en_japn_2.0k,XS,47.5,64.8,6324.0,"['s011101.switches', 's101110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.162,transformer_iwslt_de_en
+switches,XS_s101111_en_japn_2.0k,s101111_en_japn_2.0k,XS,48.8,65.4,5592.0,"['s011101.switches', 's101111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.796,transformer_iwslt_de_en
+switches,XS_s110000_en_japn_2.0k,s110000_en_japn_2.0k,XS,48.6,65.2,6612.0,"['s011101.switches', 's110000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.306,transformer_iwslt_de_en
+switches,XS_s110001_en_japn_2.0k,s110001_en_japn_2.0k,XS,48.6,65.2,7728.0,"['s011101.switches', 's110001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.864,transformer_iwslt_de_en
+switches,XS_s110010_en_japn_2.0k,s110010_en_japn_2.0k,XS,48.0,65.1,6048.0,"['s011101.switches', 's110010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.024,transformer_iwslt_de_en
+switches,XS_s110011_en_japn_2.0k,s110011_en_japn_2.0k,XS,48.3,64.8,5784.0,"['s011101.switches', 's110011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.892,transformer_iwslt_de_en
+switches,XS_s110100_en_japn_2.0k,s110100_en_japn_2.0k,XS,48.8,65.0,6912.0,"['s011101.switches', 's110100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.456,transformer_iwslt_de_en
+switches,XS_s110101_en_japn_2.0k,s110101_en_japn_2.0k,XS,48.8,64.8,7176.0,"['s011101.switches', 's110101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.588,transformer_iwslt_de_en
+switches,XS_s110110_en_japn_2.0k,s110110_en_japn_2.0k,XS,48.7,65.3,6000.0,"['s011101.switches', 's110110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.0,transformer_iwslt_de_en
+switches,XS_s110111_en_japn_2.0k,s110111_en_japn_2.0k,XS,47.4,64.2,5136.0,"['s011101.switches', 's110111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.568,transformer_iwslt_de_en
+switches,XS_s111000_en_japn_2.0k,s111000_en_japn_2.0k,XS,48.2,64.7,5748.0,"['s011101.switches', 's111000.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.874,transformer_iwslt_de_en
+switches,XS_s111001_en_japn_2.0k,s111001_en_japn_2.0k,XS,49.5,65.0,8676.0,"['s011101.switches', 's111001.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,4.338,transformer_iwslt_de_en
+switches,XS_s111010_en_japn_2.0k,s111010_en_japn_2.0k,XS,46.4,64.2,4164.0,"['s011101.switches', 's111010.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.082,transformer_iwslt_de_en
+switches,XS_s111011_en_japn_2.0k,s111011_en_japn_2.0k,XS,49.2,64.9,5952.0,"['s011101.switches', 's111011.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.976,transformer_iwslt_de_en
+switches,XS_s111100_en_japn_2.0k,s111100_en_japn_2.0k,XS,50.1,65.9,7968.0,"['s011101.switches', 's111100.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.984,transformer_iwslt_de_en
+switches,XS_s111101_en_japn_2.0k,s111101_en_japn_2.0k,XS,49.2,65.6,7860.0,"['s011101.switches', 's111101.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.93,transformer_iwslt_de_en
+switches,XS_s111110_en_japn_2.0k,s111110_en_japn_2.0k,XS,48.7,64.3,5520.0,"['s011101.switches', 's111110.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.76,transformer_iwslt_de_en
+switches,XS_s111111_en_japn_2.0k,s111111_en_japn_2.0k,XS,49.1,66.1,6852.0,"['s011101.switches', 's111111.switches']","['s000000.switches', 's000000.switches']","[1000, 1000]",XS,1000,75,True,True,2000,3.426,transformer_iwslt_de_en
+switches,XS_en_japn_4.0k,en_japn_4.0k,XS,58.7,71.2,8162.0,['s011101.switches'],['s000000.switches'],[4000],XS,1000,75,True,False,4000,2.0405,transformer_iwslt_de_en
+switches,XS_s000001_en_japn_4.0k,s000001_en_japn_4.0k,XS,59.1,69.8,13179.0,"['s011101.switches', 's000001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.29475,transformer_iwslt_de_en
+switches,XS_s000010_en_japn_4.0k,s000010_en_japn_4.0k,XS,58.2,69.7,9768.0,"['s011101.switches', 's000010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.442,transformer_iwslt_de_en
+switches,XS_s000011_en_japn_4.0k,s000011_en_japn_4.0k,XS,58.1,69.5,10472.0,"['s011101.switches', 's000011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.618,transformer_iwslt_de_en
+switches,XS_s000100_en_japn_4.0k,s000100_en_japn_4.0k,XS,58.1,69.4,12857.0,"['s011101.switches', 's000100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.21425,transformer_iwslt_de_en
+switches,XS_s000101_en_japn_4.0k,s000101_en_japn_4.0k,XS,58.2,69.8,9416.0,"['s011101.switches', 's000101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.354,transformer_iwslt_de_en
+switches,XS_s000110_en_japn_4.0k,s000110_en_japn_4.0k,XS,58.6,69.6,11572.0,"['s011101.switches', 's000110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.893,transformer_iwslt_de_en
+switches,XS_s000111_en_japn_4.0k,s000111_en_japn_4.0k,XS,58.8,69.6,11198.0,"['s011101.switches', 's000111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.7995,transformer_iwslt_de_en
+switches,XS_s001000_en_japn_4.0k,s001000_en_japn_4.0k,XS,57.5,69.5,9856.0,"['s011101.switches', 's001000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.464,transformer_iwslt_de_en
+switches,XS_s001001_en_japn_4.0k,s001001_en_japn_4.0k,XS,57.8,69.6,12650.0,"['s011101.switches', 's001001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.1625,transformer_iwslt_de_en
+switches,XS_s001010_en_japn_4.0k,s001010_en_japn_4.0k,XS,58.9,69.9,11550.0,"['s011101.switches', 's001010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.8875,transformer_iwslt_de_en
+switches,XS_s001011_en_japn_4.0k,s001011_en_japn_4.0k,XS,57.7,69.1,11616.0,"['s011101.switches', 's001011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.904,transformer_iwslt_de_en
+switches,XS_s001100_en_japn_4.0k,s001100_en_japn_4.0k,XS,59.0,69.6,12167.0,"['s011101.switches', 's001100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.04175,transformer_iwslt_de_en
+switches,XS_s001101_en_japn_4.0k,s001101_en_japn_4.0k,XS,57.0,69.2,8910.0,"['s011101.switches', 's001101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.2275,transformer_iwslt_de_en
+switches,XS_s001110_en_japn_4.0k,s001110_en_japn_4.0k,XS,58.0,69.8,8878.0,"['s011101.switches', 's001110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.2195,transformer_iwslt_de_en
+switches,XS_s001111_en_japn_4.0k,s001111_en_japn_4.0k,XS,58.2,69.3,10787.0,"['s011101.switches', 's001111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.69675,transformer_iwslt_de_en
+switches,XS_s010000_en_japn_4.0k,s010000_en_japn_4.0k,XS,57.9,69.2,8947.0,"['s011101.switches', 's010000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.23675,transformer_iwslt_de_en
+switches,XS_s010001_en_japn_4.0k,s010001_en_japn_4.0k,XS,58.2,69.5,13068.0,"['s011101.switches', 's010001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.267,transformer_iwslt_de_en
+switches,XS_s010010_en_japn_4.0k,s010010_en_japn_4.0k,XS,58.4,69.5,11946.0,"['s011101.switches', 's010010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.9865,transformer_iwslt_de_en
+switches,XS_s010011_en_japn_4.0k,s010011_en_japn_4.0k,XS,58.7,69.9,11937.0,"['s011101.switches', 's010011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.98425,transformer_iwslt_de_en
+switches,XS_s010100_en_japn_4.0k,s010100_en_japn_4.0k,XS,58.6,69.6,10787.0,"['s011101.switches', 's010100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.69675,transformer_iwslt_de_en
+switches,XS_s010101_en_japn_4.0k,s010101_en_japn_4.0k,XS,58.7,69.8,9384.0,"['s011101.switches', 's010101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.346,transformer_iwslt_de_en
+switches,XS_s010110_en_japn_4.0k,s010110_en_japn_4.0k,XS,58.1,69.3,9890.0,"['s011101.switches', 's010110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.4725,transformer_iwslt_de_en
+switches,XS_s010111_en_japn_4.0k,s010111_en_japn_4.0k,XS,58.6,69.3,11339.0,"['s011101.switches', 's010111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.83475,transformer_iwslt_de_en
+switches,XS_s011000_en_japn_4.0k,s011000_en_japn_4.0k,XS,58.7,69.5,10419.0,"['s011101.switches', 's011000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.60475,transformer_iwslt_de_en
+switches,XS_s011001_en_japn_4.0k,s011001_en_japn_4.0k,XS,58.9,69.6,9844.0,"['s011101.switches', 's011001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.461,transformer_iwslt_de_en
+switches,XS_s011010_en_japn_4.0k,s011010_en_japn_4.0k,XS,59.0,69.9,9269.0,"['s011101.switches', 's011010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.31725,transformer_iwslt_de_en
+switches,XS_s011011_en_japn_4.0k,s011011_en_japn_4.0k,XS,57.9,69.4,11374.0,"['s011101.switches', 's011011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.8435,transformer_iwslt_de_en
+switches,XS_s011100_en_japn_4.0k,s011100_en_japn_4.0k,XS,58.5,69.5,10076.0,"['s011101.switches', 's011100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.519,transformer_iwslt_de_en
+switches,XS_s011110_en_japn_4.0k,s011110_en_japn_4.0k,XS,58.8,69.7,11462.0,"['s011101.switches', 's011110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.8655,transformer_iwslt_de_en
+switches,XS_s011111_en_japn_4.0k,s011111_en_japn_4.0k,XS,58.1,69.6,10274.0,"['s011101.switches', 's011111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.5685,transformer_iwslt_de_en
+switches,XS_s100000_en_japn_4.0k,s100000_en_japn_4.0k,XS,59.1,69.6,11594.0,"['s011101.switches', 's100000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.8985,transformer_iwslt_de_en
+switches,XS_s100001_en_japn_4.0k,s100001_en_japn_4.0k,XS,58.9,69.7,10511.0,"['s011101.switches', 's100001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.62775,transformer_iwslt_de_en
+switches,XS_s100010_en_japn_4.0k,s100010_en_japn_4.0k,XS,58.6,69.7,9729.0,"['s011101.switches', 's100010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.43225,transformer_iwslt_de_en
+switches,XS_s100011_en_japn_4.0k,s100011_en_japn_4.0k,XS,57.8,69.0,12496.0,"['s011101.switches', 's100011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.124,transformer_iwslt_de_en
+switches,XS_s100100_en_japn_4.0k,s100100_en_japn_4.0k,XS,57.8,69.3,11569.0,"['s011101.switches', 's100100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.89225,transformer_iwslt_de_en
+switches,XS_s100101_en_japn_4.0k,s100101_en_japn_4.0k,XS,59.3,69.9,10580.0,"['s011101.switches', 's100101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.645,transformer_iwslt_de_en
+switches,XS_s100110_en_japn_4.0k,s100110_en_japn_4.0k,XS,59.4,70.4,12826.0,"['s011101.switches', 's100110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.2065,transformer_iwslt_de_en
+switches,XS_s100111_en_japn_4.0k,s100111_en_japn_4.0k,XS,59.1,70.3,10902.0,"['s011101.switches', 's100111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.7255,transformer_iwslt_de_en
+switches,XS_s101000_en_japn_4.0k,s101000_en_japn_4.0k,XS,58.3,69.3,9394.0,"['s011101.switches', 's101000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.3485,transformer_iwslt_de_en
+switches,XS_s101001_en_japn_4.0k,s101001_en_japn_4.0k,XS,58.3,69.5,12276.0,"['s011101.switches', 's101001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.069,transformer_iwslt_de_en
+switches,XS_s101010_en_japn_4.0k,s101010_en_japn_4.0k,XS,56.7,68.7,11396.0,"['s011101.switches', 's101010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.849,transformer_iwslt_de_en
+switches,XS_s101011_en_japn_4.0k,s101011_en_japn_4.0k,XS,57.8,69.6,9900.0,"['s011101.switches', 's101011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.475,transformer_iwslt_de_en
+switches,XS_s101100_en_japn_4.0k,s101100_en_japn_4.0k,XS,59.6,70.2,18193.0,"['s011101.switches', 's101100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,4.54825,transformer_iwslt_de_en
+switches,XS_s101101_en_japn_4.0k,s101101_en_japn_4.0k,XS,57.9,69.3,11572.0,"['s011101.switches', 's101101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.893,transformer_iwslt_de_en
+switches,XS_s101110_en_japn_4.0k,s101110_en_japn_4.0k,XS,59.2,69.9,10718.0,"['s011101.switches', 's101110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.6795,transformer_iwslt_de_en
+switches,XS_s101111_en_japn_4.0k,s101111_en_japn_4.0k,XS,58.5,69.6,10649.0,"['s011101.switches', 's101111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.66225,transformer_iwslt_de_en
+switches,XS_s110000_en_japn_4.0k,s110000_en_japn_4.0k,XS,57.7,69.5,9746.0,"['s011101.switches', 's110000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.4365,transformer_iwslt_de_en
+switches,XS_s110001_en_japn_4.0k,s110001_en_japn_4.0k,XS,58.5,69.6,9482.0,"['s011101.switches', 's110001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.3705,transformer_iwslt_de_en
+switches,XS_s110010_en_japn_4.0k,s110010_en_japn_4.0k,XS,58.5,69.3,10051.0,"['s011101.switches', 's110010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.51275,transformer_iwslt_de_en
+switches,XS_s110011_en_japn_4.0k,s110011_en_japn_4.0k,XS,57.3,69.3,10054.0,"['s011101.switches', 's110011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.5135,transformer_iwslt_de_en
+switches,XS_s110100_en_japn_4.0k,s110100_en_japn_4.0k,XS,57.6,69.6,10714.0,"['s011101.switches', 's110100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.6785,transformer_iwslt_de_en
+switches,XS_s110101_en_japn_4.0k,s110101_en_japn_4.0k,XS,58.5,69.8,10648.0,"['s011101.switches', 's110101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.662,transformer_iwslt_de_en
+switches,XS_s110110_en_japn_4.0k,s110110_en_japn_4.0k,XS,57.2,69.3,10741.0,"['s011101.switches', 's110110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.68525,transformer_iwslt_de_en
+switches,XS_s110111_en_japn_4.0k,s110111_en_japn_4.0k,XS,58.4,69.5,9460.0,"['s011101.switches', 's110111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.365,transformer_iwslt_de_en
+switches,XS_s111000_en_japn_4.0k,s111000_en_japn_4.0k,XS,58.1,69.3,11730.0,"['s011101.switches', 's111000.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.9325,transformer_iwslt_de_en
+switches,XS_s111001_en_japn_4.0k,s111001_en_japn_4.0k,XS,59.2,69.7,12282.0,"['s011101.switches', 's111001.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,3.0705,transformer_iwslt_de_en
+switches,XS_s111010_en_japn_4.0k,s111010_en_japn_4.0k,XS,58.7,69.6,10362.0,"['s011101.switches', 's111010.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.5905,transformer_iwslt_de_en
+switches,XS_s111011_en_japn_4.0k,s111011_en_japn_4.0k,XS,58.3,69.6,11155.0,"['s011101.switches', 's111011.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.78875,transformer_iwslt_de_en
+switches,XS_s111100_en_japn_4.0k,s111100_en_japn_4.0k,XS,57.3,69.2,8993.0,"['s011101.switches', 's111100.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.24825,transformer_iwslt_de_en
+switches,XS_s111101_en_japn_4.0k,s111101_en_japn_4.0k,XS,58.3,69.7,10010.0,"['s011101.switches', 's111101.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.5025,transformer_iwslt_de_en
+switches,XS_s111110_en_japn_4.0k,s111110_en_japn_4.0k,XS,59.1,69.9,8844.0,"['s011101.switches', 's111110.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.211,transformer_iwslt_de_en
+switches,XS_s111111_en_japn_4.0k,s111111_en_japn_4.0k,XS,58.5,69.5,9592.0,"['s011101.switches', 's111111.switches']","['s000000.switches', 's000000.switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.398,transformer_iwslt_de_en
+switches,XS_en_japn_8.0k,en_japn_8.0k,XS,63.0,73.2,14309.0,['s011101.switches'],['s000000.switches'],[8000],XS,1000,75,True,False,8000,1.788625,transformer_iwslt_de_en
+switches,XS_s000001_en_japn_8.0k,s000001_en_japn_8.0k,XS,61.5,71.8,16942.0,"['s011101.switches', 's000001.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.11775,transformer_iwslt_de_en
+switches,XS_s000010_en_japn_8.0k,s000010_en_japn_8.0k,XS,60.8,71.0,12599.0,"['s011101.switches', 's000010.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.574875,transformer_iwslt_de_en
+switches,XS_s000011_en_japn_8.0k,s000011_en_japn_8.0k,XS,61.1,71.5,22050.0,"['s011101.switches', 's000011.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.75625,transformer_iwslt_de_en
+switches,XS_s000100_en_japn_8.0k,s000100_en_japn_8.0k,XS,61.3,71.3,18619.0,"['s011101.switches', 's000100.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.327375,transformer_iwslt_de_en
+switches,XS_s000101_en_japn_8.0k,s000101_en_japn_8.0k,XS,61.1,71.4,14491.0,"['s011101.switches', 's000101.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.811375,transformer_iwslt_de_en
+switches,XS_s000110_en_japn_8.0k,s000110_en_japn_8.0k,XS,61.2,71.5,14620.0,"['s011101.switches', 's000110.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.8275,transformer_iwslt_de_en
+switches,XS_s000111_en_japn_8.0k,s000111_en_japn_8.0k,XS,61.7,71.5,16727.0,"['s011101.switches', 's000111.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.090875,transformer_iwslt_de_en
+switches,XS_s001000_en_japn_8.0k,s001000_en_japn_8.0k,XS,60.9,71.4,14238.0,"['s011101.switches', 's001000.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.77975,transformer_iwslt_de_en
+switches,XS_s001001_en_japn_8.0k,s001001_en_japn_8.0k,XS,61.1,71.2,14018.0,"['s011101.switches', 's001001.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.75225,transformer_iwslt_de_en
+switches,XS_s001010_en_japn_8.0k,s001010_en_japn_8.0k,XS,61.2,71.4,14706.0,"['s011101.switches', 's001010.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.83825,transformer_iwslt_de_en
+switches,XS_s001011_en_japn_8.0k,s001011_en_japn_8.0k,XS,61.7,71.6,16684.0,"['s011101.switches', 's001011.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.0855,transformer_iwslt_de_en
+switches,XS_s001100_en_japn_8.0k,s001100_en_japn_8.0k,XS,61.2,71.5,15652.0,"['s011101.switches', 's001100.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.9565,transformer_iwslt_de_en
+switches,XS_s001101_en_japn_8.0k,s001101_en_japn_8.0k,XS,61.5,71.7,14792.0,"['s011101.switches', 's001101.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.849,transformer_iwslt_de_en
+switches,XS_s001110_en_japn_8.0k,s001110_en_japn_8.0k,XS,61.4,71.8,17200.0,"['s011101.switches', 's001110.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.15,transformer_iwslt_de_en
+switches,XS_s001111_en_japn_8.0k,s001111_en_japn_8.0k,XS,61.7,71.8,15136.0,"['s011101.switches', 's001111.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.892,transformer_iwslt_de_en
+switches,XS_s010000_en_japn_8.0k,s010000_en_japn_8.0k,XS,61.3,71.7,15498.0,"['s011101.switches', 's010000.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.93725,transformer_iwslt_de_en
+switches,XS_s010001_en_japn_8.0k,s010001_en_japn_8.0k,XS,61.3,71.3,15179.0,"['s011101.switches', 's010001.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.897375,transformer_iwslt_de_en
+switches,XS_s010010_en_japn_8.0k,s010010_en_japn_8.0k,XS,61.4,71.6,16899.0,"['s011101.switches', 's010010.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.112375,transformer_iwslt_de_en
+switches,XS_s010011_en_japn_8.0k,s010011_en_japn_8.0k,XS,61.1,71.4,15246.0,"['s011101.switches', 's010011.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.90575,transformer_iwslt_de_en
+switches,XS_s010100_en_japn_8.0k,s010100_en_japn_8.0k,XS,61.1,71.4,14233.0,"['s011101.switches', 's010100.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.779125,transformer_iwslt_de_en
+switches,XS_s010101_en_japn_8.0k,s010101_en_japn_8.0k,XS,61.1,71.4,14620.0,"['s011101.switches', 's010101.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.8275,transformer_iwslt_de_en
+switches,XS_s010110_en_japn_8.0k,s010110_en_japn_8.0k,XS,60.9,71.2,16340.0,"['s011101.switches', 's010110.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.0425,transformer_iwslt_de_en
+switches,XS_s010111_en_japn_8.0k,s010111_en_japn_8.0k,XS,61.0,71.2,14878.0,"['s011101.switches', 's010111.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.85975,transformer_iwslt_de_en
+switches,XS_s011000_en_japn_8.0k,s011000_en_japn_8.0k,XS,61.5,71.6,14319.0,"['s011101.switches', 's011000.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.789875,transformer_iwslt_de_en
+switches,XS_s011001_en_japn_8.0k,s011001_en_japn_8.0k,XS,60.9,71.4,14491.0,"['s011101.switches', 's011001.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.811375,transformer_iwslt_de_en
+switches,XS_s011011_en_japn_8.0k,s011011_en_japn_8.0k,XS,60.9,71.2,16899.0,"['s011101.switches', 's011011.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,2.112375,transformer_iwslt_de_en
+switches,XS_s011110_en_japn_8.0k,s011110_en_japn_8.0k,XS,61.2,71.4,12126.0,"['s011101.switches', 's011110.switches']","['s000000.switches', 's000000.switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.51575,transformer_iwslt_de_en
+new_switches,XS_s000001_en_japn_2.0k_new,s000001_en_japn_2.0k_new,XS,49.2,65.0,4200.0,"['s011101.new_switches', 's000001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s000010_en_japn_2.0k_new,s000010_en_japn_2.0k_new,XS,49.2,64.5,210.0,"['s011101.new_switches', 's000010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,0.105,transformer_iwslt_de_en
+new_switches,XS_s000011_en_japn_2.0k_new,s000011_en_japn_2.0k_new,XS,49.2,64.3,4200.0,"['s011101.new_switches', 's000011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s000100_en_japn_2.0k_new,s000100_en_japn_2.0k_new,XS,48.0,63.8,3285.0,"['s011101.new_switches', 's000100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.6425,transformer_iwslt_de_en
+new_switches,XS_s000101_en_japn_2.0k_new,s000101_en_japn_2.0k_new,XS,49.0,65.0,4200.0,"['s011101.new_switches', 's000101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s000110_en_japn_2.0k_new,s000110_en_japn_2.0k_new,XS,46.4,62.5,2670.0,"['s011101.new_switches', 's000110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.335,transformer_iwslt_de_en
+new_switches,XS_s000111_en_japn_2.0k_new,s000111_en_japn_2.0k_new,XS,49.5,64.5,4500.0,"['s011101.new_switches', 's000111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s001000_en_japn_2.0k_new,s001000_en_japn_2.0k_new,XS,49.1,64.4,4200.0,"['s011101.new_switches', 's001000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s001001_en_japn_2.0k_new,s001001_en_japn_2.0k_new,XS,49.9,64.9,4500.0,"['s011101.new_switches', 's001001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s001010_en_japn_2.0k_new,s001010_en_japn_2.0k_new,XS,48.2,64.3,3710.0,"['s011101.new_switches', 's001010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.855,transformer_iwslt_de_en
+new_switches,XS_s001011_en_japn_2.0k_new,s001011_en_japn_2.0k_new,XS,47.3,63.3,2786.0,"['s011101.new_switches', 's001011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.393,transformer_iwslt_de_en
+new_switches,XS_s001100_en_japn_2.0k_new,s001100_en_japn_2.0k_new,XS,48.6,64.3,3738.0,"['s011101.new_switches', 's001100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.869,transformer_iwslt_de_en
+new_switches,XS_s001101_en_japn_2.0k_new,s001101_en_japn_2.0k_new,XS,48.6,64.6,4200.0,"['s011101.new_switches', 's001101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s001110_en_japn_2.0k_new,s001110_en_japn_2.0k_new,XS,47.9,63.3,3444.0,"['s011101.new_switches', 's001110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.722,transformer_iwslt_de_en
+new_switches,XS_s001111_en_japn_2.0k_new,s001111_en_japn_2.0k_new,XS,48.8,64.2,4158.0,"['s011101.new_switches', 's001111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.079,transformer_iwslt_de_en
+new_switches,XS_s010000_en_japn_2.0k_new,s010000_en_japn_2.0k_new,XS,47.9,63.9,3570.0,"['s011101.new_switches', 's010000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.785,transformer_iwslt_de_en
+new_switches,XS_s010001_en_japn_2.0k_new,s010001_en_japn_2.0k_new,XS,49.4,64.6,4158.0,"['s011101.new_switches', 's010001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.079,transformer_iwslt_de_en
+new_switches,XS_s010010_en_japn_2.0k_new,s010010_en_japn_2.0k_new,XS,48.9,64.1,4200.0,"['s011101.new_switches', 's010010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s010011_en_japn_2.0k_new,s010011_en_japn_2.0k_new,XS,49.0,64.3,4500.0,"['s011101.new_switches', 's010011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s010100_en_japn_2.0k_new,s010100_en_japn_2.0k_new,XS,49.9,64.9,4500.0,"['s011101.new_switches', 's010100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s010101_en_japn_2.0k_new,s010101_en_japn_2.0k_new,XS,48.9,64.3,4200.0,"['s011101.new_switches', 's010101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s010110_en_japn_2.0k_new,s010110_en_japn_2.0k_new,XS,50.0,64.9,4500.0,"['s011101.new_switches', 's010110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s010111_en_japn_2.0k_new,s010111_en_japn_2.0k_new,XS,49.0,64.3,4200.0,"['s011101.new_switches', 's010111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s011000_en_japn_2.0k_new,s011000_en_japn_2.0k_new,XS,49.2,64.3,4200.0,"['s011101.new_switches', 's011000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s011001_en_japn_2.0k_new,s011001_en_japn_2.0k_new,XS,48.1,63.7,3675.0,"['s011101.new_switches', 's011001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.8375,transformer_iwslt_de_en
+new_switches,XS_s011010_en_japn_2.0k_new,s011010_en_japn_2.0k_new,XS,49.8,65.1,4200.0,"['s011101.new_switches', 's011010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s011011_en_japn_2.0k_new,s011011_en_japn_2.0k_new,XS,48.2,63.9,3458.0,"['s011101.new_switches', 's011011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.729,transformer_iwslt_de_en
+new_switches,XS_s011100_en_japn_2.0k_new,s011100_en_japn_2.0k_new,XS,49.7,64.8,4200.0,"['s011101.new_switches', 's011100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s011101_2_en_japn_2.0k_new,s011101_2_en_japn_2.0k_new,XS,49.1,64.4,4130.0,"['s011101.new_switches', 's011101_2.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.065,transformer_iwslt_de_en
+new_switches,XS_s011110_en_japn_2.0k_new,s011110_en_japn_2.0k_new,XS,48.8,64.2,4130.0,"['s011101.new_switches', 's011110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.065,transformer_iwslt_de_en
+new_switches,XS_s011111_en_japn_2.0k_new,s011111_en_japn_2.0k_new,XS,47.5,63.6,3528.0,"['s011101.new_switches', 's011111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.764,transformer_iwslt_de_en
+new_switches,XS_s100000_en_japn_2.0k_new,s100000_en_japn_2.0k_new,XS,49.2,64.5,4200.0,"['s011101.new_switches', 's100000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s100001_en_japn_2.0k_new,s100001_en_japn_2.0k_new,XS,49.4,64.5,4186.0,"['s011101.new_switches', 's100001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.093,transformer_iwslt_de_en
+new_switches,XS_s100010_en_japn_2.0k_new,s100010_en_japn_2.0k_new,XS,48.3,64.1,3598.0,"['s011101.new_switches', 's100010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.799,transformer_iwslt_de_en
+new_switches,XS_s100011_en_japn_2.0k_new,s100011_en_japn_2.0k_new,XS,49.6,64.7,4200.0,"['s011101.new_switches', 's100011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s100100_en_japn_2.0k_new,s100100_en_japn_2.0k_new,XS,48.5,64.3,4200.0,"['s011101.new_switches', 's100100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s100101_en_japn_2.0k_new,s100101_en_japn_2.0k_new,XS,47.4,63.3,3052.0,"['s011101.new_switches', 's100101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.526,transformer_iwslt_de_en
+new_switches,XS_s100110_en_japn_2.0k_new,s100110_en_japn_2.0k_new,XS,49.4,64.4,4200.0,"['s011101.new_switches', 's100110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s100111_en_japn_2.0k_new,s100111_en_japn_2.0k_new,XS,48.3,64.4,3920.0,"['s011101.new_switches', 's100111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.96,transformer_iwslt_de_en
+new_switches,XS_s101000_en_japn_2.0k_new,s101000_en_japn_2.0k_new,XS,49.4,64.6,4500.0,"['s011101.new_switches', 's101000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s101001_en_japn_2.0k_new,s101001_en_japn_2.0k_new,XS,49.6,64.6,4200.0,"['s011101.new_switches', 's101001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s101010_en_japn_2.0k_new,s101010_en_japn_2.0k_new,XS,49.1,64.5,4200.0,"['s011101.new_switches', 's101010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s101011_en_japn_2.0k_new,s101011_en_japn_2.0k_new,XS,48.6,64.7,3976.0,"['s011101.new_switches', 's101011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.988,transformer_iwslt_de_en
+new_switches,XS_s101100_en_japn_2.0k_new,s101100_en_japn_2.0k_new,XS,48.2,64.1,3975.0,"['s011101.new_switches', 's101100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.9875,transformer_iwslt_de_en
+new_switches,XS_s101101_en_japn_2.0k_new,s101101_en_japn_2.0k_new,XS,49.1,64.3,4200.0,"['s011101.new_switches', 's101101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s101110_en_japn_2.0k_new,s101110_en_japn_2.0k_new,XS,48.6,64.2,4200.0,"['s011101.new_switches', 's101110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s101111_en_japn_2.0k_new,s101111_en_japn_2.0k_new,XS,49.0,65.1,4500.0,"['s011101.new_switches', 's101111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s110000_en_japn_2.0k_new,s110000_en_japn_2.0k_new,XS,48.9,64.3,4200.0,"['s011101.new_switches', 's110000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s110001_en_japn_2.0k_new,s110001_en_japn_2.0k_new,XS,50.3,64.9,4200.0,"['s011101.new_switches', 's110001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s110010_en_japn_2.0k_new,s110010_en_japn_2.0k_new,XS,49.4,64.7,4200.0,"['s011101.new_switches', 's110010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s110011_en_japn_2.0k_new,s110011_en_japn_2.0k_new,XS,49.4,64.3,4500.0,"['s011101.new_switches', 's110011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s110100_en_japn_2.0k_new,s110100_en_japn_2.0k_new,XS,50.0,64.9,4200.0,"['s011101.new_switches', 's110100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s110101_en_japn_2.0k_new,s110101_en_japn_2.0k_new,XS,49.1,64.6,4275.0,"['s011101.new_switches', 's110101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1375,transformer_iwslt_de_en
+new_switches,XS_s110110_en_japn_2.0k_new,s110110_en_japn_2.0k_new,XS,49.2,64.5,4200.0,"['s011101.new_switches', 's110110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s110111_en_japn_2.0k_new,s110111_en_japn_2.0k_new,XS,48.6,64.1,3962.0,"['s011101.new_switches', 's110111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,1.981,transformer_iwslt_de_en
+new_switches,XS_s111000_en_japn_2.0k_new,s111000_en_japn_2.0k_new,XS,49.7,64.5,4500.0,"['s011101.new_switches', 's111000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s111001_en_japn_2.0k_new,s111001_en_japn_2.0k_new,XS,49.1,64.4,4074.0,"['s011101.new_switches', 's111001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.037,transformer_iwslt_de_en
+new_switches,XS_s111010_en_japn_2.0k_new,s111010_en_japn_2.0k_new,XS,48.5,64.0,4005.0,"['s011101.new_switches', 's111010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.0025,transformer_iwslt_de_en
+new_switches,XS_s111011_en_japn_2.0k_new,s111011_en_japn_2.0k_new,XS,49.0,64.1,4500.0,"['s011101.new_switches', 's111011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s111100_en_japn_2.0k_new,s111100_en_japn_2.0k_new,XS,49.5,64.9,4200.0,"['s011101.new_switches', 's111100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s111101_en_japn_2.0k_new,s111101_en_japn_2.0k_new,XS,49.4,64.7,4200.0,"['s011101.new_switches', 's111101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s111110_en_japn_2.0k_new,s111110_en_japn_2.0k_new,XS,49.6,64.7,4500.0,"['s011101.new_switches', 's111110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.25,transformer_iwslt_de_en
+new_switches,XS_s111111_en_japn_2.0k_new,s111111_en_japn_2.0k_new,XS,49.5,64.8,4200.0,"['s011101.new_switches', 's111111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[1000, 1000]",XS,1000,75,True,True,2000,2.1,transformer_iwslt_de_en
+new_switches,XS_s000001_en_japn_4.0k_new,s000001_en_japn_4.0k_new,XS,56.5,68.6,8100.0,"['s011101.new_switches', 's000001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s000010_en_japn_4.0k_new,s000010_en_japn_4.0k_new,XS,56.6,68.7,7587.0,"['s011101.new_switches', 's000010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.89675,transformer_iwslt_de_en
+new_switches,XS_s000011_en_japn_4.0k_new,s000011_en_japn_4.0k_new,XS,57.5,69.1,8100.0,"['s011101.new_switches', 's000011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s000100_en_japn_4.0k_new,s000100_en_japn_4.0k_new,XS,56.4,68.5,8100.0,"['s011101.new_switches', 's000100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s000101_en_japn_4.0k_new,s000101_en_japn_4.0k_new,XS,56.8,68.7,8400.0,"['s011101.new_switches', 's000101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.1,transformer_iwslt_de_en
+new_switches,XS_s000110_en_japn_4.0k_new,s000110_en_japn_4.0k_new,XS,56.3,68.4,5994.0,"['s011101.new_switches', 's000110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.4985,transformer_iwslt_de_en
+new_switches,XS_s000111_en_japn_4.0k_new,s000111_en_japn_4.0k_new,XS,57.1,68.7,8100.0,"['s011101.new_switches', 's000111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s001000_en_japn_4.0k_new,s001000_en_japn_4.0k_new,XS,56.8,68.9,7857.0,"['s011101.new_switches', 's001000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.96425,transformer_iwslt_de_en
+new_switches,XS_s001001_en_japn_4.0k_new,s001001_en_japn_4.0k_new,XS,57.5,69.1,8400.0,"['s011101.new_switches', 's001001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.1,transformer_iwslt_de_en
+new_switches,XS_s001010_en_japn_4.0k_new,s001010_en_japn_4.0k_new,XS,57.2,69.1,8100.0,"['s011101.new_switches', 's001010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s001011_en_japn_4.0k_new,s001011_en_japn_4.0k_new,XS,56.9,68.9,8100.0,"['s011101.new_switches', 's001011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s001100_en_japn_4.0k_new,s001100_en_japn_4.0k_new,XS,55.9,68.3,6912.0,"['s011101.new_switches', 's001100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.728,transformer_iwslt_de_en
+new_switches,XS_s001101_en_japn_4.0k_new,s001101_en_japn_4.0k_new,XS,56.9,68.9,8400.0,"['s011101.new_switches', 's001101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.1,transformer_iwslt_de_en
+new_switches,XS_s001110_en_japn_4.0k_new,s001110_en_japn_4.0k_new,XS,57.0,68.8,8100.0,"['s011101.new_switches', 's001110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s001111_en_japn_4.0k_new,s001111_en_japn_4.0k_new,XS,56.6,68.8,8100.0,"['s011101.new_switches', 's001111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s010000_en_japn_4.0k_new,s010000_en_japn_4.0k_new,XS,56.7,68.8,8019.0,"['s011101.new_switches', 's010000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.00475,transformer_iwslt_de_en
+new_switches,XS_s010001_en_japn_4.0k_new,s010001_en_japn_4.0k_new,XS,57.0,69.0,7911.0,"['s011101.new_switches', 's010001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.97775,transformer_iwslt_de_en
+new_switches,XS_s010010_en_japn_4.0k_new,s010010_en_japn_4.0k_new,XS,57.2,68.9,8100.0,"['s011101.new_switches', 's010010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s010011_en_japn_4.0k_new,s010011_en_japn_4.0k_new,XS,56.3,68.7,8064.0,"['s011101.new_switches', 's010011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.016,transformer_iwslt_de_en
+new_switches,XS_s010100_en_japn_4.0k_new,s010100_en_japn_4.0k_new,XS,55.5,68.1,5994.0,"['s011101.new_switches', 's010100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.4985,transformer_iwslt_de_en
+new_switches,XS_s010101_en_japn_4.0k_new,s010101_en_japn_4.0k_new,XS,56.8,68.7,7614.0,"['s011101.new_switches', 's010101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.9035,transformer_iwslt_de_en
+new_switches,XS_s010110_en_japn_4.0k_new,s010110_en_japn_4.0k_new,XS,56.7,68.7,8100.0,"['s011101.new_switches', 's010110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s010111_en_japn_4.0k_new,s010111_en_japn_4.0k_new,XS,56.3,68.7,7398.0,"['s011101.new_switches', 's010111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.8495,transformer_iwslt_de_en
+new_switches,XS_s011000_en_japn_4.0k_new,s011000_en_japn_4.0k_new,XS,56.9,68.9,8100.0,"['s011101.new_switches', 's011000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011001_en_japn_4.0k_new,s011001_en_japn_4.0k_new,XS,57.1,68.8,8100.0,"['s011101.new_switches', 's011001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011010_en_japn_4.0k_new,s011010_en_japn_4.0k_new,XS,57.3,69.0,8100.0,"['s011101.new_switches', 's011010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011011_en_japn_4.0k_new,s011011_en_japn_4.0k_new,XS,57.2,68.9,8100.0,"['s011101.new_switches', 's011011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011100_en_japn_4.0k_new,s011100_en_japn_4.0k_new,XS,56.6,68.7,8100.0,"['s011101.new_switches', 's011100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011101_2_en_japn_4.0k_new,s011101_2_en_japn_4.0k_new,XS,57.1,68.7,8100.0,"['s011101.new_switches', 's011101_2.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011110_en_japn_4.0k_new,s011110_en_japn_4.0k_new,XS,56.6,68.8,8100.0,"['s011101.new_switches', 's011110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s011111_en_japn_4.0k_new,s011111_en_japn_4.0k_new,XS,56.6,68.9,7479.0,"['s011101.new_switches', 's011111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.86975,transformer_iwslt_de_en
+new_switches,XS_s100000_en_japn_4.0k_new,s100000_en_japn_4.0k_new,XS,56.4,68.6,6993.0,"['s011101.new_switches', 's100000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.74825,transformer_iwslt_de_en
+new_switches,XS_s100001_en_japn_4.0k_new,s100001_en_japn_4.0k_new,XS,56.7,68.8,7047.0,"['s011101.new_switches', 's100001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.76175,transformer_iwslt_de_en
+new_switches,XS_s100010_en_japn_4.0k_new,s100010_en_japn_4.0k_new,XS,57.4,69.3,8100.0,"['s011101.new_switches', 's100010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s100011_en_japn_4.0k_new,s100011_en_japn_4.0k_new,XS,56.9,68.9,8100.0,"['s011101.new_switches', 's100011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s100100_en_japn_4.0k_new,s100100_en_japn_4.0k_new,XS,56.4,68.6,8100.0,"['s011101.new_switches', 's100100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s100101_en_japn_4.0k_new,s100101_en_japn_4.0k_new,XS,56.8,68.9,8100.0,"['s011101.new_switches', 's100101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s100110_en_japn_4.0k_new,s100110_en_japn_4.0k_new,XS,57.1,69.0,8046.0,"['s011101.new_switches', 's100110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.0115,transformer_iwslt_de_en
+new_switches,XS_s100111_en_japn_4.0k_new,s100111_en_japn_4.0k_new,XS,56.6,68.6,8100.0,"['s011101.new_switches', 's100111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s101000_en_japn_4.0k_new,s101000_en_japn_4.0k_new,XS,56.2,68.8,6966.0,"['s011101.new_switches', 's101000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.7415,transformer_iwslt_de_en
+new_switches,XS_s101001_en_japn_4.0k_new,s101001_en_japn_4.0k_new,XS,56.4,68.6,6993.0,"['s011101.new_switches', 's101001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.74825,transformer_iwslt_de_en
+new_switches,XS_s101010_en_japn_4.0k_new,s101010_en_japn_4.0k_new,XS,57.2,69.0,8100.0,"['s011101.new_switches', 's101010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s101011_en_japn_4.0k_new,s101011_en_japn_4.0k_new,XS,57.3,69.0,7614.0,"['s011101.new_switches', 's101011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.9035,transformer_iwslt_de_en
+new_switches,XS_s101100_en_japn_4.0k_new,s101100_en_japn_4.0k_new,XS,57.3,69.1,8100.0,"['s011101.new_switches', 's101100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s101101_en_japn_4.0k_new,s101101_en_japn_4.0k_new,XS,56.0,68.4,8019.0,"['s011101.new_switches', 's101101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.00475,transformer_iwslt_de_en
+new_switches,XS_s101110_en_japn_4.0k_new,s101110_en_japn_4.0k_new,XS,56.7,68.8,6021.0,"['s011101.new_switches', 's101110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.50525,transformer_iwslt_de_en
+new_switches,XS_s101111_en_japn_4.0k_new,s101111_en_japn_4.0k_new,XS,56.3,68.6,7857.0,"['s011101.new_switches', 's101111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.96425,transformer_iwslt_de_en
+new_switches,XS_s110000_en_japn_4.0k_new,s110000_en_japn_4.0k_new,XS,57.0,69.1,8100.0,"['s011101.new_switches', 's110000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s110001_en_japn_4.0k_new,s110001_en_japn_4.0k_new,XS,57.1,68.7,8100.0,"['s011101.new_switches', 's110001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s110010_en_japn_4.0k_new,s110010_en_japn_4.0k_new,XS,56.7,69.1,8100.0,"['s011101.new_switches', 's110010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s110011_en_japn_4.0k_new,s110011_en_japn_4.0k_new,XS,56.4,68.4,7938.0,"['s011101.new_switches', 's110011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.9845,transformer_iwslt_de_en
+new_switches,XS_s110100_en_japn_4.0k_new,s110100_en_japn_4.0k_new,XS,57.1,68.8,7965.0,"['s011101.new_switches', 's110100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.99125,transformer_iwslt_de_en
+new_switches,XS_s110101_en_japn_4.0k_new,s110101_en_japn_4.0k_new,XS,57.5,69.3,8100.0,"['s011101.new_switches', 's110101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s110110_en_japn_4.0k_new,s110110_en_japn_4.0k_new,XS,57.6,69.1,8100.0,"['s011101.new_switches', 's110110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s110111_en_japn_4.0k_new,s110111_en_japn_4.0k_new,XS,59.7,70.2,8400.0,"['s011101.new_switches', 's110111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.1,transformer_iwslt_de_en
+new_switches,XS_s111000_en_japn_4.0k_new,s111000_en_japn_4.0k_new,XS,57.0,68.8,8100.0,"['s011101.new_switches', 's111000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s111001_en_japn_4.0k_new,s111001_en_japn_4.0k_new,XS,56.5,68.8,8100.0,"['s011101.new_switches', 's111001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s111010_en_japn_4.0k_new,s111010_en_japn_4.0k_new,XS,57.2,68.9,8100.0,"['s011101.new_switches', 's111010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s111011_en_japn_4.0k_new,s111011_en_japn_4.0k_new,XS,55.6,68.3,6723.0,"['s011101.new_switches', 's111011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.68075,transformer_iwslt_de_en
+new_switches,XS_s111100_en_japn_4.0k_new,s111100_en_japn_4.0k_new,XS,56.1,68.5,6804.0,"['s011101.new_switches', 's111100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.701,transformer_iwslt_de_en
+new_switches,XS_s111101_en_japn_4.0k_new,s111101_en_japn_4.0k_new,XS,56.2,68.6,7047.0,"['s011101.new_switches', 's111101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.76175,transformer_iwslt_de_en
+new_switches,XS_s111110_en_japn_4.0k_new,s111110_en_japn_4.0k_new,XS,56.4,68.7,6750.0,"['s011101.new_switches', 's111110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,1.6875,transformer_iwslt_de_en
+new_switches,XS_s111111_en_japn_4.0k_new,s111111_en_japn_4.0k_new,XS,56.3,68.6,8100.0,"['s011101.new_switches', 's111111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[2000, 2000]",XS,1000,75,True,True,4000,2.025,transformer_iwslt_de_en
+new_switches,XS_s000001_en_japn_8.0k_new,s000001_en_japn_8.0k_new,XS,59.8,71.1,12614.0,"['s011101.new_switches', 's000001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.57675,transformer_iwslt_de_en
+new_switches,XS_s000010_en_japn_8.0k_new,s000010_en_japn_8.0k_new,XS,59.9,71.2,13992.0,"['s011101.new_switches', 's000010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.749,transformer_iwslt_de_en
+new_switches,XS_s000011_en_japn_8.0k_new,s000011_en_japn_8.0k_new,XS,60.0,71.2,13462.0,"['s011101.new_switches', 's000011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.68275,transformer_iwslt_de_en
+new_switches,XS_s000100_en_japn_8.0k_new,s000100_en_japn_8.0k_new,XS,60.1,71.2,12614.0,"['s011101.new_switches', 's000100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.57675,transformer_iwslt_de_en
+new_switches,XS_s000101_en_japn_8.0k_new,s000101_en_japn_8.0k_new,XS,60.1,71.2,12826.0,"['s011101.new_switches', 's000101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.60325,transformer_iwslt_de_en
+new_switches,XS_s000110_en_japn_8.0k_new,s000110_en_japn_8.0k_new,XS,59.9,71.0,11872.0,"['s011101.new_switches', 's000110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.484,transformer_iwslt_de_en
+new_switches,XS_s000111_en_japn_8.0k_new,s000111_en_japn_8.0k_new,XS,59.9,71.0,11501.0,"['s011101.new_switches', 's000111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.437625,transformer_iwslt_de_en
+new_switches,XS_s001000_en_japn_8.0k_new,s001000_en_japn_8.0k_new,XS,59.9,71.0,13122.0,"['s011101.new_switches', 's001000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.64025,transformer_iwslt_de_en
+new_switches,XS_s001001_en_japn_8.0k_new,s001001_en_japn_8.0k_new,XS,60.2,71.3,14045.0,"['s011101.new_switches', 's001001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.755625,transformer_iwslt_de_en
+new_switches,XS_s001010_en_japn_8.0k_new,s001010_en_japn_8.0k_new,XS,60.0,71.3,13038.0,"['s011101.new_switches', 's001010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.62975,transformer_iwslt_de_en
+new_switches,XS_s001011_en_japn_8.0k_new,s001011_en_japn_8.0k_new,XS,60.0,71.1,11607.0,"['s011101.new_switches', 's001011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.450875,transformer_iwslt_de_en
+new_switches,XS_s001100_en_japn_8.0k_new,s001100_en_japn_8.0k_new,XS,60.2,71.2,13303.0,"['s011101.new_switches', 's001100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.662875,transformer_iwslt_de_en
+new_switches,XS_s001101_en_japn_8.0k_new,s001101_en_japn_8.0k_new,XS,60.0,71.1,12420.0,"['s011101.new_switches', 's001101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.5525,transformer_iwslt_de_en
+new_switches,XS_s001110_en_japn_8.0k_new,s001110_en_japn_8.0k_new,XS,60.1,70.9,10812.0,"['s011101.new_switches', 's001110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.3515,transformer_iwslt_de_en
+new_switches,XS_s001111_en_japn_8.0k_new,s001111_en_japn_8.0k_new,XS,60.0,71.2,9858.0,"['s011101.new_switches', 's001111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.23225,transformer_iwslt_de_en
+new_switches,XS_s010000_en_japn_8.0k_new,s010000_en_japn_8.0k_new,XS,60.2,71.2,13462.0,"['s011101.new_switches', 's010000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.68275,transformer_iwslt_de_en
+new_switches,XS_s010001_en_japn_8.0k_new,s010001_en_japn_8.0k_new,XS,60.1,71.2,12031.0,"['s011101.new_switches', 's010001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.503875,transformer_iwslt_de_en
+new_switches,XS_s010010_en_japn_8.0k_new,s010010_en_japn_8.0k_new,XS,59.5,70.7,9752.0,"['s011101.new_switches', 's010010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.219,transformer_iwslt_de_en
+new_switches,XS_s010011_en_japn_8.0k_new,s010011_en_japn_8.0k_new,XS,59.9,71.0,11713.0,"['s011101.new_switches', 's010011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.464125,transformer_iwslt_de_en
+new_switches,XS_s010100_en_japn_8.0k_new,s010100_en_japn_8.0k_new,XS,60.4,71.2,14681.0,"['s011101.new_switches', 's010100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.835125,transformer_iwslt_de_en
+new_switches,XS_s010101_en_japn_8.0k_new,s010101_en_japn_8.0k_new,XS,60.5,71.2,13176.0,"['s011101.new_switches', 's010101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.647,transformer_iwslt_de_en
+new_switches,XS_s010110_en_japn_8.0k_new,s010110_en_japn_8.0k_new,XS,60.1,71.3,15476.0,"['s011101.new_switches', 's010110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.9345,transformer_iwslt_de_en
+new_switches,XS_s010111_en_japn_8.0k_new,s010111_en_japn_8.0k_new,XS,59.9,71.0,11448.0,"['s011101.new_switches', 's010111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.431,transformer_iwslt_de_en
+new_switches,XS_s011000_en_japn_8.0k_new,s011000_en_japn_8.0k_new,XS,60.1,71.4,12349.0,"['s011101.new_switches', 's011000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.543625,transformer_iwslt_de_en
+new_switches,XS_s011001_en_japn_8.0k_new,s011001_en_japn_8.0k_new,XS,59.7,70.9,10812.0,"['s011101.new_switches', 's011001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.3515,transformer_iwslt_de_en
+new_switches,XS_s011010_en_japn_8.0k_new,s011010_en_japn_8.0k_new,XS,60.2,71.2,12879.0,"['s011101.new_switches', 's011010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.609875,transformer_iwslt_de_en
+new_switches,XS_s011011_en_japn_8.0k_new,s011011_en_japn_8.0k_new,XS,59.9,71.1,11925.0,"['s011101.new_switches', 's011011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.490625,transformer_iwslt_de_en
+new_switches,XS_s011100_en_japn_8.0k_new,s011100_en_japn_8.0k_new,XS,59.7,71.0,9911.0,"['s011101.new_switches', 's011100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.238875,transformer_iwslt_de_en
+new_switches,XS_s011101_2_en_japn_8.0k_new,s011101_2_en_japn_8.0k_new,XS,60.1,71.1,13038.0,"['s011101.new_switches', 's011101_2.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.62975,transformer_iwslt_de_en
+new_switches,XS_s011110_en_japn_8.0k_new,s011110_en_japn_8.0k_new,XS,60.5,71.3,13250.0,"['s011101.new_switches', 's011110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.65625,transformer_iwslt_de_en
+new_switches,XS_s011111_en_japn_8.0k_new,s011111_en_japn_8.0k_new,XS,60.7,71.6,14575.0,"['s011101.new_switches', 's011111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.821875,transformer_iwslt_de_en
+new_switches,XS_s100000_en_japn_8.0k_new,s100000_en_japn_8.0k_new,XS,60.3,71.2,14840.0,"['s011101.new_switches', 's100000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.855,transformer_iwslt_de_en
+new_switches,XS_s100001_en_japn_8.0k_new,s100001_en_japn_8.0k_new,XS,60.0,71.0,11554.0,"['s011101.new_switches', 's100001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.44425,transformer_iwslt_de_en
+new_switches,XS_s100010_en_japn_8.0k_new,s100010_en_japn_8.0k_new,XS,60.2,71.1,11554.0,"['s011101.new_switches', 's100010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.44425,transformer_iwslt_de_en
+new_switches,XS_s100011_en_japn_8.0k_new,s100011_en_japn_8.0k_new,XS,59.8,71.0,9646.0,"['s011101.new_switches', 's100011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.20575,transformer_iwslt_de_en
+new_switches,XS_s100100_en_japn_8.0k_new,s100100_en_japn_8.0k_new,XS,59.9,71.0,15847.0,"['s011101.new_switches', 's100100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.980875,transformer_iwslt_de_en
+new_switches,XS_s100101_en_japn_8.0k_new,s100101_en_japn_8.0k_new,XS,60.4,71.5,12349.0,"['s011101.new_switches', 's100101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.543625,transformer_iwslt_de_en
+new_switches,XS_s100110_en_japn_8.0k_new,s100110_en_japn_8.0k_new,XS,60.5,71.3,12137.0,"['s011101.new_switches', 's100110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.517125,transformer_iwslt_de_en
+new_switches,XS_s100111_en_japn_8.0k_new,s100111_en_japn_8.0k_new,XS,60.0,71.2,14098.0,"['s011101.new_switches', 's100111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.76225,transformer_iwslt_de_en
+new_switches,XS_s101000_en_japn_8.0k_new,s101000_en_japn_8.0k_new,XS,59.9,70.9,10176.0,"['s011101.new_switches', 's101000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.272,transformer_iwslt_de_en
+new_switches,XS_s101001_en_japn_8.0k_new,s101001_en_japn_8.0k_new,XS,60.3,71.3,12879.0,"['s011101.new_switches', 's101001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.609875,transformer_iwslt_de_en
+new_switches,XS_s101010_en_japn_8.0k_new,s101010_en_japn_8.0k_new,XS,59.8,71.1,9990.0,"['s011101.new_switches', 's101010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.24875,transformer_iwslt_de_en
+new_switches,XS_s101011_en_japn_8.0k_new,s101011_en_japn_8.0k_new,XS,59.4,70.8,9275.0,"['s011101.new_switches', 's101011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.159375,transformer_iwslt_de_en
+new_switches,XS_s101100_en_japn_8.0k_new,s101100_en_japn_8.0k_new,XS,60.4,71.3,14045.0,"['s011101.new_switches', 's101100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.755625,transformer_iwslt_de_en
+new_switches,XS_s101101_en_japn_8.0k_new,s101101_en_japn_8.0k_new,XS,60.0,71.1,12561.0,"['s011101.new_switches', 's101101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.570125,transformer_iwslt_de_en
+new_switches,XS_s101110_en_japn_8.0k_new,s101110_en_japn_8.0k_new,XS,60.2,71.2,14045.0,"['s011101.new_switches', 's101110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.755625,transformer_iwslt_de_en
+new_switches,XS_s101111_en_japn_8.0k_new,s101111_en_japn_8.0k_new,XS,59.9,71.1,11819.0,"['s011101.new_switches', 's101111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.477375,transformer_iwslt_de_en
+new_switches,XS_s110000_en_japn_8.0k_new,s110000_en_japn_8.0k_new,XS,60.3,71.3,13284.0,"['s011101.new_switches', 's110000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.6605,transformer_iwslt_de_en
+new_switches,XS_s110001_en_japn_8.0k_new,s110001_en_japn_8.0k_new,XS,60.0,71.1,14045.0,"['s011101.new_switches', 's110001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.755625,transformer_iwslt_de_en
+new_switches,XS_s110010_en_japn_8.0k_new,s110010_en_japn_8.0k_new,XS,60.0,71.3,14363.0,"['s011101.new_switches', 's110010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.795375,transformer_iwslt_de_en
+new_switches,XS_s110011_en_japn_8.0k_new,s110011_en_japn_8.0k_new,XS,60.2,71.3,12455.0,"['s011101.new_switches', 's110011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.556875,transformer_iwslt_de_en
+new_switches,XS_s110100_en_japn_8.0k_new,s110100_en_japn_8.0k_new,XS,60.1,71.2,13303.0,"['s011101.new_switches', 's110100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.662875,transformer_iwslt_de_en
+new_switches,XS_s110101_en_japn_8.0k_new,s110101_en_japn_8.0k_new,XS,59.8,71.0,14151.0,"['s011101.new_switches', 's110101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.768875,transformer_iwslt_de_en
+new_switches,XS_s110110_en_japn_8.0k_new,s110110_en_japn_8.0k_new,XS,60.3,71.3,14628.0,"['s011101.new_switches', 's110110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.8285,transformer_iwslt_de_en
+new_switches,XS_s110111_en_japn_8.0k_new,s110111_en_japn_8.0k_new,XS,60.1,71.1,13770.0,"['s011101.new_switches', 's110111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.72125,transformer_iwslt_de_en
+new_switches,XS_s111000_en_japn_8.0k_new,s111000_en_japn_8.0k_new,XS,60.1,71.2,11289.0,"['s011101.new_switches', 's111000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.411125,transformer_iwslt_de_en
+new_switches,XS_s111001_en_japn_8.0k_new,s111001_en_japn_8.0k_new,XS,60.0,71.2,12879.0,"['s011101.new_switches', 's111001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.609875,transformer_iwslt_de_en
+new_switches,XS_s111010_en_japn_8.0k_new,s111010_en_japn_8.0k_new,XS,60.7,71.6,14999.0,"['s011101.new_switches', 's111010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.874875,transformer_iwslt_de_en
+new_switches,XS_s111011_en_japn_8.0k_new,s111011_en_japn_8.0k_new,XS,59.7,70.9,12879.0,"['s011101.new_switches', 's111011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.609875,transformer_iwslt_de_en
+new_switches,XS_s111100_en_japn_8.0k_new,s111100_en_japn_8.0k_new,XS,60.4,71.4,12508.0,"['s011101.new_switches', 's111100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.5635,transformer_iwslt_de_en
+new_switches,XS_s111101_en_japn_8.0k_new,s111101_en_japn_8.0k_new,XS,60.3,71.4,14151.0,"['s011101.new_switches', 's111101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.768875,transformer_iwslt_de_en
+new_switches,XS_s111110_en_japn_8.0k_new,s111110_en_japn_8.0k_new,XS,59.8,70.9,11289.0,"['s011101.new_switches', 's111110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.411125,transformer_iwslt_de_en
+new_switches,XS_s111111_en_japn_8.0k_new,s111111_en_japn_8.0k_new,XS,60.4,71.3,10918.0,"['s011101.new_switches', 's111111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[4000, 4000]",XS,1000,75,True,True,8000,1.36475,transformer_iwslt_de_en
+new_switches,XS_s000001_en_japn_16.0k_new,s000001_en_japn_16.0k_new,XS,63.6,73.8,18437.0,"['s011101.new_switches', 's000001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.1523125,transformer_iwslt_de_en
+new_switches,XS_s000010_en_japn_16.0k_new,s000010_en_japn_16.0k_new,XS,63.6,73.8,25296.0,"['s011101.new_switches', 's000010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.581,transformer_iwslt_de_en
+new_switches,XS_s000011_en_japn_16.0k_new,s000011_en_japn_16.0k_new,XS,63.0,73.2,9991.0,"['s011101.new_switches', 's000011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,0.6244375,transformer_iwslt_de_en
+new_switches,XS_s000100_en_japn_16.0k_new,s000100_en_japn_16.0k_new,XS,63.8,73.8,20394.0,"['s011101.new_switches', 's000100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.274625,transformer_iwslt_de_en
+new_switches,XS_s000101_en_japn_16.0k_new,s000101_en_japn_16.0k_new,XS,63.1,73.3,15553.0,"['s011101.new_switches', 's000101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,0.9720625,transformer_iwslt_de_en
+new_switches,XS_s000110_en_japn_16.0k_new,s000110_en_japn_16.0k_new,XS,63.4,73.5,19776.0,"['s011101.new_switches', 's000110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.236,transformer_iwslt_de_en
+new_switches,XS_s000111_en_japn_16.0k_new,s000111_en_japn_16.0k_new,XS,64.4,74.2,23562.0,"['s011101.new_switches', 's000111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.472625,transformer_iwslt_de_en
+new_switches,XS_s001000_en_japn_16.0k_new,s001000_en_japn_16.0k_new,XS,63.9,74.2,21726.0,"['s011101.new_switches', 's001000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.357875,transformer_iwslt_de_en
+new_switches,XS_s001001_en_japn_16.0k_new,s001001_en_japn_16.0k_new,XS,64.3,74.3,21527.0,"['s011101.new_switches', 's001001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.3454375,transformer_iwslt_de_en
+new_switches,XS_s001010_en_japn_16.0k_new,s001010_en_japn_16.0k_new,XS,63.3,73.5,17748.0,"['s011101.new_switches', 's001010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.10925,transformer_iwslt_de_en
+new_switches,XS_s001011_en_japn_16.0k_new,s001011_en_japn_16.0k_new,XS,63.8,74.0,25956.0,"['s011101.new_switches', 's001011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.62225,transformer_iwslt_de_en
+new_switches,XS_s001100_en_japn_16.0k_new,s001100_en_japn_16.0k_new,XS,64.0,74.0,21012.0,"['s011101.new_switches', 's001100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.31325,transformer_iwslt_de_en
+new_switches,XS_s001101_en_japn_16.0k_new,s001101_en_japn_16.0k_new,XS,63.1,73.4,28662.0,"['s011101.new_switches', 's001101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.791375,transformer_iwslt_de_en
+new_switches,XS_s001110_en_japn_16.0k_new,s001110_en_japn_16.0k_new,XS,64.2,74.4,19261.0,"['s011101.new_switches', 's001110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2038125,transformer_iwslt_de_en
+new_switches,XS_s001111_en_japn_16.0k_new,s001111_en_japn_16.0k_new,XS,64.0,74.0,24888.0,"['s011101.new_switches', 's001111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.5555,transformer_iwslt_de_en
+new_switches,XS_s010000_en_japn_16.0k_new,s010000_en_japn_16.0k_new,XS,63.5,73.8,15810.0,"['s011101.new_switches', 's010000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,0.988125,transformer_iwslt_de_en
+new_switches,XS_s010001_en_japn_16.0k_new,s010001_en_japn_16.0k_new,XS,64.2,74.1,26265.0,"['s011101.new_switches', 's010001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.6415625,transformer_iwslt_de_en
+new_switches,XS_s010010_en_japn_16.0k_new,s010010_en_japn_16.0k_new,XS,63.7,73.8,20094.0,"['s011101.new_switches', 's010010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.255875,transformer_iwslt_de_en
+new_switches,XS_s010011_en_japn_16.0k_new,s010011_en_japn_16.0k_new,XS,64.0,74.0,19992.0,"['s011101.new_switches', 's010011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2495,transformer_iwslt_de_en
+new_switches,XS_s010100_en_japn_16.0k_new,s010100_en_japn_16.0k_new,XS,64.4,74.3,26265.0,"['s011101.new_switches', 's010100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.6415625,transformer_iwslt_de_en
+new_switches,XS_s010101_en_japn_16.0k_new,s010101_en_japn_16.0k_new,XS,64.0,74.2,20909.0,"['s011101.new_switches', 's010101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.3068125,transformer_iwslt_de_en
+new_switches,XS_s010110_en_japn_16.0k_new,s010110_en_japn_16.0k_new,XS,63.5,73.6,25132.0,"['s011101.new_switches', 's010110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.57075,transformer_iwslt_de_en
+new_switches,XS_s010111_en_japn_16.0k_new,s010111_en_japn_16.0k_new,XS,63.3,73.7,19879.0,"['s011101.new_switches', 's010111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2424375,transformer_iwslt_de_en
+new_switches,XS_s011000_en_japn_16.0k_new,s011000_en_japn_16.0k_new,XS,63.9,73.9,23381.0,"['s011101.new_switches', 's011000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.4613125,transformer_iwslt_de_en
+new_switches,XS_s011001_en_japn_16.0k_new,s011001_en_japn_16.0k_new,XS,63.8,73.9,23381.0,"['s011101.new_switches', 's011001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.4613125,transformer_iwslt_de_en
+new_switches,XS_s011010_en_japn_16.0k_new,s011010_en_japn_16.0k_new,XS,63.1,73.3,18564.0,"['s011101.new_switches', 's011010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.16025,transformer_iwslt_de_en
+new_switches,XS_s011011_en_japn_16.0k_new,s011011_en_japn_16.0k_new,XS,64.1,74.0,25132.0,"['s011101.new_switches', 's011011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.57075,transformer_iwslt_de_en
+new_switches,XS_s011100_en_japn_16.0k_new,s011100_en_japn_16.0k_new,XS,62.9,73.2,15244.0,"['s011101.new_switches', 's011100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,0.95275,transformer_iwslt_de_en
+new_switches,XS_s011101_2_en_japn_16.0k_new,s011101_2_en_japn_16.0k_new,XS,63.9,73.9,29172.0,"['s011101.new_switches', 's011101_2.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.82325,transformer_iwslt_de_en
+new_switches,XS_s011110_en_japn_16.0k_new,s011110_en_japn_16.0k_new,XS,63.7,73.8,21527.0,"['s011101.new_switches', 's011110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.3454375,transformer_iwslt_de_en
+new_switches,XS_s011111_en_japn_16.0k_new,s011111_en_japn_16.0k_new,XS,63.5,73.7,18025.0,"['s011101.new_switches', 's011111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.1265625,transformer_iwslt_de_en
+new_switches,XS_s100000_en_japn_16.0k_new,s100000_en_japn_16.0k_new,XS,64.0,73.9,22248.0,"['s011101.new_switches', 's100000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.3905,transformer_iwslt_de_en
+new_switches,XS_s100001_en_japn_16.0k_new,s100001_en_japn_16.0k_new,XS,63.8,74.0,26883.0,"['s011101.new_switches', 's100001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.6801875,transformer_iwslt_de_en
+new_switches,XS_s100010_en_japn_16.0k_new,s100010_en_japn_16.0k_new,XS,64.1,74.3,26883.0,"['s011101.new_switches', 's100010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.6801875,transformer_iwslt_de_en
+new_switches,XS_s100011_en_japn_16.0k_new,s100011_en_japn_16.0k_new,XS,63.5,73.7,22454.0,"['s011101.new_switches', 's100011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.403375,transformer_iwslt_de_en
+new_switches,XS_s100100_en_japn_16.0k_new,s100100_en_japn_16.0k_new,XS,64.5,74.4,22763.0,"['s011101.new_switches', 's100100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.4226875,transformer_iwslt_de_en
+new_switches,XS_s100101_en_japn_16.0k_new,s100101_en_japn_16.0k_new,XS,64.1,74.0,30600.0,"['s011101.new_switches', 's100101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.9125,transformer_iwslt_de_en
+new_switches,XS_s100110_en_japn_16.0k_new,s100110_en_japn_16.0k_new,XS,63.7,73.7,19467.0,"['s011101.new_switches', 's100110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2166875,transformer_iwslt_de_en
+new_switches,XS_s100111_en_japn_16.0k_new,s100111_en_japn_16.0k_new,XS,64.5,74.3,22042.0,"['s011101.new_switches', 's100111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.377625,transformer_iwslt_de_en
+new_switches,XS_s101000_en_japn_16.0k_new,s101000_en_japn_16.0k_new,XS,64.0,73.9,28531.0,"['s011101.new_switches', 's101000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.7831875,transformer_iwslt_de_en
+new_switches,XS_s101001_en_japn_16.0k_new,s101001_en_japn_16.0k_new,XS,63.8,73.8,23587.0,"['s011101.new_switches', 's101001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.4741875,transformer_iwslt_de_en
+new_switches,XS_s101010_en_japn_16.0k_new,s101010_en_japn_16.0k_new,XS,63.8,73.7,29149.0,"['s011101.new_switches', 's101010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.8218125,transformer_iwslt_de_en
+new_switches,XS_s101011_en_japn_16.0k_new,s101011_en_japn_16.0k_new,XS,64.0,73.9,22032.0,"['s011101.new_switches', 's101011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.377,transformer_iwslt_de_en
+new_switches,XS_s101100_en_japn_16.0k_new,s101100_en_japn_16.0k_new,XS,63.3,73.3,25647.0,"['s011101.new_switches', 's101100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.6029375,transformer_iwslt_de_en
+new_switches,XS_s101101_en_japn_16.0k_new,s101101_en_japn_16.0k_new,XS,64.4,74.4,24102.0,"['s011101.new_switches', 's101101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.506375,transformer_iwslt_de_en
+new_switches,XS_s101110_en_japn_16.0k_new,s101110_en_japn_16.0k_new,XS,63.9,74.0,20291.0,"['s011101.new_switches', 's101110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2681875,transformer_iwslt_de_en
+new_switches,XS_s101111_en_japn_16.0k_new,s101111_en_japn_16.0k_new,XS,64.2,74.2,28356.0,"['s011101.new_switches', 's101111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.77225,transformer_iwslt_de_en
+new_switches,XS_s110000_en_japn_16.0k_new,s110000_en_japn_16.0k_new,XS,63.5,73.7,18849.0,"['s011101.new_switches', 's110000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.1780625,transformer_iwslt_de_en
+new_switches,XS_s110001_en_japn_16.0k_new,s110001_en_japn_16.0k_new,XS,64.1,73.9,18952.0,"['s011101.new_switches', 's110001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.1845,transformer_iwslt_de_en
+new_switches,XS_s110010_en_japn_16.0k_new,s110010_en_japn_16.0k_new,XS,63.9,73.9,17442.0,"['s011101.new_switches', 's110010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.090125,transformer_iwslt_de_en
+new_switches,XS_s110011_en_japn_16.0k_new,s110011_en_japn_16.0k_new,XS,63.9,74.1,20600.0,"['s011101.new_switches', 's110011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2875,transformer_iwslt_de_en
+new_switches,XS_s110100_en_japn_16.0k_new,s110100_en_japn_16.0k_new,XS,64.0,74.1,21527.0,"['s011101.new_switches', 's110100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.3454375,transformer_iwslt_de_en
+new_switches,XS_s110101_en_japn_16.0k_new,s110101_en_japn_16.0k_new,XS,64.0,74.0,27810.0,"['s011101.new_switches', 's110101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.738125,transformer_iwslt_de_en
+new_switches,XS_s110110_en_japn_16.0k_new,s110110_en_japn_16.0k_new,XS,63.8,73.8,20703.0,"['s011101.new_switches', 's110110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.2939375,transformer_iwslt_de_en
+new_switches,XS_s110111_en_japn_16.0k_new,s110111_en_japn_16.0k_new,XS,63.7,73.8,21012.0,"['s011101.new_switches', 's110111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.31325,transformer_iwslt_de_en
+new_switches,XS_s111000_en_japn_16.0k_new,s111000_en_japn_16.0k_new,XS,63.2,73.4,14729.0,"['s011101.new_switches', 's111000.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,0.9205625,transformer_iwslt_de_en
+new_switches,XS_s111001_en_japn_16.0k_new,s111001_en_japn_16.0k_new,XS,64.4,74.2,,"['s011101.new_switches', 's111001.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,,transformer_iwslt_de_en
+new_switches,XS_s111010_en_japn_16.0k_new,s111010_en_japn_16.0k_new,XS,63.4,73.7,20188.0,"['s011101.new_switches', 's111010.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.26175,transformer_iwslt_de_en
+new_switches,XS_s111011_en_japn_16.0k_new,s111011_en_japn_16.0k_new,XS,64.0,74.1,19570.0,"['s011101.new_switches', 's111011.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.223125,transformer_iwslt_de_en
+new_switches,XS_s111100_en_japn_16.0k_new,s111100_en_japn_16.0k_new,XS,64.0,74.0,25544.0,"['s011101.new_switches', 's111100.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.5965,transformer_iwslt_de_en
+new_switches,XS_s111101_en_japn_16.0k_new,s111101_en_japn_16.0k_new,XS,64.3,74.2,28016.0,"['s011101.new_switches', 's111101.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.751,transformer_iwslt_de_en
+new_switches,XS_s111110_en_japn_16.0k_new,s111110_en_japn_16.0k_new,XS,64.1,74.1,,"['s011101.new_switches', 's111110.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,,transformer_iwslt_de_en
+new_switches,XS_s111111_en_japn_16.0k_new,s111111_en_japn_16.0k_new,XS,63.7,73.9,17304.0,"['s011101.new_switches', 's111111.new_switches']","['s000000.new_switches', 's000000.new_switches']","[8000, 8000]",XS,1000,75,True,True,16000,1.0815,transformer_iwslt_de_en

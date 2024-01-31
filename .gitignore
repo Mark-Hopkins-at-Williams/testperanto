@@ -13,7 +13,6 @@ docs/*/*.pdf
 docs/*/.texpadtmp
 experiment_pipeline/experiment_data*
 experiment_pipeline/experiments/datasets
-experiment_pipeline/experiments/peranto_configs
 experiment_pipeline/experiments/results
 experiment_pipeline/experiments/run_outputs
 experiment_pipeline/experiments/tp_data
