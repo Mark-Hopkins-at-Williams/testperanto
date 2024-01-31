@@ -112,5 +112,5 @@ Here's the repo layout I'm using (though you can change these easily by just adj
 └── plot_info.json # metadata about plots
 ```
 
-Additionally, you need to add a directory appa-mt in testperanto, which just is exactly [https://github.com/Mark-Hopkins-at-Williams/appa-mt/tree/main/fairseq](this) directory, except train.sh/prepare_data.sh are slightly modified (these updated files are located in experiments). 
+Additionally, you need to add a directory appa-mt in testperanto, which just is exactly [this](https://github.com/Mark-Hopkins-at-Williams/appa-mt/tree/main/fairseq) directory, except train.sh/prepare_data.sh are slightly modified (these updated files are located in experiments). 
 
